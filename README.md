@@ -4,10 +4,21 @@ Exposes the native functions of the PACLI command line utility.
 
 PACLI executable must be present on the computer on which the module is to be imported. 
 
+Save the PoShPACLI.psm1 file in a folder with the same name in your modules folder. 
+
+To view the paths that are specified as module folders, type the following command: $env:PSModulePath
+
+To find the module on your local system, issue command: Get-Module -ListAvailable
+
+To import the module into your session, use command: Import-Module PoShPACLI
+
+After the module has been imported, you can use the Get-Command cmdlet with the –module parameter to see which commands are exported by the module: Get-Command -Module PoShPACLI
+
 Function Initialize-PoShPACLI must be run before working with the other module functions.
 This is required to locate the PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
 
 The below list shows the native PACLI function to PoShPACLI function relationship:
+
 INIT: Start-Pacli
 
 TERM: Stop-Pacli
