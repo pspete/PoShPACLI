@@ -1,8 +1,9 @@
 # PoShPACLI
-Powershell PACLI Module
-Exposes the native functions of the PACLI command line utility.
+Powershell PACLI Module for CyberArk EPV
 
-PACLI executable must be present on the computer on which the module is to be imported. 
+Exposes the native functions of the CyberArk PACLI command line utility via a PowerShell wrapper for interfacing with CyberArk EPV.
+
+The CyberArk PACLI executable must be present on the computer on which the module is to be imported. 
 
 Save the PoShPACLI.psm1 file in a folder with the same name in your modules folder. 
 
@@ -15,7 +16,7 @@ To import the module into your session, use command: Import-Module PoShPACLI
 After the module has been imported, you can use the Get-Command cmdlet with the –module parameter to see which commands are exported by the module: Get-Command -Module PoShPACLI
 
 Function Initialize-PoShPACLI must be run before working with the other module functions.
-This is required to locate the PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
+This is required to locate the CyberArk PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
 
 The below list shows the native PACLI function to PoShPACLI function relationship:
 
