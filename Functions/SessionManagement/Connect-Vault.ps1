@@ -54,12 +54,11 @@ Function Connect-Vault{
             The logonfile and radius parameters cannot be defined in the same command.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Connect-Vault -vault Vault -user User -password pa55w0RD
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
         
     [CmdLetBinding()]
@@ -87,7 +86,9 @@ Function Connect-Vault{
             
         Write-Verbose "Logging onto Vault"
         
-        $pacliLogon = (Invoke-Expression "$pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $pacliLogon = (Invoke-Expression "$pacli LOGON $($PSBoundParameters.getEnumerator() | 
+        
+            ConvertTo-ParameterString -quoteOutput)" -ErrorAction SilentlyContinue) 2>&1
 
         if($LASTEXITCODE){
             
