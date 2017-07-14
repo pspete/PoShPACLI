@@ -86,9 +86,7 @@ Function Connect-Vault{
             
         Write-Verbose "Logging onto Vault"
         
-        $pacliLogon = (Invoke-Expression "$pacli LOGON $($PSBoundParameters.getEnumerator() | 
-        
-            ConvertTo-ParameterString -quoteOutput)" -ErrorAction SilentlyContinue) 2>&1
+        $pacliLogon = (Invoke-Expression "$pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
 
         if($LASTEXITCODE){
             
