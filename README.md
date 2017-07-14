@@ -40,6 +40,70 @@ Initialize-PoShPACLI -pacliFolder D:\PACLI
 ```
 This is required to locate the CyberArk PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
 
+----------
+
+An identical process to using the PACLI tool on its own should be followed:
+
+Example method to use the module to add a password object to a safe:
+```
+#Locate/set path to PACLI executable
+
+Initialize-PoShPACLI
+
+#Start PACLI Executable
+
+Start-PACLI
+
+#Define Vault
+
+Add-VaultDefinition -vault "VAULT" -address "vaultAddress"
+
+#Logon to vault
+
+Connect-Vault -vault "VAULT" -user "User" -logonFile "credfile.xxx"
+
+#Open Safe
+
+Open-Safe -vault "VAULT" -user "User" -safe "SAFE_Name"
+
+#Add Password to Safe
+
+Add-PasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password "Password_String"
+
+#Add Device Type for password
+
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value 
+"Device_Type"
+
+#Add PolicyID for password
+
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "PolicyID" -value "Policy_Name"
+
+#Add Logon Domain for password
+
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "LogonDomain" -value "Domain_Name"
+
+#Add Address for password
+
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category 'Address' -value "Address_Value"
+
+#Add UserName for password
+
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "UserName" -value "Account_Name"
+
+#Close Safe
+
+Close-Safe -vault "VAULT" -user "User" -safe "SAFE_Name"
+
+#Logoff From Vault
+
+Disconnect-Vault  -vault "VAULT" -user "User"
+
+#Stop Pacli process
+
+Stop-PACLI
+```
+
 ## Author
 
 * **Pete Maan** - [pspete](https://github.com/pspete)
