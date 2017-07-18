@@ -26,7 +26,7 @@ Function Get-SafeDetails{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -46,70 +46,66 @@ Function Get-SafeDetails{
     Else{
 
         #$PACLI variable set to executable path
-                        
-        #define hash to hold values
-        $details = @{}
         
         #execute pacli
-        $safeDetails = Invoke-Expression "$pacli SAFEDETAILS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE,OEM)'" | 
-            
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
+        $Return = Invoke-PACLICommand $pacli SAFEDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($safeDetails){
-            
-                Write-Debug $safeDetails
-        
-                $values = $safeDetails | ConvertFrom-PacliOutput
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                #Add elements to hashtable
-                $details.Add("Description",$values[0])
-                $details.Add("Delay",$values[1])
-                $details.Add("Retention",$values[2])
-                $details.Add("ObjectsRetention",$values[3])
-                $details.Add("MaxSize",$values[4])
-                $details.Add("CurrSize",$values[5])
-                $details.Add("FromHour",$values[6])
-                $details.Add("ToHour",$values[7])
-                $details.Add("DailyVersions",$values[8])
-                $details.Add("MonthlyVersions",$values[9])
-                $details.Add("YearlyVersions",$values[10])
-                $details.Add("QuotaOwner",$values[11])
-                $details.Add("Location",$values[12])
-                $details.Add("RequestsRetention",$values[13])
-                $details.Add("ConfirmationType",$values[14])
-                $details.Add("SecurityLevel",$values[15])
-                $details.Add("DefaultAccessMarks",$values[16])
-                $details.Add("ReadOnlyByDefault",$values[17])
-                $details.Add("UseFileCategories",$values[18])
-                $details.Add("VirusFree",$values[19])
-                $details.Add("TextOnly",$values[20])
-                $details.Add("RequireReason",$values[21])
-                $details.Add("EnforceExclusivePasswords",$values[22])
-                $details.Add("RequireContentValidation",$values[23])
-                $details.Add("ShareOptions",$values[24])
-                $details.Add("ConfirmationCount",$values[25])
-                $details.Add("MaxFileSize",$values[26])
-                $details.Add("AllowedFileTypes",$values[27])
-                $details.Add("SupportOLAC",$values[28])
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=29){
+                    
+                    #Get Range from array
+                    $values = $Results[$i..($i+29)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
 
-                #return object from hashtable
-                New-Object -TypeName psobject -Property $details | select Description, Delay, Retention, ObjectsRetention, 
-                    MaxSize, CurrSize, FromHour, ToHour, DailyVersions, MonthlyVersions, YearlyVersions, QuotaOwner,
-                        Location, RequestsRetention, ConfirmationType, SecurityLevel, DefaultAccessMarks, ReadOnlyByDefault,
-                            UseFileCategories, VirusFree, TextOnly, RequireReason, EnforceExclusivePasswords, 
-                                RequireContentValidation, ShareOptions, ConfirmationCount, MaxFileSize, AllowedFileTypes, 
-                                    SupportOLAC
+                        "Description"=$values[0]
+                        "Delay"=$values[1]
+                        "Retention"=$values[2]
+                        "ObjectsRetention"=$values[3]
+                        "MaxSize"=$values[4]
+                        "CurrSize"=$values[5]
+                        "FromHour"=$values[6]
+                        "ToHour"=$values[7]
+                        "DailyVersions"=$values[8]
+                        "MonthlyVersions"=$values[9]
+                        "YearlyVersions"=$values[10]
+                        "QuotaOwner"=$values[11]
+                        "Location"=$values[12]
+                        "RequestsRetention"=$values[13]
+                        "ConfirmationType"=$values[14]
+                        "SecurityLevel"=$values[15]
+                        "DefaultAccessMarks"=$values[16]
+                        "ReadOnlyByDefault"=$values[17]
+                        "UseFileCategories"=$values[18]
+                        "VirusFree"=$values[19]
+                        "TextOnly"=$values[20]
+                        "RequireReason"=$values[21]
+                        "EnforceExclusivePasswords"=$values[22]
+                        "RequireContentValidation"=$values[23]
+                        "ShareOptions"=$values[24]
+                        "ConfirmationCount"=$values[25]
+                        "MaxFileSize"=$values[26]
+                        "AllowedFileTypes"=$values[27]
+                        "SupportOLAC"=$values[28]
+
+                    }
+
+                }
             
             }
             

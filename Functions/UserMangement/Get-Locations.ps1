@@ -23,7 +23,7 @@ Function Get-Locations{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -44,41 +44,38 @@ Function Get-Locations{
         #$PACLI variable set to executable path
                 
         #execute pacli with parameters
-        $locations = (Invoke-Expression "$pacli LOCATIONSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli LOCATIONSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($locations){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($location in $locations){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=4){
                     
-                    #define hash to hold values
-                    $locationsList = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+4)]
                     
-                    #split the command output
-                    $values = $safe | ConvertFrom-PacliOutput
+                    #Output Object
+                    [PSCustomObject] @{
                         
-                    #assign values to properties
-                    $locationsList.Add("Name",$values[0])
-                    $locationsList.Add("Quota",$values[1])
-                    $locationsList.Add("UsedQuota",$values[2])
-                    $locationsList.Add("LocationID",$values[3])
+                        #assign values to properties
+                        "Name"=$values[0]
+                        "Quota"=$values[1]
+                        "UsedQuota"=$values[2]
+                        "LocationID"=$values[3]
                     
-                    #output object
-                    new-object -Type psobject -Property $locationsList | select Name, Quota, UsedQuota, LocationID
+                    }
                         
                 }
             

@@ -16,9 +16,9 @@ Function ConvertTo-ParameterString{
 
     .PARAMETER boundParameters
     	The bound parameter object from a PowerShell function.
-        
-    .PARAMETER quoteOutput
-    	Specifies whether arguments and values contained in output string should be quoted
+
+    .PARAMETER donotQuote
+        Optional parameterNames that will be included int he output without "quotes"
 
     .PARAMETER excludedParameters
         Array of parameters, of which the names and values should not be included in the 
@@ -44,17 +44,18 @@ Function ConvertTo-ParameterString{
     .EXAMPLE
     	$PSBoundParameters.getEnumerator() | ConvertTo-ParameterString
         
-        Outputs a string where the Key/Value pairs contained in PSBoundParameters are converted into KEY=VALUE
+        #Outputs a string where the Key/Value pairs contained in PSBoundParameters 
+        #are converted into KEY="VALUE"
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
     param(
         [Parameter(Mandatory=$True,ValueFromPipeline=$True)][array]$boundParameters,
-        [Parameter(Mandatory=$False,ValueFromPipeline=$False)][switch]$quoteOutput,
+        [Parameter(Mandatory=$False,ValueFromPipeline=$False)][array]$donotQuote,
         [Parameter(Mandatory=$False,ValueFromPipeline=$False)][array]$excludedParameters = @(
             "Debug","ErrorAction","ErrorVariable","OutVariable","OutBuffer","PipelineVariable",
                 "Verbose","WarningAction","WarningVariable","WhatIf","Confirm")
@@ -65,19 +66,37 @@ Function ConvertTo-ParameterString{
         write-debug "Processing Bound Parameters"
         #define array to hold parameters
         $parameters=@()
+
+        #Ensure sessionID is never enclosed in quotes
+        if($donotQuote -notcontains "sessionID"){
+
+            $donotQuote+="sessionID"
+
+        }
         
     }
     
     Process{
         
         #foreach elemant in passed array
-        $boundParameters | foreach{
+        $boundParameters | ForEach-Object{
         
-            If($excludedParameters -notContains $_.key){
-                    
+            If(($excludedParameters -notContains $_.key) -and ($donotQuote -notContains $_.key)){
+                
                 #add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
-                $parameters+=$($_.Key)+"="+(($($_.Value) -replace "True", "YES") -replace "False", "NO")
+                #Quote Parameter Value so Key="Value"
+                $parameters+=$($_.Key)+"="+(((($($_.Value) -replace '^', '"') `
+                    -replace '$','"') `
+                        -replace '"True"', 'YES') `
+                            -replace '"False"', 'NO') `
+                            #boolean values YES/NO should never be "in quotes"
+            }
             
+            If(($excludedParameters -notContains $_.key) -and ($donotQuote -Contains $_.key)){
+
+                #add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
+                $parameters+=$($_.Key)+"="+$($_.Value)
+
             }
                 
         }    
@@ -89,13 +108,6 @@ Function ConvertTo-ParameterString{
         if($parameters){
 
             $parameters = $parameters -join ' '
-                        
-            If($quoteOutput){
-            
-                #Add required quotes at whitespaces, at thh start and end of string and around '=' symbol
-                $parameters = ((($parameters -replace "(\s)",'""" "') -replace "(^)|($)",'"') -replace "(=)",'=""')
-            
-            }
                 
             write-debug $parameters
             #output parameter string

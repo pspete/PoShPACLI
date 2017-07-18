@@ -26,7 +26,7 @@ Function Read-VaultConfigFile{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,23 +48,21 @@ Function Read-VaultConfigFile{
                 
         Write-Verbose "Defining Vault"
         
-        $vaultConfig = (Invoke-Expression "$pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
 
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose $($vaultConfig)
-            $false
-            
         }
         
-        Else{
-            
-            write-debug "LastExitCode: $LASTEXITCODE"
+        else{
+        
             Write-Verbose "Vault Config Read"
-            $true
+            $TRUE
             
-        }
+        }        
         
     }
 

@@ -207,7 +207,7 @@ Function Search-Files{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -263,70 +263,69 @@ Function Search-Files{
         #$PACLI variable set to executable path
                             
         #execute pacli    
-        $searchFiles = Invoke-Expression "$pacli FINDFILES $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+                searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
+                    categoryListAction ) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($searchFiles){
-            
-                ForEach($file in $searchFiles){
-        
-                    #define hash to hold values
-                    $filesList = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=29){
                     
-                    $values = $file | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+29)]
                     
-                    #Add elements to hashtable
-                    $filesList.Add("Name",$values[0])
-                    $filesList.Add("Accessed",$values[1])
-                    $filesList.Add("CreationDate",$values[2])
-                    $filesList.Add("CreatedBy",$values[3])
-                    $filesList.Add("DeletionDate",$values[4])
-                    $filesList.Add("DeletionBy",$values[5])
-                    $filesList.Add("LastUsedDate",$values[6])
-                    $filesList.Add("LastUsedBy",$values[7])
-                    $filesList.Add("LockDate",$values[8])
-                    $filesList.Add("LockedBy",$values[9])
-                    $filesList.Add("LockedByGW",$values[10])
-                    $filesList.Add("Size",$values[11])
-                    $filesList.Add("History",$values[12])
-                    $filesList.Add("InternalName",$values[13])
-                    $filesList.Add("Safe",$values[14])
-                    $filesList.Add("Folder",$values[15])
-                    $filesList.Add("FileID",$values[16])
-                    $filesList.Add("LockedByUserID",$values[17])
-                    $filesList.Add("ValidationStatus",$values[18])
-                    $filesList.Add("HumanCreationDate",$values[19])
-                    $filesList.Add("HumanCreatedBy",$values[20])
-                    $filesList.Add("HumanLastUsedDate",$values[21])                
-                    $filesList.Add("HumanLastUsedBy",$values[22])
-                    $filesList.Add("HumanLastRetrievedByDate",$values[23])
-                    $filesList.Add("HumanLastRetrievedBy",$values[24])
-                    $filesList.Add("ComponentCreationDate",$values[25])
-                    $filesList.Add("ComponentCreatedBy",$values[26])
-                    $filesList.Add("ComponentLastUsedDate",$values[27])
-                    $filesList.Add("ComponentLastUsedBy",$values[28])   
-                    $filesList.Add("ComponentLastRetrievedDate",$values[26])
-                    $filesList.Add("ComponentLastRetrievedBy",$values[27])
-                    $filesList.Add("FileCategories",$values[28])   
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Name"=$values[0]
+                        "Accessed"=$values[1]
+                        "CreationDate"=$values[2]
+                        "CreatedBy"=$values[3]
+                        "DeletionDate"=$values[4]
+                        "DeletionBy"=$values[5]
+                        "LastUsedDate"=$values[6]
+                        "LastUsedBy"=$values[7]
+                        "LockDate"=$values[8]
+                        "LockedBy"=$values[9]
+                        "LockedByGW"=$values[10]
+                        "Size"=$values[11]
+                        "History"=$values[12]
+                        "InternalName"=$values[13]
+                        "Safe"=$values[14]
+                        "Folder"=$values[15]
+                        "FileID"=$values[16]
+                        "LockedByUserID"=$values[17]
+                        "ValidationStatus"=$values[18]
+                        "HumanCreationDate"=$values[19]
+                        "HumanCreatedBy"=$values[20]
+                        "HumanLastUsedDate"=$values[21]
+                        "HumanLastUsedBy"=$values[22]
+                        "HumanLastRetrievedByDate"=$values[23]
+                        "HumanLastRetrievedBy"=$values[24]
+                        "ComponentCreationDate"=$values[25]
+                        "ComponentCreatedBy"=$values[26]
+                        "ComponentLastUsedDate"=$values[27]
+                        "ComponentLastUsedBy"=$values[28]   
+                        "ComponentLastRetrievedDate"=$values[26]
+                        "ComponentLastRetrievedBy"=$values[27]
+                        "FileCategories"=$values[28]
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $filesList | select Name, Accessed, CreationDate, CreatedBy, DeletionDate, DeletionBy, LastUsedDate, LastUsedBy,
-                        LockDate, LockedBy, LockedByGW, Size, History, InternalName, Safe, Folder, FileID, LockedByUserID, ValidationStatus, HumanCreationDate, HumanCreatedBy,
-                            HumanLastUsedDate, HumanLastUsedBy, HumanLastRetrievedByDate, HumanLastRetrievedBy, ComponentCreationDate, ComponentCreatedBy, ComponentLastUsedDate,
-                                ComponentLastUsedBy, ComponentLastRetrievedDate, ComponentLastRetrievedBy, FileCategories
-                        
+                    }
+                    
                 }
             
             }

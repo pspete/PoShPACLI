@@ -29,7 +29,7 @@ Function Get-UserActivity{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -51,47 +51,44 @@ Function Get-UserActivity{
         #$PACLI variable set to executable path
             
         #execute pacli with parameters
-        $userActivity = (Invoke-Expression "$pacli INSPECTUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli INSPECTUSER "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($userActivity){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($activity in $userActivity){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=9){
                     
-                    #define hash to hold values
-                    $activities = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+9)]
                     
-                    #split the command output
-                    $values = $user | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $activities.Add("Time",$values[0])
-                    $activities.Add("User",$values[1])
-                    $activities.Add("Safe",$values[2])
-                    $activities.Add("Activity",$values[3])
-                    $activities.Add("Location",$values[4])
-                    $activities.Add("NewLocation",$values[5])
-                    $activities.Add("RequestID",$values[6])
-                    $activities.Add("RequestReason",$values[7])
-                    $activities.Add("Code",$values[8])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        #assign values to properties
+                        "Time"=$values[0]
+                        "User"=$values[1]
+                        "Safe"=$values[2]
+                        "Activity"=$values[3]
+                        "Location"=$values[4]
+                        "NewLocation"=$values[5]
+                        "RequestID"=$values[6]
+                        "RequestReason"=$values[7]
+                        "Code"=$values[8]
                     
-                    #output object
-                    new-object -Type psobject -Property $activities | select Time, User, Safe, 
-                        Activity, Location, NewLocation, RequestID, RequestReason, Code
+                    }
                         
                 }
             

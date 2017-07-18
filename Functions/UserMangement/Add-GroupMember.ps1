@@ -29,7 +29,7 @@ Function Add-GroupMember{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -51,18 +51,18 @@ Function Add-GroupMember{
 
         #$PACLI variable set to executable path
                 
-        $addGroupMember = Invoke-Expression "$pacli ADDGROUPMEMBER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli ADDGROUPMEMBER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

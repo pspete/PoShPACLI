@@ -32,7 +32,7 @@ Function Lock-File{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -55,24 +55,20 @@ Function Lock-File{
 
         #$PACLI variable set to executable path
                     
-        $lockFile = (Invoke-Expression "$pacli LOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli LOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Locking File: $file"
-            Write-Debug $($lockFile|Out-String)
-            #error Locking File, return false
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Locking File: $file"
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "$file Locked"
-            #File Locked return true
-            $true
+            $TRUE
             
         }
         

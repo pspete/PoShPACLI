@@ -34,7 +34,7 @@ Function Get-RulesList{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -56,44 +56,42 @@ Function Get-RulesList{
     Else{
 
         #$PACLI variable set to executable path
-                    
-        #define hash to hold values
-        $details = @{}
+
+        $Return = Invoke-PACLICommand $pacli RULESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        $rulesList = Invoke-Expression "$pacli RULESLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        if($Return.ExitCode){
             
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
-        
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
-            
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            if($rulesList){
-            
-                ForEach($rule in $rulesList){
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                    $values = $rule | ConvertFrom-PacliOutput
-
-                    #Add elements to hashtable
-                    $details.Add("RuleID",$values[0])
-                    $details.Add("UserName",$values[1])
-                    $details.Add("SafeName",$values[2])
-                    $details.Add("FullObjectName",$values[3])
-                    $details.Add("Effect",$values[4])
-                    $details.Add("RuleCreationDate",$values[5])
-                    $details.Add("AccessLevel",$values[6])                    
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=7){
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $details | select RuleID, UserName, SafeName, FullObjectName, Effect, RuleCreationDate, AccessLevel
-                
+                    #Get Range from array
+                    $values = $Results[$i..($i+7)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "RuleID"=$values[0]
+                        "UserName"=$values[1]
+                        "SafeName"=$values[2]
+                        "FullObjectName"=$values[3]
+                        "Effect"=$values[4]
+                        "RuleCreationDate"=$values[5]
+                        "AccessLevel"=$values[6]                    
+                    
+                    }
+
                 }
                 
             }

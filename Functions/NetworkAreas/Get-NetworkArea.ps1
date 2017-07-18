@@ -23,7 +23,7 @@ Function Get-NetworkArea{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -44,39 +44,35 @@ Function Get-NetworkArea{
         #$PACLI variable set to executable path
                     
         #execute pacli with parameters
-        $getNetworkArea = (Invoke-Expression "$pacli NETWORKAREASLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli NETWORKAREASLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($getNetworkArea){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($area in $getNetworkArea){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=2){
                     
-                    #define hash to hold values
-                    $networkArea = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+2)]
                     
-                    #split the command output
-                    $values = $area | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $networkArea.Add("Name",$values[0])
-                    $networkArea.Add("SecurityLevel",$values[1])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Name"=$values[0]
+                        "SecurityLevel"=$values[1]
                     
-                    #output object
-                    new-object -Type psobject -Property $networkArea | select Name, SecurityLevel
+                    }
                         
                 }
             

@@ -211,7 +211,7 @@ Function Update-User{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -284,17 +284,18 @@ Function Update-User{
 
         #$PACLI variable set to executable path
             
-        $updateUser = Invoke-Expression "$pacli UPDATEUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+
             $false
+
         }
         
         Else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             $true
             
         }

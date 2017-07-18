@@ -6,8 +6,8 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ----------
 ## Whats New
- - Minor [Bug](https://github.com/pspete/PoShPACLI/issues/11) Fix
  - Major Change to Module Folder/File Structure
+ - All Functions reworked, reducing Parse errors and resolving lots of bugs.
 
 ## Getting Started
 - Check the [relationship table](#Pacli_to_PoShPACLI) to determine what PoShPACLI function exposes which PACLI command.

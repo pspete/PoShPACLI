@@ -31,7 +31,7 @@ Function Remove-SafeShare{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,20 +53,20 @@ Function Remove-SafeShare{
 
         #$PACLI variable set to executable path
                 
-        $deleteSafeShare = (Invoke-Expression "$pacli DELETESAFESHARE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
-
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Deleting Sharing Safe: $safe"
-            write-debug $($addSafeShare[0]|out-string)
+        $Return = Invoke-PACLICommand $pacli DELETESAFESHARE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Deleting Safe Share: $safe"
+            $FALSE
+
         }
         
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        else{
+            
             Write-Verbose "$safe Share via $gwAccount Deleted"
+            $TRUE
             
         }
         

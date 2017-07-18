@@ -86,22 +86,20 @@ Function Connect-Vault{
             
         Write-Verbose "Logging onto Vault"
         
-        $pacliLogon = (Invoke-Expression "$pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
             
-            write-debug "LastExitCode: $LASTEXITCODE"
+            Write-Debug $Return.StdErr
             Write-Verbose "Error Logging on"
-            Write-Debug $($pacliLogon|out-string)
-            $false
-            
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "Succesfully Logged on"
-            $true
+            $TRUE
             
         }
         

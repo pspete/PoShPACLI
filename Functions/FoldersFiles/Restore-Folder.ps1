@@ -31,7 +31,7 @@ Function Restore-Folder{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,19 +53,18 @@ Function Restore-Folder{
 
         #$PACLI variable set to executable path
                     
-        $restoreFolder = (Invoke-Expression "$pacli UNDELETEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli UNDELETEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

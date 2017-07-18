@@ -23,7 +23,7 @@ Function Disconnect-Vault{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -45,20 +45,18 @@ Function Disconnect-Vault{
 
         Write-Verbose "Logging off from Vault"
         
-        $pacliLogoff = (Invoke-Expression "$pacli LOGOFF $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
 
-        if($LASTEXITCODE){
-            
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Debug $pacliLogoff
-            $false
-            
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

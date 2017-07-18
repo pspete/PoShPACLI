@@ -46,7 +46,7 @@ Function Confirm-Object{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -72,19 +72,19 @@ Function Confirm-Object{
 
         #$PACLI variable set to executable path
                     
-        $confirmObject = (Invoke-Expression "$pacli VALIDATEOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli VALIDATEOBJECT $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote validationAction)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

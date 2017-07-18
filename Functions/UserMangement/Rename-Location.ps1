@@ -30,7 +30,7 @@ Function Rename-Location{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -38,7 +38,7 @@ Function Rename-Location{
         [Parameter(Mandatory=$True)][string]$vault,
         [Parameter(Mandatory=$True)][string]$user,
         [Parameter(Mandatory=$True)][string]$location,
-        [Parameter(Mandatory=$True)][int]$newName,
+        [Parameter(Mandatory=$True)][string]$newName,
         [Parameter(Mandatory=$False)][int]$sessionID
     )
 
@@ -52,18 +52,18 @@ Function Rename-Location{
 
         #$PACLI variable set to executable path
                 
-        $renameLocation = Invoke-Expression "$pacli RENAMELOCATION $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli RENAMELOCATION $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

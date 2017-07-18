@@ -29,7 +29,7 @@ Function Add-SafeShare{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -51,20 +51,20 @@ Function Add-SafeShare{
 
         #$PACLI variable set to executable path
                 
-        $addSafeShare = (Invoke-Expression "$pacli ADDSAFESHARE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
-
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Sharing Safe: $safe"
-            write-debug $($addSafeShare[0]|out-string)
+        $Return = Invoke-PACLICommand $pacli ADDSAFESHARE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Sharing Safe: $safe"            
+            $FALSE
+
         }
         
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        else{
+            
             Write-Verbose "$safe Shared via $gwAccount"
+            $TRUE
             
         }
         

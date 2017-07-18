@@ -211,7 +211,7 @@ Function Add-User{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -224,7 +224,7 @@ Function Add-User{
         [Parameter(Mandatory=$False)][string]$password,
         [Parameter(Mandatory=$False)][string]$certFileName,
         [Parameter(Mandatory=$False)][string]$DN,
-        [Parameter(Mandatory=$False)][string]$location,
+        [Parameter(Mandatory=$True)][string]$location,
         [Parameter(Mandatory=$False)][switch]$usersAdmin,
         [Parameter(Mandatory=$False)][switch]$resetPassword,
         [Parameter(Mandatory=$False)][switch]$activateUsers,
@@ -285,18 +285,20 @@ Function Add-User{
 
         #$PACLI variable set to executable path
             
-        $addUser = Invoke-Expression "$pacli ADDUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() | 
         
-        if($LASTEXITCODE){
+            ConvertTo-ParameterString -donotQuote password,retention,quota)
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

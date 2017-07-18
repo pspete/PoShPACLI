@@ -85,7 +85,7 @@ Function Add-VaultDefinition{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -126,23 +126,21 @@ Function Add-VaultDefinition{
             
         Write-Verbose "Defining Vault"
         
-        $vaultDefinition = (Invoke-Expression "$pacli DEFINE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose $($vaultDefinition)
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
-            
-            write-debug "LastExitCode: $LASTEXITCODE"
+        else{
+        
             Write-Verbose "Vault Defined"
-            $true
+            $TRUE
             
-        }    
+        }
         
     }
 

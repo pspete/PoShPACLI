@@ -36,7 +36,7 @@ Function Get-FileCategories{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -61,38 +61,36 @@ Function Get-FileCategories{
         #$PACLI variable set to executable path
                     
         #execute pacli    
-        $fileCategories = Invoke-Expression "$pacli LISTFILECATEGORIES $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli LISTFILECATEGORIES "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($fileCategories){
-            
-                ForEach($category in $fileCategories){
-        
-                    #define hash to hold values
-                    $categories = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=3){
                     
-                    $values = $category | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+3)]
                     
-                    #Add elements to hashtable
-                    $categories.Add("CategoryName",$values[0])
-                    $categories.Add("CategoryValue",$values[1])
-                    $categories.Add("CategoryID",$values[2])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "CategoryName"=$values[0]
+                        "CategoryValue"=$values[1]
+                        "CategoryID"=$values[2]
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $categories | select CategoryName, CategoryValue, CategoryID
-                        
+                    }
                 }
             
             }

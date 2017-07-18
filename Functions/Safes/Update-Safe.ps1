@@ -156,7 +156,7 @@ Function Update-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -211,17 +211,21 @@ Function Update-Safe{
 
         #$PACLI variable set to executable path
                     
-        $updateSafe = (Invoke-Expression "$pacli UPDATESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli UPDATESAFE $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote size,fromHour,toHour,delay,dailyVersions,monthlyVersions,
+                yearlyVersions,logRetention,fileRetention,requestsRetention,safeOptions,securityLevelParm,
+                    confirmationCount,maxFileSize)
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

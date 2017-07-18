@@ -29,7 +29,7 @@ Function Add-NetworkArea{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -37,7 +37,8 @@ Function Add-NetworkArea{
         [Parameter(Mandatory=$True)][string]$vault,
         [Parameter(Mandatory=$True)][string]$user,
         [Parameter(Mandatory=$True)][string]$networkArea,
-        [Parameter(Mandatory=$False)][string]$securityLevelParm,
+        [Parameter(Mandatory=$False)]
+        [ValidateRange(1,63)][int]$securityLevelParm,
         [Parameter(Mandatory=$False)][int]$sessionID
     )
 
@@ -51,18 +52,19 @@ Function Add-NetworkArea{
 
         #$PACLI variable set to executable path
                     
-        $addNetworkArea = Invoke-Expression "$pacli ADDNETWORKAREA $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli ADDNETWORKAREA $($PSBoundParameters.getEnumerator() | 
+        ConvertTo-ParameterString -donotQuote securityLevelParm)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

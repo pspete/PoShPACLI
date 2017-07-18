@@ -23,7 +23,7 @@ Function Get-SafesLog{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -44,41 +44,38 @@ Function Get-SafesLog{
         #$PACLI variable set to executable path
             
         #execute pacli with parameters
-        $safesLog = (Invoke-Expression "$pacli SAFESLOG $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli SAFESLOG "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($safesLog){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($safe in $safesLog){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=4){
                     
-                    #define hash to hold values
-                    $safeLogs = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+4)]
                     
-                    #split the command output
-                    $values = $safe | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $safeLogs.Add("Name",$values[0])
-                    $safeLogs.Add("UsersCount",$values[1])
-                    $safeLogs.Add("OpenDate",$values[2])
-                    $safeLogs.Add("OpenState",$values[3])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        #assign values to properties
+                        "Name"=$values[0]
+                        "UsersCount"=$values[1]
+                        "OpenDate"=$values[2]
+                        "OpenState"=$values[3]
                     
-                    #output object
-                    new-object -Type psobject -Property $safeLogs | select Name, UsersCount, OpenDate, OpenState
+                    }
                         
                 }
             

@@ -29,7 +29,7 @@ Function New-LogonFile{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
         
     [CmdLetBinding()]
@@ -50,19 +50,18 @@ Function New-LogonFile{
 
         #$PACLI variable set to executable path
             
-        $newLogonFile = (Invoke-Expression "$pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
 
-        if($LASTEXITCODE){
-            
-            write-debug "LastExitCode: $LASTEXITCODE"
-            $false
-            
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

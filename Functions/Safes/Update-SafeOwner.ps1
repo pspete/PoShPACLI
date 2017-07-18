@@ -118,7 +118,7 @@ Function Update-SafeOwner{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -166,17 +166,18 @@ Function Update-SafeOwner{
 
         #$PACLI variable set to executable path
                         
-        $updateOwner = (Invoke-Expression "$pacli UPDATEOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli UPDATEOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

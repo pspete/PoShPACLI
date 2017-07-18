@@ -29,7 +29,7 @@ Function Get-RequestConfirmationStatus{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -51,42 +51,41 @@ Function Get-RequestConfirmationStatus{
 
         #$PACLI variable set to executable path
                     
-        #define hash to hold values
-        $details = @{}
+        $Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        $requestStatus = Invoke-Expression "$pacli REQUESTCONFIRMATIONSTATUS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        if($Return.ExitCode){
             
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
-        
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            if($requestStatus){
-            
-                ForEach($request in $requestStatus){
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                    $values = $request | ConvertFrom-PacliOutput
-
-                    #Add elements to hashtable
-                    $details.Add("UserName",$values[0])
-                    $details.Add("GroupName",$values[1])
-                    $details.Add("Action",$values[2])
-                    $details.Add("ActionDate",$values[3])
-                    $details.Add("Reason",$values[4])
-                    $details.Add("UserID",$values[5])
-                    $details.Add("GroupID",$values[6])
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=7){
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $details | select UserName, GroupName, Action, ActionDate, Reason, UserID, GroupID
-                
+                    #Get Range from array
+                    $values = $Results[$i..($i+7)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "UserName"=$values[0]
+                        "GroupName"=$values[1]
+                        "Action"=$values[2]
+                        "ActionDate"=$values[3]
+                        "Reason"=$values[4]
+                        "UserID"=$values[5]
+                        "GroupID"=$values[6]
+                    
+                    }
+
                 }
                 
             }

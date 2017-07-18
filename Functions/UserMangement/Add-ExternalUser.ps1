@@ -41,7 +41,7 @@ Function Add-ExternalUser{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
         Work required to support LDAPFullDN & Parameter Validation / Parameter Sets
     #>
     
@@ -72,25 +72,36 @@ Function Add-ExternalUser{
     Else{
 
         #$PACLI variable set to executable path
+        $Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        $addUser = (Invoke-Expression "$pacli ADDUPDATEEXTERNALUSERENTITY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) Output '(ALL,ENCLOSE)'" -ErrorAction SilentlyContinue) 2>&1
-        
-        if($LASTEXITCODE){
+        if($Return.ExitCode){
             
-            write-debug "LastExitCode: $LASTEXITCODE"
+            Write-Debug $Return.StdErr
             Write-Verbose "Error Adding External User: $destUser"
-            write-debug $($addUser[0]|Out-String)   
-            
+
         }
         
-        Else{
-            
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "External User $destUser added."
-            $addUser | ConvertFrom-PacliOutput
-            
-        }
+        else{
         
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                Write-Verbose "External User $destUser added."
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                       
+                #Output Object
+                [PSCustomObject] @{
+                            
+                    "UserName"= $Results[0]
+                    
+                }
+
+            }
+
+        }
+
     }
     
 }

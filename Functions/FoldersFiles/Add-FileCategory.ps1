@@ -38,7 +38,7 @@ Function Add-FileCategory{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -63,22 +63,18 @@ Function Add-FileCategory{
 
         #$PACLI variable set to executable path
                     
-        $addCategory = (Invoke-Expression "$pacli ADDFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString -quoteOutput)") 2>&1
+        $Return = Invoke-PACLICommand $pacli ADDFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            write-debug $($addCategory|out-string)
-            #error adding category, return false
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            #category added return true
-            $true
+            $TRUE
             
         }
         

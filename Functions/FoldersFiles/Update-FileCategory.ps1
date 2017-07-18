@@ -38,7 +38,7 @@ Function Update-FileCategory{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -63,24 +63,20 @@ Function Update-FileCategory{
 
         #$PACLI variable set to executable path
                     
-        $updateCategory = (Invoke-Expression "$pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error updating File Category: $category"
-            Write-Debug $($updateCategory|Out-String)
-            #error updating category, return false
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error updating File Category: $category"
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "File Category $category Updated"
-            #category updated added return true
-            $true
+            $TRUE
             
         }
         

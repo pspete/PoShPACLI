@@ -35,7 +35,7 @@ Function Get-FileActivity{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -60,42 +60,42 @@ Function Get-FileActivity{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $fileActivities = Invoke-Expression "$pacli INSPECTFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($fileActivities){
-            
-                ForEach($activity in $fileActivities){
-        
-                    #define hash to hold values
-                    $activities = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=7){
                     
-                    $values = $activity | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+7)]
                     
-                    #Add elements to hashtable
-                    $activities.Add("Time",$values[0])
-                    $activities.Add("User",$values[1])
-                    $activities.Add("Activity",$values[2])
-                    $activities.Add("PreviousLocation",$values[3])
-                    $activities.Add("RequestID",$values[4])
-                    $activities.Add("RequestReason",$values[5])
-                    $activities.Add("Code",$values[6])
-                    
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $activities | select Time, User, Activity, PreviousLocation, RequestID, RequestReason, Code
-                        
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Time"=$values[0]
+                        "User"=$values[1]
+                        "Activity"=$values[2]
+                        "PreviousLocation"=$values[3]
+                        "RequestID"=$values[4]
+                        "RequestReason"=$values[5]
+                        "Code"=$values[6]
+
+                    }
+
                 }
             
             }

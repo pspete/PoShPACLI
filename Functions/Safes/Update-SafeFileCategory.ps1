@@ -43,7 +43,7 @@ Function Update-SafeFileCategory{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -69,17 +69,18 @@ Function Update-SafeFileCategory{
 
         #$PACLI variable set to executable path
                     
-        $updateSafeFileCategory = (Invoke-Expression "$pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

@@ -26,7 +26,7 @@ Function Get-TrustedNetworkArea{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,44 +48,40 @@ Function Get-TrustedNetworkArea{
         #$PACLI variable set to executable path
                     
         #execute pacli with parameters
-        $getTrustedNetworkArea = (Invoke-Expression "$pacli TRUSTEDNETWORKAREASLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli TRUSTEDNETWORKAREASLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($getTrustedNetworkArea){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($area in $getTrustedNetworkArea){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=6){
                     
-                    #define hash to hold values
-                    $trustedNetworkArea = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+6)]
                     
-                    #split the command output
-                    $values = $area | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $trustedNetworkArea.Add("Name",$values[0])
-                    $trustedNetworkArea.Add("FromHour",$values[1])
-                    $trustedNetworkArea.Add("ToHour",$values[2])
-                    $trustedNetworkArea.Add("Active",$values[3])
-                    $trustedNetworkArea.Add("MaxViolationCount",$values[4])
-                    $trustedNetworkArea.Add("ViolationCount",$values[5])
-                    
-                    #output object
-                    new-object -Type psobject -Property $trustedNetworkArea | select Name, FromHour, ToHour, Active, MaxViolationCount, ViolationCount
-                        
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Name"=$values[0]
+                        "FromHour"=$values[1]
+                        "ToHour"=$values[2]
+                        "Active"=$values[3]
+                        "MaxViolationCount"=$values[4]
+                        "ViolationCount"=$values[5]
+
+                    }
+                       
                 }
             
             }

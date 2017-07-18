@@ -20,7 +20,7 @@ Function Remove-VaultDefinition{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -39,21 +39,20 @@ Function Remove-VaultDefinition{
 
         #$PACLI variable set to executable path
             
-        $removeVault = (Invoke-Expression "$pacli DELETEVAULT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
+        
+            $TRUE
             
-            write-debug "LastExitCode: $LASTEXITCODE"
-            $true
-            
-        }  
+        }
         
     }  
 

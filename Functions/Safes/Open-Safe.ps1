@@ -74,7 +74,7 @@ Function Open-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -103,60 +103,45 @@ Function Open-Safe{
     Else{
 
         #$PACLI variable set to executable path
-                        
-        $openSafe = (Invoke-Expression "$pacli OPENSAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
 
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            #error openeing safe, return false
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            #if safe opened/results returned
-            if($openSafe){
-            
-                #process returned results
-                foreach($safe in $openSafe){
-                    
-                    #define hash to hold values
-                    $openedSafe = @{}
-                    
-                    #split the command output
-                    $values = $safe | ConvertFrom-PacliOutput
-                    
-                    #assign values to properties
-                    #(these may not be the correct order - but most are)
-                    $openedSafe.Add("Name",$values[0])
-                    $openedSafe.Add("Status",$values[1])
-                    $openedSafe.Add("LastUsed",$values[2])
-                    $openedSafe.Add("Accessed",$values[3])
-                    $openedSafe.Add("Size",$values[4])
-                    $openedSafe.Add("Location",$values[5])
-                    $openedSafe.Add("SafeID",$values[6])
-                    $openedSafe.Add("LocationID",$values[7])
-                    $openedSafe.Add("TextOnly",$values[8])
-                    $openedSafe.Add("ShareOptions",$values[9])
-                    $openedSafe.Add("UseFileCategories",$values[10])
-                    $openedSafe.Add("RequireContentValidation",$values[11])
-                    $openedSafe.Add("RequireReason",$values[12])
-                    $openedSafe.Add("EnforceExclusivePasswords",$values[13])
-                    
-                    #output object
-                    new-object -Type psobject -Property $openedSafe | select Name, Size, Status, LastUsed, 
-                        Accessed, ShareOptions, Location, UseFileCategories, TextOnly, RequireReason, 
-                            EnforceExclusivePasswords, RequireContentValidation, SafeID, LocationID
+            #if result(s) returned
+            if($Return.StdOut){
                 
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+                #Output Object
+                [PSCustomObject] @{
+
+                    #(possiblity these may not all be in the correct order - 
+                    #...but most are)
+                    "Name"=$Results[0]
+                    "Status"=$Results[1]
+                    "LastUsed"=$Results[2]
+                    "Accessed"=$Results[3]
+                    "Size"=$Results[4]
+                    "Location"=$Results[5]
+                    "SafeID"=$Results[6]
+                    "LocationID"=$Results[7]
+                    "TextOnly"=$Results[8]
+                    "ShareOptions"=$Results[9]
+                    "UseFileCategories"=$Results[10]
+                    "RequireContentValidation"=$Results[11]
+                    "RequireReason"=$Results[12]
+                    "EnforceExclusivePasswords"=$Results[13]
+
                 }
-            
+                
             }
             
         }
