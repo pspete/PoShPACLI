@@ -41,7 +41,7 @@ Function Add-SafeEvent{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -65,18 +65,21 @@ Function Add-SafeEvent{
     Else{
 
         #$PACLI variable set to executable path
-                    
-        $addSafeEvent = (Invoke-Expression "$pacli ADDEVENT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
         
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() | 
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            ConvertTo-ParameterString -donotQuote sourceID,eventTypeID)
+        
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

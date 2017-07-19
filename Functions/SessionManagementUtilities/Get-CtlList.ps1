@@ -22,7 +22,7 @@ Function Get-CtlList{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -41,38 +41,38 @@ Function Get-CtlList{
 
         #$PACLI variable set to executable path
                     
-        $ctlList = Invoke-Expression "$pacli CTLLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
-            
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
+        $Return = Invoke-PACLICommand $pacli CTLLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            if($ctlList){
-            
-                ForEach($ctl in $ctlList){
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                    $values = $ctl | ConvertFrom-PacliOutput
-
-                    #define hash to hold values
-                    $details = @{}
-            
-                    #Add elements to hashtable
-                    $details.Add("Subject",$values[0])
-                    $details.Add("Issuer",$values[0])
-                    $details.Add("FromDate",$values[0])
-                    $details.Add("ToDate",$values[0])
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=3){
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $details | select Subject, Issuer, FromDate, ToDate
+                    #Get Range from array
+                    $values = $Results[$i..($i+3)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        #Add elements to hashtable
+                        "Subject"=$values[0]
+                        "Issuer"=$values[1]
+                        "FromDate"=$values[2]
+                        "ToDate"=$values[3]
+                    
+                    }
                 
                 }
                 

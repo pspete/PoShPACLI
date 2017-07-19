@@ -26,7 +26,7 @@ Function Get-GroupDetails{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,44 +48,40 @@ Function Get-GroupDetails{
         #$PACLI variable set to executable path
                     
         #execute pacli with parameters
-        $groupDetails = (Invoke-Expression "$pacli GROUPDETAILS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli GROUPDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($groupDetails){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($detail in $groupDetails){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=6){
                     
-                    #define hash to hold values
-                    $groupDetail = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+6)]
                     
-                    #split the command output
-                    $values = $detail | ConvertFrom-PacliOutput
+                    #Output Object
+                    [PSCustomObject] @{
                         
-                    #assign values to properties
-                    $groupDetail.Add("Description",$values[0])
-                    $groupDetail.Add("LDAPFullDN",$values[1])
-                    $groupDetail.Add("LDAPDirectory",$values[2])
-                    $groupDetail.Add("MapID",$values[3])
-                    $groupDetail.Add("MapName",$values[4])
-                    $groupDetail.Add("ExternalGroup",$values[5])
+                        #assign values to properties
+                        "Description"=$values[0]
+                        "LDAPFullDN"=$values[1]
+                        "LDAPDirectory"=$values[2]
+                        "MapID"=$values[3]
+                        "MapName"=$values[4]
+                        "ExternalGroup"=$values[5]
                     
-                    #output object
-                    new-object -Type psobject -Property $groupDetail | select Description, LDAPFullDN, LDAPDirectory, MapID,
-                        MapName, ExternalGroup
+                   }
                         
                 }
             

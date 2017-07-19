@@ -55,12 +55,13 @@ Function New-Password{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
     param(
-        [Parameter(Mandatory=$True)][int]$length,
+        [Parameter(Mandatory=$True)]
+        [ValidateRange(1,170)][int]$length,
         [Parameter(Mandatory=$False)][int]$minUpperCase,
         [Parameter(Mandatory=$False)][int]$minSpecial,
         [Parameter(Mandatory=$False)][int]$minLowerCase,
@@ -80,23 +81,36 @@ Function New-Password{
 
         #$PACLI variable set to executable path
                     
-        $generatePassword = (Invoke-Expression "$pacli GENERATEPASSWORD $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
+                minDigit,effectiveLength) OUTPUT (ALL)"
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Generating Password"
-            Write-Debug $($generatePassword|Out-String)
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Generating Password"
+            $FALSE
+
         }
         
-        Else{
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Password Generated"
-            #Return Generated Password String
-            [string]$generatePassword
+        else{
+
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                Write-Verbose "Password Generated"
+                Write-Debug $Return.StdOut
+                #Convert Output to array
+                #$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                $Results = ($Return.StdOut | Select-String -Pattern "\S")
+                #Return Generated Password String
+                [PSCustomObject] @{
+                            
+                    "Password"= $Return.StdOut
+                    
+                }
+
+            }
             
         }
         

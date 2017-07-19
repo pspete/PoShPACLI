@@ -34,7 +34,7 @@ Function Get-SafeOwners{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -58,46 +58,44 @@ Function Get-SafeOwners{
         #$PACLI variable set to executable path
                             
         #execute pacli    
-        $ownersList = Invoke-Expression "$pacli OWNERSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli OWNERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($ownersList){
-            
-                ForEach($owner in $ownersList){
-        
-                    #define hash to hold values
-                    $owners = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=11){
                     
-                    $values = $owner | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+11)]
                     
-                    #Add elements to hashtable
-                    $owners.Add("Name",$values[0])
-                    $owners.Add("Group",$values[1])
-                    $owners.Add("SafeName",$values[2])
-                    $owners.Add("AccessLevel",$values[3])
-                    $owners.Add("OpenDate",$values[4])
-                    $owners.Add("OpenState",$values[5])
-                    $owners.Add("ExpirationDate",$values[6])
-                    $owners.Add("GatewayAccount",$values[7])
-                    $owners.Add("ReadOnlyByDefault",$values[8])
-                    $owners.Add("SafeID",$values[9])
-                    $owners.Add("UserID",$values[10])
+                    #Output Object
+                    [PSCustomObject] @{
 
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $owners | select Name, Group, SafeName, AccessLevel, OpenDate, 
-                        OpenState, ExpirationDate, GatewayAccount, ReadOnlyByDefault, SafeID, UserID
+                        "Name"=$values[0]
+                        "Group"=$values[1]
+                        "SafeName"=$values[2]
+                        "AccessLevel"=$values[3]
+                        "OpenDate"=$values[4]
+                        "OpenState"=$values[5]
+                        "ExpirationDate"=$values[6]
+                        "GatewayAccount"=$values[7]
+                        "ReadOnlyByDefault"=$values[8]
+                        "SafeID"=$values[9]
+                        "UserID"=$values[10]
+
+                    }
                         
                 }
             

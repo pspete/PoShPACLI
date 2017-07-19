@@ -26,7 +26,7 @@ Function Get-GroupMembers{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,39 +48,36 @@ Function Get-GroupMembers{
         #$PACLI variable set to executable path
                     
         #execute pacli with parameters
-        $groupMembers = (Invoke-Expression "$pacli GROUPMEMBERS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli GROUPMEMBERS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($groupMembers){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($member in $groupMembers){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=2){
                     
-                    #define hash to hold values
-                    $groupMember = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+2)]
                     
-                    #split the command output
-                    $values = $member | ConvertFrom-PacliOutput
+                    #Output Object
+                    [PSCustomObject] @{
                         
-                    #assign values to properties
-                    $groupMember.Add("Name",$values[0])
-                    $groupMember.Add("UserID",$values[1])
+                        #assign values to properties
+                        "Name"=$values[0]
+                        "UserID"=$values[1]
                     
-                    #output object
-                    new-object -Type psobject -Property $groupMember | select Name, UserID
+                    }
                         
                 }
             

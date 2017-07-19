@@ -30,7 +30,7 @@ Function Remove-SafeFileCategory{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -52,17 +52,18 @@ Function Remove-SafeFileCategory{
 
         #$PACLI variable set to executable path
                     
-        $removeSafeFileCategory = (Invoke-Expression "$pacli DELETESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli DELETESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

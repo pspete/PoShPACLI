@@ -31,7 +31,7 @@ Function Remove-SafeOwner{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,17 +53,18 @@ Function Remove-SafeOwner{
 
         #$PACLI variable set to executable path
                     
-        $deleteOwner = (Invoke-Expression "$pacli DELETEOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli DELETEOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

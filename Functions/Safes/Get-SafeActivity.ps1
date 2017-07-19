@@ -108,7 +108,7 @@ Function Get-SafeActivity{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -149,49 +149,45 @@ Function Get-SafeActivity{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $getSafeActivity = Invoke-Expression "$pacli INSPECTSAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
-        
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        $Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+    
+        if($Return.StdErr){
             
-        }
-        
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($safeActivity){
-            
-                ForEach($activity in $getSafeActivity){
-        
-                    #define hash to hold values
-                    $safeActivity = @{}
-                    
-                    $values = $activity | ConvertFrom-PacliOutput
-                    
-                    #Add elements to hashtable
-                    $safeActivity.Add("Time",$values[0])
-                    $safeActivity.Add("User",$values[1])
-                    $safeActivity.Add("Safe",$values[2])
-                    $safeActivity.Add("Activity",$values[3])
-                    $safeActivity.Add("Location",$values[4])
-                    $safeActivity.Add("NewLocation",$values[5])
-                    $safeActivity.Add("RequestID",$values[6])
-                    $safeActivity.Add("RequestReason",$values[7])
-                    $safeActivity.Add("Code",$values[8])
+            write-debug $Return.StdErr
+            $FALSE
 
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $safeActivity | select Time, User, Safe, Activity, Location, 
-                        NewLocation, RequestID, RequestReason, Code
-                        
+        }
+
+        #if result(s) returned
+        elseif($Return.StdOut){
+            
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+            
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=9){
+                
+                #Get Range from array
+                $values = $Results[$i..($i+9)]
+                
+                #Output Object
+                [PSCustomObject] @{
+
+                    "Time"=$values[0]
+                    "User"=$values[1]
+                    "Safe"=$values[2]
+                    "Activity"=$values[3]
+                    "Location"=$values[4]
+                    "NewLocation"=$values[5]
+                    "RequestID"=$values[6]
+                    "RequestReason"=$values[7]
+                    "Code"=$values[8]
+                
                 }
-            
+
             }
-            
+        
         }
         
     }

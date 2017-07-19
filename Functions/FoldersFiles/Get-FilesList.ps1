@@ -30,7 +30,7 @@ Function Get-FilesList{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -52,56 +52,54 @@ Function Get-FilesList{
 
         #$PACLI variable set to executable path
                         
-        #execute pacli    
-        $files = Invoke-Expression "$pacli FILESLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        #execute pacli
+        $Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($files){
-            
-                ForEach($file in $files){
-        
-                    #define hash to hold values
-                    $filesList = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=19){
                     
-                    $values = $file | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+19)]
                     
-                    #Add elements to hashtable
-                    $filesList.Add("Name",$values[0])
-                    $filesList.Add("Accessed",$values[1])
-                    $filesList.Add("CreationDate",$values[2])
-                    $filesList.Add("CreatedBy",$values[3])
-                    $filesList.Add("DeletionDate",$values[4])
-                    $filesList.Add("DeletionBy",$values[5])
-                    $filesList.Add("LastUsedDate",$values[6])
-                    $filesList.Add("LastUsedBy",$values[7])
-                    $filesList.Add("LockDate",$values[8])
-                    $filesList.Add("LockedBy",$values[9])
-                    $filesList.Add("LockedByGW",$values[10])
-                    $filesList.Add("Size",$values[11])
-                    $filesList.Add("History",$values[12])
-                    $filesList.Add("Draft",$values[13])
-                    $filesList.Add("RetrieveLock",$values[14])
-                    $filesList.Add("InternalName",$values[15])
-                    $filesList.Add("FileID",$values[16])
-                    $filesList.Add("LockedByUserID",$values[17])
-                    $filesList.Add("ValidationStatus",$values[18])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Name"=$values[0]
+                        "Accessed"=$values[1]
+                        "CreationDate"=$values[2]
+                        "CreatedBy"=$values[3]
+                        "DeletionDate"=$values[4]
+                        "DeletionBy"=$values[5]
+                        "LastUsedDate"=$values[6]
+                        "LastUsedBy"=$values[7]
+                        "LockDate"=$values[8]
+                        "LockedBy"=$values[9]
+                        "LockedByGW"=$values[10]
+                        "Size"=$values[11]
+                        "History"=$values[12]
+                        "Draft"=$values[13]
+                        "RetrieveLock"=$values[14]
+                        "InternalName"=$values[15]
+                        "FileID"=$values[16]
+                        "LockedByUserID"=$values[17]
+                        "ValidationStatus"=$values[18]
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $filesList | select Name, Accessed, CreationDate, CreatedBy, DeletionDate, DeletionBy, LastUsedDate, LastUsedBy,
-                        LockDate, LockedBy, LockedByGW, Size, History, Draft, RetrieveLock, InternalName, FileID, LockedByUserID, ValidationStatus
-                        
+                    }
+                   
                 }
             
             }

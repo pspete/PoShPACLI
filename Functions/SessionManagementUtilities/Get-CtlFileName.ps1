@@ -18,7 +18,7 @@ Function Get-CtlFileName{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -36,36 +36,27 @@ Function Get-CtlFileName{
 
         #$PACLI variable set to executable path
                     
-        $ctlFileName = Invoke-Expression "$pacli CTLGETFILENAME $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
-            
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
+        $Return = Invoke-PACLICommand $pacli CTLGETFILENAME "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            if($ctlFileName){
-            
-                ForEach($fileName in $ctlFileName){
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                    $values = $fileName | ConvertFrom-PacliOutput
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #Output Object
+                [PSCustomObject] @{
 
-                    #define hash to hold values
-                    $details = @{}
-            
-                    #Add elements to hashtable
-                    $details.Add("Name",$values[0])
-                    
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $details | select Name
-                
+                    "Name"=$Results[0]
+
                 }
                 
             }

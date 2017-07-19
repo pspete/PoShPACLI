@@ -36,7 +36,7 @@ Function Update-Group{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -59,19 +59,19 @@ Function Update-Group{
     Else{
 
         #$PACLI variable set to executable path
-                
-        $updateGroup = Invoke-Expression "$pacli UPDATEGROUP $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
         
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli UPDATEGROUP $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

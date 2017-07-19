@@ -32,7 +32,7 @@ Function Remove-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,18 +53,18 @@ Function Remove-Safe{
 
         #$PACLI variable set to executable path
                         
-        $deleteSafe = (Invoke-Expression "$pacli DELETESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue 2>&1)
-
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            write-debug $($deleteSafe[0]|Out-String)
+        $Return = Invoke-PACLICommand $pacli DELETESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

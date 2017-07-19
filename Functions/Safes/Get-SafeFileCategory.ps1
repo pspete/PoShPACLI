@@ -30,7 +30,7 @@ Function Get-SafeFileCategory{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,47 +53,36 @@ Function Get-SafeFileCategory{
         #$PACLI variable set to executable path
                     
         #execute pacli    
-        $categoriesList = Invoke-Expression "$pacli LISTSAFEFILECATEGORIES $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
-        
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-        }
-        
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($categoriesList){
-            
-                ForEach($category in $categoriesList){
-        
-                    #define hash to hold values
-                    $categoryList = @{}
-                    
-                    $values = $category | ConvertFrom-PacliOutput
-                    
-                    #Add elements to hashtable
-                    $categoryList.Add("CategoryID",$values[0])
-                    $categoryList.Add("CategoryName",$values[1])
-                    $categoryList.Add("CategoryType",$values[2])
-                    $categoryList.Add("CategoryValidValues",$values[3])
-                    $categoryList.Add("CategoryDefaultValue",$values[4])
-                    $categoryList.Add("CategoryRequired",$values[5])
-                    $categoryList.Add("VaultCategory",$values[6])
+        $Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString) output (ALL,ENCLOSE)" -DoNotWait
 
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $categoryList | select CategoryID, CategoryName, CategoryType, CategoryValidValues, 
-                        CategoryDefaultValue, CategoryRequired, VaultCategory
-                        
+        #if result(s) returned
+        if($Return.StdOut){
+            
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+            
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=7){
+                
+                #Get Range from array
+                $values = $Results[$i..($i+7)]
+                
+                #Output Object
+                [PSCustomObject] @{
+
+                    "CategoryID"=$values[0]
+                    "CategoryName"=$values[1]
+                    "CategoryType"=$values[2]
+                    "CategoryValidValues"=$values[3]
+                    "CategoryDefaultValue"=$values[4]
+                    "CategoryRequired"=$values[5]
+                    "VaultCategory"=$values[6]
+
                 }
-            
+                    
             }
-            
+        
         }
         
     }

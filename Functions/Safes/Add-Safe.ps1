@@ -175,7 +175,7 @@ Function Add-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -232,20 +232,25 @@ Function Add-Safe{
 
         #$PACLI variable set to executable path
                         
-        $addSafe = (Invoke-Expression "$pacli ADDSAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli ADDSAFE $($PSBoundParameters.getEnumerator() | 
         
-        if($LASTEXITCODE){
-
-            write-debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Creating Safe: $safe"
-            write-Debug $($addSafe[0]|Out-String)
+            ConvertTo-ParameterString -donotQuote size,fromHour,toHour,delay,
+                dailyVersions,monthlyVersions,yearlyVersions,logRetention,
+                    fileRetention,requestsRetention,securityLevelParm,ConfimrationType,
+                        confirmationCount,safeKeyType,safeOptions,maxFileSize)
+        
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Creating Safe: $safe"
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "Safe Created: $safe"
+            $TRUE
             
         }
         

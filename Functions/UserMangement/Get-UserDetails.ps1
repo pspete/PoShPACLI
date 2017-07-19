@@ -26,7 +26,7 @@ Function Get-UserDetails{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,111 +48,100 @@ Function Get-UserDetails{
         #$PACLI variable set to executable path
             
         #execute pacli with parameters
-        $userDetails = (Invoke-Expression "$pacli USERDETAILS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli USERDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($userDetails){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($user in $userDetails){
-                    
-                    #define hash to hold values
-                    $vaultUser = @{}
-                    
-                    #split the command output
-                    $values = $user | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $vaultUser.Add("Name",$values[0])
-                    $vaultUser.Add("Retention",$values[1])
-                    $vaultUser.Add("UsersAdmin",$values[2])
-                    $vaultUser.Add("SafesAdmin",$values[3])
-                    $vaultUser.Add("NetworksAdmin",$values[4])
-                    $vaultUser.Add("RulesAdmin",$values[5])
-                    $vaultUser.Add("FileCategoriesAdmin",$values[6])
-                    $vaultUser.Add("AuditAdmin",$values[7])
-                    $vaultUser.Add("BackupAdmin",$values[8])
-                    $vaultUser.Add("RestoreAdmin",$values[9])
-                    $vaultUser.Add("Location",$values[10])
-                    $vaultUser.Add("KeyFileName",$values[11])
-                    $vaultUser.Add("FromHour",$values[12])
-                    $vaultUser.Add("ToHour",$values[13])
-                    $vaultUser.Add("FirstName",$values[14])
-                    $vaultUser.Add("MiddleName",$values[15])
-                    $vaultUser.Add("LastName",$values[16])
-                    $vaultUser.Add("HomeStreet",$values[17])
-                    $vaultUser.Add("HomeCity",$values[18])
-                    $vaultUser.Add("HomeState",$values[19])
-                    $vaultUser.Add("HomeCountry",$values[20])
-                    $vaultUser.Add("HomeZIP",$values[21])
-                    $vaultUser.Add("WorkPhone",$values[22])
-                    $vaultUser.Add("HomePhone",$values[23])
-                    $vaultUser.Add("Cellular",$values[24])
-                    $vaultUser.Add("Fax",$values[25])
-                    $vaultUser.Add("Pager",$values[26])
-                    $vaultUser.Add("HEmail",$values[27])
-                    $vaultUser.Add("BEmail",$values[28])
-                    $vaultUser.Add("OEmail",$values[29])
-                    $vaultUser.Add("JobTitle",$values[30])
-                    $vaultUser.Add("Organization",$values[31])
-                    $vaultUser.Add("Department",$values[32])
-                    $vaultUser.Add("Profession",$values[33])
-                    $vaultUser.Add("WorkStreet",$values[34])
-                    $vaultUser.Add("WorkCity",$values[35])
-                    $vaultUser.Add("WorkState",$values[36])
-                    $vaultUser.Add("WorkCountry",$values[37])
-                    $vaultUser.Add("WorkZip",$values[38])
-                    $vaultUser.Add("HomePage",$values[39])
-                    $vaultUser.Add("Notes",$values[40])
-                    $vaultUser.Add("ExpirationDate",$values[41])
-                    $vaultUser.Add("PassAuth",$values[42])
-                    $vaultUser.Add("PKIAuth",$values[43])
-                    $vaultUser.Add("SecureIDAuth",$values[44])
-                    $vaultUser.Add("NTAuth",$values[45])
-                    $vaultUser.Add("RadiusAuth",$values[46])
-                    $vaultUser.Add("ChangePassword",$values[47])
-                    $vaultUser.Add("PasswordNeverExpires",$values[48])
-                    $vaultUser.Add("LDAPUser",$values[49])
-                    $vaultUser.Add("Template",$values[50])
-                    $vaultUser.Add("GWAccount",$values[51])
-                    $vaultUser.Add("Disabled",$values[52])
-                    $vaultUser.Add("Quota",$values[53])
-                    $vaultUser.Add("UsedQuota",$values[54])
-                    $vaultUser.Add("DN",$values[55])
-                    $vaultUser.Add("Fingerprint",$values[56])
-                    $vaultUser.Add("LDAPFullDN",$values[57])
-                    $vaultUser.Add("LDAPDirectory",$values[58])
-                    $vaultUser.Add("MapID",$values[59])
-                    $vaultUser.Add("MapName",$values[60])
-                    $vaultUser.Add("UserAuth",$values[61])
-                    $vaultUser.Add("UserTypeID",$values[62])
-                    $vaultUser.Add("NonAllowedClients",$values[63])
-                    $vaultUser.Add("EnableComponentMonitoring",$values[64])
-                    
-                    #output object
-                    new-object -Type psobject -Property $vaultUser | select Name, Retention, UsersAdmin, 
-                        SafesAdmin, NetworksAdmin, RulesAdmin, FileCategoriesAdmin, AuditAdmin, BackupAdmin, RestoreAdmin, 
-                            Location, KeyFileName, FromHour, ToHour, FirstName, MiddleName, LastName, HomeStreet, HomeCity, 
-                                HomeState, HomeCountry, HomeZIP, WorkPhone, HomePhone, Cellular, Fax, Pager, HEmail, BEmail,
-                                    OEmail, JobTitle, Organization, Department, Profession, WorkStreet, WorkCity, WorkState, 
-                                        WorkCountry, WorkZip, HomePage, Notes, ExpirationDate, PassAuth, PKIAuth, SecureIDAuth, 
-                                            NTAuth, RadiusAuth, ChangePassword, PasswordNeverExpires, LDAPUser, Template, GWAccount, 
-                                                Disabled, Quota, UsedQuota, DN, Fingerprint, LDAPFullDN, LDAPDirectory, MapID, MapName, 
-                                                    UserAuth, UserTypeID, NonAllowedClients, EnableComponentMonitoring
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
                 
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=65){
+                    
+                    #Get Range from array
+                    $values = $Results[$i..($i+65)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        #assign values to properties
+                        "Name"=$values[0]
+                        "Retention"=$values[1]
+                        "UsersAdmin"=$values[2]
+                        "SafesAdmin"=$values[3]
+                        "NetworksAdmin"=$values[4]
+                        "RulesAdmin"=$values[5]
+                        "FileCategoriesAdmin"=$values[6]
+                        "AuditAdmin"=$values[7]
+                        "BackupAdmin"=$values[8]
+                        "RestoreAdmin"=$values[9]
+                        "Location"=$values[10]
+                        "KeyFileName"=$values[11]
+                        "FromHour"=$values[12]
+                        "ToHour"=$values[13]
+                        "FirstName"=$values[14]
+                        "MiddleName"=$values[15]
+                        "LastName"=$values[16]
+                        "HomeStreet"=$values[17]
+                        "HomeCity"=$values[18]
+                        "HomeState"=$values[19]
+                        "HomeCountry"=$values[20]
+                        "HomeZIP"=$values[21]
+                        "WorkPhone"=$values[22]
+                        "HomePhone"=$values[23]
+                        "Cellular"=$values[24]
+                        "Fax"=$values[25]
+                        "Pager"=$values[26]
+                        "HEmail"=$values[27]
+                        "BEmail"=$values[28]
+                        "OEmail"=$values[29]
+                        "JobTitle"=$values[30]
+                        "Organization"=$values[31]
+                        "Department"=$values[32]
+                        "Profession"=$values[33]
+                        "WorkStreet"=$values[34]
+                        "WorkCity"=$values[35]
+                        "WorkState"=$values[36]
+                        "WorkCountry"=$values[37]
+                        "WorkZip"=$values[38]
+                        "HomePage"=$values[39]
+                        "Notes"=$values[40]
+                        "ExpirationDate"=$values[41]
+                        "PassAuth"=$values[42]
+                        "PKIAuth"=$values[43]
+                        "SecureIDAuth"=$values[44]
+                        "NTAuth"=$values[45]
+                        "RadiusAuth"=$values[46]
+                        "ChangePassword"=$values[47]
+                        "PasswordNeverExpires"=$values[48]
+                        "LDAPUser"=$values[49]
+                        "Template"=$values[50]
+                        "GWAccount"=$values[51]
+                        "Disabled"=$values[52]
+                        "Quota"=$values[53]
+                        "UsedQuota"=$values[54]
+                        "DN"=$values[55]
+                        "Fingerprint"=$values[56]
+                        "LDAPFullDN"=$values[57]
+                        "LDAPDirectory"=$values[58]
+                        "MapID"=$values[59]
+                        "MapName"=$values[60]
+                        "UserAuth"=$values[61]
+                        "UserTypeID"=$values[62]
+                        "NonAllowedClients"=$values[63]
+                        "EnableComponentMonitoring"=$values[64]
+                    
+                    }
+
                 }
             
             }

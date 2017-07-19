@@ -29,7 +29,7 @@ Function Rename-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -51,17 +51,18 @@ Function Rename-Safe{
 
         #$PACLI variable set to executable path
                         
-        $renameSafe = (Invoke-Expression "$pacli UPDATESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString -quoteOutput)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli RENAMESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            $TRUE
             
         }
         

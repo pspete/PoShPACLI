@@ -31,7 +31,7 @@ Function Update-Location{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -53,17 +53,21 @@ Function Update-Location{
 
         #$PACLI variable set to executable path
                 
-        $updateLocation = Invoke-Expression "$pacli UPDATELOCATION $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
+            
+            $PSBoundParameters.getEnumerator() | 
+            
+                ConvertTo-ParameterString -donotQuote quota)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
             $false
+
         }
         
         Else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             $true
             
         }

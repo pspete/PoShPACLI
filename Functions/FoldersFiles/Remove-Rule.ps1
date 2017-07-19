@@ -40,7 +40,7 @@ Function Remove-Rule{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -65,18 +65,19 @@ Function Remove-Rule{
 
         #$PACLI variable set to executable path
                     
-        $deleteRule = Invoke-Expression "$pacli DELETERULE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli DELETERULE $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote ruleID)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

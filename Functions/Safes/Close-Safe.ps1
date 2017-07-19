@@ -26,7 +26,7 @@ Function Close-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -47,19 +47,18 @@ Function Close-Safe{
 
         #$PACLI variable set to executable path
                     
-        $closeSafe = (Invoke-Expression "$pacli CLOSESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli CLOSESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $true
+            $TRUE
             
         }
         

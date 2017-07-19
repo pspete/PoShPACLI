@@ -22,7 +22,7 @@ Function Stop-PACLI{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -42,12 +42,11 @@ Function Stop-PACLI{
 
         Write-Verbose "Stopping Pacli"
         
-        $term = (Invoke-Expression "$pacli TERM $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction SilentlyContinue) 2>&1
+        $Return = Invoke-PACLICommand $pacli TERM $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug $term
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
             Write-Verbose "Error Stopping Pacli"
             
             #Return FALSE
@@ -57,7 +56,6 @@ Function Stop-PACLI{
         
         Else{
             
-            write-debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "Pacli Stopped"
             
             #return TRUE

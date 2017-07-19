@@ -74,7 +74,7 @@ Function Get-RequestsList{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -104,58 +104,56 @@ Function Get-RequestsList{
 
         #$PACLI variable set to executable path
                         
-        #define hash to hold values
-        $details = @{}
+
+        $Return = Invoke-PACLICommand $pacli REQUESTSLIST "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote requestsType,displayInvalid,objectsType) OUTPUT (ALL,ENCLOSE)"
         
-        $requestsList = Invoke-Expression "$pacli REQUESTSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        if($Return.ExitCode){
             
-            #ignore whitespaces, return string
-            Select-String -Pattern "\S" | Out-String
-        
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            $false
-            
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            
-            if($requestsList){
-            
-                ForEach($request in $requestsList){
+            #if result(s) returned
+            if($Return.StdOut){
                 
-                    $values = $request | ConvertFrom-PacliOutput
-
-                    #Add elements to hashtable
-                    $details.Add("RequestID",$values[0])
-                    $details.Add("User",$values[1])
-                    $details.Add("Operation",$values[2])
-                    $details.Add("Safe",$values[3])
-                    $details.Add("File",$values[4])
-                    $details.Add("Confirmed",$values[5])
-                    $details.Add("Reason",$values[6])
-                    $details.Add("Status",$values[7])
-                    $details.Add("InvalidReason",$values[8])
-                    $details.Add("Confirmations",$values[9])
-                    $details.Add("Rejections",$values[10])
-                    $details.Add("ConfirmationsLeft",$values[11])
-                    $details.Add("CreationDate",$values[12])
-                    $details.Add("LastUsedDate",$values[13])
-                    $details.Add("ExpirationDate",$values[14])
-                    $details.Add("AccessType",$values[15])
-                    $details.Add("UsableFrom",$values[16])
-                    $details.Add("UsableTo",$values[17])
-                    $details.Add("SafeID",$values[18])
-                    $details.Add("UserID",$values[19])
-                    $details.Add("FileID",$values[20])                        
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=21){
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $details | select RequestID, User, Operation, Safe, File, Confirmed, Reason, Status, 
-                        InvalidReason, Confirmations, Rejections, ConfirmationsLeft, CreationDate, LastUsedDate, ExpirationDate, AccessType, 
-                            UsableFrom, UsableTo, SafeID, UserID, FileID
+                    #Get Range from array
+                    $values = $Results[$i..($i+21)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "RequestID"=$values[0]
+                        "User"=$values[1]
+                        "Operation"=$values[2]
+                        "Safe"=$values[3]
+                        "File"=$values[4]
+                        "Confirmed"=$values[5]
+                        "Reason"=$values[6]
+                        "Status"=$values[7]
+                        "InvalidReason"=$values[8]
+                        "Confirmations"=$values[9]
+                        "Rejections"=$values[10]
+                        "ConfirmationsLeft"=$values[11]
+                        "CreationDate"=$values[12]
+                        "LastUsedDate"=$values[13]
+                        "ExpirationDate"=$values[14]
+                        "AccessType"=$values[15]
+                        "UsableFrom"=$values[16]
+                        "UsableTo"=$values[17]
+                        "SafeID"=$values[18]
+                        "UserID"=$values[19]
+                        "FileID"=$values[20]
+                    
+                    }
                 
                 }
                 

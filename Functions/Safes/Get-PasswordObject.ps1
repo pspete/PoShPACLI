@@ -92,7 +92,7 @@ Function Get-PasswordObject{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -127,36 +127,28 @@ Function Get-PasswordObject{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $getPasswordObject = Invoke-Expression "$pacli RETRIEVEPASSWORDOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($getPasswordObject){
-            
-                ForEach($password in $getPasswordObject){
-        
-                    #define hash to hold values
-                    $passwordObject = @{}
-                    
-                    $values = $password | ConvertFrom-PacliOutput
-                    
-                    #Add elements to hashtable
-                    $passwordObject.Add("Password",$values[0])
-                    
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $passwordObject | select Password
-                        
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+ 
+                #Output Object
+                [PSCustomObject] @{
+
+                    "Password"=$Results
+                
                 }
             
             }

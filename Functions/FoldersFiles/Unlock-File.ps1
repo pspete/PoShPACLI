@@ -32,7 +32,7 @@ Function Unlock-File{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -55,24 +55,20 @@ Function Unlock-File{
 
         #$PACLI variable set to executable path
                     
-        $unlockFile = (Invoke-Expression "$pacli UNLOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
+        $Return = Invoke-PACLICommand $pacli UNLOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
-            Write-Verbose "Error Unlocking File: $file"
-            Write-Debug $($unlockFile|Out-String)
-            #error unlocking File, return false
-            $false
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            Write-Verbose "Error Unlocking File: $file"
+            $FALSE
+
         }
         
-        Else{
+        else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "$file Unlocked"
-            #File unlocked return true
-            $true
+            $TRUE
             
         }
         

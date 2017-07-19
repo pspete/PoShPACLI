@@ -211,7 +211,7 @@ Function Update-User{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -219,7 +219,9 @@ Function Update-User{
         [Parameter(Mandatory=$True)][string]$vault,
         [Parameter(Mandatory=$True)][string]$user,
         [Parameter(Mandatory=$True)][string]$destUser,
-        [Parameter(Mandatory=$False)][string]$authType,
+        [Parameter(Mandatory=$False)]
+            [ValidateSet("PA_AUTH","NT_AUTH","NT_OR_PA_AUTH","PKI_AUTH","RADIUS_AUTH","LDAP_AUTH")]
+                [string]$authType,
         [Parameter(Mandatory=$False)][switch]$requireSecureIDAuth,
         [Parameter(Mandatory=$False)][string]$password,
         [Parameter(Mandatory=$False)][string]$certFileName,
@@ -284,17 +286,19 @@ Function Update-User{
 
         #$PACLI variable set to executable path
             
-        $updateUser = Invoke-Expression "$pacli UPDATEUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)"
+        $Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote authType,retention,quota)
         
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
+            
+            Write-Debug $Return.StdErr
+
             $false
+
         }
         
         Else{
         
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             $true
             
         }

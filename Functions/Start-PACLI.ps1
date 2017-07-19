@@ -23,7 +23,7 @@ Function Start-PACLI{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
         
     [CmdLetBinding()]
@@ -43,13 +43,12 @@ Function Start-PACLI{
         #$PACLI variable set to executable path
 
         Write-Verbose "Starting Pacli"
-    
-        $init = (Invoke-Expression "$pacli INIT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)" -ErrorAction Stop) 2>&1
         
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli INIT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        
+        if($Return.ExitCode){
             
-            Write-Debug $init
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+            Write-Debug $Return.StdErr
             Write-Verbose "Error Starting Pacli"
             
             #Return FALSE
@@ -59,7 +58,6 @@ Function Start-PACLI{
         
         Else{
             
-            Write-Debug "LastExitCode: $LASTEXITCODE"
             Write-Verbose "Pacli Started"
             
             #return TRUE

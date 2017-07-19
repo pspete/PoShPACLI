@@ -119,7 +119,7 @@ Function Add-SafeOwner{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -167,19 +167,20 @@ Function Add-SafeOwner{
 
         #$PACLI variable set to executable path
                         
-        $safeOwner = (Invoke-Expression "$pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)") 2>&1
-
-        if($LASTEXITCODE){
+        $Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            write-verbose "Error Adding Safe Owner: $owner"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+            write-verbose "Error Adding Safe Owner: $owner"
+            $FALSE
+
         }
         
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        else{
+            
             write-verbose "Added Safe Owner: $owner"
+            $TRUE
             
         }
         

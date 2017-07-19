@@ -26,7 +26,7 @@ Function Get-Folder{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -47,40 +47,39 @@ Function Get-Folder{
 
         #$PACLI variable set to executable path
                         
-        #execute pacli    
-        $getFolder = Invoke-Expression "$pacli FOLDERSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        #execute pacli
+        $Return = Invoke-PACLICommand $pacli FOLDERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($getFolder){
-            
-                ForEach($folder in $getFolder){
-        
-                    #define hash to hold values
-                    $folderList = @{}
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=5){
                     
-                    $values = $folder | ConvertFrom-PacliOutput
+                    #Get Range from array
+                    $values = $Results[$i..($i+5)]
                     
-                    #Add elements to hashtable
-                    $folderList.Add("Name",$values[0])
-                    $folderList.Add("Accessed",$values[1])
-                    $folderList.Add("History",$values[2])
-                    $folderList.Add("DeletionDate",$values[3])
-                    $folderList.Add("DeletedBy",$values[4])
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "Name"=$values[0]
+                        "Accessed"=$values[1]
+                        "History"=$values[2]
+                        "DeletionDate"=$values[3]
+                        "DeletedBy"=$values[4]
                     
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $folderList | select Name, Accessed, History, DeletionDate, DeletedBy
+                    }
                         
                 }
             

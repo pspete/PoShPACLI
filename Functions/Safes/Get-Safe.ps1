@@ -31,7 +31,7 @@ Function Get-Safe{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -54,61 +54,46 @@ Function Get-Safe{
         #$PACLI variable set to executable path
                             
         #execute pacli
-        $safesList = Invoke-Expression "$pacli SAFESLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli SAFESLIST "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+        
+        #if result(s) returned
+        if($Return.StdOut){
             
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
             
-        }
-        
-        Else{
-        
-            Write-Debug "LastExitCode: $LASTEXITCODE"
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=19){
+                
+                #Get Range from array
+                $values = $Results[$i..($i+19)]
+                
+                #Output Object
+                [PSCustomObject] @{
 
-            if($safesList){
-                
-                foreach($safe in $safesList){
-                    
-                    #define hash to hold values
-                    $vaultSafe = @{}
-                    
-                    #remove line break characters in data, 
-                    $values = $safe | ConvertFrom-PacliOutput
-                
-                    #write-debug $values.count
-                        
-                    #assign values to properties
-                    $vaultSafe.Add("Name",$values[0])
-                    $vaultSafe.Add("Size",$values[1])
-                    $vaultSafe.Add("Status",$values[2])
-                    $vaultSafe.Add("LastUsed",$values[3])
-                    $vaultSafe.Add("Accessed",$values[4])
-                    $vaultSafe.Add("VirusFree",$values[5])
-                    $vaultSafe.Add("ShareOptions",$values[6])
-                    $vaultSafe.Add("Location",$values[7])
-                    $vaultSafe.Add("UseFileCategories",$values[8])
-                    $vaultSafe.Add("TextOnly",$values[9])
-                    $vaultSafe.Add("RequireReason",$values[10])
-                    $vaultSafe.Add("EnforceExclusivePasswords",$values[11])
-                    $vaultSafe.Add("RequireContentValidation",$values[12])
-                    $vaultSafe.Add("AccessLevel",$values[13])
-                    $vaultSafe.Add("MaxSize",$values[14])
-                    $vaultSafe.Add("ReadOnlyByDefault",$values[15])
-                    $vaultSafe.Add("SafeID",$values[16])
-                    $vaultSafe.Add("LocationID",$values[17])
-                    $vaultSafe.Add("SupportOLAC",$values[18])
-                    
-                    #output object
-                    new-object -Type psobject -Property $vaultSafe | select Name, Size, Status, LastUsed, Accessed, VirusFree,
-                        ShareOptions, Location, UseFileCategories, TextOnly, RequireReason, EnforceExclusivePasswords,
-                            RequireContentValidation, AccessLevel, MaxSize, ReadOnlyByDefault, SafeID, LocationID, SupportOLAC
+                    "Name"=$values[0]
+                    "Size"=$values[1]
+                    "Status"=$values[2]
+                    "LastUsed"=$values[3]
+                    "Accessed"=$values[4]
+                    "VirusFree"=$values[5]
+                    "ShareOptions"=$values[6]
+                    "Location"=$values[7]
+                    "UseFileCategories"=$values[8]
+                    "TextOnly"=$values[9]
+                    "RequireReason"=$values[10]
+                    "EnforceExclusivePasswords"=$values[11]
+                    "RequireContentValidation"=$values[12]
+                    "AccessLevel"=$values[13]
+                    "MaxSize"=$values[14]
+                    "ReadOnlyByDefault"=$values[15]
+                    "SafeID"=$values[16]
+                    "LocationID"=$values[17]
+                    "SupportOLAC"=$values[18]
                 
                 }
-                
+            
             }
             
         }

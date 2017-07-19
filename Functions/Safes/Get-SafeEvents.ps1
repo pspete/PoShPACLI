@@ -51,7 +51,7 @@ Function Get-SafeEvents{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -81,54 +81,42 @@ Function Get-SafeEvents{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $safeEventsList = Invoke-Expression "$pacli SAFEEVENTSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)" -DoNotWait
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.StdOut){
+                
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") -replace '((\<\?xml[\d\D]*\?\>)|\r|\n|\t|\n\r|\r\n)',"" | 
+                ConvertFrom-PacliOutput)
             
-        }
-        
-        Else{
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($safeEventsList){
-            
-                ForEach($event in $safeEventsList){
-        
-                    #define hash to hold values
-                    $eventList = @{}
-                    
-                    $values = $event | ConvertFrom-PacliOutput
-                    
-                    #Add elements to hashtable
-                    $eventList.Add("SafeName",$values[0])
-                    $eventList.Add("SafeID",$values[1])
-                    $eventList.Add("EventID",$values[2])
-                    $eventList.Add("SourceID",$values[3])
-                    $eventList.Add("EventTypeID",$values[4])
-                    $eventList.Add("CreationDate",$values[5])
-                    $eventList.Add("ExpirationDate",$values[6])
-                    $eventList.Add("UserName",$values[7])
-                    $eventList.Add("UserID",$values[8])
-                    $eventList.Add("AgentName",$values[9])
-                    $eventList.Add("AgentID",$values[10])
-                    $eventList.Add("ClientID",$values[11])
-                    $eventList.Add("Version",$values[12])
-                    $eventList.Add("FromIP",$values[13])
-                    $eventList.Add("Data",$values[14])
-                    
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $eventList | select SafeName, SafeID, EventID, SourceID, 
-                        EventTypeID, CreationDate, ExpirationDate, UserName, UserID, AgentName, AgentID, ClientID,
-                            Version, FromIP, Data
-                        
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=15){
+                
+                #Get Range from array
+                $values = $Results[$i..($i+15)]
+                
+                #Output Object
+                [PSCustomObject] @{
+
+                    "SafeName"=$values[0]
+                    "SafeID"=$values[1]
+                    "EventID"=$values[2]
+                    "SourceID"=$values[3]
+                    "EventTypeID"=$values[4]
+                    "CreationDate"=$values[5]
+                    "ExpirationDate"=$values[6]
+                    "UserName"=$values[7]
+                    "UserID"=$values[8]
+                    "AgentName"=$values[9]
+                    "AgentID"=$values[10]
+                    "ClientID"=$values[11]
+                    "Version"=$values[12]
+                    "FromIP"=$values[13]
+                    "Data"=$values[14]
+                
                 }
-            
+                    
             }
             
         }

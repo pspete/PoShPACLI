@@ -26,7 +26,7 @@ Function Get-OwnerSafes{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -48,42 +48,37 @@ Function Get-OwnerSafes{
         #$PACLI variable set to executable path
                         
         #execute pacli
-        $ownerSafesList = Invoke-Expression "$pacli OWNERSAFESLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
-            
-            #ignore whitespace
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli OWNERSAFESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=3){
+                    
+                    #Get Range from array
+                    $values = $Results[$i..($i+3)]
+                    
+                    #Output Object
+                    [PSCustomObject] @{
 
-            If($ownerSafesList){
-            
-                ForEach($ownerSafe in $ownerSafesList){
-        
-                    write-debug $ownerSafe
-                    
-                    #define hash to hold values
-                    $ownerSafes = @{}
-                    
-                    $values = $ownerSafe | ConvertFrom-PacliOutput
-                    
-                    #Add array elements to hashtable
-                    $ownerSafes.Add("Name",$values[0])
-                    $ownerSafes.Add("AccessLevel",$values[1])
-                    $ownerSafes.Add("ExpirationDate",$values[2])
+                        "Name"=$values[0]
+                        "AccessLevel"=$values[1]
+                        "ExpirationDate"=$values[2]
 
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $ownerSafes | 
-                        
-                        select Name, AccessLevel, ExpirationDate 
-                        
+                    }
+
                 }
             
             }

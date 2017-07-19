@@ -41,7 +41,7 @@ Function Update-LDAPBranch{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -68,52 +68,48 @@ Function Update-LDAPBranch{
         #$PACLI variable set to executable path
                         
         #execute pacli with parameters
-        $updateLDAPBranch = (Invoke-Expression "$pacli LDAPBRANCHUPDATE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli LDAPBRANCHUPDATE "$(
+            $PSBoundParameters.getEnumerator() | 
+                ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($updateLDAPBranch){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($branch in $updateLDAPBranch){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=7){
                     
-                    #define hash to hold values
-                    $ldapBranch = @{}
+                    #Get Range from array
+                    $values = $Results[$i..($i+7)]
                     
-                    #split the command output
-                    $values = $branch | ConvertFrom-PacliOutput
-                        
-                    #assign values to properties
-                    $ldapBranch.Add("LDAPBranchID",$values[0])
-                    $ldapBranch.Add("LDAPMapID",$values[1])
-                    $ldapBranch.Add("LDAPMapName",$values[2])
-                    $ldapBranch.Add("LDAPDirName",$values[3])
-                    $ldapBranch.Add("LDAPBranchName",$values[4])
-                    $ldapBranch.Add("LDAPQuery",$values[5])
-                    $ldapBranch.Add("LDAPGroupMatch",$values[6])
-                    
-                    #output object
-                    new-object -Type psobject -Property $ldapBranch | select LDAPBranchID, LDAPMapID, LDAPMapName, LDAPDirName,
-                        LDAPBranchName, LDAPQuery, LDAPGroupMatch
-                        
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "LDAPBranchID"=$values[0]
+                        "LDAPMapID"=$values[1]
+                        "LDAPMapName"=$values[2]
+                        "LDAPDirName"=$values[3]
+                        "LDAPBranchName"=$values[4]
+                        "LDAPQuery"=$values[5]
+                        "LDAPGroupMatch"=$values[6]
+
+                    }
                 }
-            
+                
             }
             
         }
-    
+
     }
     
 }

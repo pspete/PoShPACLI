@@ -33,7 +33,7 @@ Function Get-HttpGwUrl{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -57,38 +57,29 @@ Function Get-HttpGwUrl{
         #$PACLI variable set to executable path
                     
         #execute pacli    
-        $httpGwUrl = Invoke-Expression "$pacli GETHTTPGWURL $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'" | 
+        $Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-            #ignore whitespace
-            Select-String -Pattern "\S"
-        
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-            
-            If($httpGwUrl){
-            
-                ForEach($gwURL in $httpGwUrl){
-        
-                    #define hash to hold values
-                    $urls = @{}
-                    
-                    $values = $gwURL | ConvertFrom-PacliOutput
-                    
-                    #Add elements to hashtable
-                    $urls.Add("URL",$values[0])
-                    
-                    #return object from hashtable
-                    New-Object -TypeName psobject -Property $urls | select URL
-                        
-                }
-            
+            #if result(s) returned
+            if($Return.StdOut){
+                
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+                #Output Object
+                [PSCustomObject] @{
+
+                    "URL"=$Results[0]
+                
+                }       
+                
             }
             
         }

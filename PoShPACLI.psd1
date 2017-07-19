@@ -4,7 +4,7 @@
     RootModule = 'PoShPACLI.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.0.02'
+    ModuleVersion = '0.0.03'
 
     # ID used to uniquely identify this module
     GUID = '194c227f-87bf-43af-b401-4a34bd8e2ac6'
@@ -22,7 +22,7 @@
     Description = 'PowerShell wrapper exposing CyberArk PACLI commandline utility functionality'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    PowerShellVersion = '2.0'
+    PowerShellVersion = '3.0'
 
     # Name of the Windows PowerShell host required by this module
     # PowerShellHostName = ''

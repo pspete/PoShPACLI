@@ -43,7 +43,7 @@ Function Get-VaultUsers{
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -69,53 +69,47 @@ Function Get-VaultUsers{
         #$PACLI variable set to executable path
             
         #execute pacli with parameters
-        $usersList = (Invoke-Expression "$pacli USERSLIST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT '(ALL,ENCLOSE)'") | 
-            
-            #ignore whitespace lines
-            Select-String -Pattern "\S"
+        $Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
         
-        if($LASTEXITCODE){
-        
-            write-debug "LastExitCode: $LASTEXITCODE"
+        if($Return.ExitCode){
             
+            Write-Debug $Return.StdErr
+
         }
         
-        Else{
+        else{
         
-            write-debug "LastExitCode: $LASTEXITCODE"
-
             #if result(s) returned
-            if($usersList){
+            if($Return.StdOut){
                 
-                #process each result
-                foreach($user in $usersList){
+                #Convert Output to array
+                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                
+                #loop through results
+                For($i=0 ; $i -lt $Results.length ; $i+=14){
                     
-                    #define hash to hold values
-                    $vaultUser = @{}
+                    #Get User Range from array
+                    $values = $Results[$i..($i+14)]
                     
-                    #split the command output
-                    $values = $user | ConvertFrom-PacliOutput
+                    #output object for each user
+                    [PSCustomObject] @{
                         
-                    #assign values to properties
-                    $vaultUser.Add("Name",$values[0])
-                    $vaultUser.Add("Quota",$values[1])
-                    $vaultUser.Add("UsedQuota",$values[2])
-                    $vaultUser.Add("Location",$values[3])
-                    $vaultUser.Add("FirstName",$values[4])
-                    $vaultUser.Add("LastName",$values[5])
-                    $vaultUser.Add("LDAPUser",$values[6])
-                    $vaultUser.Add("Template",$values[7])
-                    $vaultUser.Add("GWAccount",$values[8])
-                    $vaultUser.Add("Disabled",$values[9])
-                    $vaultUser.Add("Type",$values[10])
-                    $vaultUser.Add("UserID",$values[11])
-                    $vaultUser.Add("LocationID",$values[12])
-                    $vaultUser.Add("EnableComponentMonitoring",$values[13])
-                    
-                    #output object
-                    new-object -Type psobject -Property $vaultUser | select Name, Quota, UsedQuota, 
-                        Location, FirstName, LastName, LDAPUser, Template, GWAccount, Disabled, 
-                            Type, UserID, LocationID, EnableComponentMonitoring
+                        "Name"=$values[0]
+                        "Quota"=$values[1]
+                        "UsedQuota"=$values[2]
+                        "Location"=$values[3]
+                        "FirstName"=$values[4]
+                        "LastName"=$values[5]
+                        "LDAPUser"=$values[6]
+                        "Template"=$values[7]
+                        "GWAccount"=$values[8]
+                        "Disabled"=$values[9]
+                        "Type"=$values[10]
+                        "UserID"=$values[11]
+                        "LocationID"=$values[12]
+                        "EnableComponentMonitoring"=$values[13]
+
+                    } 
                 
                 }
             
