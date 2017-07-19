@@ -20,7 +20,9 @@ Function Invoke-PACLICommand{
         [Parameter(Mandatory=$True,Position=2)]
         [string]$PacliCommand,
         [Parameter(Mandatory=$False,Position=3)]
-        [string]$CommandParameters
+        [string]$CommandParameters,
+        [Parameter(Mandatory=$False)]
+        [switch]$DoNotWait
     )
 
         Begin{
@@ -39,7 +41,13 @@ Function Invoke-PACLICommand{
             $PacliProcess.StartInfo.RedirectStandardError = $True
             $PacliProcess.StartInfo.UseShellExecute = $False
             $PacliProcess.start()
-            $PacliProcess.WaitForExit()
+
+            #Some Pacli functions do not return data if waitforexit specified
+            if( -not ($DoNotWait)){
+
+                $PacliProcess.WaitForExit()
+
+            }
 
     }
         
@@ -52,7 +60,7 @@ Function Invoke-PACLICommand{
                 "ExitCode" = $PacliProcess.ExitCode
                 "StdOut" = $PacliProcess.StandardOutput.ReadToEnd()
                 "StdErr" = $PacliProcess.StandardError.ReadToEnd()
-                
+
             }
 
         }

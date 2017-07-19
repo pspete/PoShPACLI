@@ -74,7 +74,8 @@ Function Add-SafeFileCategory{
 
         #$PACLI variable set to executable path
                     
-        $Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        $Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote type)
         
         if($Return.ExitCode){
             

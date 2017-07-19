@@ -126,7 +126,9 @@ Function Add-VaultDefinition{
             
         Write-Verbose "Defining Vault"
         
-        $Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        $Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote proxyType,port,timeout,reconnectPeriod,
+                proxyPort,numOfRecordsPerSend,numOfRecordsPerChunk)
         
         if($Return.ExitCode){
             

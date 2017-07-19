@@ -53,45 +53,36 @@ Function Get-SafeFileCategory{
         #$PACLI variable set to executable path
                     
         #execute pacli    
-        $Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
+        $Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString) output (ALL,ENCLOSE)" -DoNotWait
+
+        #if result(s) returned
+        if($Return.StdOut){
             
-            Write-Debug $Return.StdErr
-
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+            
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=7){
                 
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                #Get Range from array
+                $values = $Results[$i..($i+7)]
                 
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=7){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+7)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+                #Output Object
+                [PSCustomObject] @{
 
-                        "CategoryID"=$values[0]
-                        "CategoryName"=$values[1]
-                        "CategoryType"=$values[2]
-                        "CategoryValidValues"=$values[3]
-                        "CategoryDefaultValue"=$values[4]
-                        "CategoryRequired"=$values[5]
-                        "VaultCategory"=$values[6]
+                    "CategoryID"=$values[0]
+                    "CategoryName"=$values[1]
+                    "CategoryType"=$values[2]
+                    "CategoryValidValues"=$values[3]
+                    "CategoryDefaultValue"=$values[4]
+                    "CategoryRequired"=$values[5]
+                    "VaultCategory"=$values[6]
 
-                    }
-                        
                 }
-            
+                    
             }
-            
+        
         }
         
     }

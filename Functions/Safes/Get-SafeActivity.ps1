@@ -149,47 +149,45 @@ Function Get-SafeActivity{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
+        $Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+    
+        if($Return.StdErr){
             
-            Write-Debug $Return.StdErr
+            write-debug $Return.StdErr
+            $FALSE
 
         }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=9){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+9)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
 
-                        "Time"=$values[0]
-                        "User"=$values[1]
-                        "Safe"=$values[2]
-                        "Activity"=$values[3]
-                        "Location"=$values[4]
-                        "NewLocation"=$values[5]
-                        "RequestID"=$values[6]
-                        "RequestReason"=$values[7]
-                        "Code"=$values[8]
-                    
-                    }
+        #if result(s) returned
+        elseif($Return.StdOut){
+            
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+            
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=9){
+                
+                #Get Range from array
+                $values = $Results[$i..($i+9)]
+                
+                #Output Object
+                [PSCustomObject] @{
 
+                    "Time"=$values[0]
+                    "User"=$values[1]
+                    "Safe"=$values[2]
+                    "Activity"=$values[3]
+                    "Location"=$values[4]
+                    "NewLocation"=$values[5]
+                    "RequestID"=$values[6]
+                    "RequestReason"=$values[7]
+                    "Code"=$values[8]
+                
                 }
-            
+
             }
-            
+        
         }
         
     }

@@ -69,17 +69,18 @@ Function Update-SafeFileCategory{
 
         #$PACLI variable set to executable path
                     
-        $Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+        $Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString) -DoNotWait
         
-        if($Return.ExitCode){
+        if($Return.StdErr){
             
-            Write-Debug $Return.StdErr
+            write-debug $Return.StdErr
             $FALSE
 
         }
         
-        else{
-        
+        elseif($Return -match "True"){
+            
             $TRUE
             
         }

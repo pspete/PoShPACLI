@@ -127,7 +127,8 @@ Function Get-PasswordObject{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+        $Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
         
         if($Return.ExitCode){
             

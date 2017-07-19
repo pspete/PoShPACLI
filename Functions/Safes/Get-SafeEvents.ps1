@@ -81,51 +81,42 @@ Function Get-SafeEvents{
         #$PACLI variable set to executable path
                         
         #execute pacli    
-        $Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+        $Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() | 
+            ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)" -DoNotWait
         
-        if($Return.ExitCode){
+        if($Return.StdOut){
+                
+            #Convert Output to array
+            $Results = (($Return.StdOut | Select-String -Pattern "\S") -replace '((\<\?xml[\d\D]*\?\>)|\r|\n|\t|\n\r|\r\n)',"" | 
+                ConvertFrom-PacliOutput)
             
-            Write-Debug $Return.StdErr
-
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
+            #loop through results
+            For($i=0 ; $i -lt $Results.length ; $i+=15){
                 
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+                #Get Range from array
+                $values = $Results[$i..($i+15)]
                 
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=15){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+15)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+                #Output Object
+                [PSCustomObject] @{
 
-                        "SafeName"=$values[0]
-                        "SafeID"=$values[1]
-                        "EventID"=$values[2]
-                        "SourceID"=$values[3]
-                        "EventTypeID"=$values[4]
-                        "CreationDate"=$values[5]
-                        "ExpirationDate"=$values[6]
-                        "UserName"=$values[7]
-                        "UserID"=$values[8]
-                        "AgentName"=$values[9]
-                        "AgentID"=$values[10]
-                        "ClientID"=$values[11]
-                        "Version"=$values[12]
-                        "FromIP"=$values[13]
-                        "Data"=$values[14]
-                    
-                    }
-                        
+                    "SafeName"=$values[0]
+                    "SafeID"=$values[1]
+                    "EventID"=$values[2]
+                    "SourceID"=$values[3]
+                    "EventTypeID"=$values[4]
+                    "CreationDate"=$values[5]
+                    "ExpirationDate"=$values[6]
+                    "UserName"=$values[7]
+                    "UserID"=$values[8]
+                    "AgentName"=$values[9]
+                    "AgentID"=$values[10]
+                    "ClientID"=$values[11]
+                    "Version"=$values[12]
+                    "FromIP"=$values[13]
+                    "Data"=$values[14]
+                
                 }
-            
+                    
             }
             
         }
