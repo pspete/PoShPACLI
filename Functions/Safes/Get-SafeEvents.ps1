@@ -84,40 +84,95 @@ Function Get-SafeEvents{
         $Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() | 
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)" -DoNotWait
         
+        #If data returned
         if($Return.StdOut){
-                
-            #Convert Output to array
-            $Results = (($Return.StdOut | Select-String -Pattern "\S") -replace '((\<\?xml[\d\D]*\?\>)|\r|\n|\t|\n\r|\r\n)',"" | 
-                ConvertFrom-PacliOutput)
             
-            #loop through results
-            For($i=0 ; $i -lt $Results.length ; $i+=15){
-                
-                #Get Range from array
-                $values = $Results[$i..($i+15)]
-                
-                #Output Object
-                [PSCustomObject] @{
+            #Split the output in an array
+            #each element represents an event
+            $Events = ($Return.StdOut).Split("`n")
 
-                    "SafeName"=$values[0]
-                    "SafeID"=$values[1]
-                    "EventID"=$values[2]
-                    "SourceID"=$values[3]
-                    "EventTypeID"=$values[4]
-                    "CreationDate"=$values[5]
-                    "ExpirationDate"=$values[6]
-                    "UserName"=$values[7]
-                    "UserID"=$values[8]
-                    "AgentName"=$values[9]
-                    "AgentID"=$values[10]
-                    "ClientID"=$values[11]
-                    "Version"=$values[12]
-                    "FromIP"=$values[13]
-                    "Data"=$values[14]
-                
-                }
+            #loop through event data
+            For($i=0 ; $i -lt $events.count ; $i++)    
+            {
+                #Event data can sometimes contain xml - detect this
+                #Object output is affected if not dealt with
+                If($events[$i] -match '(\<\?xml[\d\D]*\?\>)'){
                     
-            }
+                    #Remove the XML Tag (causes parse issues if left)
+                    $events[$i] = $events[$i] -replace '(\<\?xml[\d\D]*\?\>)',''
+
+                    #find subsequent array elements that contain lines from the xml event data
+                    if($events[$i+1] -match '<EventData>'){
+
+                        #define integer for loop
+                        [int]$iXML = $i+1
+
+                        #define integer for xml start
+                        [int]$FirstXML = $iXML
+
+                        #increment the counter
+                        do {
+
+                            [int]$iXML+=1
+                            #continue until close tag found
+
+                        } until ($events[$iXML] -match '</EventData>')
+
+                        #join range of the array containing XML and flatten
+                        $EventData = ((((((($events)[$FirstXML..$iXML] -join ' ') `
+                            -replace ">(\s*)<","><") `
+                                -replace '\n','') `
+                                    -replace '="','=') `
+                                        -replace '">','>') `
+                                            -replace '</EventData>','</EventData>"') #`
+                                                #-replace '<EventData>','"<EventData>'
+                        
+                        #whitespace, newlines, "quote marks" are all removed
+                        #"quote marks" added to start and end of string
+                        #incrament outer counter to restart loop at next event
+                        $i = $iXML+1
+
+                    }
+
+                }
+
+                #Convert event data into output string
+                $Values = $events[$i]  | Select-String -Pattern "\S" | ConvertFrom-PacliOutput
+                
+                #if we have output
+                if($Values){
+                    
+                    if($EventData){
+                        
+                        #add flattened xml to output if present
+                        $Values+=$EventData
+
+                    }
+
+                    #Output Object
+                    [PSCustomObject] @{
+
+                        "SafeName"=$values[0]
+                        "SafeID"=$values[1]
+                        "EventID"=$values[2]
+                        "SourceID"=$values[3]
+                        "EventTypeID"=$values[4]
+                        "CreationDate"=$values[5]
+                        "ExpirationDate"=$values[6]
+                        "UserName"=$values[7]
+                        "UserID"=$values[8]
+                        "AgentName"=$values[9]
+                        "AgentID"=$values[10]
+                        "ClientID"=$values[11]
+                        "Version"=$values[12]
+                        "FromIP"=$values[13]
+                        "Data"=$values[14]
+
+                    }
+
+                }
+
+            } 
             
         }
         
