@@ -39,7 +39,7 @@ Function ConvertFrom-PacliOutput{
         
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: January 2015
+    	LASTEDIT: July 2017
     #>
     
     [CmdLetBinding()]
@@ -63,7 +63,7 @@ Function ConvertFrom-PacliOutput{
             #find all values between quotes
             Select-String -Pattern $regEx -AllMatches).matches | 
             
-                foreach{
+                ForEach-Object{
                     
                     #assign returned values to array and remove quotes
                     $pacliValues += $_.Value -replace '"',''
