@@ -1,6 +1,5 @@
-Function Test-ExePreReqs{
-
-    <#
+Function Test-ExePreReqs {
+	<#
     .SYNOPSIS
         Test Pre-Requisites needed for PACLI exeutbale to run.
         
@@ -24,12 +23,20 @@ Function Test-ExePreReqs{
     	LASTEDIT: January 2015
     #>
         
-    [CmdLetBinding()]
-    param([Parameter(Mandatory=$False)][string]$pacliVar = "pacli")
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $False)]
+		[string]$pacliVar = "pacli"
+	)
 
-    ((Get-Variable -Name $pacliVar -ErrorAction SilentlyContinue) -and 
-        
-        (Test-Path (Get-Variable -Name pacli -ValueOnly -ErrorAction SilentlyContinue) `
-            -PathType leaf -Include "*.exe" -ErrorAction SilentlyContinue))
+	if ((Get-Variable -Name $pacliVar -ErrorAction SilentlyContinue) -and 
+		(Test-Path (Get-Variable -Name pacli -ValueOnly -ErrorAction SilentlyContinue) `
+				-PathType leaf -Include "*.exe" -ErrorAction SilentlyContinue)) {
+		$true
+	}#if
+	else {
+		Write-Warning -Message "Failed Pre-Requisite Checks, please check you have the PACLI.exe and DLLS installed"
+		$False
+	}#else
     
 }
