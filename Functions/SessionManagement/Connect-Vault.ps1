@@ -17,11 +17,11 @@
         The Username of the User logging on
 
     .PARAMETER password
-        The User’s password.
+        The User’s password (as a Secure String).
         Note: The LOGONFILE and PASSWORD parameters cannot be defined together.
 
     .PARAMETER newPassword
-        The User’s new password (if the User would like to change password at
+        The User’s new password (as a Secure String); (if the User would like to change password at
         logon time) or NULL.
         Note: The LOGONFILE and NEWPASSWORD parameters cannot be defined together.
 
@@ -54,19 +54,19 @@
             The logonfile and radius parameters cannot be defined in the same command.
 
     .EXAMPLE
-    	Connect-Vault -vault Vault -user User -password pa55w0RD
+    	Connect-Vault -vault Vault -user User -password (read-host -AsSecureString)
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$password,
-		[Parameter(Mandatory = $False)][string]$newPassword,
+		[Parameter(Mandatory = $False)][securestring]$password,
+		[Parameter(Mandatory = $False)][securestring]$newPassword,
 		[Parameter(Mandatory = $False)][string]$logonFile,
 		[Parameter(Mandatory = $False)][switch]$autoChangePassword,
 		[Parameter(Mandatory = $False)][int]$sessionID,
@@ -84,6 +84,21 @@
 
 		#$PACLI variable set to executable path
 
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
+
+		#deal with newPassword SecureString
+		if($PSBoundParameters.ContainsKey("newPassword")) {
+
+			#Included decoded password in request
+			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
+
+		}
+
 		Write-Verbose "Logging onto Vault"
 
 		$Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
@@ -98,7 +113,7 @@
 
 		else {
 
-			Write-Verbose "Succesfully Logged on"
+			Write-Verbose "Successfully Logged on"
 			$TRUE
 
 		}

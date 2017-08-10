@@ -26,14 +26,14 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$password,
+		[Parameter(Mandatory = $False)][securestring]$password,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
@@ -46,6 +46,13 @@
 	Else {
 
 		#$PACLI variable set to executable path
+
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
 
 		$Return = Invoke-PACLICommand $pacli UNLOCK $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 

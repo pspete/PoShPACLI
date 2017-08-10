@@ -175,7 +175,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -198,14 +198,14 @@
 		#[Parameter(Mandatory=$False)][switch]$virusFree,
 		[Parameter(Mandatory = $False)][switch]$textOnly,
 		[Parameter(Mandatory = $False)][int]$securityLevelParm,
-		[Parameter(Mandatory = $False)][ValidateSet("1", "2", "3", "4")][int]$ConfimrationType,
+		[Parameter(Mandatory = $False)][ValidateSet("1", "2", "3", "4")][int]$ConfirmationType,
 		[Parameter(Mandatory = $False)]
 		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
 		[int]$confirmationCount,
 		[Parameter(Mandatory = $False)][switch]$alwaysNeedsConfirmation,
 		[Parameter(Mandatory = $False)][ValidateSet("1", "2", "3", "4")][int]$safeKeyType,
 		[Parameter(Mandatory = $False)][string]$safeKey,
-		[Parameter(Mandatory = $False)][string]$password,
+		[Parameter(Mandatory = $False)][securestring]$password,
 		[Parameter(Mandatory = $False)][string]$keyFilePath,
 		[Parameter(Mandatory = $False)][switch]$getNewFileAccessMark,
 		[Parameter(Mandatory = $False)][switch]$getRetrievedFileAccessMark,
@@ -232,11 +232,18 @@
 
 		#$PACLI variable set to executable path
 
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
+
 		$Return = Invoke-PACLICommand $pacli ADDSAFE $($PSBoundParameters.getEnumerator() |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,
-			fileRetention, requestsRetention, securityLevelParm, ConfimrationType,
+			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
 			confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
 		if($Return.ExitCode) {
