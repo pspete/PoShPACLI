@@ -1,16 +1,16 @@
-Function Get-LDAPBranches{
+﻿Function Get-LDAPBranches {
 
-    <#
+	<#
     .SYNOPSIS
     	Lists the LDAP branches in a specified CyberArk Directory Map
 
     .DESCRIPTION
     	Exposes the PACLI Function: "LDAPBRANCHESLIST"
 
-    .PARAMETER vault 
+    .PARAMETER vault
 		The name of the Vault.
 
-    .PARAMETER user 
+    .PARAMETER user
 		The Username of the User who is logged on.
 
     .PARAMETER ldapMapName
@@ -28,68 +28,68 @@ Function Get-LDAPBranches{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$ldapMapName,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$ldapMapName,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        #execute pacli with parameters
-        $Return = Invoke-PACLICommand $pacli LDAPBRANCHESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
+	Else {
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=7){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+7)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
-                        
-                        #assign values to properties
-                        "LDAPBranchID"=$values[0]
-                        "LDAPMapID"=$values[1]
-                        "LDAPMapName"=$values[2]
-                        "LDAPDirName"=$values[3]
-                        "LDAPBranchName"=$values[4]
-                        "LDAPQuery"=$values[5]
-                        "LDAPGroupMatch"=$values[6]
-                    
-                    }
-                        
-                }
-            
-            }
-            
-        }
-        
-    }
-    
+		#$PACLI variable set to executable path
+
+		#execute pacli with parameters
+		$Return = Invoke-PACLICommand $pacli LDAPBRANCHESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+
+					#Get Range from array
+					$values = $Results[$i..($i + 7)]
+
+					#Output Object
+					[PSCustomObject] @{
+
+						#assign values to properties
+						"LDAPBranchID"   = $values[0]
+						"LDAPMapID"      = $values[1]
+						"LDAPMapName"    = $values[2]
+						"LDAPDirName"    = $values[3]
+						"LDAPBranchName" = $values[4]
+						"LDAPQuery"      = $values[5]
+						"LDAPGroupMatch" = $values[6]
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

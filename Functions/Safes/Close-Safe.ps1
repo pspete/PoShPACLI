@@ -1,6 +1,6 @@
-Function Close-Safe{
+﻿Function Close-Safe {
 
-    <#
+	<#
     .SYNOPSIS
     	Closes a Safe
 
@@ -15,7 +15,7 @@ Function Close-Safe{
 
     .PARAMETER safe
 		The name of the Safe to close.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -28,40 +28,40 @@ Function Close-Safe{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
-    
-    If(!(Test-ExePreReqs)){
 
-            #$pacli variable not set or not a valid path
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-    }
+	If(!(Test-ExePreReqs)) {
 
-    Else{
+		#$pacli variable not set or not a valid path
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli CLOSESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	}
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
-    
+	Else {
+
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli CLOSESAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
+
 }

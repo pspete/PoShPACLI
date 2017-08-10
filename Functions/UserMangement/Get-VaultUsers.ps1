@@ -1,6 +1,6 @@
-Function Get-VaultUsers{
+﻿Function Get-VaultUsers {
 
-    <#
+	<#
     .SYNOPSIS
     	Produces a list of Users who have access to the specified Vault.
         You can only generate this list if you have administrative permissions.
@@ -19,18 +19,18 @@ Function Get-VaultUsers{
 	   Note: A backslash ‘\’ must be added before the name of the location.
 
     .PARAMETER includeSubLocations
-	   Whether or not the output will include the sublocation in which the User 
+	   Whether or not the output will include the sublocation in which the User
        is defined.
 
     .PARAMETER includeDisabledUsers
 	   Whether or not the output will include disabled users
 
     .PARAMETER onlyKnownUsers
-	   Whether or not the output will include only Users who share Safes with 
+	   Whether or not the output will include only Users who share Safes with
        the User carrying out the command or all Users known by the specified Vault
 
     .PARAMETER userPattern
-	   The full name or part of the name of the User(s) to include in the report. 
+	   The full name or part of the name of the User(s) to include in the report.
        A wildcard can also be used in this parameter.
 
     .PARAMETER sessionID
@@ -45,78 +45,78 @@ Function Get-VaultUsers{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$False)][string]$vault,
-        [Parameter(Mandatory=$False)][string]$user,
-        [Parameter(Mandatory=$False)][string]$location = "\",
-        [Parameter(Mandatory=$False)][switch]$includeSubLocations,
-        [Parameter(Mandatory=$False)][switch]$includeDisabledUsers,
-        [Parameter(Mandatory=$False)][switch]$onlyKnownUsers,
-        [Parameter(Mandatory=$False)][string]$userPattern,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $False)][string]$vault,
+		[Parameter(Mandatory = $False)][string]$user,
+		[Parameter(Mandatory = $False)][string]$location = "\",
+		[Parameter(Mandatory = $False)][switch]$includeSubLocations,
+		[Parameter(Mandatory = $False)][switch]$includeDisabledUsers,
+		[Parameter(Mandatory = $False)][switch]$onlyKnownUsers,
+		[Parameter(Mandatory = $False)][string]$userPattern,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-            
-        #execute pacli with parameters
-        $Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
+	Else {
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=14){
-                    
-                    #Get User Range from array
-                    $values = $Results[$i..($i+14)]
-                    
-                    #output object for each user
-                    [PSCustomObject] @{
-                        
-                        "Name"=$values[0]
-                        "Quota"=$values[1]
-                        "UsedQuota"=$values[2]
-                        "Location"=$values[3]
-                        "FirstName"=$values[4]
-                        "LastName"=$values[5]
-                        "LDAPUser"=$values[6]
-                        "Template"=$values[7]
-                        "GWAccount"=$values[8]
-                        "Disabled"=$values[9]
-                        "Type"=$values[10]
-                        "UserID"=$values[11]
-                        "LocationID"=$values[12]
-                        "EnableComponentMonitoring"=$values[13]
+		#$PACLI variable set to executable path
 
-                    } 
-                
-                }
-            
-            }
-            
-        }
-    
-    }
-    
+		#execute pacli with parameters
+		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 14) {
+
+					#Get User Range from array
+					$values = $Results[$i..($i + 14)]
+
+					#output object for each user
+					[PSCustomObject] @{
+
+						"Name"                      = $values[0]
+						"Quota"                     = $values[1]
+						"UsedQuota"                 = $values[2]
+						"Location"                  = $values[3]
+						"FirstName"                 = $values[4]
+						"LastName"                  = $values[5]
+						"LDAPUser"                  = $values[6]
+						"Template"                  = $values[7]
+						"GWAccount"                 = $values[8]
+						"Disabled"                  = $values[9]
+						"Type"                      = $values[10]
+						"UserID"                    = $values[11]
+						"LocationID"                = $values[12]
+						"EnableComponentMonitoring" = $values[13]
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

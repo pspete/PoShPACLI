@@ -1,18 +1,18 @@
-Function Get-SafesLog{
+﻿Function Get-SafesLog {
 
-    <#
+	<#
     .SYNOPSIS
     	Generates a log of activities per Safe in the specified Vault.
 
     .DESCRIPTION
     	Exposes the PACLI Function: "SAFESLOG"
-    
-    .PARAMETER vault 
+
+    .PARAMETER vault
     	The name of the Vault containing the Safe.
-        
-    .PARAMETER user 
+
+    .PARAMETER user
 	   The Username of the User carrying out the command.
-    
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -25,64 +25,64 @@ Function Get-SafesLog{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$False)][string]$vault,
-        [Parameter(Mandatory=$False)][string]$user,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $False)][string]$vault,
+		[Parameter(Mandatory = $False)][string]$user,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-            
-        #execute pacli with parameters
-        $Return = Invoke-PACLICommand $pacli SAFESLOG "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
+	Else {
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=4){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+4)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+		#$PACLI variable set to executable path
 
-                        #assign values to properties
-                        "Name"=$values[0]
-                        "UsersCount"=$values[1]
-                        "OpenDate"=$values[2]
-                        "OpenState"=$values[3]
-                    
-                    }
-                        
-                }
-            
-            }
-            
-        }
-        
-    }
-    
+		#execute pacli with parameters
+		$Return = Invoke-PACLICommand $pacli SAFESLOG "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 4) {
+
+					#Get Range from array
+					$values = $Results[$i..($i + 4)]
+
+					#Output Object
+					[PSCustomObject] @{
+
+						#assign values to properties
+						"Name"       = $values[0]
+						"UsersCount" = $values[1]
+						"OpenDate"   = $values[2]
+						"OpenState"  = $values[3]
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

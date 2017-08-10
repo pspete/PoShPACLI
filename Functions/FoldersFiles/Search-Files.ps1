@@ -1,8 +1,8 @@
-Function Search-Files{
+﻿Function Search-Files {
 
-    <#
+	<#
     .SYNOPSIS
-    	Finds a particular file, list of files, password, or list of passwords, 
+    	Finds a particular file, list of files, password, or list of passwords,
         according to the parameters set.
 
     .DESCRIPTION
@@ -52,7 +52,7 @@ Function Search-Files{
     .PARAMETER includeVersions
         Whether or not the report will include previous versions of
         included files or passwords.
-        
+
         Note: If the value is set to NO, the ‘deletedoption’
         parameter cannot be set to INCLUDE_DELETED.
 
@@ -64,7 +64,7 @@ Function Search-Files{
         Whether or not the search will include subfolders.
 
     .PARAMETER dateLimit
-        A specific time duration. 
+        A specific time duration.
         Possible values are:
             NONE
             BETWEEN which is qualified by [fromdate] and [todate].
@@ -73,7 +73,7 @@ Function Search-Files{
 
     .PARAMETER dateActionLimit
         The activity that took place during the period specified in
-        [datelimit]. 
+        [datelimit].
         Possible values are:
             ACCESSEDFILE
             CREATED
@@ -82,16 +82,16 @@ Function Search-Files{
     .PARAMETER prevCount
         The number of days or months to be included in the report if
         [datelimit] is specified as ‘PREVMONTH’ or ‘PREVDAY’.
-    
+
     .PARAMETER fromDate
         The first day to be included in the report if [datelimit] is
-        specified as ‘BETWEEN’. 
+        specified as ‘BETWEEN’.
         Use the following date format:
             dd/mm/yyyy.
-    
+
     .PARAMETER toDate
         The last day to be included in the report if [datelimit] is
-        specified as ‘BETWEEN’. 
+        specified as ‘BETWEEN’.
         Use the following date format:
             dd/mm/yyyy.
 
@@ -105,7 +105,7 @@ Function Search-Files{
     .PARAMETER searchInAllAction
         The way that the values in the ‘searchinallvalues’ parameter
         will be searched for if the ‘searchinall’ parameter is set to
-        ‘YES’. 
+        ‘YES’.
         Possible values are:
             ‘OR’ – at least one of the values in the list needs to be
             found.
@@ -128,7 +128,7 @@ Function Search-Files{
         ‘searchinallvalues’, ‘searchinallcategorylist’, ‘categoryidlist’,
         and ‘categoryvalues’ parameters. The default value is “,”
         (comma).
-    
+
         Note: When a string with more than one character is
         specified, only the first character will be used.
 
@@ -139,7 +139,7 @@ Function Search-Files{
             INCLUDE_DELETED
             ONLY_DELETED
             WITHOUT_DELETED
-            
+
         Note: If the value is set to INCLUDE_DELETED, the
         ‘includeversions’ parameter cannot be set to NO.
 
@@ -148,7 +148,7 @@ Function Search-Files{
         on the ‘sizelimittype’ parameter.
 
     .PARAMETER sizeLimitType
-        The type of file or password size-based search. 
+        The type of file or password size-based search.
         Possible
         values are:
             ATLEAST
@@ -158,7 +158,7 @@ Function Search-Files{
         A list of category IDs according to which the values
         specified in the ‘categoryvalues’ parameter will be searched
         for.
-        
+
         Note: The first value corresponds to the first category, the
         second value to the second category, etc.
         Only files or passwords that contain the specified file
@@ -168,7 +168,7 @@ Function Search-Files{
     .PARAMETER categoryValues
         A list of values to search for in the file categories specified
         in the ‘categoryidlist’ parameter.
-        
+
         Note: The first value corresponds to the first category, the
         second value to the second category, etc.
         Only files or passwords that contain the listed file categories
@@ -177,7 +177,7 @@ Function Search-Files{
 
     .PARAMETER categoryListAction
         Specifies how to search for the values in the ‘categoryidlist’
-        and ‘categoryvalues’ parameters. 
+        and ‘categoryvalues’ parameters.
         Possible values are:
             ‘OR’ – at least one of the values in the list needs to be
             found.
@@ -209,129 +209,129 @@ Function Search-Files{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$False)][string]$filePattern,
-        [Parameter(Mandatory=$False)][switch]$fileRetrieved,
-        [Parameter(Mandatory=$False)][switch]$fileChanged,
-        [Parameter(Mandatory=$False)][switch]$fileNew,
-        [Parameter(Mandatory=$False)][switch]$fileLocked,
-        [Parameter(Mandatory=$False)][switch]$fileWithNoMark,
-        [Parameter(Mandatory=$False)][switch]$includeVersions,
-        [Parameter(Mandatory=$False)][switch]$onlyOpenSafes,
-        [Parameter(Mandatory=$False)][switch]$includeSubFolders,
-        [Parameter(Mandatory=$False)][ValidateSet("NONE","BETWEEN","PREVMONTH","PREVDAY")][string]$dateLimit,
-        [Parameter(Mandatory=$False)][ValidateSet("ACCESSEDFILE","CREATED","MODIFIED")][string]$dateActionLimit,
-        [Parameter(Mandatory=$False)][int]$prevCount,
-        [Parameter(Mandatory=$False)]
-            [ValidateScript({($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-                [string]$fromDate,
-        [Parameter(Mandatory=$False)]
-            [ValidateScript({($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-                [string]$toDate,
-        [Parameter(Mandatory=$False)][switch]$searchInAll,
-        [Parameter(Mandatory=$False)][ValidateSet("OR","AND")][string]$searchInAllAction,
-        [Parameter(Mandatory=$False)][string]$searchInAllValues,
-        [Parameter(Mandatory=$False)][string]$searchInAllCategoryList,
-        [Parameter(Mandatory=$False)][string]$listSeparator,
-        [Parameter(Mandatory=$False)][ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS","INCLUDE_DELETED","ONLY_DELETED","WITHOUT_DELETED")]
-            [string]$deletedOption,
-        [Parameter(Mandatory=$False)][int]$sizeLimit,
-        [Parameter(Mandatory=$False)][ValidateSet("ATLEAST","ATMOST")][string]$sizeLimitType,
-        [Parameter(Mandatory=$False)][string]$categoryIDList,
-        [Parameter(Mandatory=$False)][string]$categoryValues,
-        [Parameter(Mandatory=$False)][ValidateSet("OR","AND")][string]$categoryListAction,
-        [Parameter(Mandatory=$False)][switch]$includeFileCategories,
-        [Parameter(Mandatory=$False)][string]$fileCategoriesSeparator,
-        [Parameter(Mandatory=$False)][string]$fileCategoryValueSeparator,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $False)][string]$filePattern,
+		[Parameter(Mandatory = $False)][switch]$fileRetrieved,
+		[Parameter(Mandatory = $False)][switch]$fileChanged,
+		[Parameter(Mandatory = $False)][switch]$fileNew,
+		[Parameter(Mandatory = $False)][switch]$fileLocked,
+		[Parameter(Mandatory = $False)][switch]$fileWithNoMark,
+		[Parameter(Mandatory = $False)][switch]$includeVersions,
+		[Parameter(Mandatory = $False)][switch]$onlyOpenSafes,
+		[Parameter(Mandatory = $False)][switch]$includeSubFolders,
+		[Parameter(Mandatory = $False)][ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")][string]$dateLimit,
+		[Parameter(Mandatory = $False)][ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")][string]$dateActionLimit,
+		[Parameter(Mandatory = $False)][int]$prevCount,
+		[Parameter(Mandatory = $False)]
+		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
+		[string]$fromDate,
+		[Parameter(Mandatory = $False)]
+		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
+		[string]$toDate,
+		[Parameter(Mandatory = $False)][switch]$searchInAll,
+		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$searchInAllAction,
+		[Parameter(Mandatory = $False)][string]$searchInAllValues,
+		[Parameter(Mandatory = $False)][string]$searchInAllCategoryList,
+		[Parameter(Mandatory = $False)][string]$listSeparator,
+		[Parameter(Mandatory = $False)][ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
+		[string]$deletedOption,
+		[Parameter(Mandatory = $False)][int]$sizeLimit,
+		[Parameter(Mandatory = $False)][ValidateSet("ATLEAST", "ATMOST")][string]$sizeLimitType,
+		[Parameter(Mandatory = $False)][string]$categoryIDList,
+		[Parameter(Mandatory = $False)][string]$categoryValues,
+		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$categoryListAction,
+		[Parameter(Mandatory = $False)][switch]$includeFileCategories,
+		[Parameter(Mandatory = $False)][string]$fileCategoriesSeparator,
+		[Parameter(Mandatory = $False)][string]$fileCategoryValueSeparator,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                            
-        #execute pacli    
-        $Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() | 
+	Else {
+
+		#$PACLI variable set to executable path
+
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
                 searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
                     categoryListAction ) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=29){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+29)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+		if($Return.ExitCode) {
 
-                        "Name"=$values[0]
-                        "Accessed"=$values[1]
-                        "CreationDate"=$values[2]
-                        "CreatedBy"=$values[3]
-                        "DeletionDate"=$values[4]
-                        "DeletionBy"=$values[5]
-                        "LastUsedDate"=$values[6]
-                        "LastUsedBy"=$values[7]
-                        "LockDate"=$values[8]
-                        "LockedBy"=$values[9]
-                        "LockedByGW"=$values[10]
-                        "Size"=$values[11]
-                        "History"=$values[12]
-                        "InternalName"=$values[13]
-                        "Safe"=$values[14]
-                        "Folder"=$values[15]
-                        "FileID"=$values[16]
-                        "LockedByUserID"=$values[17]
-                        "ValidationStatus"=$values[18]
-                        "HumanCreationDate"=$values[19]
-                        "HumanCreatedBy"=$values[20]
-                        "HumanLastUsedDate"=$values[21]
-                        "HumanLastUsedBy"=$values[22]
-                        "HumanLastRetrievedByDate"=$values[23]
-                        "HumanLastRetrievedBy"=$values[24]
-                        "ComponentCreationDate"=$values[25]
-                        "ComponentCreatedBy"=$values[26]
-                        "ComponentLastUsedDate"=$values[27]
-                        "ComponentLastUsedBy"=$values[28]   
-                        "ComponentLastRetrievedDate"=$values[26]
-                        "ComponentLastRetrievedBy"=$values[27]
-                        "FileCategories"=$values[28]
-                    
-                    }
-                    
-                }
-            
-            }
-            
-        }
-        
-    }
-    
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+
+					#Get Range from array
+					$values = $Results[$i..($i + 29)]
+
+					#Output Object
+					[PSCustomObject] @{
+
+						"Name"                       = $values[0]
+						"Accessed"                   = $values[1]
+						"CreationDate"               = $values[2]
+						"CreatedBy"                  = $values[3]
+						"DeletionDate"               = $values[4]
+						"DeletionBy"                 = $values[5]
+						"LastUsedDate"               = $values[6]
+						"LastUsedBy"                 = $values[7]
+						"LockDate"                   = $values[8]
+						"LockedBy"                   = $values[9]
+						"LockedByGW"                 = $values[10]
+						"Size"                       = $values[11]
+						"History"                    = $values[12]
+						"InternalName"               = $values[13]
+						"Safe"                       = $values[14]
+						"Folder"                     = $values[15]
+						"FileID"                     = $values[16]
+						"LockedByUserID"             = $values[17]
+						"ValidationStatus"           = $values[18]
+						"HumanCreationDate"          = $values[19]
+						"HumanCreatedBy"             = $values[20]
+						"HumanLastUsedDate"          = $values[21]
+						"HumanLastUsedBy"            = $values[22]
+						"HumanLastRetrievedByDate"   = $values[23]
+						"HumanLastRetrievedBy"       = $values[24]
+						"ComponentCreationDate"      = $values[25]
+						"ComponentCreatedBy"         = $values[26]
+						"ComponentLastUsedDate"      = $values[27]
+						"ComponentLastUsedBy"        = $values[28]
+						"ComponentLastRetrievedDate" = $values[26]
+						"ComponentLastRetrievedBy"   = $values[27]
+						"FileCategories"             = $values[28]
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

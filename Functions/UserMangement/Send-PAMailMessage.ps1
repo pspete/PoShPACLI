@@ -1,6 +1,6 @@
-Function Send-PAMailMessage{
+﻿Function Send-PAMailMessage {
 
-    <#
+	<#
     .SYNOPSIS
     	Enables a User to send e-mail using details in the User’s account
 
@@ -15,21 +15,21 @@ Function Send-PAMailMessage{
 
     .PARAMETER mailServerIP
         The IP of the mail server
-        
+
     .PARAMETER senderEmail
-        The E-mail address of the sender. This is used as return address and in 
+        The E-mail address of the sender. This is used as return address and in
         the ‘From’ field of the mail.
-        
+
     .PARAMETER domainName
-        The sender’s domain (computer name). This value can usually be anything 
+        The sender’s domain (computer name). This value can usually be anything
         other than blank.
-        
+
     .PARAMETER recipientEmail
         The E-mail address of the recipient
-        
+
     .PARAMETER recipientUser
         The recipient user in Vault=vault. The recipient’s E-mail is taken from
-        the user’s personal details. From the home address/business address/other 
+        the user’s personal details. From the home address/business address/other
         address according to the following parameters
 
     .PARAMETER safe
@@ -37,16 +37,16 @@ Function Send-PAMailMessage{
 
     .PARAMETER folder
         The outgoing E-mail will contain a link to this CyberArk Vault file.
-        
+
     .PARAMETER file
         The outgoing E-mail will contain a link to this CyberArk Vault file.
-        
+
     .PARAMETER subject
         The subject of the E-mail message
-            
+
     .PARAMETER text
         The text of the E-mail message
-        
+
     .PARAMETER useBusinessMail
         Use the recipient user’s business Email address.
 
@@ -62,34 +62,34 @@ Function Send-PAMailMessage{
 
     .PARAMETER parm1
         Values for variables in the template file.
-        
+
     .PARAMETER parm2
         Values for variables in the template file.
-        
+
     .PARAMETER parm3
         Values for variables in the template file.
-        
-    .PARAMETER parm4 
+
+    .PARAMETER parm4
         Values for variables in the template file.
-        
+
     .PARAMETER parm5
         Values for variables in the template file.
-        
+
     .PARAMETER parm6
         Values for variables in the template file.
-        
+
     .PARAMETER parm7
         Values for variables in the template file.
-        
+
     .PARAMETER parm8
         Values for variables in the template file.
-        
+
     .PARAMETER parm9
         Values for variables in the template file.
-        
+
     .PARAMETER parm10
         Values for variables in the template file.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -106,63 +106,63 @@ Function Send-PAMailMessage{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$mailServerIP,
-        [Parameter(Mandatory=$True)][string]$senderEmail,
-        [Parameter(Mandatory=$True)][string]$domainName,
-        [Parameter(Mandatory=$False)][string]$recipientEmail,
-        [Parameter(Mandatory=$False)][string]$recipientUser,
-        [Parameter(Mandatory=$False)][string]$safe,
-        [Parameter(Mandatory=$False)][string]$folder,
-        [Parameter(Mandatory=$False)][string]$file,
-        [Parameter(Mandatory=$False)][string]$subject,
-        [Parameter(Mandatory=$False)][string]$text,
-        [Parameter(Mandatory=$False)][switch]$useBusinessMail,
-        [Parameter(Mandatory=$False)][switch]$useHomeMail,
-        [Parameter(Mandatory=$False)][switch]$useOtherMail,
-        [Parameter(Mandatory=$False)][string]$templateFile,
-        [Parameter(Mandatory=$False)][string]$parm1,
-        [Parameter(Mandatory=$False)][string]$parm2,
-        [Parameter(Mandatory=$False)][string]$parm3,
-        [Parameter(Mandatory=$False)][string]$parm4, 
-        [Parameter(Mandatory=$False)][string]$parm5,
-        [Parameter(Mandatory=$False)][string]$parm6,
-        [Parameter(Mandatory=$False)][string]$parm7,
-        [Parameter(Mandatory=$False)][string]$parm8,
-        [Parameter(Mandatory=$False)][string]$parm9,
-        [Parameter(Mandatory=$False)][string]$parm10,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$mailServerIP,
+		[Parameter(Mandatory = $True)][string]$senderEmail,
+		[Parameter(Mandatory = $True)][string]$domainName,
+		[Parameter(Mandatory = $False)][string]$recipientEmail,
+		[Parameter(Mandatory = $False)][string]$recipientUser,
+		[Parameter(Mandatory = $False)][string]$safe,
+		[Parameter(Mandatory = $False)][string]$folder,
+		[Parameter(Mandatory = $False)][string]$file,
+		[Parameter(Mandatory = $False)][string]$subject,
+		[Parameter(Mandatory = $False)][string]$text,
+		[Parameter(Mandatory = $False)][switch]$useBusinessMail,
+		[Parameter(Mandatory = $False)][switch]$useHomeMail,
+		[Parameter(Mandatory = $False)][switch]$useOtherMail,
+		[Parameter(Mandatory = $False)][string]$templateFile,
+		[Parameter(Mandatory = $False)][string]$parm1,
+		[Parameter(Mandatory = $False)][string]$parm2,
+		[Parameter(Mandatory = $False)][string]$parm3,
+		[Parameter(Mandatory = $False)][string]$parm4,
+		[Parameter(Mandatory = $False)][string]$parm5,
+		[Parameter(Mandatory = $False)][string]$parm6,
+		[Parameter(Mandatory = $False)][string]$parm7,
+		[Parameter(Mandatory = $False)][string]$parm8,
+		[Parameter(Mandatory = $False)][string]$parm9,
+		[Parameter(Mandatory = $False)][string]$parm10,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-            
-        $Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }
