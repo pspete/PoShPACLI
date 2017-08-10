@@ -223,7 +223,7 @@
 		[ValidateSet("PA_AUTH", "NT_AUTH", "NT_OR_PA_AUTH", "PKI_AUTH", "RADIUS_AUTH", "LDAP_AUTH")]
 		[string]$authType,
 		[Parameter(Mandatory = $False)][switch]$requireSecureIDAuth,
-		[Parameter(Mandatory = $False)][string]$password,
+		[Parameter(Mandatory = $False)][securestring]$password,
 		[Parameter(Mandatory = $False)][string]$certFileName,
 		[Parameter(Mandatory = $False)][string]$DN,
 		[Parameter(Mandatory = $False)][string]$location,
@@ -285,6 +285,13 @@
 	Else {
 
 		#$PACLI variable set to executable path
+
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
 
 		$Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote authType, retention, quota)
