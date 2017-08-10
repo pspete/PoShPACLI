@@ -53,7 +53,9 @@
 		#$PACLI variable set to executable path
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
+
+		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
 
 		if($Return.ExitCode) {
 
