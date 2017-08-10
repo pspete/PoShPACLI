@@ -45,7 +45,7 @@
 		[Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $True)][string]$folder,
 		[Parameter(Mandatory = $True)][string]$file,
-		[Parameter(Mandatory = $True)][string]$password,
+		[Parameter(Mandatory = $True)][securestring]$password,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
@@ -58,6 +58,13 @@
 	Else {
 
 		#$PACLI variable set to executable path
+
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
 
 		$Return = Invoke-PACLICommand $pacli STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
