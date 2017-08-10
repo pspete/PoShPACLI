@@ -29,15 +29,15 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$password,
-		[Parameter(Mandatory = $True)][string]$newPassword,
+		[Parameter(Mandatory = $True)][securestring]$password,
+		[Parameter(Mandatory = $True)][securestring]$newPassword,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
@@ -50,6 +50,21 @@
 	Else {
 
 		#$PACLI variable set to executable path
+
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
+
+		#deal with newPassword SecureString
+		if($PSBoundParameters.ContainsKey("newPassword")) {
+
+			#Included decoded password in request
+			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
+
+		}
 
 		$Return = Invoke-PACLICommand $pacli SETPASSWORD $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 

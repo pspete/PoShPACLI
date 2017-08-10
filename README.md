@@ -6,7 +6,8 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ----------
 ## Whats New
- - Major Change to Module Folder/File Structure
+ - SecureString values now required for any parameters relating to password input.
+ - Major Change to Module Folder/File Structure.
  - All Functions reworked, reducing Parse errors and resolving lots of bugs.
 
 ## Getting Started
@@ -14,7 +15,7 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ### Prerequisites
 
- - The CyberArk PACLI executable must be present on the same computer as the module. 
+ - The CyberArk PACLI executable must be present on the same computer as the module.
 
 ### Install & Use
 
@@ -68,11 +69,11 @@ Open-Safe -vault "VAULT" -user "User" -safe "SAFE_Name"
 
 #Add Password to Safe
 
-Add-PasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password "Password_String"
+Add-PasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password (Read-Host -AsSecureString)
 
 #Add Device Type for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value 
+Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value
 "Device_Type"
 
 #Add PolicyID for password
@@ -118,7 +119,7 @@ See the [CONTRIBUTING.md](CONTRIBUTING.md) for a few more details.
 
 ## <a id="Pacli_to_PoShPACLI"></a>PACLI to PoShPACLI Function Relationship
 
-The table shows how the the PoShPACLI module functions relate to the native PACLI commands: 
+The table shows how the the PoShPACLI module functions relate to the native PACLI commands:
 
 |PACLI Command|PoshPACLI Function|
 |---:|:---|

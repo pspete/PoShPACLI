@@ -211,7 +211,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -221,7 +221,7 @@
 		[Parameter(Mandatory = $True)][string]$destUser,
 		[Parameter(Mandatory = $False)][string]$authType,
 		[Parameter(Mandatory = $False)][switch]$requireSecureIDAuth,
-		[Parameter(Mandatory = $False)][string]$password,
+		[Parameter(Mandatory = $False)][securestring]$password,
 		[Parameter(Mandatory = $False)][string]$certFileName,
 		[Parameter(Mandatory = $False)][string]$DN,
 		[Parameter(Mandatory = $True)][string]$location,
@@ -284,6 +284,13 @@
 	Else {
 
 		#$PACLI variable set to executable path
+
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
+
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+
+		}
 
 		$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
 
