@@ -1,6 +1,6 @@
-Function Get-PasswordObject{
+﻿Function Get-PasswordObject {
 
-    <#
+	<#
     .SYNOPSIS
     	Retrieves a password object from the Vault
 
@@ -34,19 +34,19 @@ Function Get-PasswordObject{
         is locked by another user.
 
     .PARAMETER requestUsageType
-        The operation that the user will carry out. 
+        The operation that the user will carry out.
         Possible options are:
             REQUEST_AND_USE – create and send a request if
                 necessary, or use the confirmation if it has been granted
                 to open the Safe/file/password.
-                
+
             CHECK_DON’T_USE – check if a request has been sent
                 or, if not, create one and send an error. If a request is not
                 needed, carry out the action.
-                
+
             USE_ONLY – if the request has been confirmed, or if a
                 request is not needed, open the Safe/file/password.
-                
+
         Note: In version 4.1, this parameter has no default value and
         is obsolete. However, it can still be used as long as the
         ‘userequest’, ‘sendrequest’ and ‘executerequest’ parameters
@@ -94,67 +94,67 @@ Function Get-PasswordObject{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$True)][switch]$lockFile,
-        [Parameter(Mandatory=$False)][switch]$evenIfLocked,
-        [Parameter(Mandatory=$False)][ValidateSet("REQUEST_AND_USE","CHECK_DON’T_USE","USE_ONLY")][string]$requestUsageType,
-        [Parameter(Mandatory=$False)][ValidateSet("SINGLE","MULTIPLE")][string]$requestAccessType,
-        [Parameter(Mandatory=$False)][string]$usableFrom,
-        [Parameter(Mandatory=$False)][string]$usableTo,
-        [Parameter(Mandatory=$False)][string]$requestReason,
-        [Parameter(Mandatory=$False)][switch]$userRequest,
-        [Parameter(Mandatory=$False)][switch]$sendRequest,
-        [Parameter(Mandatory=$False)][switch]$executeRequest,
-        [Parameter(Mandatory=$False)][string]$internalName,        
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $True)][switch]$lockFile,
+		[Parameter(Mandatory = $False)][switch]$evenIfLocked,
+		[Parameter(Mandatory = $False)][ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
+		[Parameter(Mandatory = $False)][ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
+		[Parameter(Mandatory = $False)][string]$usableFrom,
+		[Parameter(Mandatory = $False)][string]$usableTo,
+		[Parameter(Mandatory = $False)][string]$requestReason,
+		[Parameter(Mandatory = $False)][switch]$userRequest,
+		[Parameter(Mandatory = $False)][switch]$sendRequest,
+		[Parameter(Mandatory = $False)][switch]$executeRequest,
+		[Parameter(Mandatory = $False)][string]$internalName,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                        
-        #execute pacli    
-        $Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() | 
+	Else {
+
+		#$PACLI variable set to executable path
+
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
- 
-                #Output Object
-                [PSCustomObject] @{
+		if($Return.ExitCode) {
 
-                    "Password"=$Results
-                
-                }
-            
-            }
-            
-        }
-        
-    }
-    
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#Output Object
+				[PSCustomObject] @{
+
+					"Password" = $Results
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

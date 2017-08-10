@@ -1,6 +1,6 @@
-Function Update-Group{
+﻿Function Update-Group {
 
-    <#
+	<#
     .SYNOPSIS
     	Updates CyberArk Group properties.
 
@@ -25,7 +25,7 @@ Function Update-Group{
 
     .PARAMETER externalGroup
 		The name of an external group that is a member in the current group.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -38,43 +38,43 @@ Function Update-Group{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$group,
-        [Parameter(Mandatory=$True)][string]$location,
-        [Parameter(Mandatory=$False)][string]$description,
-        [Parameter(Mandatory=$False)][string]$externalGroup,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$group,
+		[Parameter(Mandatory = $True)][string]$location,
+		[Parameter(Mandatory = $False)][string]$description,
+		[Parameter(Mandatory = $False)][string]$externalGroup,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-        
-        $Return = Invoke-PACLICommand $pacli UPDATEGROUP $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli UPDATEGROUP $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }

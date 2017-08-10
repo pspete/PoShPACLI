@@ -1,36 +1,36 @@
-Function Update-LDAPBranch{
+﻿Function Update-LDAPBranch {
 
-    <#
+	<#
     .SYNOPSIS
     	Updates an existing LDAP branch in a CyberArk Directory Map
 
     .DESCRIPTION
     	Exposes the PACLI Function: "LDAPBRANCHUPDATE"
 
-    .PARAMETER vault 
+    .PARAMETER vault
 		The name of the Vault.
 
-    .PARAMETER user 
+    .PARAMETER user
 		The Username of the User who is logged on.
 
     .PARAMETER ldapMapName
 		The name of the Directory Map where the LDAP branch will be updated.
 
     .PARAMETER updateBranchID
-		A 64-bit unique ID of the branch to update       
+		A 64-bit unique ID of the branch to update
 
-    .PARAMETER ldapDirName 
+    .PARAMETER ldapDirName
 		The name of the LDAP directory.
 
-    .PARAMETER ldapBranchName 
+    .PARAMETER ldapBranchName
 		The DN of the LDAP directory branch.
 
-    .PARAMETER ldapQuery 
+    .PARAMETER ldapQuery
 		The LDAP filter that is applied to objects in the specified branch.
 
-    .PARAMETER ldapGroupMatch 
+    .PARAMETER ldapGroupMatch
 		A regular expression used to filter LDAP groups of objects in the branch.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -43,73 +43,73 @@ Function Update-LDAPBranch{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$ldapMapName,
-        [Parameter(Mandatory=$True)][string]$updateBranchID,
-        [Parameter(Mandatory=$True)][string]$ldapDirName,
-        [Parameter(Mandatory=$True)][string]$ldapBranchName,
-        [Parameter(Mandatory=$False)][string]$ldapQuery,
-        [Parameter(Mandatory=$False)][string]$ldapGroupMatch,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$ldapMapName,
+		[Parameter(Mandatory = $True)][string]$updateBranchID,
+		[Parameter(Mandatory = $True)][string]$ldapDirName,
+		[Parameter(Mandatory = $True)][string]$ldapBranchName,
+		[Parameter(Mandatory = $False)][string]$ldapQuery,
+		[Parameter(Mandatory = $False)][string]$ldapGroupMatch,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                        
-        #execute pacli with parameters
-        $Return = Invoke-PACLICommand $pacli LDAPBRANCHUPDATE "$(
-            $PSBoundParameters.getEnumerator() | 
+	Else {
+
+		#$PACLI variable set to executable path
+
+		#execute pacli with parameters
+		$Return = Invoke-PACLICommand $pacli LDAPBRANCHUPDATE "$(
+            $PSBoundParameters.getEnumerator() |
                 ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=7){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+7)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+		if($Return.ExitCode) {
 
-                        "LDAPBranchID"=$values[0]
-                        "LDAPMapID"=$values[1]
-                        "LDAPMapName"=$values[2]
-                        "LDAPDirName"=$values[3]
-                        "LDAPBranchName"=$values[4]
-                        "LDAPQuery"=$values[5]
-                        "LDAPGroupMatch"=$values[6]
+			Write-Debug $Return.StdErr
 
-                    }
-                }
-                
-            }
-            
-        }
+		}
 
-    }
-    
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+
+					#Get Range from array
+					$values = $Results[$i..($i + 7)]
+
+					#Output Object
+					[PSCustomObject] @{
+
+						"LDAPBranchID"   = $values[0]
+						"LDAPMapID"      = $values[1]
+						"LDAPMapName"    = $values[2]
+						"LDAPDirName"    = $values[3]
+						"LDAPBranchName" = $values[4]
+						"LDAPQuery"      = $values[5]
+						"LDAPGroupMatch" = $values[6]
+
+					}
+				}
+
+			}
+
+		}
+
+	}
+
 }

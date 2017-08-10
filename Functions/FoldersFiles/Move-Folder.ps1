@@ -1,6 +1,6 @@
-Function Move-Folder{
+﻿Function Move-Folder {
 
-    <#
+	<#
     .SYNOPSIS
     	Moves a folder to a different location within the same Safe.
 
@@ -22,7 +22,7 @@ Function Move-Folder{
     .PARAMETER newLocation
         The new location of the folder.
         Note: Add a backslash ‘\’ before the name of the location.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -35,42 +35,42 @@ Function Move-Folder{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$True)][string]$newLocation,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$newLocation,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli MOVEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli MOVEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }

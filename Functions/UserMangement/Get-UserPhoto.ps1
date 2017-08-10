@@ -1,27 +1,27 @@
-Function Get-UserPhoto{
+﻿Function Get-UserPhoto {
 
-    <#
+	<#
     .SYNOPSIS
     	Retrieves the photograph of the specified CyberArk User from the Vault
 
     .DESCRIPTION
     	Exposes the PACLI Function: "GETUSERPHOTO"
-    
-    .PARAMETER vault 
+
+    .PARAMETER vault
     	The name of the Vault to which the User has access.
-        
-    .PARAMETER user 
+
+    .PARAMETER user
     	The Username of the User who is carrying out the command.
-        
-    .PARAMETER destUser 
+
+    .PARAMETER destUser
     	The name of the User whose photo you wish to retrieve.
-        
-    .PARAMETER localFolder 
+
+    .PARAMETER localFolder
     	The path of the folder in which the photograph is stored
 
-    .PARAMETER localFile 
+    .PARAMETER localFile
     	The name of the file in which the photograph is stored
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -34,42 +34,42 @@ Function Get-UserPhoto{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$destUser,
-        [Parameter(Mandatory=$True)][string]$localFolder,
-        [Parameter(Mandatory=$True)][string]$localFile,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$destUser,
+		[Parameter(Mandatory = $True)][string]$localFolder,
+		[Parameter(Mandatory = $True)][string]$localFile,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-        
-        $Return = Invoke-PACLICommand $pacli GETUSERPHOTO $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli GETUSERPHOTO $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }
