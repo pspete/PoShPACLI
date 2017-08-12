@@ -1,6 +1,6 @@
-Function Remove-Request{
+﻿Function Remove-Request {
 
-    <#
+	<#
     .SYNOPSIS
     	Removes a request from the requests list. If the request is removed from 
         the MY_REQUEST list, it is deleted. If it is removed from the 
@@ -24,7 +24,7 @@ Function Remove-Request{
     
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+        with multiple scripts simultaneously. The default is â€˜0â€™.
 
     .EXAMPLE
     	A sample command that uses the function or script, optionally followed
@@ -35,40 +35,41 @@ Function Remove-Request{
     	LASTEDIT: July 2017
     #>
     
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$requestID,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
+	[CmdLetBinding(
+		SupportsShouldProcess = $True
+	)]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$requestID,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-    If(!(Test-ExePreReqs)){
+	If (!(Test-ExePreReqs)) {
 
-            #$pacli variable not set or not a valid path
+		#$pacli variable not set or not a valid path
 
+	}
+    elseif( $PSCmdlet.ShouldProcess($($PSBoundParameters.getEnumerator()))) {
+        Write-Output 'Would process command Invoke-PACLICommand $pacli DELETEREQUEST'
     }
 
-    Else{
+	Else {
 
-        #$PACLI variable set to executable path
+		#$PACLI variable set to executable path
                     
-        $Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
         
-        if($Return.ExitCode){
+		if ($Return.ExitCode) {
+			Write-Debug $Return.StdErr
+			Write-Output $FALSE
+		}
+		else {
+			Write-Output $TRUE
             
-            Write-Debug $Return.StdErr
-            $FALSE
-
-        }
+		}
         
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+	}
 
 }
