@@ -29,14 +29,13 @@ Function Test-ExePreReqs {
 		[string]$pacliVar = "pacli"
 	)
 
-	if ((Get-Variable -Name $pacliVar -ErrorAction SilentlyContinue) -and 
-		(Test-Path (Get-Variable -Name pacli -ValueOnly -ErrorAction SilentlyContinue) `
-				-PathType leaf -Include "*.exe" -ErrorAction SilentlyContinue)) {
-		$true
+	if ((Get-Variable -Name pacliVar) -and 
+		(Test-Path (Get-Variable -Name pacliVar -ValueOnly ) -PathType leaf -Include "*.exe" )) {
+			Write-Output $true
 	}#if
 	else {
 		Write-Warning -Message "Failed Pre-Requisite Checks, please check you have the PACLI.exe and DLLS installed"
-		$False
+		Write-Output $False
 	}#else
     
 }
