@@ -1,6 +1,6 @@
-Function Update-FileCategory{
+﻿Function Update-FileCategory {
 
-    <#
+	<#
     .SYNOPSIS
     	Updates an existing File Category for a file or password.
 
@@ -21,13 +21,13 @@ Function Update-FileCategory{
 
     .PARAMETER file
         The name of the file or password that is attached to a File Category.
-        
+
     .PARAMETER category
         The name of the File Category.
-        
+
     .PARAMETER value
         The value of the File Category for the file.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -40,46 +40,46 @@ Function Update-FileCategory{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder = "Root",
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$True)][string]$category,
-        [Parameter(Mandatory=$True)][string]$value,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder = "Root",
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $True)][string]$category,
+		[Parameter(Mandatory = $True)][string]$value,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            Write-Verbose "Error updating File Category: $category"
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            Write-Verbose "File Category $category Updated"
-            $TRUE
-            
-        }
-        
-    }
-    
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			Write-Verbose "Error updating File Category: $category"
+			$FALSE
+
+		}
+
+		else {
+
+			Write-Verbose "File Category $category Updated"
+			$TRUE
+
+		}
+
+	}
+
 }

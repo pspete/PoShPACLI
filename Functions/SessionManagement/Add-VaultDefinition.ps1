@@ -1,6 +1,6 @@
-Function Add-VaultDefinition{
+﻿Function Add-VaultDefinition {
 
-    <#
+	<#
     .SYNOPSIS
     	Enables a Vault to be defined
 
@@ -9,20 +9,20 @@ Function Add-VaultDefinition{
 
     .PARAMETER vault
         The name of the Vault to create.
-        
+
     .PARAMETER address
         The IP address of the Vault.
-        
+
     .PARAMETER port
         The Vault IP port.
-        
+
     .PARAMETER timeout
         The number of seconds to wait for a Vault to respond to a
         command before a timeout message is displayed.
 
     .PARAMETER behindFirewall
         Whether or not the Vault will be accessed via a Firewall.
-        
+
     .PARAMETER reconnectPeriod
         The number of seconds to wait before the sessions with the
         Vault is re-established.
@@ -41,16 +41,16 @@ Function Add-VaultDefinition{
 
     .PARAMETER proxyPort
         The Proxy server IP Port
-        
+
     .PARAMETER proxyUser
         User for Proxy server if NTLM authentication is required
-        
+
     .PARAMETER proxyPassword
         User's Password for Proxy server
-        
+
     .PARAMETER proxyAuthDomain
         The authentication domain of the proxy
-        
+
     .PARAMETER numOfRecordsPerSend
         The number of file records to transfer together in a single
         TCP/IP send/receive commands.
@@ -87,63 +87,63 @@ Function Add-VaultDefinition{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$address,
-        [Parameter(Mandatory=$False)][int]$port,
-        [Parameter(Mandatory=$False)][int]$timeout,
-        [Parameter(Mandatory=$False)][switch]$behindFirewall,
-        [Parameter(Mandatory=$False)][int]$reconnectPeriod,
-        [Parameter(Mandatory=$False)][switch]$useOnlyHTTP1,
-        [Parameter(Mandatory=$False)]
-            [ValidateSet("HTTP","HTTPS","SOCKS4","SOCKS5","NOPROXY")]
-            [string]$proxyType,
-        [Parameter(Mandatory=$False)][string]$proxyAddress,
-        [Parameter(Mandatory=$False)][int]$proxyPort,
-        [Parameter(Mandatory=$False)][string]$proxyUser,
-        [Parameter(Mandatory=$False)][string]$proxyPassword,
-        [Parameter(Mandatory=$False)][string]$proxyAuthDomain,
-        [Parameter(Mandatory=$False)][int]$numOfRecordsPerSend,
-        [Parameter(Mandatory=$False)][int]$numOfRecordsPerChunk,
-        [Parameter(Mandatory=$False)][switch]$enhancedSSL,
-        [Parameter(Mandatory=$False)][switch]$preAuthSecuredSession,
-        [Parameter(Mandatory=$False)][switch]$trustSSC,
-        [Parameter(Mandatory=$False)][switch]$allowSSCFor3PartyAuth,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
-    
-    If(!(Test-ExePreReqs)){
 
-            #$pacli variable not set or not a valid path
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$address,
+		[Parameter(Mandatory = $False)][int]$port,
+		[Parameter(Mandatory = $False)][int]$timeout,
+		[Parameter(Mandatory = $False)][switch]$behindFirewall,
+		[Parameter(Mandatory = $False)][int]$reconnectPeriod,
+		[Parameter(Mandatory = $False)][switch]$useOnlyHTTP1,
+		[Parameter(Mandatory = $False)]
+		[ValidateSet("HTTP", "HTTPS", "SOCKS4", "SOCKS5", "NOPROXY")]
+		[string]$proxyType,
+		[Parameter(Mandatory = $False)][string]$proxyAddress,
+		[Parameter(Mandatory = $False)][int]$proxyPort,
+		[Parameter(Mandatory = $False)][string]$proxyUser,
+		[Parameter(Mandatory = $False)][string]$proxyPassword,
+		[Parameter(Mandatory = $False)][string]$proxyAuthDomain,
+		[Parameter(Mandatory = $False)][int]$numOfRecordsPerSend,
+		[Parameter(Mandatory = $False)][int]$numOfRecordsPerChunk,
+		[Parameter(Mandatory = $False)][switch]$enhancedSSL,
+		[Parameter(Mandatory = $False)][switch]$preAuthSecuredSession,
+		[Parameter(Mandatory = $False)][switch]$trustSSC,
+		[Parameter(Mandatory = $False)][switch]$allowSSCFor3PartyAuth,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-    }
+	If(!(Test-ExePreReqs)) {
 
-    Else{
+		#$pacli variable not set or not a valid path
 
-        #$PACLI variable set to executable path
-            
-        Write-Verbose "Defining Vault"
-        
-        $Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() | 
-            ConvertTo-ParameterString -donotQuote proxyType,port,timeout,reconnectPeriod,
-                proxyPort,numOfRecordsPerSend,numOfRecordsPerChunk)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	}
 
-        }
-        
-        else{
-        
-            Write-Verbose "Vault Defined"
-            $TRUE
-            
-        }
-        
-    }
+	Else {
+
+		#$PACLI variable set to executable path
+
+		Write-Verbose "Defining Vault"
+
+		$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote proxyType, port, timeout, reconnectPeriod,
+			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			Write-Verbose "Vault Defined"
+			$TRUE
+
+		}
+
+	}
 
 }

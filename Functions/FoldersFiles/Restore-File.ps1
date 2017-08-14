@@ -1,6 +1,6 @@
-Function Restore-File{
+﻿Function Restore-File {
 
-    <#
+	<#
     .SYNOPSIS
     	Undelete a file or password that has been previously deleted.
 
@@ -34,42 +34,42 @@ Function Restore-File{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli UNDELETEFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli UNDELETEFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }

@@ -1,6 +1,6 @@
-Function Get-SafeOwners{
+﻿Function Get-SafeOwners {
 
-    <#
+	<#
     .SYNOPSIS
     	Produces a list of all the Safe Owners of the specified Safe(s).
 
@@ -9,21 +9,21 @@ Function Get-SafeOwners{
 
     .PARAMETER vault
         The name of the Vault containing the specified Safe.
-        
+
     .PARAMETER user
         The Username of the User who is logged on.
-        
+
     .PARAMETER safePattern
-        The full name or part of the name of the Safe(s) to include in the list. 
+        The full name or part of the name of the Safe(s) to include in the list.
         Alternatively, a wildcard can be used in this parameter.
-        
+
     .PARAMETER ownerPattern
-        The full name or part of the name of the Owner(s) to include in the list. 
+        The full name or part of the name of the Owner(s) to include in the list.
         Alternatively, a wildcard can be used in this parameter.
-        
+
     .PARAMETER includeGroupMembers
         Whether or not to include individual members of Groups in the list.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -36,73 +36,73 @@ Function Get-SafeOwners{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safePattern,
-        [Parameter(Mandatory=$True)][string]$ownerPattern,
-        [Parameter(Mandatory=$False)][switch]$includeGroupMembers,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safePattern,
+		[Parameter(Mandatory = $True)][string]$ownerPattern,
+		[Parameter(Mandatory = $False)][switch]$includeGroupMembers,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                            
-        #execute pacli    
-        $Return = Invoke-PACLICommand $pacli OWNERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
+	Else {
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-                
-                #loop through results
-                For($i=0 ; $i -lt $Results.length ; $i+=11){
-                    
-                    #Get Range from array
-                    $values = $Results[$i..($i+11)]
-                    
-                    #Output Object
-                    [PSCustomObject] @{
+		#$PACLI variable set to executable path
 
-                        "Name"=$values[0]
-                        "Group"=$values[1]
-                        "SafeName"=$values[2]
-                        "AccessLevel"=$values[3]
-                        "OpenDate"=$values[4]
-                        "OpenState"=$values[5]
-                        "ExpirationDate"=$values[6]
-                        "GatewayAccount"=$values[7]
-                        "ReadOnlyByDefault"=$values[8]
-                        "SafeID"=$values[9]
-                        "UserID"=$values[10]
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli OWNERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-                    }
-                        
-                }
-            
-            }
-            
-        }
-        
-    }
-    
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 11) {
+
+					#Get Range from array
+					$values = $Results[$i..($i + 11)]
+
+					#Output Object
+					[PSCustomObject] @{
+
+						"Name"              = $values[0]
+						"Group"             = $values[1]
+						"SafeName"          = $values[2]
+						"AccessLevel"       = $values[3]
+						"OpenDate"          = $values[4]
+						"OpenState"         = $values[5]
+						"ExpirationDate"    = $values[6]
+						"GatewayAccount"    = $values[7]
+						"ReadOnlyByDefault" = $values[8]
+						"SafeID"            = $values[9]
+						"UserID"            = $values[10]
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

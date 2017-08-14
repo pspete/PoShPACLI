@@ -1,8 +1,8 @@
-Function Get-HttpGwUrl{
+﻿Function Get-HttpGwUrl {
 
-    <#
+	<#
     .SYNOPSIS
-    	Retrieves the HTTP Gateway URL for a file in the Safe. 
+    	Retrieves the HTTP Gateway URL for a file in the Safe.
         Note: This command is no longer supported in version 5.5.
 
     .DESCRIPTION
@@ -22,7 +22,7 @@ Function Get-HttpGwUrl{
 
     .PARAMETER file
         The name of the specified file.
-        
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -35,55 +35,55 @@ Function Get-HttpGwUrl{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        #execute pacli    
-        $Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
+	Else {
 
-        }
-        
-        else{
-        
-            #if result(s) returned
-            if($Return.StdOut){
-                
-                #Convert Output to array
-                $Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+		#$PACLI variable set to executable path
 
-                #Output Object
-                [PSCustomObject] @{
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-                    "URL"=$Results[0]
-                
-                }       
-                
-            }
-            
-        }
-        
-    }
-    
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+
+		}
+
+		else {
+
+			#if result(s) returned
+			if($Return.StdOut) {
+
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+				#Output Object
+				[PSCustomObject] @{
+
+					"URL" = $Results[0]
+
+				}
+
+			}
+
+		}
+
+	}
+
 }

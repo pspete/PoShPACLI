@@ -1,6 +1,6 @@
-Function Get-File{
+﻿Function Get-File {
 
-    <#
+	<#
     .SYNOPSIS
     	Retrieves a file from a Safe, if the appropriate authorizations are held.
 
@@ -39,7 +39,7 @@ Function Get-File{
         another user.
 
     .PARAMETER requestUsageType
-        The operation that the user will carry out. 
+        The operation that the user will carry out.
         Possible options are:
             REQUEST_AND_USE – create and send a request if
                 necessary, or use the confirmation if it has been granted
@@ -49,7 +49,7 @@ Function Get-File{
                 not needed, carry out the action.
             USE_ONLY – if the request has been confirmed, or if a
                 request is not needed, open the Safe/file/password.
-        
+
         Note: In version 4.1, this parameter has no default value and
         is obsolete. However, it can still be used as long as the
         ‘userequest’, ‘sendrequest’ and ‘executerequest’ parameters
@@ -60,28 +60,28 @@ Function Get-File{
         Possible options are:
             SINGLE – for a single access.
             MULTIPLE – for multiple accesses.
-            
+
     .PARAMETER usableFrom
         The proposed date from when the request will be valid.
 
     .PARAMETER usableTo
         The proposed date until when the request will be valid.
-    
+
     .PARAMETER requestReason
         The reason for the request.
-        
+
     .PARAMETER userRequest
         If a confirmed request exists, it will be used to open the Safe
         and retrieve the specified file.
-    
+
     .PARAMETER sendRequest
         If a request is required to retrieve the selected file, it will be
         sent.
-    
+
     .PARAMETER executeRequest
         If a confirmed request exists or a request is not needed, the
         specified file will be retrieved.
-    
+
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working
         with multiple scripts simultaneously. The default is ‘0’.
@@ -93,61 +93,61 @@ Function Get-File{
     .NOTES
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
-        
+
             Comment:
-            If the userequest, sendrequest, and executerequest parameters are all 
-            set to ‘no’, and a request is needed, the status of the request will 
+            If the userequest, sendrequest, and executerequest parameters are all
+            set to ‘no’, and a request is needed, the status of the request will
             be returned as an error.
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder,
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$True)][string]$localFolder,
-        [Parameter(Mandatory=$True)][string]$localFile,
-        [Parameter(Mandatory=$False)][switch]$lockFile,
-        [Parameter(Mandatory=$False)][switch]$evenIfLocked,
-        [Parameter(Mandatory=$False)][ValidateSet("REQUEST_AND_USE","CHECK_DON’T_USE","USE_ONLY")][string]$requestUsageType,        
-        [Parameter(Mandatory=$False)][ValidateSet("SINGLE","MULTIPLE")][string]$requestAccessType,
-        [Parameter(Mandatory=$False)][string]$usableFrom,
-        [Parameter(Mandatory=$False)][string]$usableTo,
-        [Parameter(Mandatory=$False)][string]$requestReason,
-        [Parameter(Mandatory=$False)][switch]$userRequest,
-        [Parameter(Mandatory=$False)][switch]$sendRequest,
-        [Parameter(Mandatory=$False)][switch]$executeRequest,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $True)][string]$localFolder,
+		[Parameter(Mandatory = $True)][string]$localFile,
+		[Parameter(Mandatory = $False)][switch]$lockFile,
+		[Parameter(Mandatory = $False)][switch]$evenIfLocked,
+		[Parameter(Mandatory = $False)][ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
+		[Parameter(Mandatory = $False)][ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
+		[Parameter(Mandatory = $False)][string]$usableFrom,
+		[Parameter(Mandatory = $False)][string]$usableTo,
+		[Parameter(Mandatory = $False)][string]$requestReason,
+		[Parameter(Mandatory = $False)][switch]$userRequest,
+		[Parameter(Mandatory = $False)][switch]$sendRequest,
+		[Parameter(Mandatory = $False)][switch]$executeRequest,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli RETRIEVEFILE $($PSBoundParameters.getEnumerator() | 
-            ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$FALSE
+
+		}
+
+		else {
+
+			$TRUE
+
+		}
+
+	}
 
 }

@@ -1,6 +1,6 @@
-Function Unlock-File{
+﻿Function Unlock-File {
 
-    <#
+	<#
     .SYNOPSIS
     	Unlocks a file or password, enabling other Users to retrieve it.
 
@@ -34,44 +34,44 @@ Function Unlock-File{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$safe,
-        [Parameter(Mandatory=$True)][string]$folder = "Root",
-        [Parameter(Mandatory=$True)][string]$file,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder = "Root",
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                    
-        $Return = Invoke-PACLICommand $pacli UNLOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            Write-Verbose "Error Unlocking File: $file"
-            $FALSE
+	Else {
 
-        }
-        
-        else{
-        
-            Write-Verbose "$file Unlocked"
-            $TRUE
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli UNLOCKFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			Write-Verbose "Error Unlocking File: $file"
+			$FALSE
+
+		}
+
+		else {
+
+			Write-Verbose "$file Unlocked"
+			$TRUE
+
+		}
+
+	}
 
 }

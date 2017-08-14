@@ -1,6 +1,6 @@
-Function Update-Location{
+﻿Function Update-Location {
 
-    <#
+	<#
     .SYNOPSIS
     	Updates the properties of a location.
 
@@ -9,16 +9,16 @@ Function Update-Location{
 
     .PARAMETER vault
         The name of the Vault to which the User has access.
-    
+
     .PARAMETER user
         The Username of the User who is carrying out the command.
-        
+
     .PARAMETER location
         The name of the location to update.
         Note: Add a backslash ‘\’ before the name of the location
-        
+
     .PARAMETER quota
-        The size of the quota to allocate to the location in MB. 
+        The size of the quota to allocate to the location in MB.
         The specification ‘-1’ indicates an unlimited quota allocation.
 
     .PARAMETER sessionID
@@ -33,45 +33,45 @@ Function Update-Location{
     	AUTHOR: Pete Maan
     	LASTEDIT: July 2017
     #>
-    
-    [CmdLetBinding()]
-    param(
-        [Parameter(Mandatory=$True)][string]$vault,
-        [Parameter(Mandatory=$True)][string]$user,
-        [Parameter(Mandatory=$True)][string]$location,
-        [Parameter(Mandatory=$True)][int]$quota,
-        [Parameter(Mandatory=$False)][int]$sessionID
-    )
 
-    If(!(Test-ExePreReqs)){
+	[CmdLetBinding()]
+	param(
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$location,
+		[Parameter(Mandatory = $True)][int]$quota,
+		[Parameter(Mandatory = $False)][int]$sessionID
+	)
 
-            #$pacli variable not set or not a valid path
+	If(!(Test-ExePreReqs)) {
 
-    }
+		#$pacli variable not set or not a valid path
 
-    Else{
+	}
 
-        #$PACLI variable set to executable path
-                
-        $Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
-            
-            $PSBoundParameters.getEnumerator() | 
-            
-                ConvertTo-ParameterString -donotQuote quota)
-        
-        if($Return.ExitCode){
-            
-            Write-Debug $Return.StdErr
-            $false
+	Else {
 
-        }
-        
-        Else{
-        
-            $true
-            
-        }
-        
-    }
+		#$PACLI variable set to executable path
+
+		$Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
+
+			$PSBoundParameters.getEnumerator() |
+
+			ConvertTo-ParameterString -donotQuote quota)
+
+		if($Return.ExitCode) {
+
+			Write-Debug $Return.StdErr
+			$false
+
+		}
+
+		Else {
+
+			$true
+
+		}
+
+	}
 
 }
