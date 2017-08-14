@@ -206,8 +206,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-User -vault Lab -user userAdmin -destUser backup1 -password (read-host -AsSecureString) -backupAdmin -location "\"
+
+        Creates a new vault user in the root location, named backup1, with backup admin vault rights.
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -294,7 +295,7 @@
 
 		$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
 
-			ConvertTo-ParameterString -donotQuote password, retention, quota)
+			ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
 		if($Return.ExitCode) {
 

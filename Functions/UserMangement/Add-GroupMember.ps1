@@ -24,8 +24,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		add-groupmember -vault Lab -user administrator -group xGroup1 -member xUser1
+
+		Adds user xUser1 to group xGroup1
 
     .NOTES
     	AUTHOR: Pete Maan

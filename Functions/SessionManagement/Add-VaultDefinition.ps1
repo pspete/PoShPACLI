@@ -80,12 +80,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+        Add-VaultDefinition -vault VaultA -address 10.10.10.20
+
+        Defines a connection to Vault (VaultA) with IP 10.10.10.20
+        VaultA definition is used in subsequent executions of PACLI functions.
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

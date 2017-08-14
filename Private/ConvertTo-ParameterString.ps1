@@ -11,13 +11,13 @@
         arguments to native PACLI functions.
 
         Common Parameters, like Verbose or Debug, which may be contained in the array
-        passed to this function are exluded from the output by default as they will
+        passed to this function are excluded from the output by default as they will
         not be interpreted by the PACLI utility and will result in an error.
 
     .PARAMETER boundParameters
     	The bound parameter object from a PowerShell function.
 
-    .PARAMETER donotQuote
+    .PARAMETER doNotQuote
         Optional parameterNames that will be included int he output without "quotes"
 
     .PARAMETER excludedParameters
@@ -45,17 +45,25 @@
     	$PSBoundParameters.getEnumerator() | ConvertTo-ParameterString
 
         #Outputs a string where the Key/Value pairs contained in PSBoundParameters
-        #are converted into KEY="VALUE"
+		#are converted into KEY="VALUE"
+
+	.EXAMPLE
+    	$PSBoundParameters.getEnumerator() | ConvertTo-ParameterString -DoNotQuote thisParameter
+
+        #Outputs a string where the Key/Value pairs contained in PSBoundParameters
+		#are converted into KEY="VALUE"
+		#and Key/Value pair for parameter $thisParameter
+		#is converted into KEY=VALUE
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipeline = $True)][array]$boundParameters,
-		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][array]$donotQuote,
+		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][array]$doNotQuote,
 		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][array]$excludedParameters = @(
 			"Debug", "ErrorAction", "ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable",
 			"Verbose", "WarningAction", "WarningVariable", "WhatIf", "Confirm")
@@ -68,9 +76,9 @@
 		$parameters = @()
 
 		#Ensure sessionID is never enclosed in quotes
-		if($donotQuote -notcontains "sessionID") {
+		if($doNotQuote -notcontains "sessionID") {
 
-			$donotQuote += "sessionID"
+			$doNotQuote += "sessionID"
 
 		}
 
@@ -78,10 +86,10 @@
 
 	Process {
 
-		#foreach elemant in passed array
+		#foreach element in passed array
 		$boundParameters | ForEach-Object {
 
-			If(($excludedParameters -notContains $_.key) -and ($donotQuote -notContains $_.key)) {
+			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -notContains $_.key)) {
 
 				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
 				#Quote Parameter Value so Key="Value"
@@ -92,7 +100,7 @@
 					#boolean values YES/NO should never be "in quotes"
 			}
 
-			If(($excludedParameters -notContains $_.key) -and ($donotQuote -Contains $_.key)) {
+			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -Contains $_.key)) {
 
 				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
 				$parameters += $($_.Key) + "=" + $($_.Value)

@@ -113,12 +113,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+        Update-SafeOwner -vault lab -user administrator -owner magnus -safe VIP -manageOwners:$false
+
+        Remove manageOwners right from user magnus on safe VIP
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

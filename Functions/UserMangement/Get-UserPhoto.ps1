@@ -27,12 +27,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Get-UserPhoto -vault Lab -user administrator -destUser user1 -localFolder D:\userphotos -localFile userphoto.jpg
+
+		Saves photo set on user account user1 to local drive
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

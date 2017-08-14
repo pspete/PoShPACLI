@@ -114,12 +114,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-SafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store -administer -supervise
+
+        Adds user The_User to safe The_Safe with the specified safe permissions.
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

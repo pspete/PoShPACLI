@@ -24,8 +24,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Set-Password -vault Lab -user PacliUser -password (read-host -AsSecureString) -newPassword (Read-Host -AsSecureString)
+
+		Resets the password of the authenticated user
 
     .NOTES
     	AUTHOR: Pete Maan

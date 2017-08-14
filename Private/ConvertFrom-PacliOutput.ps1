@@ -14,7 +14,7 @@
     	The string Returned from the PACLI executable.
 
         PACLI commands which return output should be called with the 'ENCLOSE'
-        output option to ensure all values are enclised in quotation marks.
+        output option to ensure all values are enclosed in quotation marks.
 
         All whitespace should be removed from the PACLI output via a
         Select-String -Pattern "\S" pattern match in order to prevent blank lines
@@ -28,18 +28,23 @@
         The default Regular Expression used is: '"([^"]*)"'
 
     .EXAMPLE
-        foreach ($pacliLine in $pacliOuPut){
+        foreach ($pacliLine in $pacliOutPut){
 
             $returnValues = $pacliLine | ConvertFrom-PacliOutput
 
         }
 
         Outputs an array containing the returned property values for each line
-        of PACLI output passed to this function.
+		of PACLI output passed to this function.
+
+	.EXAMPLE
+		$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+		Converts StdOut of PACLI output (saved to $Return) to array (saved to $Results)
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

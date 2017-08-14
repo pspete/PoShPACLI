@@ -50,12 +50,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		New-Password -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 -minDigit 1 -forbiddenChars xyz
+
+		Generates a new password as per the parameters
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

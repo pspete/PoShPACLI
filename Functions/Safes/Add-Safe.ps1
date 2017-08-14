@@ -170,8 +170,10 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+        add-safe -vault Lab -user administrator -safe PacliSafe `
+        -location \ -size 50 -description "new Safe" -dailyVersions 5 -logRetention 40
+
+        Creates safe "PacliSafe", in the root location, with size, daily versions & log retention set
 
     .NOTES
     	AUTHOR: Pete Maan

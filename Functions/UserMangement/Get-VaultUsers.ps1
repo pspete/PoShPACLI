@@ -38,12 +38,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Get-VaultUsers -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
+
+		Returns all LDAP users/groups from vault
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -69,7 +70,7 @@
 		#$PACLI variable set to executable path
 
 		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
 
 		if($Return.ExitCode) {
 

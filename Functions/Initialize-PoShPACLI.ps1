@@ -11,7 +11,7 @@
         to locate the PACLI executable.
 
     .PARAMETER pacliFolder
-        If PACLI is does not reside in a folder in the local PATH Enviromental variable,
+        If PACLI does not reside in a folder in the local PATH Environment variable,
         supply the folder in which to find the PACLI executable against this parameter.
 
     .PARAMETER pacliExe
@@ -29,7 +29,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -39,7 +39,7 @@
 		[Parameter(Mandatory = $False)][ValidateSet("Global", "Local", "Script", "Private", 0, 1, 2, 3)][string]$scope = 1
 	)
 
-	#Force remove pacli variable in specifed scope
+	#Force remove pacli variable in specified scope
 	Remove-Variable -scope $scope -name pacli -Force -ErrorAction SilentlyContinue
 
 	Try {
@@ -50,13 +50,15 @@
 			#look for PACLI in the PATH environmental variable
 			$pacliPath = (Get-Command -Name $pacliExe -CommandType Application -ErrorAction Stop |
 
-				Select -ExpandProperty Definition) | select -First 1
+				Select-Object -ExpandProperty Definition) | Select-Object -First 1
 
 		}
 
 		Else {
 
-			If(!(Test-Path ($pacliPath = Join-Path -path $pacliFolder -childPath $pacliExe) -pathType Leaf -include $pacliExe -ErrorAction Stop)) {
+			If(!(Test-Path (
+						$pacliPath = Join-Path -path $pacliFolder -childPath $pacliExe) `
+						-pathType Leaf -include $pacliExe -ErrorAction Stop)) {
 
 				#not valid/pacli.exe not found in folder
 				throw

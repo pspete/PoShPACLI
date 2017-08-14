@@ -24,8 +24,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	New-LogonFile -logonFile D:\PACLI\cred.file -username administrator -password $password
+
+		Creates a new credential file, cred.file, which can be used for logon via Connect-Vault.
 
     .NOTES
     	AUTHOR: Pete Maan

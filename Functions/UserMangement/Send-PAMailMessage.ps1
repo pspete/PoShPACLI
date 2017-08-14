@@ -95,6 +95,11 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
+
+        Send-PAMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
+        -domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports -folder Reports `
+        -file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
+
         Example for template file content:
         Dear %%RecipientUser,
         I have sent you a new report named %%FILE in safe %%SAFE folder
@@ -102,9 +107,11 @@
         Best Regards,
         %%PARM1.
 
+        Sends an email to the specified vault user in accordance with the supplied parameters.
+
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

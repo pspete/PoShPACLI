@@ -21,8 +21,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Remove-Group -vault Lab -user administrator -group old_group
+
+		Deletes group old_group from Vault.
 
     .NOTES
     	AUTHOR: Pete Maan
