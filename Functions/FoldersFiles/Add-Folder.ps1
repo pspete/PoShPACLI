@@ -24,12 +24,12 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-Folder -vault lab -user administrator -safe Reports -folder Root\AuditReports\2017
 
+		Adds folder "2017" to the AuditReports folder under the Root location in safe "Reports"
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

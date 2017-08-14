@@ -28,12 +28,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Move-Folder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 -newLocation root
+
+		Moves folder "2017"to the root location of the safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

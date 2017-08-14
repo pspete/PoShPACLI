@@ -30,12 +30,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-PasswordObject -vault lab -user administrator -safe Dev_Team -folder Root -file devpass -password (read-host -AsSecureString)
+
+		Adds password object with specified value to Dev_Team safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
