@@ -42,12 +42,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-SafeFileCategory -vault Lab -user administrator -safe EU_Support -category NewCat1 -type cat_text
+
+		Adds text type category NewCat1 to EU_Support safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

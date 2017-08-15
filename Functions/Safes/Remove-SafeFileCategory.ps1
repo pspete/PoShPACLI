@@ -25,12 +25,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Remove-SafeFileCategory -vault lab -user administrator -safe EU_Infra -category CISOcat1
+
+		Deletes CISOcat1 file category from EU_Infra safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

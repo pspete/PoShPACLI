@@ -35,12 +35,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Remove-Rule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM -fullObjectName root\IDMPass -isFolder:$false
+
+		Deletes OLAC rule 15 from object
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

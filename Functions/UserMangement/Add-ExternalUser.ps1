@@ -7,11 +7,8 @@
     .DESCRIPTION
     	Exposes the PACLI Function: "ADDUPDATEEXTERNALUSERENTITY"
 
-    .PARAMETER sessionID
-
-
     .PARAMETER vault
-    	The name of the Vault where the file is stored.
+    	The name of the Vault.
 
     .PARAMETER user
     	The Username of the User who is carrying out the task.
@@ -24,8 +21,7 @@
     	The full DN of the user in the external directory.
 
     .PARAMETER ldapDirectory
-    	The name (netbios domain name) of the external directory where the user or
-        group is defined.
+    	The name of the external directory where the user or group is defined.
 
     .PARAMETER UpdateIfExists
     	Whether or not existing external Users and Groups definitions will be updated
@@ -36,12 +32,12 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-ExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT -UpdateIfExists
 
+		Updates user admin01 in vault from domain VIRTUALREAL.IT
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
         Work required to support LDAPFullDN & Parameter Validation / Parameter Sets
     #>
 
@@ -94,7 +90,7 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"UserName" = $Results[0]
+					"UserName" = $Results
 
 				}
 

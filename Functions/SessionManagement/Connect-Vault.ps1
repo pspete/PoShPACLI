@@ -54,7 +54,9 @@
             The logonfile and radius parameters cannot be defined in the same command.
 
     .EXAMPLE
-    	Connect-Vault -vault Vault -user User -password (read-host -AsSecureString)
+		Connect-Vault -vault VaultA -user User1 -password (read-host -AsSecureString)
+
+		Logs onto defined vault VaultA using User1
 
     .NOTES
     	AUTHOR: Pete Maan

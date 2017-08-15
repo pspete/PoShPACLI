@@ -30,12 +30,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Add-AreaAddress -vault Lab -user administrator -networkArea All\EMEA -ipAddress 192.168.0.1 -toAddress 192.168.0.254
+
+		Adds address range to EMEA Network Area
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -59,7 +60,8 @@
 
 		#$PACLI variable set to executable path
 
-		$Return = Invoke-PACLICommand $pacli ADDAREAADDRESS $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $pacli ADDAREAADDRESS $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
 		if($Return.ExitCode) {
 

@@ -2,7 +2,7 @@
 
 	<#
     .SYNOPSIS
-    	Displays the description of a CyberArk group.
+    	Returns details of a CyberArk group.
 
     .DESCRIPTION
     	Exposes the PACLI Function: "GROUPDETAILS"
@@ -21,12 +21,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Get-GroupDetails -vault Lab -user administrator -group cybr_admins -sessionID 0
+
+		Lists details for cybr_admins group
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

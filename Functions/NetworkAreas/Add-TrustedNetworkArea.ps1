@@ -35,12 +35,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Add-TrustedNetworkArea -vault Lab -user administrator -trusterName user1 -networkArea "All\VPN"
+
+		Adds VPN Trusted Network Area to user1
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]

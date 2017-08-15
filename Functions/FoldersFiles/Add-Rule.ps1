@@ -135,12 +135,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Add-Rule -vault lab -user administrator -userName user1 -safeName DEV-1 -fullObjectName root\rootpass -effect Allow -retrieve -store -delete
+
+        Adds rule on object rootpass safe DEV-1 fr user user1
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -155,28 +156,28 @@
 		[Parameter(Mandatory = $False)][switch]$retrieve,
 		[Parameter(Mandatory = $False)][switch]$store,
 		[Parameter(Mandatory = $False)][switch]$delete,
-		[Parameter(Mandatory = $False)][string]$administer,
-		[Parameter(Mandatory = $False)][string]$supervise,
-		[Parameter(Mandatory = $False)][string]$backup,
-		[Parameter(Mandatory = $False)][string]$manageOwners,
-		[Parameter(Mandatory = $False)][string]$accessNoConfirmation,
-		[Parameter(Mandatory = $False)][string]$validateSafeContent,
-		[Parameter(Mandatory = $False)][string]$list,
-		[Parameter(Mandatory = $False)][string]$usePassword,
-		[Parameter(Mandatory = $False)][string]$updateObjectProperties,
-		[Parameter(Mandatory = $False)][string]$initiateCPMChange,
-		[Parameter(Mandatory = $False)][string]$initiateCPMChangeWithManualPassword,
-		[Parameter(Mandatory = $False)][string]$createFolder,
-		[Parameter(Mandatory = $False)][string]$deleteFolder,
-		[Parameter(Mandatory = $False)][string]$moveFrom,
-		[Parameter(Mandatory = $False)][string]$moveInto,
-		[Parameter(Mandatory = $False)][string]$viewAudit,
-		[Parameter(Mandatory = $False)][string]$viewPermissions,
-		[Parameter(Mandatory = $False)][string]$eventsList,
-		[Parameter(Mandatory = $False)][string]$addEvents,
-		[Parameter(Mandatory = $False)][string]$createObject,
-		[Parameter(Mandatory = $False)][string]$unlockObject,
-		[Parameter(Mandatory = $False)][string]$renameObject,
+		[Parameter(Mandatory = $False)][switch]$administer,
+		[Parameter(Mandatory = $False)][switch]$supervise,
+		[Parameter(Mandatory = $False)][switch]$backup,
+		[Parameter(Mandatory = $False)][switch]$manageOwners,
+		[Parameter(Mandatory = $False)][switch]$accessNoConfirmation,
+		[Parameter(Mandatory = $False)][switch]$validateSafeContent,
+		[Parameter(Mandatory = $False)][switch]$list,
+		[Parameter(Mandatory = $False)][switch]$usePassword,
+		[Parameter(Mandatory = $False)][switch]$updateObjectProperties,
+		[Parameter(Mandatory = $False)][switch]$initiateCPMChange,
+		[Parameter(Mandatory = $False)][switch]$initiateCPMChangeWithManualPassword,
+		[Parameter(Mandatory = $False)][switch]$createFolder,
+		[Parameter(Mandatory = $False)][switch]$deleteFolder,
+		[Parameter(Mandatory = $False)][switch]$moveFrom,
+		[Parameter(Mandatory = $False)][switch]$moveInto,
+		[Parameter(Mandatory = $False)][switch]$viewAudit,
+		[Parameter(Mandatory = $False)][switch]$viewPermissions,
+		[Parameter(Mandatory = $False)][switch]$eventsList,
+		[Parameter(Mandatory = $False)][switch]$addEvents,
+		[Parameter(Mandatory = $False)][switch]$createObject,
+		[Parameter(Mandatory = $False)][switch]$unlockObject,
+		[Parameter(Mandatory = $False)][switch]$renameObject,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 

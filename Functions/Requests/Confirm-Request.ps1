@@ -30,12 +30,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Confirm-Request -vault Lab -user administrator -safe SQL -requestID 11 -confirm
+
+		Confirms request with ID 11 in safe SQL
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -43,8 +44,8 @@
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$requestID,
-		[Parameter(Mandatory = $True)][string]$confirm,
+		[Parameter(Mandatory = $True)][int]$requestID,
+		[Parameter(Mandatory = $True)][switch]$confirm,
 		[Parameter(Mandatory = $False)][string]$reason,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
@@ -59,7 +60,11 @@
 
 		#$PACLI variable set to executable path
 
-		$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		#ConvertTo-ParameterString usually remove "Confirm", which conflists with a parameter of the function
+		$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($PSBoundParameters.getEnumerator() |
+		ConvertTo-ParameterString -doNotQuote requestID -excludedParameters @("Debug", "ErrorAction",
+		"ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable", "Verbose", "WarningAction",
+		"WarningVariable", "WhatIf")) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 

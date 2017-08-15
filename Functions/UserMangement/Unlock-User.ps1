@@ -21,8 +21,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Unlock-User -vault Lab -user administrator -password (read-host -AsSecureString)
+
+		Unlocks the current user (administrator), after supplying password for the account.
 
     .NOTES
     	AUTHOR: Pete Maan

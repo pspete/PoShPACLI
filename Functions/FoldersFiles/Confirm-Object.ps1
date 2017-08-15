@@ -41,12 +41,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Confirm-Object -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys -internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+
+		Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
