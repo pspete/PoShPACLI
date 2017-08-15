@@ -27,12 +27,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+    	Remove-Request -vault Lab -user Requestor -safe Admin_Safe -requestID 2
+
+		Deletes request from Requestor's My_Request list
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -40,7 +41,7 @@
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$requestID,
+		[Parameter(Mandatory = $True)][int]$requestID,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
@@ -54,7 +55,8 @@
 
 		#$PACLI variable set to executable path
 
-		$Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote requestID)
 
 		if($Return.ExitCode) {
 

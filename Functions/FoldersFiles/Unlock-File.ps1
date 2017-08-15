@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		unlock-file -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
+		Unlock-File -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
 
 		Unlocks file Adminpass in safe Prod_Servers
 

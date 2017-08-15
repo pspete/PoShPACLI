@@ -33,12 +33,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	A sample command that uses the function or script, optionally followed
-    	by sample output and a description. Repeat this keyword for each example.
+		Update-FileCategory -vault Lab -user administrator -safe Reports -folder root -file Access -category NextReview -value 1/6/18
+
+		Updates value of existing File Category "NextReview" on file "Access"
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
