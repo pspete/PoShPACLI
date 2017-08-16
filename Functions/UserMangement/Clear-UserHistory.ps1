@@ -48,14 +48,13 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
-			$TRUE
+			exit 0
 
 		}
 

@@ -56,11 +56,11 @@
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
 
-		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
+			Write-Error $Return.StdErr
 
 		}
 

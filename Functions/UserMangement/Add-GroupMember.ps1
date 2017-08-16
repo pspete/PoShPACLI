@@ -1,37 +1,37 @@
 ﻿Function Add-GroupMember {
 
 	<#
-    .SYNOPSIS
-    	Adds a CyberArk User to an existing CyberArk group
+	.SYNOPSIS
+		Adds a CyberArk User to an existing CyberArk group
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "ADDGROUPMEMBER"
+	.DESCRIPTION
+		Exposes the PACLI Function: "ADDGROUPMEMBER"
 
-    .PARAMETER vault
+	.PARAMETER vault
 		The name of the Vault containing the group.
 
-    .PARAMETER user
+	.PARAMETER user
 		The Username of the User who is carrying out the command
 
-    .PARAMETER group
+	.PARAMETER group
 		The name of the group.
 
-    .PARAMETER member
-        The name of the User to add to the group.
+	.PARAMETER member
+		The name of the User to add to the group.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
+	.EXAMPLE
 		add-groupmember -vault Lab -user administrator -group xGroup1 -member xUser1
 
 		Adds user xUser1 to group xGroup1
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -56,14 +56,13 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
-			$TRUE
+			exit 0
 
 		}
 

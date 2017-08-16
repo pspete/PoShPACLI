@@ -1,44 +1,44 @@
 ﻿Function Add-Group {
 
 	<#
-    .SYNOPSIS
-    	Adds a group to the CyberArk Vault
+	.SYNOPSIS
+		Adds a group to the CyberArk Vault
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "ADDGROUP"
+	.DESCRIPTION
+		Exposes the PACLI Function: "ADDGROUP"
 
-    .PARAMETER vault
+	.PARAMETER vault
 		The name of the Vault to which the User has access.
 
-    .PARAMETER user
+	.PARAMETER user
 		The Username of the User who is carrying out the command
 
-    .PARAMETER group
+	.PARAMETER group
 		The name of the group to add.
 
-    .PARAMETER location
+	.PARAMETER location
 		The location in which to add the group.
 		Note: Add a backslash ‘\’ before the name of the location.
 
-    .PARAMETER description
+	.PARAMETER description
 		A brief description of the group.
 
-    .PARAMETER externalGroup
+	.PARAMETER externalGroup
 		The name of an external group that is a member in the current group.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
+	.EXAMPLE
 			add-group -vault Lab -user administrator -group xGroup1 -location "\" -description "test description"
 
 			Adds group xGroup1 to vault.
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -65,14 +65,13 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
-			$TRUE
+			exit 0
 
 		}
 

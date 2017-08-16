@@ -41,9 +41,7 @@
 		[Parameter(Mandatory = $True, Position = 2)]
 		[string]$PacliCommand,
 		[Parameter(Mandatory = $False, Position = 3)]
-		[string]$CommandParameters,
-		[Parameter(Mandatory = $False)]
-		[switch]$DoNotWait
+		[string]$CommandParameters
 	)
 
 	Begin {
@@ -67,12 +65,13 @@
 		#Start Process
 		$PacliProcess.start()
 
-		#Some Pacli functions do not return data if waitforexit specified
-		if( -not ($DoNotWait)) {
+		#Read Output Stream First
+		$StdOut = $PacliProcess.StandardOutput.ReadToEnd()
+		$StdErr = $PacliProcess.StandardError.ReadToEnd()
 
-			$PacliProcess.WaitForExit()
-
-		}
+		#If you wait for the process to exit before reading StandardOutput
+		#the process can block trying to write to it, so the process never ends.
+		$PacliProcess.WaitForExit()
 
 	}
 
@@ -83,8 +82,8 @@
 		[PSCustomObject] @{
 
 			"ExitCode" = $PacliProcess.ExitCode
-			"StdOut"   = $PacliProcess.StandardOutput.ReadToEnd()
-			"StdErr"   = $PacliProcess.StandardError.ReadToEnd()
+			"StdOut"   = $StdOut
+			"StdErr"   = $StdErr
 
 		}
 

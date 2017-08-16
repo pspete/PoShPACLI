@@ -71,18 +71,17 @@
 		#$PACLI variable set to executable path
 
 		$Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) -DoNotWait
+				ConvertTo-ParameterString)
 
 		if($Return.StdErr) {
 
-			write-debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		elseif($Return -match "True") {
 
-			$TRUE
+			exit 0
 
 		}
 

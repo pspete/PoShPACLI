@@ -1,34 +1,34 @@
 ﻿Function Remove-Group {
 
 	<#
-    .SYNOPSIS
-    	Deletes a CyberArk group from the Vault
+		.SYNOPSIS
+			Deletes a CyberArk group from the Vault
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETEGROUP"
+		.DESCRIPTION
+			Exposes the PACLI Function: "DELETEGROUP"
 
-    .PARAMETER vault
+		.PARAMETER vault
 		The name of the Vault containing the group.
 
-    .PARAMETER user
+		.PARAMETER user
 		The Username of the User who is carrying out the command
 
-    .PARAMETER group
+		.PARAMETER group
 		The name of the group to delete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+		.PARAMETER sessionID
+			The ID number of the session. Use this parameter when working
+				with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Remove-Group -vault Lab -user administrator -group old_group
+		.EXAMPLE
+			Remove-Group -vault Lab -user administrator -group old_group
 
-		Deletes group old_group from Vault.
+			Deletes group old_group from Vault.
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
-    #>
+		.NOTES
+			AUTHOR: Pete Maan
+			LASTEDIT: August 2017
+		#>
 
 	[CmdLetBinding()]
 	param(
@@ -52,14 +52,13 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
-			$TRUE
+			exit 0
 
 		}
 

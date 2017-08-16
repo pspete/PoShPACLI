@@ -23,7 +23,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: July 2017
+    	LASTEDIT: August 2017
     #>
 
 	[CmdLetBinding()]
@@ -48,11 +48,7 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Starting Pacli"
-
-			#Return FALSE
-			$false
+			Write-Error $Return.StdErr
 
 		}
 
@@ -60,8 +56,7 @@
 
 			Write-Verbose "Pacli Started"
 
-			#return TRUE
-			$true
+			exit 0
 
 		}
 

@@ -61,7 +61,7 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
+			Write-Error $Return.StdErr
 
 		}
 

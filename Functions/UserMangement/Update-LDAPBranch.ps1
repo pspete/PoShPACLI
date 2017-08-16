@@ -1,50 +1,50 @@
 ﻿Function Update-LDAPBranch {
 
 	<#
-    .SYNOPSIS
-    	Updates an existing LDAP branch in a CyberArk Directory Map
+	.SYNOPSIS
+		Updates an existing LDAP branch in a CyberArk Directory Map
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LDAPBRANCHUPDATE"
+	.DESCRIPTION
+		Exposes the PACLI Function: "LDAPBRANCHUPDATE"
 
-    .PARAMETER vault
+	.PARAMETER vault
 		The name of the Vault.
 
-    .PARAMETER user
+	.PARAMETER user
 		The Username of the User who is logged on.
 
-    .PARAMETER ldapMapName
+	.PARAMETER ldapMapName
 		The name of the Directory Map where the LDAP branch will be updated.
 
-    .PARAMETER updateBranchID
+	.PARAMETER updateBranchID
 		A 64-bit unique ID of the branch to update
 
-    .PARAMETER ldapDirName
+	.PARAMETER ldapDirName
 		The name of the LDAP directory.
 
-    .PARAMETER ldapBranchName
+	.PARAMETER ldapBranchName
 		The DN of the LDAP directory branch.
 
-    .PARAMETER ldapQuery
+	.PARAMETER ldapQuery
 		The LDAP filter that is applied to objects in the specified branch.
 
-    .PARAMETER ldapGroupMatch
+	.PARAMETER ldapGroupMatch
 		A regular expression used to filter LDAP groups of objects in the branch.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
+	.EXAMPLE
 			Update-LDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
 			-ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
 
 			Sets LDAP Group Match on branch with ID of 3 in "Vault Users Mapping"
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -71,12 +71,12 @@
 
 		#execute pacli with parameters
 		$Return = Invoke-PACLICommand $pacli LDAPBRANCHUPDATE "$(
-            $PSBoundParameters.getEnumerator() |
-                ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
+			$PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
+			Write-Error $Return.StdErr
 
 		}
 

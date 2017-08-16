@@ -60,7 +60,7 @@
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString) output (ALL,ENCLOSE)" -DoNotWait
+            ConvertTo-ParameterString) output (ALL,ENCLOSE)"
 
 		#if result(s) returned
 		if($Return.StdOut) {

@@ -88,9 +88,7 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Generating Password"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 

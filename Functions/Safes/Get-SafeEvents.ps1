@@ -83,7 +83,7 @@
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+            ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"
 
 		#If data returned
 		if($Return.StdOut) {

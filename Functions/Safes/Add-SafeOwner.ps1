@@ -172,16 +172,15 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			write-verbose "Error Adding Safe Owner: $owner"
-			$FALSE
+			Write-Error $Return.StdErr
+
 
 		}
 
 		else {
 
 			write-verbose "Added Safe Owner: $owner"
-			$TRUE
+			exit 0
 
 		}
 

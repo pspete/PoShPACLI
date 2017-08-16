@@ -56,16 +56,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Sharing Safe: $safe"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "$safe Shared via $gwAccount"
-			$TRUE
+			exit 0
 
 		}
 

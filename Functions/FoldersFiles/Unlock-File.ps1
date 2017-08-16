@@ -60,16 +60,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Unlocking File: $file"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "$file Unlocked"
-			$TRUE
+			exit 0
 
 		}
 

@@ -1,37 +1,37 @@
 ﻿Function Remove-GroupMember {
 
 	<#
-    .SYNOPSIS
-    	Removes a User as a member from a CyberArk group.
+	.SYNOPSIS
+		Removes a User as a member from a CyberArk group.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETEGROUPMEMBER"
+	.DESCRIPTION
+		Exposes the PACLI Function: "DELETEGROUPMEMBER"
 
-    .PARAMETER vault
+	.PARAMETER vault
 		The name of the Vault containing the group.
 
-    .PARAMETER user
+	.PARAMETER user
 		The Username of the User who is carrying out the command
 
-    .PARAMETER group
+	.PARAMETER group
 		The name of the group.
 
-    .PARAMETER member
-        The name of the group member to delete
+	.PARAMETER member
+		The name of the group member to delete
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
+	.EXAMPLE
 		Remove-GroupMember -vault Lab -user administrator -group auditors -member WebService
 
 		Deletes "WebService" as a member of vault group "Auditors"
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -56,14 +56,13 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
-			$TRUE
+			exit 0
 
 		}
 
