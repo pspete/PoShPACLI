@@ -58,16 +58,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Deleting Safe Share: $safe"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "$safe Share via $gwAccount Deleted"
-			$TRUE
+			exit 0
 
 		}
 

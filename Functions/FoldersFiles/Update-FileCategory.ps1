@@ -68,16 +68,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error updating File Category: $category"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "File Category $category Updated"
-			$TRUE
+			exit 0
 
 		}
 

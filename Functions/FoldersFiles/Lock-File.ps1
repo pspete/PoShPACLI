@@ -60,16 +60,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Locking File: $file"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "$file Locked"
-			$TRUE
+			exit 0
 
 		}
 

@@ -134,15 +134,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "Vault Defined"
-			$TRUE
+			exit 0
 
 		}
 

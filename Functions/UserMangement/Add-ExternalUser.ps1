@@ -72,8 +72,7 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Adding External User: $destUser"
+			Write-Error $Return.StdErr
 
 		}
 

@@ -250,16 +250,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Creating Safe: $safe"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "Safe Created: $safe"
-			$TRUE
+			exit 0
 
 		}
 

@@ -53,15 +53,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "Vault Config Read"
-			$TRUE
+			exit 0
 
 		}
 

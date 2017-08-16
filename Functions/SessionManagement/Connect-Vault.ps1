@@ -107,16 +107,14 @@
 
 		if($Return.ExitCode) {
 
-			Write-Debug $Return.StdErr
-			Write-Verbose "Error Logging on"
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
 		else {
 
 			Write-Verbose "Successfully Logged on"
-			$TRUE
+			exit 0
 
 		}
 

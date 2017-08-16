@@ -155,8 +155,7 @@
 
 		if($Return.StdErr) {
 
-			write-debug $Return.StdErr
-			$FALSE
+			Write-Error $Return.StdErr
 
 		}
 
