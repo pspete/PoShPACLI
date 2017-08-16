@@ -53,7 +53,7 @@
 
 		#execute pacli with parameters
 		$Return = Invoke-PACLICommand $pacli INSPECTUSER "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)" -doNotWait
+            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 

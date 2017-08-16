@@ -56,7 +56,7 @@
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli SAFESLIST "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+            ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		#if result(s) returned
 		if($Return.StdOut) {

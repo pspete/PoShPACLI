@@ -70,7 +70,7 @@
 		#$PACLI variable set to executable path
 
 		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 

@@ -151,7 +151,7 @@
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)" -DoNotWait
+            ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.StdErr) {
 
