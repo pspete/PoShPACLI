@@ -44,13 +44,13 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)][string]$vault,
-		[Parameter(Mandatory = $False)][string]$user,
-		[Parameter(Mandatory = $False)][string]$safe,
-		[Parameter(Mandatory = $False)][string]$folder,
-		[Parameter(Mandatory = $False)][string]$file,
-		[Parameter(Mandatory = $False)][string]$category,
-		[Parameter(Mandatory = $False)][string]$value,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$safe,
+		[Parameter(Mandatory = $True)][string]$folder,
+		[Parameter(Mandatory = $True)][string]$file,
+		[Parameter(Mandatory = $True)][string]$category,
+		[Parameter(Mandatory = $True)][string]$value,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 

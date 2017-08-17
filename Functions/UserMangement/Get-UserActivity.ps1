@@ -35,8 +35,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)][string]$vault,
-		[Parameter(Mandatory = $False)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $False)][int]$logDays,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)

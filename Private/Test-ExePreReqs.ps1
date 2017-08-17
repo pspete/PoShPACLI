@@ -10,7 +10,7 @@ Function Test-ExePreReqs {
         Function Test-ExePreReqs ensures that both the variable is set, and that the path
         to the utility stored in the variable resolves OK.
 
-        Returns True or False (if one or both of the conditions is not met).
+        Returns True, or, if one or both of the conditions is not met, False.
 
     .PARAMETER pacliVar
         The name of the variable containing the path to the PACLI Utility.
@@ -34,7 +34,7 @@ Function Test-ExePreReqs {
 			Write-Output $true
 	}#if
 	else {
-		Write-Warning -Message "Failed Pre-Requisite Checks, please check you have the PACLI.exe and DLLS installed"
+		Write-Error "Failed Pre-Requisite Checks: ensure PACLI.exe is available, then run Initialize-PoShPACLI"
 		Write-Output $False
 	}#else
 
