@@ -219,7 +219,7 @@ The table shows how the the PoShPACLI module functions relate to the native PACL
 |UPDATESAFE|Set-PVSafe|
 |INSPECTSAFE|Get-PVSafeActivity|
 |SAFEEVENTSLIST|Get-PVSafeEvent|
-|ADDEVENT|Set-PVSafeEvent|
+|ADDEVENT|Write-PVSafeEvent|
 |LISTSAFEFILECATEGORIES|Get-PVSafeFileCategory|
 |ADDSAFEFILECATEGORY|New-PVSafeFileCategory|
 |DELETESAFEFILECATEGORY|Remove-PVSafeFileCategory|

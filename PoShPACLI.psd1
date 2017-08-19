@@ -130,7 +130,7 @@
 		'Set-PVSafeFileCategory', #UPDATESAFEFILECATEGORY
 		'Remove-PVSafeFileCategory', #DELETESAFEFILECATEGORY
 		'Get-PVSafeFileCategory', #LISTSAFEFILECATEGORIES
-		'Set-PVSafeEvent', #ADDEVENT
+		'Write-PVSafeEvent', #ADDEVENT
 		'Get-PVSafeEvent', #SAFEEVENTSLIST
 		'Set-PVSafeNote', #ADDNOTE
 		'Reset-PVSafe', #RESETSAFE

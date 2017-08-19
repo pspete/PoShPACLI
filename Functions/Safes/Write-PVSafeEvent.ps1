@@ -1,4 +1,4 @@
-﻿Function Set-PVSafeEvent {
+﻿Function Write-PVSafeEvent {
 
 	<#
     .SYNOPSIS
@@ -36,7 +36,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
+		Write-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
 
 		Adds event to safe Windows_Safe
 
