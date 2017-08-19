@@ -14,7 +14,7 @@
         The Username of the User who is logged on.
 
     .PARAMETER safeName
-        The Safe where the ruls are applied.
+        The Safe where the rules are applied.
 
     .PARAMETER fullObjectName
         The file, password, or folder that the rule applies to.

@@ -129,7 +129,7 @@
 
 						#whitespace, newlines, "quote marks" are all removed
 						#"quote marks" added to start and end of string
-						#incrament outer counter to restart loop at next event
+						#increment outer counter to restart loop at next event
 						$i = $iXML + 1
 
 					}

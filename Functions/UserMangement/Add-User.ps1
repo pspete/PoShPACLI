@@ -30,7 +30,7 @@
 		LDAP_AUTH – LDAP authentication.
 
 	.PARAMETER requireSecureIDAuth
-		Whether or not the User is required to provide a SecurID passcode as well
+		Whether or not the User is required to provide a SecureID passcode as well
 		as the method specified in the authtype parameter
 
 	.PARAMETER password

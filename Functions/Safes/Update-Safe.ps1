@@ -80,7 +80,7 @@
 	.PARAMETER securityLevelParm
 		The level of the Network Area security flags
 
-	.PARAMETER ConfimrationType
+	.PARAMETER ConfirmationType
 		The type of confirmation required to enable access to the Safe.
 		Possible values for this parameter are:
 			1 – No confirmation is needed (default)
@@ -176,7 +176,7 @@
 		[Parameter(Mandatory = $False)][int]$yearlyVersions,
 		[Parameter(Mandatory = $False)][int]$logRetention,
 		[Parameter(Mandatory = $False)][int]$fileRetention,
-		[Parameter(Mandatory = $False)][int]$requestRetenion,
+		[Parameter(Mandatory = $False)][int]$requestRetention,
 		[Parameter(Mandatory = $False)][ValidateSet("None", "TextOnlyFilter")][string]$safeFilter,
 		[Parameter(Mandatory = $False)]
 		[ValidateSet("64", "128", "512", "256", "192", "576", "320", "640", "384", "768", "704", "448", "832", "896", "960")]

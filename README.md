@@ -5,7 +5,7 @@
 Exposes the native functions of the CyberArk PACLI command line utility via a PowerShell wrapper for interfacing with CyberArk EPV.
 
 ----------
-## Whats New
+## Latest Updates
 
 - Any Pacli output on StdErr is now written to the PowerShell error stream.
 - Boolean output from functions removed
@@ -44,7 +44,7 @@ Function Initialize-PoShPACLI must be run before working with the other module f
 ```
 Initialize-PoShPACLI -pacliFolder D:\PACLI
 ```
-This is required to locate the CyberArk PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
+This is required to locate the CyberArk PACLI executable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
 
 ----------
 
