@@ -1,4 +1,4 @@
-﻿Function Get-FilesList {
+﻿Function Get-PVFileList {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-FilesList -vault lab -user administrator -safe Reports -folder root
+    	Get-PVFileList -vault lab -user administrator -safe Reports -folder root
 
 		Lists files in the Reports safe
 
@@ -43,7 +43,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

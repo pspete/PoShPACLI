@@ -1,4 +1,4 @@
-﻿Function Rename-Location {
+﻿Function Rename-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Rename-Location -vault Lab -user administrator -location \Location2 -newName \Location3
+		Rename-PVLocation -vault Lab -user administrator -location \Location2 -newName \Location3
 
 		Renames Location2 to Location3 in the vault
 
@@ -43,7 +43,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

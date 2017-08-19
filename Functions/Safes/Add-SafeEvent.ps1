@@ -1,4 +1,4 @@
-﻿Function Add-SafeEvent {
+﻿Function Set-PVSafeEvent {
 
 	<#
     .SYNOPSIS
@@ -36,7 +36,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-SafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
+		Set-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
 
 		Adds event to safe Windows_Safe
 
@@ -57,7 +57,7 @@
 	)
 
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

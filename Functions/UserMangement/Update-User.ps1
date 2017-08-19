@@ -1,4 +1,4 @@
-﻿Function Update-User {
+﻿Function Set-PVUser {
 
 	<#
 	.SYNOPSIS
@@ -206,11 +206,11 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		update-user -vault Lab -user administrator -destUser admin3 -password (read-host -AsSecureString)
+		Set-PVUser -vault Lab -user administrator -destUser admin3 -password (read-host -AsSecureString)
 
 		Resets he password of user admin3 to the value provided.
 	.EXAMPLE
-		update-user -vault Lab -user administrator -destUser zest3 -location \Location3
+		Set-PVUser -vault Lab -user administrator -destUser zest3 -location \Location3
 
 		Moves vault user to Location3
 
@@ -281,7 +281,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

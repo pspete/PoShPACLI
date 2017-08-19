@@ -1,4 +1,4 @@
-﻿Function Get-SafeDetails {
+﻿Function Get-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-SafeDetails -vault lab -user administrator -safe system
+		Get-PVSafe -vault lab -user administrator -safe system
 
 		Lists details of the SYSTEM safe
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

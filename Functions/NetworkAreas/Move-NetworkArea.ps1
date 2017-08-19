@@ -1,4 +1,4 @@
-﻿Function Move-NetworkArea {
+﻿Function Move-PVNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Move-NetworkArea -vault Lab -user administrator -networkArea All\DE -newLocation ALL\EMEA\DE
+    	Move-PVNetworkArea -vault Lab -user administrator -networkArea All\DE -newLocation ALL\EMEA\DE
 
 		Moves Network Area DE to EMEA\DE
 
@@ -43,7 +43,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

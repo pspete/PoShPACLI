@@ -1,4 +1,4 @@
-﻿Function Remove-SafeFileCategory {
+﻿Function Remove-PVSafeFileCategory {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-SafeFileCategory -vault lab -user administrator -safe EU_Infra -category CISOcat1
+		Remove-PVSafeFileCategory -vault lab -user administrator -safe EU_Infra -category CISOcat1
 
 		Deletes CISOcat1 file category from EU_Infra safe
 
@@ -43,7 +43,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

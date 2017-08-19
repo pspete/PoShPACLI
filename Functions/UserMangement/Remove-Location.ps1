@@ -1,4 +1,4 @@
-﻿Function Remove-Location {
+﻿Function Remove-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -22,7 +22,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-Location -vault Lab -user administrator -location \x51
+		Remove-PVLocation -vault Lab -user administrator -location \x51
 
 		Deletes location "x51" from the vault
 
@@ -39,7 +39,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

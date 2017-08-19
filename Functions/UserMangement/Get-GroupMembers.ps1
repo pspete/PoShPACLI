@@ -1,4 +1,4 @@
-﻿Function Get-GroupMembers {
+﻿Function Get-PVGroupMember {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-GroupMembers -vault Lab -user administrator -group cybr_admins
+		Get-PVGroupMember -vault Lab -user administrator -group cybr_admins
 
 		Lists members of the cybr_admins group
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

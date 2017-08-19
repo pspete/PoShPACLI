@@ -1,4 +1,4 @@
-﻿Function Remove-VaultDefinition {
+﻿Function Remove-PVVaultDefinition {
 
 	<#
     .SYNOPSIS
@@ -15,7 +15,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-VaultDefinition -vault "Demo Vault"
+		Remove-PVVaultDefinition -vault "Demo Vault"
 
 		Deletes "Demo Vault" vault definition.
 
@@ -32,7 +32,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

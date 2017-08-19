@@ -1,9 +1,9 @@
-﻿Function Get-CtlFileName {
+﻿Function Get-PVCTL {
 
 	<#
     .SYNOPSIS
     	Returns the name of the Certificate Trust List (CTL) that was defined
-        during the Start-Pacli function.
+        during the Start-PVPacli function.
 
     .DESCRIPTION
     	Exposes the PACLI Function: "CTLGETFILENAME"
@@ -13,9 +13,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-CtlFileName
+		Get-PVCTL
 
-		Returns the name of the Certificate Trust List (CTL) provided to Start-Pacli function.
+		Returns the name of the Certificate Trust List (CTL) provided to Start-PVPacli function.
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -27,7 +27,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

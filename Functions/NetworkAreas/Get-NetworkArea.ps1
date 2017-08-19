@@ -1,4 +1,4 @@
-﻿Function Get-NetworkArea {
+﻿Function Get-PVNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-NetworkArea -vault lab -user administrator
+		Get-PVNetworkArea -vault lab -user administrator
 
 		Lists all network areas
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

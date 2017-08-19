@@ -1,4 +1,4 @@
-﻿Function Get-Safe {
+﻿Function Get-PVSafeList {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		get-safe -vault lab -user administrator -location \
+		Get-PVSafeList -vault lab -user administrator -location \
 
 		Lists all safes from the root location of the vault
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

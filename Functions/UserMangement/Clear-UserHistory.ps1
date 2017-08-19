@@ -1,4 +1,4 @@
-﻿Function Clear-UserHistory {
+﻿Function Clear-PVUserHistory {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Clear-UserHistory -vault Lab -user administrator
+		Clear-PVUserHistory -vault Lab -user administrator
 
 		Clears the history records for Users of the Vault "Lab"
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

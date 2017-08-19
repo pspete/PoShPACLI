@@ -1,4 +1,4 @@
-﻿Function Get-SafeOwners {
+﻿Function Get-PVSafeOwner {
 
 	<#
     .SYNOPSIS
@@ -29,7 +29,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-SafeOwners -vault lab -user administrator -safePattern system -ownerPattern *
+		Get-PVSafeOwner -vault lab -user administrator -safePattern system -ownerPattern *
 
 		Lists all owners of the SYSTEM safe
 
@@ -48,7 +48,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

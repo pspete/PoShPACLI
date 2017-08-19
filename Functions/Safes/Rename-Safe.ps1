@@ -1,4 +1,4 @@
-﻿Function Rename-Safe {
+﻿Function Rename-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Rename-Safe -vault lab -user administrator -safe oldName -newName newName
+    	Rename-PVSafe -vault lab -user administrator -safe oldName -newName newName
 
 		Renames safe oldName to newName
     .NOTES
@@ -41,7 +41,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

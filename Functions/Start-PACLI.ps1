@@ -1,4 +1,4 @@
-﻿Function Start-PACLI {
+﻿Function Start-PVPacli {
 
 	<#
     .SYNOPSIS
@@ -16,7 +16,7 @@
         The full path of the file that contains the Certificate Trust List (CTL).
 
     .EXAMPLE
-    	Start-PACLI -sessionID $PID
+    	Start-PVPacli -sessionID $PID
 
         Starts the PACLI process with a session ID equal to the process ID of the current
         Powershell process.
@@ -32,7 +32,7 @@
 		[Parameter(Mandatory = $False)][string]$ctlFileName
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

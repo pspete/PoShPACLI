@@ -1,4 +1,4 @@
-﻿Function Add-PreferredFolder {
+﻿Function Add-PVPreferredFolder {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-PreferredFolder -vault lab -user administrator -safe AuditReports -folder root\reports\2017
+		Add-PVPreferredFolder -vault lab -user administrator -safe AuditReports -folder root\reports\2017
 
 		Sets preferred folder in AuditReports safe.
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

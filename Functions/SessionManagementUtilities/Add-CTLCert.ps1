@@ -1,4 +1,4 @@
-﻿Function Add-CTLCert {
+﻿Function Add-PVCTLCertificate {
 
 	<#
     .SYNOPSIS
@@ -20,7 +20,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-CTLCert -ctlFileName CTL.FILE -certFileName cert.File
+		Add-PVCTLCertificate -ctlFileName CTL.FILE -certFileName cert.File
 
 		Adds Certificate cert.File to Certificate Trust List store CTL.FILE
 
@@ -36,7 +36,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

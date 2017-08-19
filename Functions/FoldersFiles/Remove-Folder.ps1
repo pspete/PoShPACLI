@@ -1,4 +1,4 @@
-﻿Function Remove-Folder {
+﻿Function Remove-PVFolder {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-Folder -vault lab -user administrator -safe Reports -folder root\2017
+    	Remove-PVFolder -vault lab -user administrator -safe Reports -folder root\2017
 
 		Deletes folder "2017" from Reports safe
     .NOTES
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

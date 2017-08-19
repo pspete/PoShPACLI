@@ -1,4 +1,4 @@
-﻿Function Remove-LDAPBranch {
+﻿Function Remove-PVLDAPBranch {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-LDAPBranch -vault Lab -user administrator -ldapMapName EU_Users -deleteBranchID 4
+		Remove-PVLDAPBranch -vault Lab -user administrator -ldapMapName EU_Users -deleteBranchID 4
 
 		Deletes Ldap Branch with ID of 4 from EU_Users Mapping
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

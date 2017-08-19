@@ -1,4 +1,4 @@
-﻿Function New-Password {
+﻿Function New-PVPassword {
 
 	<#
     .SYNOPSIS
@@ -50,7 +50,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		New-Password -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 -minDigit 1 -forbiddenChars xyz
+		New-PVPassword -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 -minDigit 1 -forbiddenChars xyz
 
 		Generates a new password as per the parameters
 
@@ -72,7 +72,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 
@@ -99,9 +99,7 @@
 
 				Write-Verbose "Password Generated"
 				Write-Debug $Return.StdOut
-				#Convert Output to array
-				#$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
-				$Results = ($Return.StdOut | Select-String -Pattern "\S")
+
 				#Return Generated Password String
 				[PSCustomObject] @{
 

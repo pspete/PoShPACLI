@@ -1,4 +1,4 @@
-﻿Function Get-FileCategories {
+﻿Function Get-PVFileCategory {
 
 	<#
     .SYNOPSIS
@@ -31,7 +31,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-FileCategories -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
+		Get-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
 
 		Lists file categories on file TeamPass in safe DEV.
 
@@ -51,7 +51,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

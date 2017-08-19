@@ -1,4 +1,4 @@
-﻿Function Disconnect-Vault {
+﻿Function Disconnect-PVVault {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Disconnect-Vault -vault VaultA -user administrator
+		Disconnect-PVVault -vault VaultA -user administrator
 
 		Logs off administrator from defined vault VaultA
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

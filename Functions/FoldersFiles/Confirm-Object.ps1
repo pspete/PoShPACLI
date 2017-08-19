@@ -1,4 +1,4 @@
-﻿Function Confirm-Object {
+﻿Function Set-PVObjectValidation {
 
 	<#
     .SYNOPSIS
@@ -41,7 +41,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Confirm-Object -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys -internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+    	Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys -internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
 
 		Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
@@ -63,7 +63,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Remove-PreferredFolder {
+﻿Function Remove-PVPreferredFolder {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-PreferredFolder -vault lab -user administrator -safe Reports -folder root\reports
+    	Remove-PVPreferredFolder -vault lab -user administrator -safe Reports -folder root\reports
 
 		Deletes preferred folder
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

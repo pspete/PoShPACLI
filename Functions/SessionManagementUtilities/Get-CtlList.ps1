@@ -1,4 +1,4 @@
-﻿Function Get-CtlList {
+﻿Function Get-PVCTLCertificate {
 
 	<#
     .SYNOPSIS
@@ -17,10 +17,10 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Get-CtlList
+		Get-PVCTLCertificate
 
 		lists all the certificates in the Certificate Trust List store/file
-		using the CTL file provided as parameter value to Start-PACLI function.
+		using the CTL file provided as parameter value to Start-PVPacli function.
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -33,7 +33,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

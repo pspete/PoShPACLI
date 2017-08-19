@@ -1,4 +1,4 @@
-﻿Function Send-PAMailMessage {
+﻿Function Send-PVMailMessage {
 
 	<#
 	.SYNOPSIS
@@ -96,7 +96,7 @@
 
 	.EXAMPLE
 
-		Send-PAMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
+		Send-PVMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
 		-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports -folder Reports `
 		-file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
 
@@ -145,7 +145,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

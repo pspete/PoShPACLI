@@ -1,4 +1,4 @@
-﻿Function Remove-Safe {
+﻿Function Remove-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-Safe -vault lab -user administrator -safe Old_Safe
+    	Remove-PVSafe -vault lab -user administrator -safe Old_Safe
 
 		Deletes safe Old_Safe
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

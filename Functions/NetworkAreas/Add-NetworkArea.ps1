@@ -1,4 +1,4 @@
-﻿Function Add-NetworkArea {
+﻿Function New-PVNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-NetworkArea -vault Lab -user administrator -networkArea All\EMEA
+		New-PVNetworkArea -vault Lab -user administrator -networkArea All\EMEA
 
 		Adds EMEA Network Area
 
@@ -43,7 +43,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

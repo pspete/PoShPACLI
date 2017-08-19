@@ -1,4 +1,4 @@
-﻿Function Rename-User {
+﻿Function Rename-PVUser {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Rename-User -vault Lab -user administrator -destUser Then -newName Now
+		Rename-PVUser -vault Lab -user administrator -destUser Then -newName Now
 
 		Renames user "Then" to user "Now"
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

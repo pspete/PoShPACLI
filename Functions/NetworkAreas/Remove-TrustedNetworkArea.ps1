@@ -1,4 +1,4 @@
-﻿Function Remove-TrustedNetworkArea {
+﻿Function Remove-PVTrustedNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-TrustedNetworkArea -vault Lab -user administrator -trusterName cnAdmin -networkArea All\Vendor
+    	Remove-PVTrustedNetworkArea -vault Lab -user administrator -trusterName cnAdmin -networkArea All\Vendor
 
 		Deletes Trusted Network Area "Vendor" from cnAdmin account
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

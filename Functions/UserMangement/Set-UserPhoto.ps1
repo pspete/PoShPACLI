@@ -1,4 +1,4 @@
-﻿Function Set-UserPhoto {
+﻿Function Set-PVUserPhoto {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-UserPhoto -vault Lab -user Administrator -destUser user1 -localFolder D:\ -localFile photo.jpg
+		Set-PVUserPhoto -vault Lab -user Administrator -destUser user1 -localFolder D:\ -localFile photo.jpg
 
 		Sets D:\photo.jpg as user photo for vault user user1
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

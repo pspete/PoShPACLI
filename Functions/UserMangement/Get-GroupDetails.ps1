@@ -1,4 +1,4 @@
-﻿Function Get-GroupDetails {
+﻿Function Get-PVGroup {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-GroupDetails -vault Lab -user administrator -group cybr_admins -sessionID 0
+		Get-PVGroup -vault Lab -user administrator -group cybr_admins -sessionID 0
 
 		Lists details for cybr_admins group
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

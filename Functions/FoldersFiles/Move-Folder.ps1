@@ -1,4 +1,4 @@
-﻿Function Move-Folder {
+﻿Function Move-PVFolder {
 
 	<#
     .SYNOPSIS
@@ -28,7 +28,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Move-Folder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 -newLocation root
+		Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 -newLocation root
 
 		Moves folder "2017"to the root location of the safe
 
@@ -47,7 +47,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

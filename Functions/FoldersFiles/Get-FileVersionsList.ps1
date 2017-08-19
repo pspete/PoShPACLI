@@ -1,4 +1,4 @@
-﻿Function Get-FileVersionsList {
+﻿Function Get-PVFileVersionList {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-FileVersionsList -vault lab -user administrator -safe Win_Admins -folder root -file administrator.domain.com
+		Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root -file administrator.domain.com
 
 		Lists the versions of the specified file
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Clear-SafeHistory {
+﻿Function Clear-PVSafeHistory {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Clear-SafeHistory -vault Lab -user administrator -safe system
+		Clear-PVSafeHistory -vault Lab -user administrator -safe system
 
 		Clears safe history on the SYSTEM safe
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

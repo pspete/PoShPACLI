@@ -1,4 +1,4 @@
-﻿Function Lock-User {
+﻿Function Lock-PVUser {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Lock-User -vault Lab -user administrator
+		Lock-PVUser -vault Lab -user administrator
 
 		Locks the current user (administrator)
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

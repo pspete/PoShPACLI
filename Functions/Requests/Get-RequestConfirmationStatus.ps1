@@ -1,4 +1,4 @@
-﻿Function Get-RequestConfirmationStatus {
+﻿Function Get-PVRequestStatus {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-RequestConfirmationStatus -vault Lab -user administrator -safe EU_Safe -requestID 30
+		Get-PVRequestStatus -vault Lab -user administrator -safe EU_Safe -requestID 30
 
 		Returns status of request with ID 38 in EU_Safe
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

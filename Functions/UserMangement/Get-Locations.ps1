@@ -1,4 +1,4 @@
-﻿Function Get-Locations {
+﻿Function Get-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		get-locations -vault Lab -user administrator
+		Get-PVLocation -vault Lab -user administrator
 
 		Lists the locations defined in the vault
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

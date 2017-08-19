@@ -1,4 +1,4 @@
-﻿Function Update-LDAPBranch {
+﻿Function Set-PVLDAPBranch {
 
 	<#
 	.SYNOPSIS
@@ -36,7 +36,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-			Update-LDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
+			Set-PVLDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
 			-ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
 
 			Sets LDAP Group Match on branch with ID of 3 in "Vault Users Mapping"
@@ -59,7 +59,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

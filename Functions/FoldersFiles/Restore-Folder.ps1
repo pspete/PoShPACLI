@@ -1,4 +1,4 @@
-﻿Function Restore-Folder {
+﻿Function Restore-PVFolder {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Restore-Folder -vault lab -user administrator -safe ASIAPAC -folder root\MFA
+		Restore-PVFolder -vault lab -user administrator -safe ASIAPAC -folder root\MFA
 
 		Restores deleted MFA Folder to ASIAPAC safe
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

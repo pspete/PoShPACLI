@@ -1,4 +1,4 @@
-﻿Function Get-Folder {
+﻿Function Get-PVFolder {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-Folder -vault lab -user administrator -safe ORACLE
+		Get-PVFolder -vault lab -user administrator -safe ORACLE
 
 		Lists all folders in the specified safe.
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

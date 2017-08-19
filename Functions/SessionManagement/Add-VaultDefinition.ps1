@@ -1,94 +1,94 @@
-﻿Function Add-VaultDefinition {
+﻿Function New-PVVaultDefinition {
 
 	<#
-    .SYNOPSIS
-    	Enables a Vault to be defined
+	.SYNOPSIS
+		Enables a Vault to be defined
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DEFINE"
+	.DESCRIPTION
+		Exposes the PACLI Function: "DEFINE"
 
-    .PARAMETER vault
-        The name of the Vault to create.
+	.PARAMETER vault
+		The name of the Vault to create.
 
-    .PARAMETER address
-        The IP address of the Vault.
+	.PARAMETER address
+		The IP address of the Vault.
 
-    .PARAMETER port
-        The Vault IP port.
+	.PARAMETER port
+		The Vault IP port.
 
-    .PARAMETER timeout
-        The number of seconds to wait for a Vault to respond to a
-        command before a timeout message is displayed.
+	.PARAMETER timeout
+		The number of seconds to wait for a Vault to respond to a
+		command before a timeout message is displayed.
 
-    .PARAMETER behindFirewall
-        Whether or not the Vault will be accessed via a Firewall.
+	.PARAMETER behindFirewall
+		Whether or not the Vault will be accessed via a Firewall.
 
-    .PARAMETER reconnectPeriod
-        The number of seconds to wait before the sessions with the
-        Vault is re-established.
+	.PARAMETER reconnectPeriod
+		The number of seconds to wait before the sessions with the
+		Vault is re-established.
 
-    .PARAMETER useOnlyHTTP1
-        Use only HTTP 1.0 protocol. This parameter is valid either
-        with proxy settings or with ‘behindfirewall’.
+	.PARAMETER useOnlyHTTP1
+		Use only HTTP 1.0 protocol. This parameter is valid either
+		with proxy settings or with ‘behindfirewall’.
 
-    .PARAMETER proxyType
-        The type of proxy through which the Vault is accessed. Valid
-        values for this parameter are: HTTP, HTTPS, SOCKS4, SOCKS5, NOPROXY
+	.PARAMETER proxyType
+		The type of proxy through which the Vault is accessed. Valid
+		values for this parameter are: HTTP, HTTPS, SOCKS4, SOCKS5, NOPROXY
 
-    .PARAMETER proxyAddress
-        The proxy server IP address. This is mandatory when using
-        a proxy server.
+	.PARAMETER proxyAddress
+		The proxy server IP address. This is mandatory when using
+		a proxy server.
 
-    .PARAMETER proxyPort
-        The Proxy server IP Port
+	.PARAMETER proxyPort
+		The Proxy server IP Port
 
-    .PARAMETER proxyUser
-        User for Proxy server if NTLM authentication is required
+	.PARAMETER proxyUser
+		User for Proxy server if NTLM authentication is required
 
-    .PARAMETER proxyPassword
-        User's Password for Proxy server
+	.PARAMETER proxyPassword
+		User's Password for Proxy server
 
-    .PARAMETER proxyAuthDomain
-        The authentication domain of the proxy
+	.PARAMETER proxyAuthDomain
+		The authentication domain of the proxy
 
-    .PARAMETER numOfRecordsPerSend
-        The number of file records to transfer together in a single
-        TCP/IP send/receive commands.
+	.PARAMETER numOfRecordsPerSend
+		The number of file records to transfer together in a single
+		TCP/IP send/receive commands.
 
-    .PARAMETER numOfRecordsPerChunk
-        The number of file records to transfer together in a single
-        TCP/IP send/receive operation.
+	.PARAMETER numOfRecordsPerChunk
+		The number of file records to transfer together in a single
+		TCP/IP send/receive operation.
 
-    .PARAMETER enhancedSSL
-        Whether or not an Enhanced SSL-based connection (port
-        443) is required.
+	.PARAMETER enhancedSSL
+		Whether or not an Enhanced SSL-based connection (port
+		443) is required.
 
-    .PARAMETER preAuthSecuredSession
-        Whether or not pre-authentication secured session is enabled.
+	.PARAMETER preAuthSecuredSession
+		Whether or not pre-authentication secured session is enabled.
 
-    .PARAMETER trustSSC
-        Whether or not self-signed certificates are trusted for preauthentication
-        secured sessions.
-        Note: This parameter can only be enabled if 'preauthsecuredsession' is specified.
+	.PARAMETER trustSSC
+		Whether or not self-signed certificates are trusted for preauthentication
+		secured sessions.
+		Note: This parameter can only be enabled if 'preauthsecuredsession' is specified.
 
-    .PARAMETER allowSSCFor3PartyAuth
-        Whether or not to allow 3rd party authentication with selfsigned certificates.
-        Note: This parameter can only be enabled if 'trustssc' is specified.
+	.PARAMETER allowSSCFor3PartyAuth
+		Whether or not to allow 3rd party authentication with selfsigned certificates.
+		Note: This parameter can only be enabled if 'trustssc' is specified.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-        Add-VaultDefinition -vault VaultA -address 10.10.10.20
+	.EXAMPLE
+		New-PVVaultDefinition -vault VaultA -address 10.10.10.20
 
-        Defines a connection to Vault (VaultA) with IP 10.10.10.20
-        VaultA definition is used in subsequent executions of PACLI functions.
+		Defines a connection to Vault (VaultA) with IP 10.10.10.20
+		VaultA definition is used in subsequent executions of PACLI functions.
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -116,7 +116,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

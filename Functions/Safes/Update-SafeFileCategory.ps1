@@ -1,4 +1,4 @@
-﻿Function Update-SafeFileCategory {
+﻿Function Set-PVSafeFileCategory {
 
 	<#
     .SYNOPSIS
@@ -38,7 +38,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Update-SafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality -categoryNewName sev -validValues "1,2,3,4"
+		Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality -categoryNewName sev -validValues "1,2,3,4"
 
 		Changes Safe File Category name from "Criticality" to "sev"
 
@@ -60,7 +60,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

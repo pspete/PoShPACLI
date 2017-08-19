@@ -1,4 +1,4 @@
-﻿Function Get-SafeEvents {
+﻿Function Get-PVSafeEvent {
 
 	<#
     .SYNOPSIS
@@ -46,7 +46,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-SafeEvents -vault Lab -user administrator -safePatternName UNIX_Safe
+    	Get-PVSafeEvent -vault Lab -user administrator -safePatternName UNIX_Safe
 
 		Retrieves safe events from UNIX_Safe
 
@@ -71,7 +71,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

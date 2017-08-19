@@ -1,4 +1,4 @@
-﻿Function Confirm-Request {
+﻿Function Set-PVRequestStatus {
 
 	<#
     .SYNOPSIS
@@ -30,7 +30,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Confirm-Request -vault Lab -user administrator -safe SQL -requestID 11 -confirm
+    	Set-PVRequestStatus -vault Lab -user administrator -safe SQL -requestID 11 -confirm
 
 		Confirms request with ID 11 in safe SQL
 
@@ -50,7 +50,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

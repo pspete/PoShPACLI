@@ -1,4 +1,4 @@
-﻿Function Get-LDAPBranches {
+﻿Function Get-PVLDAPBranch {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-LDAPBranches -vault Lab -user administrator -ldapMapName "Vault Users Mapping"
+		Get-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping"
 
 		Lists LDAP branches for Vault Users Mapping
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

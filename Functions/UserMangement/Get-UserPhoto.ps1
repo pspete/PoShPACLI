@@ -1,4 +1,4 @@
-﻿Function Get-UserPhoto {
+﻿Function Get-PVUserPhoto {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-UserPhoto -vault Lab -user administrator -destUser user1 -localFolder D:\userphotos -localFile userphoto.jpg
+		Get-PVUserPhoto -vault Lab -user administrator -destUser user1 -localFolder D:\userphotos -localFile userphoto.jpg
 
 		Saves photo set on user account user1 to local drive
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

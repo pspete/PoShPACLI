@@ -1,4 +1,4 @@
-﻿Function Add-Location {
+﻿Function New-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-Location -vault Lab -user administrator -location \x51
+		New-PVLocation -vault Lab -user administrator -location \x51
 
 		Adds location x51 to Vault root
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

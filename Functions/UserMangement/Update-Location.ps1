@@ -1,4 +1,4 @@
-﻿Function Update-Location {
+﻿Function Set-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Update-Location -vault Lab -user administrator -location \EMEA -quota 1000
+		Set-PVLocation -vault Lab -user administrator -location \EMEA -quota 1000
 
 		Sets quota on EMEA
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

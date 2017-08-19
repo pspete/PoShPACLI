@@ -1,4 +1,4 @@
-﻿Function Remove-Rule {
+﻿Function Remove-PVRule {
 
 	<#
     .SYNOPSIS
@@ -35,7 +35,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-Rule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM -fullObjectName root\IDMPass -isFolder:$false
+    	Remove-PVRule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM -fullObjectName root\IDMPass -isFolder:$false
 
 		Deletes OLAC rule 15 from object
 
@@ -56,7 +56,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,10 +1,10 @@
-﻿Function New-LogonFile {
+﻿Function New-PVLogonFile {
 
 	<#
     .SYNOPSIS
     	This command creates a logon file that contains the information required
         for a User to log onto the Vault. After this file has been created, it
-        can be used with the Connect-Vault command.
+        can be used with the Connect-PVVault command.
 
     .DESCRIPTION
     	Exposes the PACLI Function: "CREATELOGONFILE"
@@ -24,9 +24,9 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	New-LogonFile -logonFile D:\PACLI\cred.file -username administrator -password $password
+    	New-PVLogonFile -logonFile D:\PACLI\cred.file -username administrator -password $password
 
-		Creates a new credential file, cred.file, which can be used for logon via Connect-Vault.
+		Creates a new credential file, cred.file, which can be used for logon via Connect-PVVault.
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -41,7 +41,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

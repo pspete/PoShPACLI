@@ -1,4 +1,4 @@
-﻿Function Get-SafesLog {
+﻿Function Get-PVSafeLog {
 
 	<#
     .SYNOPSIS
@@ -18,7 +18,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-SafesLog -vault lab -user auditor
+		Get-PVSafeLog -vault lab -user auditor
 
 		Lists activities per Safe
 
@@ -34,7 +34,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

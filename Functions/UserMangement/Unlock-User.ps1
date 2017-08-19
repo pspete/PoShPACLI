@@ -1,4 +1,4 @@
-﻿Function Unlock-User {
+﻿Function Unlock-PVUser {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Unlock-User -vault Lab -user administrator -password (read-host -AsSecureString)
+		Unlock-PVUser -vault Lab -user administrator -password (read-host -AsSecureString)
 
 		Unlocks the current user (administrator), after supplying password for the account.
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

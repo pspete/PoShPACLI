@@ -1,4 +1,4 @@
-﻿Function Get-TrustedNetworkArea {
+﻿Function Get-PVTrustedNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-TrustedNetworkArea -vault lab -user administrator -trusterName lydia
+    	Get-PVTrustedNetworkArea -vault lab -user administrator -trusterName lydia
 
 		Lists Trusted Network Areas for user lydia
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

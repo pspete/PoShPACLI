@@ -1,82 +1,82 @@
-﻿Function Open-Safe {
+﻿Function Open-PVSafe {
 
 	<#
-    .SYNOPSIS
-    	Open a Safe (Safe Owner authorizations required). When the Safe is opened,
-        various details about the Safe will be displayed, depending on the
-        parameters specified.
+		.SYNOPSIS
+			Open a Safe (Safe Owner authorizations required). When the Safe is opened,
+				various details about the Safe will be displayed, depending on the
+				parameters specified.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "OPENSAFE"
+		.DESCRIPTION
+			Exposes the PACLI Function: "OPENSAFE"
 
-    .PARAMETER vault
+		.PARAMETER vault
 		The name of the Vault containing the Safes to open.
 
-    .PARAMETER user
+		.PARAMETER user
 		The Username of the User carrying out the task.
 
-    .PARAMETER safe
+		.PARAMETER safe
 		The name of the Safe to open.
 
-    .PARAMETER requestUsageType
+		.PARAMETER requestUsageType
 		The operation that the user will carry out.
 
-        Possible options are:
-            REQUEST_AND_USE – create and send a request if
-            necessary, or use the confirmation if it has been granted to
-            open the Safe/file/password.
+				Possible options are:
+						REQUEST_AND_USE – create and send a request if
+						necessary, or use the confirmation if it has been granted to
+						open the Safe/file/password.
 
-            CHECK_DON’T_USE – check if a request has been sent or,
-            if not, create one and send an error. If a request is not
-            needed, carry out the action.
+						CHECK_DON’T_USE – check if a request has been sent or,
+						if not, create one and send an error. If a request is not
+						needed, carry out the action.
 
-            USE_ONLY – if the request has been confirmed, or if a
-            request is not needed, open the Safe/file/password.
+						USE_ONLY – if the request has been confirmed, or if a
+						request is not needed, open the Safe/file/password.
 
 		Note: In version 4.1, this parameter has no default value and
 		is obsolete. However, it can still be used as long as the
 		‘userequest’, ‘sendrequest’ and ‘executerequest’ parameters
 		are not specified.
 
-    .PARAMETER requestAccessType
+		.PARAMETER requestAccessType
 		Whether the request is for a single or multiple access.
 		Possible options are:
-		  SINGLE – for a single access.
+			SINGLE – for a single access.
 
-		  MULTIPLE – for multiple accesses.
+			MULTIPLE – for multiple accesses.
 
-    .PARAMETER usableFrom
+		.PARAMETER usableFrom
 		The proposed date from when the request will be valid.
 
-    .PARAMETER usableTo
+		.PARAMETER usableTo
 		The proposed date until when the request will be valid.
 
-    .PARAMETER requestReason
+		.PARAMETER requestReason
 		The reason for the request.
 
-    .PARAMETER useRequest
+		.PARAMETER useRequest
 		If a confirmed request exists, it will be used.
 
-    .PARAMETER sendRequest
+		.PARAMETER sendRequest
 		A request will be sent, if needed.
 
-    .PARAMETER executeRequest
+		.PARAMETER executeRequest
 		The action will be executed, if a confirmation exists or is not
 		needed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+		.PARAMETER sessionID
+			The ID number of the session. Use this parameter when working
+				with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-			Open-Safe -vault lab -user administrator -safe System
+		.EXAMPLE
+			Open-PVSafe -vault lab -user administrator -safe System
 
 			Opens the System safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+		.NOTES
+			AUTHOR: Pete Maan
+			LASTEDIT: August 2017
+		#>
 
 	[CmdLetBinding()]
 	param(
@@ -95,7 +95,7 @@
 	)
 
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 
@@ -106,7 +106,7 @@
 		#$PACLI variable set to executable path
 
 		$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
-          ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
+					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 

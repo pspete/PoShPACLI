@@ -1,4 +1,4 @@
-﻿Function Update-FileCategory {
+﻿Function Set-PVFileCategory {
 
 	<#
     .SYNOPSIS
@@ -33,7 +33,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Update-FileCategory -vault Lab -user administrator -safe Reports -folder root -file Access -category NextReview -value 1/6/18
+		Set-PVFileCategory -vault Lab -user administrator -safe Reports -folder root -file Access -category NextReview -value 1/6/18
 
 		Updates value of existing File Category "NextReview" on file "Access"
 
@@ -54,7 +54,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

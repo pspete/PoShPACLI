@@ -1,215 +1,215 @@
-﻿Function Search-Files {
+﻿Function Find-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Finds a particular file, list of files, password, or list of passwords,
-        according to the parameters set.
+	.SYNOPSIS
+		Finds a particular file, list of files, password, or list of passwords,
+		according to the parameters set.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "FINDFILES"
+	.DESCRIPTION
+		Exposes the PACLI Function: "FINDFILES"
 
-    .PARAMETER vault
-        The name of the Vault containing the file(s) or password(s)
-        you are looking for.
+	.PARAMETER vault
+		The name of the Vault containing the file(s) or password(s)
+		you are looking for.
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+		The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe containing the file(s) or password(s)
-        you are looking for. You can use a wildcard to specify a
-        wider range of safenames.
+	.PARAMETER safe
+		The name of the Safe containing the file(s) or password(s)
+		you are looking for. You can use a wildcard to specify a
+		wider range of safenames.
 
-    .PARAMETER folder
-        The name of the folder containing the file(s) or password(s)
-        to be found.
+	.PARAMETER folder
+		The name of the folder containing the file(s) or password(s)
+		to be found.
 
-    .PARAMETER filePattern
-        The full name or part of the name of the file(s) or
-        password(s) to list. Alternatively, a wildcard can be used in
-        this parameter.
+	.PARAMETER filePattern
+		The full name or part of the name of the file(s) or
+		password(s) to list. Alternatively, a wildcard can be used in
+		this parameter.
 
-    .PARAMETER fileRetrieved
-        Whether or not the report will include retrieved files or
-        passwords.
+	.PARAMETER fileRetrieved
+		Whether or not the report will include retrieved files or
+		passwords.
 
-    .PARAMETER fileChanged
-        Whether or not the report will include modified files or
-        passwords.
+	.PARAMETER fileChanged
+		Whether or not the report will include modified files or
+		passwords.
 
-    .PARAMETER fileNew
-        Whether or not the report will include new files or
-        passwords.
+	.PARAMETER fileNew
+		Whether or not the report will include new files or
+		passwords.
 
-    .PARAMETER fileLocked
-        Whether or not the report will include locked files or
-        passwords.
+	.PARAMETER fileLocked
+		Whether or not the report will include locked files or
+		passwords.
 
-    .PARAMETER fileWithNoMark
-        Whether or not the report will include files or passwords
-        without an access mark.
+	.PARAMETER fileWithNoMark
+		Whether or not the report will include files or passwords
+		without an access mark.
 
-    .PARAMETER includeVersions
-        Whether or not the report will include previous versions of
-        included files or passwords.
+	.PARAMETER includeVersions
+		Whether or not the report will include previous versions of
+		included files or passwords.
 
-        Note: If the value is set to NO, the ‘deletedoption’
-        parameter cannot be set to INCLUDE_DELETED.
+		Note: If the value is set to NO, the ‘deletedoption’
+		parameter cannot be set to INCLUDE_DELETED.
 
-    .PARAMETER onlyOpenSafes
-        Whether or not the report will search only Safes that are
-        currently open
+	.PARAMETER onlyOpenSafes
+		Whether or not the report will search only Safes that are
+		currently open
 
-    .PARAMETER includeSubFolders
-        Whether or not the search will include subfolders.
+	.PARAMETER includeSubFolders
+		Whether or not the search will include subfolders.
 
-    .PARAMETER dateLimit
-        A specific time duration.
-        Possible values are:
-            NONE
-            BETWEEN which is qualified by [fromdate] and [todate].
-            PREVMONTH which is qualified by [prevcount].
-            PREVDAY which is qualified by [prevcount].
+	.PARAMETER dateLimit
+		A specific time duration.
+		Possible values are:
+			NONE
+			BETWEEN which is qualified by [fromdate] and [todate].
+			PREVMONTH which is qualified by [prevcount].
+			PREVDAY which is qualified by [prevcount].
 
-    .PARAMETER dateActionLimit
-        The activity that took place during the period specified in
-        [datelimit].
-        Possible values are:
-            ACCESSEDFILE
-            CREATED
-            MODIFIED
+	.PARAMETER dateActionLimit
+		The activity that took place during the period specified in
+		[datelimit].
+		Possible values are:
+			ACCESSEDFILE
+			CREATED
+			MODIFIED
 
-    .PARAMETER prevCount
-        The number of days or months to be included in the report if
-        [datelimit] is specified as ‘PREVMONTH’ or ‘PREVDAY’.
+	.PARAMETER prevCount
+		The number of days or months to be included in the report if
+		[datelimit] is specified as ‘PREVMONTH’ or ‘PREVDAY’.
 
-    .PARAMETER fromDate
-        The first day to be included in the report if [datelimit] is
-        specified as ‘BETWEEN’.
-        Use the following date format:
-            dd/mm/yyyy.
+	.PARAMETER fromDate
+		The first day to be included in the report if [datelimit] is
+		specified as ‘BETWEEN’.
+		Use the following date format:
+			dd/mm/yyyy.
 
-    .PARAMETER toDate
-        The last day to be included in the report if [datelimit] is
-        specified as ‘BETWEEN’.
-        Use the following date format:
-            dd/mm/yyyy.
+	.PARAMETER toDate
+		The last day to be included in the report if [datelimit] is
+		specified as ‘BETWEEN’.
+		Use the following date format:
+			dd/mm/yyyy.
 
-    .PARAMETER searchInAll
-        Whether or not the report will only include files or passwords
-        that contain the values specified in the ‘searchinallvalues’
-        parameter in their Safe, folder or file/password name, or in
-        one of their file categories, as specified in the
-        ‘searchinallcategorylist’ parameter.
+	.PARAMETER searchInAll
+		Whether or not the report will only include files or passwords
+		that contain the values specified in the ‘searchinallvalues’
+		parameter in their Safe, folder or file/password name, or in
+		one of their file categories, as specified in the
+		‘searchinallcategorylist’ parameter.
 
-    .PARAMETER searchInAllAction
-        The way that the values in the ‘searchinallvalues’ parameter
-        will be searched for if the ‘searchinall’ parameter is set to
-        ‘YES’.
-        Possible values are:
-            ‘OR’ – at least one of the values in the list needs to be
-            found.
-            ‘AND’ – all the values in the list need to be found.
+	.PARAMETER searchInAllAction
+		The way that the values in the ‘searchinallvalues’ parameter
+		will be searched for if the ‘searchinall’ parameter is set to
+		‘YES’.
+		Possible values are:
+			‘OR’ – at least one of the values in the list needs to be
+			found.
+			‘AND’ – all the values in the list need to be found.
 
-    .PARAMETER searchInAllValues
-        A list of values that should be searched for when the
-        ‘searchinall’ parameter is set to ‘YES’. The values in the list
-        must be separated by the character specified in the
-        ‘listseparator’ parameter.
+	.PARAMETER searchInAllValues
+		A list of values that should be searched for when the
+		‘searchinall’ parameter is set to ‘YES’. The values in the list
+		must be separated by the character specified in the
+		‘listseparator’ parameter.
 
-    .PARAMETER searchInAllCategoryList
-        A list of category names to search in when the ‘searchinall’
-        parameter is set to ‘YES’. The values in the list must be
-        separated by the character specified in the ‘listseparator’
-        parameter.
+	.PARAMETER searchInAllCategoryList
+		A list of category names to search in when the ‘searchinall’
+		parameter is set to ‘YES’. The values in the list must be
+		separated by the character specified in the ‘listseparator’
+		parameter.
 
-    .PARAMETER listSeparator
-        A character that will be used to separate the values in the
-        ‘searchinallvalues’, ‘searchinallcategorylist’, ‘categoryidlist’,
-        and ‘categoryvalues’ parameters. The default value is “,”
-        (comma).
+	.PARAMETER listSeparator
+		A character that will be used to separate the values in the
+		‘searchinallvalues’, ‘searchinallcategorylist’, ‘categoryidlist’,
+		and ‘categoryvalues’ parameters. The default value is “,”
+		(comma).
 
-        Note: When a string with more than one character is
-        specified, only the first character will be used.
+		Note: When a string with more than one character is
+		specified, only the first character will be used.
 
-    .PARAMETER deletedOption
-        Whether or not deleted files will be shown in the report.
-        Possible values are:
-            INCLUDE_DELETED_WITH_ACCESSMARKS (default value)
-            INCLUDE_DELETED
-            ONLY_DELETED
-            WITHOUT_DELETED
+	.PARAMETER deletedOption
+		Whether or not deleted files will be shown in the report.
+		Possible values are:
+			INCLUDE_DELETED_WITH_ACCESSMARKS (default value)
+			INCLUDE_DELETED
+			ONLY_DELETED
+			WITHOUT_DELETED
 
-        Note: If the value is set to INCLUDE_DELETED, the
-        ‘includeversions’ parameter cannot be set to NO.
+		Note: If the value is set to INCLUDE_DELETED, the
+		‘includeversions’ parameter cannot be set to NO.
 
-    .PARAMETER sizeLimit
-        The file or password size limit in KB for the search, based
-        on the ‘sizelimittype’ parameter.
+	.PARAMETER sizeLimit
+		The file or password size limit in KB for the search, based
+		on the ‘sizelimittype’ parameter.
 
-    .PARAMETER sizeLimitType
-        The type of file or password size-based search.
-        Possible
-        values are:
-            ATLEAST
-            ATMOST
+	.PARAMETER sizeLimitType
+		The type of file or password size-based search.
+		Possible
+		values are:
+			ATLEAST
+			ATMOST
 
-    .PARAMETER categoryIDList
-        A list of category IDs according to which the values
-        specified in the ‘categoryvalues’ parameter will be searched
-        for.
+	.PARAMETER categoryIDList
+		A list of category IDs according to which the values
+		specified in the ‘categoryvalues’ parameter will be searched
+		for.
 
-        Note: The first value corresponds to the first category, the
-        second value to the second category, etc.
-        Only files or passwords that contain the specified file
-        categories (according to the ‘categorylistaction’ parameter)
-        with the specified values will be returned.
+		Note: The first value corresponds to the first category, the
+		second value to the second category, etc.
+		Only files or passwords that contain the specified file
+		categories (according to the ‘categorylistaction’ parameter)
+		with the specified values will be returned.
 
-    .PARAMETER categoryValues
-        A list of values to search for in the file categories specified
-        in the ‘categoryidlist’ parameter.
+	.PARAMETER categoryValues
+		A list of values to search for in the file categories specified
+		in the ‘categoryidlist’ parameter.
 
-        Note: The first value corresponds to the first category, the
-        second value to the second category, etc.
-        Only files or passwords that contain the listed file categories
-        (according to the ‘categorylistaction’ parameter) with the
-        specified values will be returned.
+		Note: The first value corresponds to the first category, the
+		second value to the second category, etc.
+		Only files or passwords that contain the listed file categories
+		(according to the ‘categorylistaction’ parameter) with the
+		specified values will be returned.
 
-    .PARAMETER categoryListAction
-        Specifies how to search for the values in the ‘categoryidlist’
-        and ‘categoryvalues’ parameters.
-        Possible values are:
-            ‘OR’ – at least one of the values in the list needs to be
-            found.
-            ‘AND’ – all the values in the list need to be found.
+	.PARAMETER categoryListAction
+		Specifies how to search for the values in the ‘categoryidlist’
+		and ‘categoryvalues’ parameters.
+		Possible values are:
+			‘OR’ – at least one of the values in the list needs to be
+			found.
+			‘AND’ – all the values in the list need to be found.
 
-    .PARAMETER includeFileCategories
-        Whether or not the search will include file categories in the
-        output.
+	.PARAMETER includeFileCategories
+		Whether or not the search will include file categories in the
+		output.
 
-    .PARAMETER fileCategoriesSeparator
-        If the ‘includefilecategories’ parameter is set to ‘YES’, this
-        character will be written in the search output to separate the
-        file categories. The default value is ‘#’.
+	.PARAMETER fileCategoriesSeparator
+		If the ‘includefilecategories’ parameter is set to ‘YES’, this
+		character will be written in the search output to separate the
+		file categories. The default value is ‘#’.
 
-    .PARAMETER fileCategoryValueSeparator
-        If the ‘includefilecategories’ parameter is set to ‘YES’, this
-        character will be written in the search output to separate the
-        file categories and their values. The default value is ‘:’.
+	.PARAMETER fileCategoryValueSeparator
+		If the ‘includefilecategories’ parameter is set to ‘YES’, this
+		character will be written in the search output to separate the
+		file categories and their values. The default value is ‘:’.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+		The ID number of the session. Use this parameter when working
+		with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Search-Files -vault Lab -user administrator -safe Reports -folder root
+	.EXAMPLE
+		Find-PVFile -vault Lab -user administrator -safe Reports -folder root
 
-        Finds all files in the root folder of Reports safe.
+		Finds all files in the root folder of Reports safe.
 
-    .NOTES
-    	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
-    #>
+	.NOTES
+		AUTHOR: Pete Maan
+		LASTEDIT: August 2017
+	#>
 
 	[CmdLetBinding()]
 	param(
@@ -253,7 +253,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 
@@ -265,9 +265,9 @@
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
-                searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
-                    categoryListAction ) OUTPUT (ALL,ENCLOSE)"
+			ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+				searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
+					categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 

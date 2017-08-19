@@ -1,4 +1,4 @@
-﻿Function Remove-SafeOwner {
+﻿Function Remove-PVSafeOwner {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-SafeOwner -vault lab -user administrator -safe EU_Safe -owner user1
+		Remove-PVSafeOwner -vault lab -user administrator -safe EU_Safe -owner user1
 
 		Deletes user1 as a safe member on EU_Safe
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

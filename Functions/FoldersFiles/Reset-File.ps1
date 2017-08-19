@@ -1,4 +1,4 @@
-﻿Function Reset-File {
+﻿Function Reset-PVFile {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Reset-File -vault lab -user administrator -safe EU_Admins -folder root -file eu.credential
+    	Reset-PVFile -vault lab -user administrator -safe EU_Admins -folder root -file eu.credential
 
 		Reset access mark on eu.credential file
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

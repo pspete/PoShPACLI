@@ -1,4 +1,4 @@
-﻿Function Restore-File {
+﻿Function Restore-PVFile {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Restore-File -vault lab -user administrator -safe US_Region -folder root -file deletedFile
+    	Restore-PVFile -vault lab -user administrator -safe US_Region -folder root -file deletedFile
 
 		"Un-deletes"/Restores deletedFile
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

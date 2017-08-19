@@ -1,4 +1,4 @@
-﻿Function Update-Group {
+﻿Function Set-PVGroup {
 
 	<#
 	.SYNOPSIS
@@ -31,7 +31,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Update-Group -vault Lab -user administrator -group group1 -location \ -description "New Description"
+		Set-PVGroup -vault Lab -user administrator -group group1 -location \ -description "New Description"
 
 			Sets new description on vault group 1
 
@@ -51,7 +51,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-Function Test-ExePreReqs {
+Function Test-PACLI {
 	<#
     .SYNOPSIS
         Test Pre-Requisites needed for PACLI executable to run.
@@ -7,7 +7,7 @@ Function Test-ExePreReqs {
         Module functions which call the PACLI utility require that a specific variable
         is set to the full path of the PACLI utility on the Local System and is in a scope
         accessible to the function.
-        Function Test-ExePreReqs ensures that both the variable is set, and that the path
+        Function Test-PACLI ensures that both the variable is set, and that the path
         to the utility stored in the variable resolves OK.
 
         Returns True, or, if one or both of the conditions is not met, False.
@@ -16,7 +16,7 @@ Function Test-ExePreReqs {
         The name of the variable containing the path to the PACLI Utility.
 
     .EXAMPLE
-        Test-ExePreReqs
+        Test-PACLI
 
     .NOTES
     	AUTHORS: Pete Maan, Brandon Lundt

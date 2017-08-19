@@ -1,4 +1,4 @@
-﻿Function Add-File {
+﻿Function Add-PVFile {
 
 	<#
     .SYNOPSIS
@@ -36,7 +36,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-File -vault Lab -user administrator -safe caTools -folder Root -file pacli.exe -localFolder D:\PACLI -localFile pacli.exe
+    	Add-PVFile -vault Lab -user administrator -safe caTools -folder Root -file pacli.exe -localFolder D:\PACLI -localFile pacli.exe
 
 		Stores local file, pacli.exe in the caTools safe
 
@@ -58,7 +58,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

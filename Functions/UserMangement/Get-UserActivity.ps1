@@ -1,4 +1,4 @@
-﻿Function Get-UserActivity {
+﻿Function Get-PVUserActivity {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-UserActivity -vault Lab -user administrator -logDays 5
+		Get-PVUserActivity -vault Lab -user administrator -logDays 5
 
 		Lists vault user activity from the last 5 days
 
@@ -41,7 +41,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

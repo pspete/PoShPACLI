@@ -1,4 +1,4 @@
-﻿Function Remove-GroupMember {
+﻿Function Remove-PVGroupMember {
 
 	<#
 	.SYNOPSIS
@@ -24,7 +24,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Remove-GroupMember -vault Lab -user administrator -group auditors -member WebService
+		Remove-PVGroupMember -vault Lab -user administrator -group auditors -member WebService
 
 		Deletes "WebService" as a member of vault group "Auditors"
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

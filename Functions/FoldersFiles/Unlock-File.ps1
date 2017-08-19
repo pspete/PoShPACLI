@@ -1,4 +1,4 @@
-﻿Function Unlock-File {
+﻿Function Unlock-PVFile {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Unlock-File -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
+		Unlock-PVFile -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
 
 		Unlocks file Adminpass in safe Prod_Servers
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Get-RulesList {
+﻿Function Get-PVRule {
 
 	<#
     .SYNOPSIS
@@ -29,7 +29,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-RulesList -vault lab -user administrator -safeName UNIX -fullObjectname root\rootpass -isFolder $false
+		Get-PVRule -vault lab -user administrator -safeName UNIX -fullObjectname root\rootpass -isFolder $false
 
 		Lists OLAC rules for rootpass
 
@@ -48,7 +48,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

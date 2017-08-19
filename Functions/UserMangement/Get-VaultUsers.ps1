@@ -1,4 +1,4 @@
-﻿Function Get-VaultUsers {
+﻿Function Get-PVUserList {
 
 	<#
     .SYNOPSIS
@@ -38,7 +38,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-VaultUsers -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
+		Get-PVUserList -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
 
 		Returns all LDAP users/groups from vault
 
@@ -59,7 +59,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

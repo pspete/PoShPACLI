@@ -1,4 +1,4 @@
-﻿Function Get-UserDetails {
+﻿Function Get-PVUser {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-UserDetails -vault Lab -user administrator -destUser zEST1
+		Get-PVUser -vault Lab -user administrator -destUser zEST1
 
 		Lists properties of vault user zEST1
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

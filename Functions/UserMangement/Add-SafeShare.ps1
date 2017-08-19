@@ -1,4 +1,4 @@
-﻿Function Add-SafeShare {
+﻿Function Add-PVSafeGWAccount {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-SafeShare -vault Lab -user administrator -safe Team_Safe -gwAccount PVWAGWUser
+		Add-PVSafeGWAccount -vault Lab -user administrator -safe Team_Safe -gwAccount PVWAGWUser
 
 		Adds Gateway account PVWAGWUser to shared safe Team_Safe.
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

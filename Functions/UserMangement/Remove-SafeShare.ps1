@@ -1,4 +1,4 @@
-﻿Function Remove-SafeShare {
+﻿Function Remove-PVSafeGWAccount {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-SafeShare -vault Lab -user administrator -safe xxTest -gwAccount pvwagwuser
+		Remove-PVSafeGWAccount -vault Lab -user administrator -safe xxTest -gwAccount pvwagwuser
 
 		Deletes PVWAGWuser as a GW account on open safe xxTest
 
@@ -44,7 +44,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Remove-AreaAddress {
+﻿Function Remove-PVNetworkAreaAddress {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-AreaAddress -vault lab -user administrator -networkArea all\VPN -ipAddress 20.54.118.55
+		Remove-PVNetworkAreaAddress -vault lab -user administrator -networkArea all\VPN -ipAddress 20.54.118.55
 
 		Deletes Area address 20.54.118.55 from VPN network area
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Get-OwnerSafes {
+﻿Function Get-PVUserSafeList {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-OwnerSafes -vault Lab -user administrator -owner sec_admin
+		Get-PVUserSafeList -vault Lab -user administrator -owner sec_admin
 
 		Lists safes owned by user sec_admin
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

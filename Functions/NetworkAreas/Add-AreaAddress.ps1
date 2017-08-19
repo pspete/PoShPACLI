@@ -1,4 +1,4 @@
-﻿Function Add-AreaAddress {
+﻿Function New-PVNetworkAreaAddress {
 
 	<#
     .SYNOPSIS
@@ -30,7 +30,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-AreaAddress -vault Lab -user administrator -networkArea All\EMEA -ipAddress 192.168.0.1 -toAddress 192.168.0.254
+		New-PVNetworkAreaAddress -vault Lab -user administrator -networkArea All\EMEA -ipAddress 192.168.0.1 -toAddress 192.168.0.254
 
 		Adds address range to EMEA Network Area
 
@@ -50,7 +50,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

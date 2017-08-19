@@ -1,4 +1,4 @@
-﻿Function Enable-TrustedNetworkArea {
+﻿Function Enable-PVTrustedNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Enable-TrustedNetworkArea -vault lab -user administrator -trusterName User2 -networkArea All
+    	Enable-PVTrustedNetworkArea -vault lab -user administrator -trusterName User2 -networkArea All
 
 		Enables the "All" trusted Network Area for USer2
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

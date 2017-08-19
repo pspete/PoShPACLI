@@ -1,4 +1,4 @@
-﻿Function Read-VaultConfigFile {
+﻿Function Import-PVVaultDefinition {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Read-VaultConfigFile -parmFile D:\PACLI\Vault.ini -vault "Demo Vault"
+		Import-PVVaultDefinition -parmFile D:\PACLI\Vault.ini -vault "Demo Vault"
 
 		Defines a new vault connection using the details specified in the Vault.ini parameter file.
 
@@ -37,7 +37,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

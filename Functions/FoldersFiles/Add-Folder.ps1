@@ -1,4 +1,4 @@
-﻿Function Add-Folder {
+﻿Function New-PVFolder {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-Folder -vault lab -user administrator -safe Reports -folder Root\AuditReports\2017
+    	New-PVFolder -vault lab -user administrator -safe Reports -folder Root\AuditReports\2017
 
 		Adds folder "2017" to the AuditReports folder under the Root location in safe "Reports"
     .NOTES
@@ -41,7 +41,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

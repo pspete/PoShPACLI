@@ -1,4 +1,4 @@
-﻿Function Reset-Safe {
+﻿Function Reset-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Reset-Safe -vault lab -user administrator -safe ORACLE
+		Reset-PVSafe -vault lab -user administrator -safe ORACLE
 
 		Resets access marks on ORACLE safe
 
@@ -39,7 +39,7 @@
 	)
 
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Add-GroupMember {
+﻿Function Add-PVGroupMember {
 
 	<#
 	.SYNOPSIS
@@ -24,7 +24,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		add-groupmember -vault Lab -user administrator -group xGroup1 -member xUser1
+		Add-PVGroupMember -vault Lab -user administrator -group xGroup1 -member xUser1
 
 		Adds user xUser1 to group xGroup1
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Connect-Vault {
+﻿Function Connect-PVVault {
 
 	<#
     .SYNOPSIS
@@ -8,7 +8,7 @@
         Exposes the PACLI Function: "LOGON"
     	Either log onto the Vault with this function by specifying a username and
         password or by using an authentication parameter file. To create this file,
-        see the New-LogonFile command.
+        see the New-PVLogonFile command.
 
     .PARAMETER vault
         The name of the Vault to log onto
@@ -54,7 +54,7 @@
             The logonfile and radius parameters cannot be defined in the same command.
 
     .EXAMPLE
-		Connect-Vault -vault VaultA -user User1 -password (read-host -AsSecureString)
+		Connect-PVVault -vault VaultA -user User1 -password (read-host -AsSecureString)
 
 		Logs onto defined vault VaultA using User1
 
@@ -76,7 +76,7 @@
 		[Parameter(Mandatory = $False)][switch]$radius
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

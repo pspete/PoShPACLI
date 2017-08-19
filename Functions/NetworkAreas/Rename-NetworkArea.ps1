@@ -1,4 +1,4 @@
-﻿Function Rename-NetworkArea {
+﻿Function Rename-PVNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Rename-NetworkArea -vault lab -user administrator -networkArea All\EMEA -newName All\EU
+		Rename-PVNetworkArea -vault lab -user administrator -networkArea All\EMEA -newName All\EU
 
 		Renames network area EMEA to EU
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Remove-File {
+﻿Function Remove-PVFile {
 
 	<#
     .SYNOPSIS
@@ -29,7 +29,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-File -vault lab -user administrator -safe ORACLE -folder root -file SYSTEM
+		Remove-PVFile -vault lab -user administrator -safe ORACLE -folder root -file SYSTEM
 
 		Deletes file from safe
 
@@ -48,7 +48,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

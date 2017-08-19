@@ -1,4 +1,4 @@
-﻿Function Add-Group {
+﻿Function New-PVGroup {
 
 	<#
 	.SYNOPSIS
@@ -31,7 +31,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-			add-group -vault Lab -user administrator -group xGroup1 -location "\" -description "test description"
+			New-PVGroup -vault Lab -user administrator -group xGroup1 -location "\" -description "test description"
 
 			Adds group xGroup1 to vault.
 
@@ -51,7 +51,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

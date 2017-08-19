@@ -1,4 +1,4 @@
-﻿Function Get-FileActivity {
+﻿Function Get-PVFileActivity {
 
 	<#
     .SYNOPSIS
@@ -30,7 +30,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-FileActivity -vault lab -user administrator -safe PROD -folder root -file prodpass
+    	Get-PVFileActivity -vault lab -user administrator -safe PROD -folder root -file prodpass
 
 		Lists file activity for prodpass in safe PROD
 
@@ -50,7 +50,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

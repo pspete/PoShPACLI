@@ -1,4 +1,4 @@
-﻿Function Get-HttpGwUrl {
+﻿Function Get-PVHttpGwUrl {
 
 	<#
     .SYNOPSIS
@@ -28,7 +28,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-HttpGwUrl -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
+    	Get-PVHttpGwUrl -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
 
 		Retrieves the HTTP Gateway URL for file TeamPass in the DEV Safe.
 
@@ -47,7 +47,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Remove-CTLCert {
+﻿Function Remove-PVCTLCertificate {
 
 	<#
     .SYNOPSIS
@@ -20,7 +20,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-CTLCert -ctlFileName CTL.FILE -certFileName cert.File
+    	Remove-PVCTLCertificate -ctlFileName CTL.FILE -certFileName cert.File
 
 		Deletes Certificate cert.File from Certificate Trust List store CTL.FILE
 
@@ -36,7 +36,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

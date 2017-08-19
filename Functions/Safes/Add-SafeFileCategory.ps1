@@ -1,4 +1,4 @@
-﻿Function Add-SafeFileCategory {
+﻿Function New-PVSafeFileCategory {
 
 	<#
     .SYNOPSIS
@@ -42,7 +42,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-SafeFileCategory -vault Lab -user administrator -safe EU_Support -category NewCat1 -type cat_text
+    	New-PVSafeFileCategory -vault Lab -user administrator -safe EU_Support -category NewCat1 -type cat_text
 
 		Adds text type category NewCat1 to EU_Support safe
 
@@ -65,7 +65,7 @@
 	)
 
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Lock-File {
+﻿Function Lock-PVFile {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Lock-File -vault lab -user administrator -safe ORACLE -folder root -file SYSpass
+		Lock-PVFile -vault lab -user administrator -safe ORACLE -folder root -file SYSpass
 
 		Locks file SYSpass in ORACLE safe.
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

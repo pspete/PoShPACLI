@@ -1,4 +1,4 @@
-﻿Function Remove-FileCategory {
+﻿Function Remove-PVFileCategory {
 
 	<#
     .SYNOPSIS
@@ -30,7 +30,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-FileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass -category AccountCategory
+    	Remove-PVFileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass -category AccountCategory
 
 		Deletes AccountCategory file category from sys.pass file
 
@@ -50,7 +50,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

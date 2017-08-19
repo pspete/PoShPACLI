@@ -1,4 +1,4 @@
-﻿Function Get-RequestsList {
+﻿Function Get-PVRequest {
 
 	<#
     .SYNOPSIS
@@ -69,7 +69,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-RequestsList -vault Lab -user administrator -requestsType INCOMING_REQUESTS
+		Get-PVRequest -vault Lab -user administrator -requestsType INCOMING_REQUESTS
 
 		Lists all Incoming Requests for the authenticated user
 
@@ -95,7 +95,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

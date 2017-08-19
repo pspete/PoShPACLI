@@ -1,4 +1,4 @@
-﻿Function Add-ExternalUser {
+﻿Function Add-PVExternalUser {
 
 	<#
     .SYNOPSIS
@@ -32,7 +32,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-ExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT -UpdateIfExists
+    	Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT -UpdateIfExists
 
 		Updates user admin01 in vault from domain VIRTUALREAL.IT
     .NOTES
@@ -59,7 +59,7 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

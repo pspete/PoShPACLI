@@ -1,4 +1,4 @@
-﻿Function Add-PasswordObject {
+﻿Function Add-PVPasswordObject {
 
 	<#
     .SYNOPSIS
@@ -30,7 +30,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-PasswordObject -vault lab -user administrator -safe Dev_Team -folder Root -file devpass -password (read-host -AsSecureString)
+    	Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root -file devpass -password (read-host -AsSecureString)
 
 		Adds password object with specified value to Dev_Team safe
 
@@ -50,7 +50,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

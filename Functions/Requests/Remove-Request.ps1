@@ -1,4 +1,4 @@
-﻿Function Remove-Request {
+﻿Function Remove-PVRequest {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-Request -vault Lab -user Requestor -safe Admin_Safe -requestID 2
+    	Remove-PVRequest -vault Lab -user Requestor -safe Admin_Safe -requestID 2
 
 		Deletes request from Requestor's My_Request list
 
@@ -45,7 +45,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

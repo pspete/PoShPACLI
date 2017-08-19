@@ -1,4 +1,4 @@
-﻿Function Add-SafeNote {
+﻿Function Set-PVSafeNote {
 
 	<#
     .SYNOPSIS
@@ -27,7 +27,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-SafeNote -vault Lab -user administrator -safe xxTest -subject "New Note" -text "Things worth noting..."
+		Set-PVSafeNote -vault Lab -user administrator -safe xxTest -subject "New Note" -text "Things worth noting..."
 
 		Adds a safe note to safe xxTest
 
@@ -46,7 +46,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

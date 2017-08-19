@@ -1,4 +1,4 @@
-﻿Function Remove-Group {
+﻿Function Remove-PVGroup {
 
 	<#
 		.SYNOPSIS
@@ -21,7 +21,7 @@
 				with multiple scripts simultaneously. The default is ‘0’.
 
 		.EXAMPLE
-			Remove-Group -vault Lab -user administrator -group old_group
+			Remove-PVGroup -vault Lab -user administrator -group old_group
 
 			Deletes group old_group from Vault.
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

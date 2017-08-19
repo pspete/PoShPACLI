@@ -1,4 +1,4 @@
-﻿Function Get-SafeFileCategory {
+﻿Function Get-PVSafeFileCategory {
 
 	<#
     .SYNOPSIS
@@ -25,12 +25,12 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Get-SafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
+    	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
 
 		lists specific file category details
 
     .EXAMPLE
-    	Get-SafeFileCategory -vault lab -user administrator -safe ORACLE
+    	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE
 
 		lists all file category details
 
@@ -48,7 +48,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Remove-NetworkArea {
+﻿Function Remove-PVNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-NetworkArea -vault Lab -user administrator -networkArea all\EU\UK
+		Remove-PVNetworkArea -vault Lab -user administrator -networkArea all\EU\UK
 
 		Deletes Network Area UK from EU
 
@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

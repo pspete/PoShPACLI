@@ -1,4 +1,4 @@
-﻿Function Stop-PACLI {
+﻿Function Stop-PVPacli {
 
 	<#
     .SYNOPSIS
@@ -13,11 +13,11 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Stop-PACLI
+    	Stop-PVPacli
         Ends the PACLI process with a session ID of 0
 
     .EXAMPLE
-    	Stop-PACLI -sessionID 7
+    	Stop-PVPacli -sessionID 7
         Ends the PACLI process with a session ID of 7
 
     .NOTES
@@ -30,7 +30,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

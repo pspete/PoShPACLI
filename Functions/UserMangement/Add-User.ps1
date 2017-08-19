@@ -1,4 +1,4 @@
-﻿Function Add-User {
+﻿Function New-PVUser {
 
 	<#
 	.SYNOPSIS
@@ -206,7 +206,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-User -vault Lab -user userAdmin -destUser backup1 -password (read-host -AsSecureString) -backupAdmin -location "\"
+		New-PVUser -vault Lab -user userAdmin -destUser backup1 -password (read-host -AsSecureString) -backupAdmin -location "\"
 
 		Creates a new vault user in the root location, named backup1, with backup admin vault rights.
 
@@ -276,7 +276,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

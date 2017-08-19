@@ -1,4 +1,4 @@
-﻿Function Set-Password {
+﻿Function Set-PVUserPassword {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Set-Password -vault Lab -user PacliUser -password (read-host -AsSecureString) -newPassword (Read-Host -AsSecureString)
+    	Set-PVUserPassword -vault Lab -user PacliUser -password (read-host -AsSecureString) -newPassword (Read-Host -AsSecureString)
 
 		Resets the password of the authenticated user
 
@@ -42,7 +42,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

@@ -1,4 +1,4 @@
-﻿Function Add-LDAPBranch {
+﻿Function New-PVLDAPBranch {
 
 	<#
 	.SYNOPSIS
@@ -33,7 +33,7 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-LDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping" -ldapDirName Domain.COM `
+		New-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping" -ldapDirName Domain.COM `
 		-ldapBranchName "DC=Domain,DC=Com" -ldapQuery "samaccountname=this_user"
 
 		Adds LDAP Branch to Vault Users Mapping with specified LDAP Query
@@ -55,7 +55,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 

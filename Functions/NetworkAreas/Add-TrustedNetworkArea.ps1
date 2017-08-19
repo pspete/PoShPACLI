@@ -1,4 +1,4 @@
-﻿Function Add-TrustedNetworkArea {
+﻿Function Add-PVTrustedNetworkArea {
 
 	<#
     .SYNOPSIS
@@ -35,7 +35,7 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-TrustedNetworkArea -vault Lab -user administrator -trusterName user1 -networkArea "All\VPN"
+		Add-PVTrustedNetworkArea -vault Lab -user administrator -trusterName user1 -networkArea "All\VPN"
 
 		Adds VPN Trusted Network Area to user1
 
@@ -56,7 +56,7 @@
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
-	If(!(Test-ExePreReqs)) {
+	If(!(Test-PACLI)) {
 
 		#$pacli variable not set or not a valid path
 
