@@ -105,7 +105,7 @@
 		[Parameter(Mandatory = $False)][string]$proxyAddress,
 		[Parameter(Mandatory = $False)][int]$proxyPort,
 		[Parameter(Mandatory = $False)][string]$proxyUser,
-		[Parameter(Mandatory = $False)][string]$proxyPassword,
+		[Parameter(Mandatory = $False)][securestring]$proxyPassword,
 		[Parameter(Mandatory = $False)][string]$proxyAuthDomain,
 		[Parameter(Mandatory = $False)][int]$numOfRecordsPerSend,
 		[Parameter(Mandatory = $False)][int]$numOfRecordsPerChunk,
@@ -126,10 +126,17 @@
 
 		#$PACLI variable set to executable path
 
+		#deal with proxyPassword SecureString
+		if($PSBoundParameters.ContainsKey("proxyPassword")) {
+
+			$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
+
+		}
+
 		Write-Verbose "Defining Vault"
 
 		$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote proxyType, port, timeout, reconnectPeriod,
+				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
 			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
 		if($Return.ExitCode) {
