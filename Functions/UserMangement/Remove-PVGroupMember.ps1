@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Deleted User $member From $group"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

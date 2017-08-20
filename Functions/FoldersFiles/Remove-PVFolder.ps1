@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Folder $folder Deleted"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

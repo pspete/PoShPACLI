@@ -70,7 +70,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "File Category $category Deleted"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

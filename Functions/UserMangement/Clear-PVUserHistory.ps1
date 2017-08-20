@@ -54,7 +54,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "History Cleared from $user"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

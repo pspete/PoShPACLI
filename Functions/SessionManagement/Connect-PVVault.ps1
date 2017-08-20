@@ -114,7 +114,8 @@
 		else {
 
 			Write-Verbose "Successfully Logged on"
-			exit 0
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

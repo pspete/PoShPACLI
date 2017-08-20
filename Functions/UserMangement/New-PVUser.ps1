@@ -305,7 +305,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Created Vault User $destUser"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

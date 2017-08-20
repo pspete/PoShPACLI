@@ -65,7 +65,8 @@
 		else {
 
 			Write-Verbose "$safe Share via $gwAccount Deleted"
-			exit 0
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

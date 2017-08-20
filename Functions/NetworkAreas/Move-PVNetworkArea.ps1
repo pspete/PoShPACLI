@@ -63,7 +63,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Network Area $networkArea Moved to $newLocation"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

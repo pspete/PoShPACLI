@@ -54,7 +54,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Locked User $user"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

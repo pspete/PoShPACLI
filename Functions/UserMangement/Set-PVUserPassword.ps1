@@ -77,7 +77,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Password Updated"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

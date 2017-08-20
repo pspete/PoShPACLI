@@ -147,8 +147,9 @@
 
 		else {
 
-			Write-Verbose "Vault Defined"
-			exit 0
+			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

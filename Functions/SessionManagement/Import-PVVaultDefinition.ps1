@@ -60,7 +60,8 @@
 		else {
 
 			Write-Verbose "Vault Config Read"
-			exit 0
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

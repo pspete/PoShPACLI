@@ -68,7 +68,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "$file Removed"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

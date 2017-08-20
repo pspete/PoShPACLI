@@ -77,7 +77,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Trusted Network Area $networkarea Assigned to $trusterName"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

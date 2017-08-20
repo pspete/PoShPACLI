@@ -68,7 +68,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Created Logon File $logonFile"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

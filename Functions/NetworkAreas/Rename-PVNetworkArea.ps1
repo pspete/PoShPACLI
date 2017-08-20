@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Network Area Renamed to $newName"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

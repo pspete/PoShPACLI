@@ -56,7 +56,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Certificate $certFileName Deleted from CTL"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

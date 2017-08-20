@@ -67,7 +67,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Moved Folder to $newLocation"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

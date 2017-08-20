@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "User $member Added to $group"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

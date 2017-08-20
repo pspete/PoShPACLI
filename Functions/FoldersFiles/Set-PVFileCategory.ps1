@@ -47,7 +47,7 @@
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder = "Root",
+		[Parameter(Mandatory = $True)][string]$folder,
 		[Parameter(Mandatory = $True)][string]$file,
 		[Parameter(Mandatory = $True)][string]$category,
 		[Parameter(Mandatory = $True)][string]$value,
@@ -75,7 +75,7 @@
 		else {
 
 			Write-Verbose "File Category $category Updated"
-			exit 0
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

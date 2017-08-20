@@ -56,7 +56,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Successfully Logged Off"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

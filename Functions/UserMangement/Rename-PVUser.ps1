@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "User Renamed to $newName"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

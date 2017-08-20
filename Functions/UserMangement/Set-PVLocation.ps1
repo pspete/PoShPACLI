@@ -68,7 +68,9 @@
 
 		Else {
 
-			exit 0
+			Write-Verbose "Updated Location $location"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 
