@@ -66,7 +66,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "User Photo Saved to Vault"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

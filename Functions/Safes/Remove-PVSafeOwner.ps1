@@ -64,7 +64,8 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Removed Safe Owner: $owner"
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

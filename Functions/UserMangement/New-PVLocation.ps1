@@ -65,7 +65,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Added Location $location"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

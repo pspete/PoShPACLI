@@ -66,7 +66,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Note Added to Safe $safe"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

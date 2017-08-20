@@ -71,7 +71,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Added Group $group"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

@@ -165,7 +165,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Mail Message Sent"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

@@ -59,7 +59,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Safe $safe Reset"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

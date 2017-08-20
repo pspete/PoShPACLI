@@ -61,7 +61,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Folder $folder Created"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

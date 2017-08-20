@@ -70,7 +70,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "File Moved"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

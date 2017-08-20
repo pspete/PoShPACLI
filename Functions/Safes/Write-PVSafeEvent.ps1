@@ -79,7 +79,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Safe Event Added"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

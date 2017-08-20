@@ -64,7 +64,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Folder $folder Restored"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

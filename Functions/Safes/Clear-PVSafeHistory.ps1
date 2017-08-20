@@ -58,7 +58,9 @@
 
 		else {
 
-			exit 0
+			"Cleared Safe History on Safe $safe"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

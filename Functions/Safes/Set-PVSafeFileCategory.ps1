@@ -81,7 +81,9 @@
 
 		elseif($Return -match "True") {
 
-			exit 0
+			Write-Verbose "Safe File Category Updated"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

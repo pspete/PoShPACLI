@@ -62,7 +62,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Address $ipAddress Removed from Network Area $networkArea"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

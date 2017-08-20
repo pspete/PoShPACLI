@@ -61,7 +61,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Safe Renamed to $newName"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

@@ -309,7 +309,9 @@
 
 		Else {
 
-			exit 0
+			Write-Verbose "Updated User $destUser"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

@@ -63,7 +63,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "Deleted Safe File Category $category"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

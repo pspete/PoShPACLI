@@ -144,7 +144,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "File Retrieved"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

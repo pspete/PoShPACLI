@@ -66,7 +66,9 @@
 
 		else {
 
-			exit 0
+			Write-Verbose "File $file Reset"
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

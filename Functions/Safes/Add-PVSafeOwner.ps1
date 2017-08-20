@@ -180,7 +180,8 @@
 		else {
 
 			write-verbose "Added Safe Owner: $owner"
-			exit 0
+
+			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 
