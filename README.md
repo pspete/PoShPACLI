@@ -1,12 +1,15 @@
 # PoShPACLI
 
-**Powershell PACLI Module for CyberArk EPV**
+## **Powershell PACLI Module for CyberArk EPV**
 
 Exposes the native functions of the CyberArk PACLI command line utility via a PowerShell wrapper for interfacing with CyberArk EPV.
 
 ----------
-## Whats New
 
+## Latest Updates
+
+- All functions (and related files) have been renamed using standard verbs and updated nouns.
+  - See [Issue #33](https://github.com/pspete/PoShPACLI/issues/33) for details.
 - Any Pacli output on StdErr is now written to the PowerShell error stream.
 - Boolean output from functions removed
   - **NOTE:** This is a breaking change if the previous $True/$False values are required by an existing script.
@@ -26,99 +29,108 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 Save the Module to your powershell modules folder of choice.
 Find your local PowerShell module paths with the following command:
-```
+
+```powershell
 $env:PSModulePath
 ```
+
 The name of the folder for the module should be "PoShPACLI".
 
 Import the module:
 
-```
+```powershell
 Import-Module PoShPACLI
 ```
+
 Discover Commands:
-```
+
+```powershell
 Get-Command -Module PoShPACLI
 ```
+
 Function Initialize-PoShPACLI must be run before working with the other module functions:
-```
+
+```powershell
 Initialize-PoShPACLI -pacliFolder D:\PACLI
 ```
-This is required to locate the CyberArk PACLI execuatable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
+
+This is required to locate the CyberArk PACLI executable in the SYSTEM path, or in a folder you specify, in order for the module to be able to execute the utility.
 
 ----------
 
 An identical process to using the PACLI tool on its own should be followed:
 
 Example method to use the module to add a password object to a safe:
-```
+
+```powershell
 #Locate/set path to PACLI executable
 
 Initialize-PoShPACLI
 
 #Start PACLI Executable
 
-Start-PACLI
+Start-PVPacli
 
 #Define Vault
 
-Add-VaultDefinition -vault "VAULT" -address "vaultAddress"
+New-PVVaultDefinition -vault "VAULT" -address "vaultAddress"
 
 #Logon to vault
 
-Connect-Vault -vault "VAULT" -user "User" -logonFile "credfile.xxx"
+Connect-PVVault -vault "VAULT" -user "User" -logonFile "credfile.xxx"
 
 #Open Safe
 
-Open-Safe -vault "VAULT" -user "User" -safe "SAFE_Name"
+Open-PVSafe -vault "VAULT" -user "User" -safe "SAFE_Name"
 
 #Add Password to Safe
 
-Add-PasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password (Read-Host -AsSecureString)
+Add-PVPasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password (Read-Host -AsSecureString)
 
 #Add Device Type for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value
 "Device_Type"
 
 #Add PolicyID for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "PolicyID" -value "Policy_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "PolicyID" -value "Policy_Name"
 
 #Add Logon Domain for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "LogonDomain" -value "Domain_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "LogonDomain" -value "Domain_Name"
 
 #Add Address for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category 'Address' -value "Address_Value"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category 'Address' -value "Address_Value"
 
 #Add UserName for password
 
-Add-FileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "UserName" -value "Account_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "UserName" -value "Account_Name"
 
 #Close Safe
 
-Close-Safe -vault "VAULT" -user "User" -safe "SAFE_Name"
+Close-PVSafe -vault "VAULT" -user "User" -safe "SAFE_Name"
 
 #Logoff From Vault
 
-Disconnect-Vault  -vault "VAULT" -user "User"
+Disconnect-PVVault  -vault "VAULT" -user "User"
 
 #Stop Pacli process
 
-Stop-PACLI
+Stop-PVPacli
 ```
 
 ## Author
 
-* **Pete Maan** - [pspete](https://github.com/pspete)
+- **Pete Maan** - [pspete](https://github.com/pspete)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Contributing
+
 Any and all contributions to this project are appreciated.
 See the [CONTRIBUTING.md](CONTRIBUTING.md) for a few more details.
 
@@ -128,124 +140,119 @@ The table shows how the the PoShPACLI module functions relate to the native PACL
 
 |PACLI Command|PoshPACLI Function|
 |---:|:---|
-|INIT|Start-Pacli
-|TERM|Stop-Pacli
-|DEFINE|Add-VaultDefinition
-|DEFINEFROMFILE|Read-VaultConfigFile
-|DELETEVAULT|Remove-VaultDefinition
-|LOGON|Connect-Vault
-|CREATELOGONFILE|New-LogonFile
-|LOGOFF|Disconnect-Vault
-|SETPASSWORD|Set-Password
-|LOCK|Lock-User
-|UNLOCK|Unlock-User
-|ADDUSER|Add-User
-|UPDATEUSER|Update-User
-|RENAMEUSER|Rename-User
-|DELETEUSER|Remove-User
-|ADDUPDATEEXTERNALUSERENTITY|Add-ExternalUser
-|USERDETAILS|Get-UserDetails
-|USERSLIST|Get-VaultUsers
-|INSPECTUSER|Get-UserActivity
-|SAFESLOG|Get-SafesLog
-|CLEARUSERHISTORY|Clear-UserHistory
-|PUTUSERPHOTO|Set-UserPhoto
-|GETUSERPHOTO|Get-UserPhoto
-|MAILUSER|Send-PAMailMessage
-|ADDSAFESHARE|Add-SafeShare
-|DELETESAFESHARE|Remove-SafeShare
-|ADDGROUP|Add-Group
-|UPDATEGROUP|Update-Group
-|DELETEGROUP|Remove-Group
-|ADDGROUPMEMBER|Add-GroupMamber
-|DELETEGROUPMEMBER|Remove-GroupMamber
-|ADDLOCATION|Add-Location
-|UPDATELOCATION|Update-Location
-|RENAMELOCATION|Rename-Location
-|DELETELOCATION|Remove-Location
-|LOCATIONSLIST|Get-Locations
-|GROUPDETAILS|Get-GroupDetails
-|GROUPMEMBERS|Get-GroupMembers
-|LDAPBRANCHADD|Add-LDAPBranch
-|LDAPBRANCHUPDATE|Update-LDAPBranch
-|LDAPBRANCHDELETE|Remove-LDAPBranch
-|LDAPBRANCHESLIST|Get-LDAPBranches
-|ADDNETWORKAREA|Add-NetworkArea
-|DELETENETWORKAREA|Remove-NetworkArea
-|MOVENETWORKAREA|Move-NetworkArea
-|RENAMENETWORKAREA|RenameNetworkArea
-|NETWORKAREASLIST|Get-NetworkArea
-|ADDAREAADDRESS|Add-AreaAddress
-|DELETEAREAADDRESS|Remove-AreaAddress
-|ADDTRUSTEDNETWORKAREA|Add-TrustedNetworkArea
-|DELETETRUSTEDNETWORKAREA|Remove-TrustedNetworkArea
-|TRUSTEDNETWORKAREALIST|Get-TrustedNetworkArea
-|ACTIVATETRUSTEDNETWORKAREA|Enable-TrustedNetworkArea
-|DEACTIVATETRUSTEDNETWORKAREA|Disable-TrustedNetworkArea
-|OPENSAFE|Open-Safe
-|CLOSESAFE|Close-Safe
-|ADDSAFE|Add-Safe
-|UPDATESAFE|Update-Safe
-|RENAMESAFE|Rename-Safe
-|DELETESAFE|Remove-Safe
-|ADDOWNER|Add-SafeOwner
-|UPDATEOWNER|Update-SafeOwner
-|DELETEOWNER|Remove-SafeOwner
-|OWNERSAFESLIST|Get-OwnerSafes
-|SAFEDETAILS|Get-SafeDetails
-|SAFESLIST|Get-Safe
-|OWNERSLIST|Get-SafeOwners
-|INSPECTSAFE|Get-SafeActivity
-|ADDSAFEFILECATEGORY|Add-SafeFileCategory
-|UPDATESAFEFILECATEGORY|Update-SafeFileCategory
-|DELETESAFEFILECATEGORY|Remove-SafeFileCategory
-|LISTSAFEFILECATEGORIES|Get-SafeFileCategory
-|ADDEVENT|Add-SafeEvent
-|SAFEEVENTSLIST|Get-SafeEvents
-|ADDNOTE|Add-SafeNote
-|RESETSAFE|Reset-Safe
-|CLEARSAFEHISTORY|Clear-SafeHistory
-|ADDFOLDER|Add-Folder
-|DELETEFOLDER|Remove-Folder
-|UNDELETEFOLDER|RestoreFolder
-|MOVEFOLDER|Move-Folder
-|FOLDERSLIST|Get-Folder
-|ADDPREFERREDFOLDER|Add-PreferredFolder
-|DELETEPREFFEREDFOLDER|Remove-PreferredFolder
-|STOREFILE|Add-File
-|RETRIEVEFILE|Get-File
-|DELETEFILE|Remove-File
-|UNDELETEFILE|Restore-File
-|STOREPASSWORDOBJECT|Add-PasswordObject
-|RETRIEVEPASSWORDOBJECT|Get-PasswordObject
-|LOCKFILE|Lock-File
-|UNLOCKFILE|Unlock-File
-|MOVEFILE|Move-File
-|FINDFILES|Search-Files
-|FILESLIST|Get-FilesList
-|FILEVERSIONSLIST|Get-FileversionsList
-|RESETFILE|Reset-File
-|INSPECTFILE|Get-FileActivity
-|ADDFILECATEGORY|Add-FileCategory
-|UPDATEFILECATEGORY|Update-FileCategory
-|DELETEFILECATEGORY|Remove-FileCategory
-|LISTFILECATEGORIES|Get-FileCategories
-|VALIDATEOBJECT|Confirm-Object
-|GETHTTPGWURL|Get-HttpGwUrl
-|ADDRULE|Add-Rule
-|DELETERULE|Remove-Rule
-|RULESLIST|Get-RulesList
-|REQUESTSLIST|Get-RequestsList
-|CONFIRMREQUEST|Confirm-Request
-|DELETEREQUEST|Remove-Request
-|REQUESTCONFIRMATIONSTATUS|Get-RequestConfirmationStatus
-|GENERATEPASSWORD|New-Password
-|CTLGETFILENAME|Get-CtlFileName
-|CTLADDCERT|Add-CTLCert
-|CTLREMOVECERT|Remove-CTLCert
-|CTLLIST|Get-CtlList
-|GENERATEPASSWORD|New-Password
-|CTLGETFILENAME|Get-CtlFileName
-|CTLADDCERT|Add-CTLCert
-|CTLREMOVECERT|Remove-CTLCert
-|CTLLIST|Get-CtlList
+|INIT|Start-PVPacli|
+|TERM|Stop-PVPacli|
+|DEFINEFROMFILE|Import-PVVaultDefinition|
+|DEFINE|New-PVVaultDefinition|
+|DELETEVAULT|Remove-PVVaultDefinition|
+|CREATELOGONFILE|New-PVLogonFile|
+|LOGON|Connect-PVVault|
+|LOGOFF|Disconnect-PVVault|
+|CTLGETFILENAME|Get-PVCTL|
+|CTLADDCERT|Add-PVCTLCertificate|
+|CTLLIST|Get-PVCTLCertificate|
+|CTLREMOVECERT|Remove-PVCTLCertificate|
+|STOREFILE|Add-PVFile|
+|FINDFILES|Find-PVFile|
+|RETRIEVEFILE|Get-PVFile|
+|LOCKFILE|Lock-PVFile|
+|MOVEFILE|Move-PVFile|
+|DELETEFILE|Remove-PVFile|
+|RESETFILE|Reset-PVFile|
+|UNDELETEFILE|Restore-PVFile|
+|UNLOCKFILE|Unlock-PVFile|
+|INSPECTFILE|Get-PVFileActivity|
+|ADDFILECATEGORY|Add-PVFileCategory|
+|LISTFILECATEGORIES|Get-PVFileCategory|
+|DELETEFILECATEGORY|Remove-PVFileCategory|
+|UPDATEFILECATEGORY|Set-PVFileCategory|
+|FILESLIST|Get-PVFileList|
+|FILEVERSIONSLIST|Get-PVFileVersionList|
+|FOLDERSLIST|Get-PVFolder|
+|MOVEFOLDER|Move-PVFolder|
+|ADDFOLDER|New-PVFolder|
+|DELETEFOLDER|Remove-PVFolder|
+|UNDELETEFOLDER|Restore-PVFolder|
+|GROUPDETAILS|Get-PVGroup|
+|ADDGROUP|New-PVGroup|
+|DELETEGROUP|Remove-PVGroup|
+|UPDATEGROUP|Set-PVGroup|
+|ADDGROUPMEMBER|Add-PVGroupMember|
+|GROUPMEMBERS|Get-PVGroupMember|
+|DELETEGROUPMEMBER|Remove-PVGroupMember|
+|GETHTTPGWURL|Get-PVHttpGwUrl|
+|LDAPBRANCHESLIST|Get-PVLDAPBranch|
+|LDAPBRANCHADD|New-PVLDAPBranch|
+|LDAPBRANCHDELETE|Remove-PVLDAPBranch|
+|LDAPBRANCHUPDATE|Set-PVLDAPBranch|
+|LOCATIONSLIST|Get-PVLocation|
+|ADDLOCATION|New-PVLocation|
+|DELETELOCATION|Remove-PVLocation|
+|RENAMELOCATION|Rename-PVLocation|
+|UPDATELOCATION|Set-PVLocation|
+|MAILUSER|Send-PVMailMessage|
+|NETWORKAREASLIST|Get-PVNetworkArea|
+|MOVENETWORKAREA|Move-PVNetworkArea|
+|ADDNETWORKAREA|New-PVNetworkArea|
+|DELETENETWORKAREA|Remove-PVNetworkArea|
+|RENAMENETWORKAREA|Rename-PVNetworkArea|
+|ADDAREAADDRESS|New-PVNetworkAreaAddress|
+|DELETEAREAADDRESS|Remove-PVNetworkAreaAddress|
+|VALIDATEOBJECT|Set-PVObjectValidation|
+|GENERATEPASSWORD|New-PVPassword|
+|STOREPASSWORDOBJECT|Add-PVPasswordObject|
+|RETRIEVEPASSWORDOBJECT|Get-PVPasswordObject|
+|DELETEPREFFEREDFOLDER|Remove-PVPreferredFolder|
+|ADDPREFERREDFOLDER|Add-PVPreferredFolder|
+|REQUESTSLIST|Get-PVRequest|
+|DELETEREQUEST|Remove-PVRequest|
+|REQUESTCONFIRMATIONSTATUS|Get-PVRequestStatus|
+|CONFIRMREQUEST|Set-PVRequestStatus|
+|ADDRULE|Add-PVRule|
+|RULESLIST|Get-PVRule|
+|DELETERULE|Remove-PVRule|
+|CLOSESAFE|Close-PVSafe|
+|SAFEDETAILS|Get-PVSafe|
+|ADDSAFE|New-PVSafe|
+|OPENSAFE|Open-PVSafe|
+|DELETESAFE|Remove-PVSafe|
+|RENAMESAFE|Rename-PVSafe|
+|RESETSAFE|Reset-PVSafe|
+|UPDATESAFE|Set-PVSafe|
+|INSPECTSAFE|Get-PVSafeActivity|
+|SAFEEVENTSLIST|Get-PVSafeEvent|
+|ADDEVENT|Write-PVSafeEvent|
+|LISTSAFEFILECATEGORIES|Get-PVSafeFileCategory|
+|ADDSAFEFILECATEGORY|New-PVSafeFileCategory|
+|DELETESAFEFILECATEGORY|Remove-PVSafeFileCategory|
+|UPDATESAFEFILECATEGORY|Set-PVSafeFileCategory|
+|ADDSAFESHARE|Add-PVSafeGWAccount|
+|DELETESAFESHARE|Remove-PVSafeGWAccount|
+|CLEARSAFEHISTORY|Clear-PVSafeHistory|
+|SAFESLIST|Get-PVSafeList|
+|SAFESLOG|Get-PVSafeLog|
+|ADDNOTE|Set-PVSafeNote|
+|ADDOWNER|Add-PVSafeOwner|
+|OWNERSLIST|Get-PVSafeOwner|
+|DELETEOWNER|Remove-PVSafeOwner|
+|UPDATEOWNER|Set-PVSafeOwner|
+|ADDTRUSTEDNETWORKAREA|Add-PVTrustedNetworkArea|
+|DEACTIVATETRUSTEDNETWORKAREA|Disable-PVTrustedNetworkArea|
+|ACTIVATETRUSTEDNETWORKAREA|Enable-PVTrustedNetworkArea|
+|TRUSTEDNETWORKAREALIST|Get-PVTrustedNetworkArea|
+|DELETETRUSTEDNETWORKAREA|Remove-PVTrustedNetworkArea|
+|USERDETAILS|Get-PVUser|
+|LOCK|Lock-PVUser|
+|ADDUSER|New-PVUser|
+|DELETEUSER|Remove-PVUser|
+|RENAMEUSER|Rename-PVUser|
+|UPDATEUSER|Set-PVUser|
+|UNLOCK|Unlock-PVUser|
+|INSPECTUSER|Get-PVUserActivity|
+|CLEARUSERHISTORY|Clear-PVUserHistory|
+|USERSLIST|Get-PVUserList|
+|SETPASSWORD|Set-PVUserPassword|
+|GETUSERPHOTO|Get-PVUserPhoto|
+|PUTUSERPHOTO|Set-PVUserPhoto|
+|OWNERSAFESLIST|Get-PVUserSafeList|
+|ADDUPDATEEXTERNALUSERENTITY|Add-PVExternalUser|
