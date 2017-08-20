@@ -8,6 +8,8 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ## Latest Updates
 
+- All functions (and related files) have been renamed using standard verbs and updated nouns.
+  - See [Issue #33](https://github.com/pspete/PoShPACLI/issues/33) for details.
 - Any Pacli output on StdErr is now written to the PowerShell error stream.
 - Boolean output from functions removed
   - **NOTE:** This is a breaking change if the previous $True/$False values are required by an existing script.
