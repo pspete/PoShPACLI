@@ -48,6 +48,7 @@
     #>
 
 	[CmdLetBinding()]
+	[OutputType('System.Array')]
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipeline = $True)][string]$pacliOutput,
 		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][string]$regEx = '"([^"]*)"'
