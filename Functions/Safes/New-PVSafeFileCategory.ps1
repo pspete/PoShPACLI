@@ -51,7 +51,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,

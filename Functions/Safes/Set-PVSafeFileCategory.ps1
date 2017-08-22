@@ -47,7 +47,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
@@ -82,8 +82,6 @@
 		elseif($Return -match "True") {
 
 			Write-Verbose "Safe File Category Updated"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

@@ -25,7 +25,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
@@ -50,11 +50,9 @@
 
 		}
 
-		Else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Pacli Stopped"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

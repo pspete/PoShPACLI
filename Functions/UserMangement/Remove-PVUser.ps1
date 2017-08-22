@@ -30,7 +30,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
@@ -59,8 +59,6 @@
 		else {
 
 			Write-Verbose "Deleted User $destUser"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

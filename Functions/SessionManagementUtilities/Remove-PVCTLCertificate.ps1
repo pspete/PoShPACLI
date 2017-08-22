@@ -29,7 +29,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $False)][string]$ctlFileName,
 		[Parameter(Mandatory = $False)][string]$certFileName,
@@ -54,11 +54,9 @@
 
 		}
 
-		else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Certificate $certFileName Deleted from CTL"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 
