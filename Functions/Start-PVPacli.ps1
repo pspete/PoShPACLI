@@ -26,7 +26,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $False)][int]$sessionID,
 		[Parameter(Mandatory = $False)][string]$ctlFileName
@@ -52,11 +52,9 @@
 
 		}
 
-		Else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Pacli Started"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

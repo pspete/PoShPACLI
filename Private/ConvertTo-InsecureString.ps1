@@ -13,6 +13,7 @@ Function ConvertTo-InsecureString {
 	ConvertTo-InsecureString $SecureStringValue
 	#>
 	[CmdLetBinding()]
+	[OutputType('System.String')]
 	Param (
 		[Parameter(Mandatory = $True)]
 		[System.Security.SecureString]$SecureString

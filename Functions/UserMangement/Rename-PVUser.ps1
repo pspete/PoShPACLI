@@ -64,8 +64,6 @@
 
 			Write-Verbose "User Renamed to $newName"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
-
 		}
 
 	}

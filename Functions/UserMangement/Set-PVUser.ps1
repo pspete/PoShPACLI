@@ -219,7 +219,7 @@
 		LASTEDIT: August 2017
 	#>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
@@ -307,11 +307,9 @@
 
 		}
 
-		Else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Updated User $destUser"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

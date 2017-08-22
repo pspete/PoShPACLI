@@ -59,7 +59,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)]
 		[ValidateRange(1, 170)][int]$length,
@@ -98,7 +98,6 @@
 			if($Return.StdOut) {
 
 				Write-Verbose "Password Generated"
-				Write-Debug $Return.StdOut
 
 				#Return Generated Password String
 				[PSCustomObject] @{

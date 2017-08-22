@@ -19,7 +19,7 @@
     .PARAMETER requestID
         The unique ID number of the request.
 
-    .PARAMETER confirm
+    .PARAMETER confirmRequest
         Whether to confirm or reject this request.
 
     .PARAMETER reason
@@ -39,13 +39,13 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $True)][int]$requestID,
-		[Parameter(Mandatory = $True)][switch]$confirm,
+		[Parameter(Mandatory = $True)][switch]$confirmRequest,
 		[Parameter(Mandatory = $False)][string]$reason,
 		[Parameter(Mandatory = $False)][int]$sessionID
 	)
@@ -61,10 +61,8 @@
 		#$PACLI variable set to executable path
 
 		#ConvertTo-ParameterString usually remove "Confirm", which conflists with a parameter of the function
-		$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($PSBoundParameters.getEnumerator() |
-		ConvertTo-ParameterString -doNotQuote requestID -excludedParameters @("Debug", "ErrorAction",
-		"ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable", "Verbose", "WarningAction",
-		"WarningVariable", "WhatIf")) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($($PSBoundParameters.getEnumerator() |
+		ConvertTo-ParameterString -doNotQuote requestID) -replace "confirmRequest","confirm") OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 
