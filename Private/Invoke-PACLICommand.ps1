@@ -28,7 +28,7 @@
     	LASTEDIT: August 2017
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 		[Parameter(Mandatory = $True, Position = 1)]
 		[string]$PacliEXE,
@@ -47,31 +47,35 @@
 
 	Process {
 
-		Write-Debug "PACLI Command: $PacliCommand $CommandParameters"
+		if ($PSCmdlet.ShouldProcess($PacliEXE, "$PacliCommand $CommandParameters")) {
 
-		#Assign process parameters
-		$PacliProcess.StartInfo.Filename = $PacliEXE
-		$PacliProcess.StartInfo.Arguments = "$PacliCommand $CommandParameters"
-		$PacliProcess.StartInfo.RedirectStandardOutput = $True
-		$PacliProcess.StartInfo.RedirectStandardError = $True
-		$PacliProcess.StartInfo.UseShellExecute = $False
+			Write-Debug "PACLI Command: $PacliCommand $CommandParameters"
 
-		#Start Process
-		$PacliProcess.start()
+			#Assign process parameters
+			$PacliProcess.StartInfo.Filename = $PacliEXE
+			$PacliProcess.StartInfo.Arguments = "$PacliCommand $CommandParameters"
+			$PacliProcess.StartInfo.RedirectStandardOutput = $True
+			$PacliProcess.StartInfo.RedirectStandardError = $True
+			$PacliProcess.StartInfo.UseShellExecute = $False
 
-		#Read Output Stream First
-		$StdOut = $PacliProcess.StandardOutput.ReadToEnd()
-		$StdErr = $PacliProcess.StandardError.ReadToEnd()
+			#Start Process
+			$PacliProcess.start()
 
-		#If you wait for the process to exit before reading StandardOutput
-		#the process can block trying to write to it, so the process never ends.
-		$PacliProcess.WaitForExit()
+			#Read Output Stream First
+			$StdOut = $PacliProcess.StandardOutput.ReadToEnd()
+			$StdErr = $PacliProcess.StandardError.ReadToEnd()
+
+			#If you wait for the process to exit before reading StandardOutput
+			#the process can block trying to write to it, so the process never ends.
+			$PacliProcess.WaitForExit()
+
+			Write-Debug "Exit Code: $($PacliProcess.ExitCode)"
+
+		}
 
 	}
 
 	End {
-
-		Write-Debug "Exit Code: $($PacliProcess.ExitCode)"
 
 		[PSCustomObject] @{
 
