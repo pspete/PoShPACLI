@@ -66,8 +66,6 @@
 
 			Write-Verbose "Deleted Safe $safe"
 
-
-
 		}
 
 	}

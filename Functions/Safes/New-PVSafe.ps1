@@ -254,11 +254,9 @@
 
 		}
 
-		else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Safe Created: $safe"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

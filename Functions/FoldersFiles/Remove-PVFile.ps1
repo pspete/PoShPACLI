@@ -70,8 +70,6 @@
 
 			Write-Verbose "$file Removed"
 
-
-
 		}
 
 	}

@@ -307,11 +307,9 @@
 
 		}
 
-		Else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Updated User $destUser"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

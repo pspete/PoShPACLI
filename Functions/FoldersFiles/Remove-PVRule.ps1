@@ -79,8 +79,6 @@
 
 			Write-Verbose "Rule $RuleID Deleted"
 
-
-
 		}
 
 	}

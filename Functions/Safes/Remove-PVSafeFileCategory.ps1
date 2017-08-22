@@ -65,8 +65,6 @@
 
 			Write-Verbose "Deleted Safe File Category $category"
 
-
-
 		}
 
 	}

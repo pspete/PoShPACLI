@@ -69,11 +69,9 @@
 
 		}
 
-		else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Updated Group $group"
-
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 
 		}
 

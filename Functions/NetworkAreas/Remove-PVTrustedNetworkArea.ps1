@@ -64,8 +64,6 @@
 
 			Write-Verbose "Trusted Network Area $NetworkArea Removed from $trusterName"
 
-
-
 		}
 
 	}

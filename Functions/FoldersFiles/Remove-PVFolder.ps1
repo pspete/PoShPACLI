@@ -64,8 +64,6 @@
 
 			Write-Verbose "Folder $folder Deleted"
 
-
-
 		}
 
 	}

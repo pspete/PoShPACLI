@@ -56,7 +56,7 @@
 
 		}
 
-		else {
+		elseif($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Deleted User $destUser"
 

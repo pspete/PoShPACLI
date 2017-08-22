@@ -60,8 +60,6 @@
 
 			Write-Verbose "Network Area $networkArea Deleted"
 
-
-
 		}
 
 	}

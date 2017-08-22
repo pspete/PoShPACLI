@@ -86,8 +86,6 @@
 
 			Write-Verbose "File $file Marked as $ValidationAction"
 
-
-
 		}
 
 	}

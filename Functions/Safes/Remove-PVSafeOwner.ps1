@@ -66,7 +66,6 @@
 
 			Write-Verbose "Removed Safe Owner: $owner"
 
-
 		}
 
 	}

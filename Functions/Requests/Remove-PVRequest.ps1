@@ -68,8 +68,6 @@
 
 			Write-Verbose "Request $RequestID Deleted"
 
-
-
 		}
 
 	}
