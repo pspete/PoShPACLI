@@ -38,12 +38,12 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $True)][String]$safe,
 		[Parameter(Mandatory = $False)][String]$subject,
 		[Parameter(Mandatory = $False)][String]$text,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

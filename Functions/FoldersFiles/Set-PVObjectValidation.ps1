@@ -52,15 +52,15 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $True)][string]$folder,
 		[Parameter(Mandatory = $True)][string]$object,
 		[Parameter(Mandatory = $True)][string]$internalName,
 		[Parameter(Mandatory = $True)][ValidateSet("VALID", "INVALID", "PENDING")][string]$validationAction,
 		[Parameter(Mandatory = $True)][string]$reason,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

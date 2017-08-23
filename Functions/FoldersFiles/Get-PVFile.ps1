@@ -103,8 +103,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $True)][string]$folder,
 		[Parameter(Mandatory = $True)][string]$file,
@@ -120,7 +120,7 @@
 		[Parameter(Mandatory = $False)][switch]$userRequest,
 		[Parameter(Mandatory = $False)][switch]$sendRequest,
 		[Parameter(Mandatory = $False)][switch]$executeRequest,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

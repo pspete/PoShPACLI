@@ -65,13 +65,13 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $False)][securestring]$password,
 		[Parameter(Mandatory = $False)][securestring]$newPassword,
 		[Parameter(Mandatory = $False)][string]$logonFile,
 		[Parameter(Mandatory = $False)][switch]$autoChangePassword,
-		[Parameter(Mandatory = $False)][int]$sessionID,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID,
 		[Parameter(Mandatory = $False)][switch]$failIfConnected,
 		[Parameter(Mandatory = $False)][switch]$radius
 	)

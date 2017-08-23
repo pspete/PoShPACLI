@@ -69,7 +69,7 @@
 		[Parameter(Mandatory = $False)][int]$minDigit,
 		[Parameter(Mandatory = $False)][int]$effectiveLength,
 		[Parameter(Mandatory = $False)][string]$forbiddenChars,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

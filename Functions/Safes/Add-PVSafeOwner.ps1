@@ -125,8 +125,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$owner,
 		[Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $False)][switch]$readOnlyByDefault,
@@ -155,7 +155,7 @@
 		[Parameter(Mandatory = $False)][switch]$createObject,
 		[Parameter(Mandatory = $False)][switch]$unlockObject,
 		[Parameter(Mandatory = $False)][switch]$renameObject,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

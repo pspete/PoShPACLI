@@ -116,8 +116,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$mailServerIP,
 		[Parameter(Mandatory = $True)][string]$senderEmail,
 		[Parameter(Mandatory = $True)][string]$domainName,
@@ -142,7 +142,7 @@
 		[Parameter(Mandatory = $False)][string]$parm8,
 		[Parameter(Mandatory = $False)][string]$parm9,
 		[Parameter(Mandatory = $False)][string]$parm10,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
