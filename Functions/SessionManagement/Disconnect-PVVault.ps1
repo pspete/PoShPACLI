@@ -29,9 +29,9 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)]$vault,
-		[Parameter(Mandatory = $True)]$user,
-		[Parameter(Mandatory = $False)]$sessionID
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]$user,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
