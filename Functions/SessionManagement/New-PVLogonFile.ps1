@@ -38,7 +38,7 @@
 		[Parameter(Mandatory = $True)][string]$logonFile,
 		[Parameter(Mandatory = $False)][string]$username,
 		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

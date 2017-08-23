@@ -36,11 +36,11 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$location,
 		[Parameter(Mandatory = $True)][string]$newName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

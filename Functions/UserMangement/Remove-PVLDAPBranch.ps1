@@ -35,11 +35,11 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$ldapMapName,
 		[Parameter(Mandatory = $True)][string]$deleteBranchID,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

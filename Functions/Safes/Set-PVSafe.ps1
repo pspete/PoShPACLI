@@ -162,8 +162,8 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Alias("Name")][Parameter(Mandatory = $True)][string]$safe,
 		[Parameter(Mandatory = $False)][string]$location,
 		[Parameter(Mandatory = $False)][int]$size,
@@ -199,7 +199,7 @@
 		[Parameter(Mandatory = $False)][switch]$requireContentValidation,
 		[Parameter(Mandatory = $False)][int]$maxFileSize,
 		[Parameter(Mandatory = $False)][string]$allowedFileTypes,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

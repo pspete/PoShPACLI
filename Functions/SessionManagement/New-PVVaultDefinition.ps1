@@ -92,7 +92,7 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$vault,
 		[Parameter(Mandatory = $True)][string]$address,
 		[Parameter(Mandatory = $False)][int]$port,
 		[Parameter(Mandatory = $False)][int]$timeout,
@@ -113,7 +113,7 @@
 		[Parameter(Mandatory = $False)][switch]$preAuthSecuredSession,
 		[Parameter(Mandatory = $False)][switch]$trustSSC,
 		[Parameter(Mandatory = $False)][switch]$allowSSCFor3PartyAuth,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

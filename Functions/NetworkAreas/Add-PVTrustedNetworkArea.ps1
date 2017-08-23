@@ -46,14 +46,14 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$trusterName,
 		[Parameter(Mandatory = $True)][string]$networkArea,
 		[Parameter(Mandatory = $False)][int]$fromHour,
 		[Parameter(Mandatory = $False)][int]$toHour,
 		[Parameter(Mandatory = $False)][int]$maxViolationCount,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

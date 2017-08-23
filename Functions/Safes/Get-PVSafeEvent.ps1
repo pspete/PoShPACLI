@@ -57,8 +57,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $False)][string]$safePatternName,
 		[Parameter(Mandatory = $False)][string]$sourceIDList,
 		[Parameter(Mandatory = $False)][string]$eventTypeIDList,
@@ -68,7 +68,7 @@
 		[Parameter(Mandatory = $False)][string]$dataSubstring,
 		[Parameter(Mandatory = $False)][int]$numOfEvents,
 		[Parameter(Mandatory = $False)][switch]$caseSensitive,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

@@ -114,8 +114,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
+		[Parameter(Mandatory = $True)][string]$vault,
+		[Parameter(Mandatory = $True)][string]$user,
 		[Parameter(Mandatory = $True)][string]$safePattern,
 		[Parameter(Mandatory = $True)][string]$userPattern,
 		[Parameter(Mandatory = $False)][int]$logdays,
@@ -136,7 +136,7 @@
 		[Parameter(Mandatory = $False)][int]$maxRecords,
 		[Parameter(Mandatory = $False)][string]$userType,
 		[Parameter(Mandatory = $False)][ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")][int]$options,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+		[Parameter(Mandatory = $False)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
