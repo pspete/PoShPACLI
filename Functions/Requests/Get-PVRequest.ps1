@@ -80,8 +80,8 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
 		[Parameter(Mandatory = $False)][ValidateSet("MY_REQUESTS", "INCOMING_REQUESTS", "ALL_REQUESTS")][string]$requestsType,
 		[Parameter(Mandatory = $False)][string]$requestorPattern,
 		[Parameter(Mandatory = $False)][string]$safePattern,
@@ -92,7 +92,7 @@
 		[Parameter(Mandatory = $False)][switch]$includeAlreadyHandled,
 		[Parameter(Mandatory = $False)][string]$requestID,
 		[Parameter(Mandatory = $False)][ValidateSet("ALL_OBJECTS", "GET_FILE", "GET_PASSWORD", "OPEN_SAFE")][string]$objectsType,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

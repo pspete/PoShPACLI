@@ -33,7 +33,7 @@
 	param(
 		[Parameter(Mandatory = $False)][string]$ctlFileName,
 		[Parameter(Mandatory = $False)][string]$certFileName,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

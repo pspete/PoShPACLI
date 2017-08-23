@@ -34,7 +34,7 @@
 	param(
 		[Parameter(Mandatory = $True)][string]$parmFile,
 		[Parameter(Mandatory = $False)][string]$vault,
-		[Parameter(Mandatory = $False)][int]$sessionID
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
