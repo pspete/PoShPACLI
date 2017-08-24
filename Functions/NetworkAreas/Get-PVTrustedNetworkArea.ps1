@@ -81,6 +81,10 @@
 						"MaxViolationCount" = $values[4]
 						"ViolationCount"    = $values[5]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

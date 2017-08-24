@@ -75,9 +75,13 @@
 					[PSCustomObject] @{
 
 						#assign values to properties
-						"Name"   = $values[0]
-						"UserID" = $values[1]
+						"Name"      = $values[0]
+						"UserID"    = $values[1]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

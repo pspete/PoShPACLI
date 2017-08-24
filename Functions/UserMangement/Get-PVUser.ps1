@@ -141,6 +141,10 @@
 						"NonAllowedClients"         = $values[63]
 						"EnableComponentMonitoring" = $values[64]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

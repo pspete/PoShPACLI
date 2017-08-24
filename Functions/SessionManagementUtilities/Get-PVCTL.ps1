@@ -56,9 +56,11 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"Name" = $Results[0]
+					"Name"      = $Results[0]
 
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"sessionID" = $sessionID
+					}
 
 			}
 

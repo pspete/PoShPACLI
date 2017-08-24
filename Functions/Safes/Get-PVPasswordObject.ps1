@@ -150,7 +150,11 @@
 
 					"Password" = $Results
 
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 			}
 

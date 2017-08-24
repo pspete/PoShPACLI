@@ -105,7 +105,12 @@
 						"LDAPQuery"      = $values[5]
 						"LDAPGroupMatch" = $values[6]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
+
 				}
 
 			}

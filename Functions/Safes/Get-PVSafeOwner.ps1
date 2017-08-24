@@ -96,6 +96,10 @@
 						"SafeID"            = $values[9]
 						"UserID"            = $values[10]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

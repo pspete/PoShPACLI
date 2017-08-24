@@ -77,9 +77,13 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"URL" = $Results[0]
+					"URL"       = $Results[0]
 
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 			}
 

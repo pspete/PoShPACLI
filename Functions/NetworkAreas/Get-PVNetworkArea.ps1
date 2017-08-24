@@ -73,6 +73,10 @@
 						"Name"          = $values[0]
 						"SecurityLevel" = $values[1]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

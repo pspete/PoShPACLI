@@ -82,6 +82,10 @@
 						"MapName"       = $values[4]
 						"ExternalGroup" = $values[5]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

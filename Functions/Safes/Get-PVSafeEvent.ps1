@@ -168,6 +168,10 @@
 						"FromIP"         = $values[13]
 						"Data"           = $values[14]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

@@ -91,6 +91,10 @@
 						"RuleCreationDate" = $values[5]
 						"AccessLevel"      = $values[6]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

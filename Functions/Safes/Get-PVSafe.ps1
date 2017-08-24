@@ -104,6 +104,10 @@
 						"AllowedFileTypes"          = $values[27]
 						"SupportOLAC"               = $values[28]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

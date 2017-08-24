@@ -93,7 +93,11 @@
 					"LocationID"                = $values[17]
 					"SupportOLAC"               = $values[18]
 
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 			}
 

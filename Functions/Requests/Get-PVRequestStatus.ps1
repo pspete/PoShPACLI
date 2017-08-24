@@ -86,6 +86,10 @@
 						"UserID"     = $values[5]
 						"GroupID"    = $values[6]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}
