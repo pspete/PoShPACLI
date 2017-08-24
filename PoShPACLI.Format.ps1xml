@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+	<ViewDefinitions>
+		<View>
+			<Name>default</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>Vault</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>User</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>sessionID</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<ScriptBlock>
+									if ($_.vault){
+
+									$_.vault
+
+									}
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+									if ($_.user){
+
+									$_.user
+
+									}
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+									if ($_.sessionID){
+
+									$_.sessionID
+
+									}
+								</ScriptBlock>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+	</ViewDefinitions>
+</Configuration>
