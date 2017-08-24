@@ -64,7 +64,13 @@
 
 			Write-Verbose "Trusted Network Area $networkArea Enabled for $trusterName"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -64,6 +64,14 @@
 
 			Write-Verbose "Address $ipAddress Removed from Network Area $networkArea"
 
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

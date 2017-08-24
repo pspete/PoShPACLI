@@ -179,6 +179,14 @@
 
 			Write-Verbose "Owner $owner Updated on Safe $safe"
 
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

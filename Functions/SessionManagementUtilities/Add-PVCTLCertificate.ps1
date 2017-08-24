@@ -58,7 +58,11 @@
 
 			Write-Verbose "Certificate $certFileName Added to CTL"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[pscustomobject] @{
+
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

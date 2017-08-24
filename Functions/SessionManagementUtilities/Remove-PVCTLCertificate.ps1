@@ -58,6 +58,12 @@
 
 			Write-Verbose "Certificate $certFileName Deleted from CTL"
 
+			[PSCustomObject] @{
+
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

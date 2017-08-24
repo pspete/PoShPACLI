@@ -64,6 +64,14 @@
 
 			Write-Verbose "Deleted User $member From $group"
 
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

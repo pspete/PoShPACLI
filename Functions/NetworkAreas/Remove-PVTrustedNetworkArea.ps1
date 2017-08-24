@@ -64,6 +64,14 @@
 
 			Write-Verbose "Trusted Network Area $NetworkArea Removed from $trusterName"
 
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

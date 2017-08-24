@@ -56,6 +56,13 @@
 
 			Write-Verbose "Pacli Started"
 
+
+			[pscustomobject] @{
+
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

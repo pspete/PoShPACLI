@@ -60,7 +60,13 @@
 
 			Write-Verbose "Cleared Safe History on Safe $safe"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

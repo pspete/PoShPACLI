@@ -81,7 +81,13 @@
 
 			Write-Verbose "Safe Event Added"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

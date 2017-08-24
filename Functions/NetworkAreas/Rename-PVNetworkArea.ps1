@@ -64,7 +64,13 @@
 
 			Write-Verbose "Network Area Renamed to $newName"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

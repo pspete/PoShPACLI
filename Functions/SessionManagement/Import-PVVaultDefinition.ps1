@@ -61,7 +61,12 @@
 
 			Write-Verbose "Vault Config Read"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 
