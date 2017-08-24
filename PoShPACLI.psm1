@@ -20,7 +20,7 @@ param()
 #Get function files
 Write-Verbose $PSScriptRoot
 
-Get-ChildItem $PSScriptRoot\ -Recurse -Filter *.ps1 -Exclude *.ps1xml -ErrorAction SilentlyContinue |
+Get-ChildItem $PSScriptRoot\ -Recurse -Filter "*.ps1" -Exclude "*.ps1xml" |
 
 ForEach-Object {
 
