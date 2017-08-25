@@ -1,235 +1,278 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuration>
-  <ViewDefinitions>
-    <View>
-      <Name>default</Name>
-      <ViewSelectedBy>
-        <TypeName>pacli.PoShPACLI</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <!--<TableColumnHeader><Label>Vault</Label></TableColumnHeader>-->
-          <!--<TableColumnHeader><Label>User</Label></TableColumnHeader>-->
-          <!--<TableColumnHeader><Label>sessionID</Label></TableColumnHeader>-->
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <!--<TableColumnItem><ScriptBlock>
+	<ViewDefinitions>
+		<View>
+			<Name>default</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<!--<TableColumnHeader><Label>Vault</Label></TableColumnHeader>-->
+					<!--<TableColumnHeader><Label>User</Label></TableColumnHeader>-->
+					<!--<TableColumnHeader><Label>sessionID</Label></TableColumnHeader>-->
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<!--<TableColumnItem><ScriptBlock>
 									if ($_.vault){
 
 									$_.vault
 
 									}
 								</ScriptBlock></TableColumnItem>-->
-              <!--<TableColumnItem><ScriptBlock>
+							<!--<TableColumnItem><ScriptBlock>
 									if ($_.user){
 
 									$_.user
 
 									}
 								</ScriptBlock></TableColumnItem>-->
-              <!--<TableColumnItem><ScriptBlock>
+							<!--<TableColumnItem><ScriptBlock>
 									if ($_.sessionID){
 
 									$_.sessionID
 
 									}
 								</ScriptBlock></TableColumnItem>-->
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
-      <Name>User</Name>
-      <ViewSelectedBy>
-        <TypeName>pacli.PoShPACLI.User</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader>
-            <Label>UserID</Label>
-          </TableColumnHeader>
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>Name</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Location</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Disabled</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPUser</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>GWAccount</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>UsedQuota</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <ScriptBlock>if($_.UserTypeID){$_.UserTypeID}elseif($_.UserID){$_.UserID}</ScriptBlock>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
-      <Name>LDAPBranch</Name>
-      <ViewSelectedBy>
-        <TypeName>pacli.PoShPACLI.LDAP.Branch</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>LDAPBranchID</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPMapID</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPMapName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPDirName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPBranchName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPQuery</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>LDAPGroupMatch</PropertyName>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
-      <Name>Activity</Name>
-      <ViewSelectedBy>
-        <TypeName>pacli.PoShPACLI.User.Activity</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>Time</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Username</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Safe</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Activity</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Location</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>NewLocation</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>RequestID</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>RequestReason</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Code</PropertyName>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
-      <Name>SafeOwner</Name>
-      <ViewSelectedBy>
-        <TypeName>pacli.PoShPACLI.Safe.Owner</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-          <TableColumnHeader />
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>Name</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Group</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>SafeName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Activity</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>OpenDate</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>ExpirationDate</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>GatewayAccount</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>ReadOnlyByDefault</PropertyName>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-  </ViewDefinitions>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+		<View>
+			<Name>User</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI.User</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader>
+						<Label>UserID</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>Name</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Location</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Disabled</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPUser</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>GWAccount</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>UsedQuota</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>if($_.UserTypeID){$_.UserTypeID}elseif($_.UserID){$_.UserID}</ScriptBlock>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+		<View>
+			<Name>LDAPBranch</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI.LDAP.Branch</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>LDAPBranchID</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPMapID</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPMapName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPDirName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPBranchName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPQuery</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LDAPGroupMatch</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+		<View>
+			<Name>Activity</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI.User.Activity</TypeName>
+				<TypeName>pacli.PoShPACLI.Safe.Activity</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>Time</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Username</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Safe</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Activity</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Location</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>NewLocation</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>RequestID</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>RequestReason</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Code</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+		<View>
+			<Name>SafeOwner</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI.Safe.Owner</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+					<TableColumnHeader />
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>Name</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Group</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>SafeName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Activity</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>OpenDate</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>ExpirationDate</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>GatewayAccount</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>ReadOnlyByDefault</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+		<View>
+			<Name>Safe</Name>
+			<ViewSelectedBy>
+				<TypeName>pacli.PoShPACLI.Safe</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader/>
+					<TableColumnHeader/>
+					<TableColumnHeader>
+						<Label>Size</Label>
+					</TableColumnHeader>
+					<TableColumnHeader/>
+					<TableColumnHeader/>
+					<TableColumnHeader/>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>Name</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Location</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>if($_.CurrSize){$_.CurrSize}elseif($_.Size){$_.Size}</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>MaxSize</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>RequireReason</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>EnforceExclusivePasswords</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+	</ViewDefinitions>
 </Configuration>
