@@ -69,12 +69,12 @@
 					[PSCustomObject] @{
 
 						#Add elements to hashtable
-						"Subject"   = $values[0]
-						"Issuer"    = $values[1]
-						"FromDate"  = $values[2]
-						"ToDate"    = $values[3]
+						"Subject"  = $values[0]
+						"Issuer"   = $values[1]
+						"FromDate" = $values[2]
+						"ToDate"   = $values[3]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -DefaultProperties Subject, Issuer, FromDate, ToDate -PropertyToAdd @{
 						"sessionID" = $sessionID
 					}
 
