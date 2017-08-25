@@ -102,9 +102,9 @@
 				#Return Generated Password String
 				[PSCustomObject] @{
 
-					"Password"  = $Return.StdOut
+					"Password" = $Return.StdOut
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				}
 
 			}
 
