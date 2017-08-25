@@ -142,11 +142,11 @@
 					"RequireReason"             = $Results[12]
 					"EnforceExclusivePasswords" = $Results[13]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+				}
 
 			}
 
