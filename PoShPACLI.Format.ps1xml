@@ -183,5 +183,53 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>SafeOwner</Name>
+      <ViewSelectedBy>
+        <TypeName>pacli.PoShPACLI.Safe.Owner</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Group</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SafeName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Activity</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>OpenDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ExpirationDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>GatewayAccount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ReadOnlyByDefault</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
