@@ -109,7 +109,7 @@
 						"UserID"            = $values[19]
 						"FileID"            = $values[20]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID

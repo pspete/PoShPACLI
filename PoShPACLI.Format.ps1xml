@@ -350,5 +350,53 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>Request</Name>
+      <ViewSelectedBy>
+        <TypeName>pacli.PoShPACLI.Request</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>RequestID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Username</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Operation</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Safe</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>File</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Confirmed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Reason</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Status</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
