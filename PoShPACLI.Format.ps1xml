@@ -261,7 +261,7 @@
                 <ScriptBlock>if($_.CurrSize){$_.CurrSize}elseif($_.Size){$_.Size}</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>MaxSize</PropertyName>
+                <PropertyName>EnforceExclusivePasswords</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>RequireReason</PropertyName>
