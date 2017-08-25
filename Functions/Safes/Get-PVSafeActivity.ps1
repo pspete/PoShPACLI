@@ -184,11 +184,11 @@
 					"RequestReason" = $values[7]
 					"Code"          = $values[8]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Activity -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+				}
 
 			}
 

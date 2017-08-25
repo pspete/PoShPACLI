@@ -74,6 +74,7 @@
 					#Output Object
 					[PSCustomObject] @{
 
+						"Name"                      = $safe
 						"Description"               = $values[0]
 						"Delay"                     = $values[1]
 						"Retention"                 = $values[2]
@@ -104,7 +105,7 @@
 						"AllowedFileTypes"          = $values[27]
 						"SupportOLAC"               = $values[28]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
