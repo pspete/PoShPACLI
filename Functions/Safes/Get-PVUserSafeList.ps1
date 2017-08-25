@@ -78,7 +78,7 @@
 						"AccessLevel"    = $values[1]
 						"ExpirationDate" = $values[2]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -DefaultProperties Name, AccessLevel, ExpirationDate -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
