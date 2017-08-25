@@ -91,7 +91,8 @@
 						"CategoryValue" = $values[1]
 						"CategoryID"    = $values[2]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -DefaultProperties CategoryName,
+					Category Value, CategoryID -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
