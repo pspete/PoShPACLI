@@ -442,5 +442,49 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>Activity</Name>
+      <ViewSelectedBy>
+        <TypeName>pacli.PoShPACLI.Activity</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Time</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Username</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Activity</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>PreviousLocation</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>RequestID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>RequestReason</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Code</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
