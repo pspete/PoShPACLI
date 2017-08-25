@@ -110,7 +110,7 @@
 						"LocationID"                = $values[12]
 						"EnableComponentMonitoring" = $values[13]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
