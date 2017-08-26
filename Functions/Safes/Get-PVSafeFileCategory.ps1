@@ -85,7 +85,11 @@
 					"CategoryRequired"     = $values[5]
 					"VaultCategory"        = $values[6]
 
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 			}
 

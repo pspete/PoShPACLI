@@ -74,6 +74,8 @@
 						"FromDate" = $values[2]
 						"ToDate"   = $values[3]
 
+					} | Add-ObjectDetail -DefaultProperties Subject, Issuer, FromDate, ToDate -PropertyToAdd @{
+						"sessionID" = $sessionID
 					}
 
 				}

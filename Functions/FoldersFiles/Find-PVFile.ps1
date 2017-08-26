@@ -284,10 +284,10 @@
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+				For($i = 0 ; $i -lt $Results.length ; $i += 32) {
 
 					#Get Range from array
-					$values = $Results[$i..($i + 29)]
+					$values = $Results[$i..($i + 32)]
 
 					#Output Object
 					[PSCustomObject] @{
@@ -321,10 +321,14 @@
 						"ComponentCreatedBy"         = $values[26]
 						"ComponentLastUsedDate"      = $values[27]
 						"ComponentLastUsedBy"        = $values[28]
-						"ComponentLastRetrievedDate" = $values[26]
-						"ComponentLastRetrievedBy"   = $values[27]
-						"FileCategories"             = $values[28]
+						"ComponentLastRetrievedDate" = $values[29]
+						"ComponentLastRetrievedBy"   = $values[30]
+						"FileCategories"             = $values[31]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

@@ -65,8 +65,15 @@
 
 		else {
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
 			Write-Verbose "User Unlocked"
+
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

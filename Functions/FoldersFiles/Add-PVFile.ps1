@@ -78,7 +78,14 @@
 
 		else {
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			Write-Verbose "Stored File $file in Safe $safe "
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -76,6 +76,10 @@
 						"OpenDate"   = $values[2]
 						"OpenState"  = $values[3]
 
+					} | Add-ObjectDetail -DefaultProperties Name, UsersCount, OpenDate, OpenState -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

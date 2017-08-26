@@ -14,28 +14,28 @@
 .LINK
 
 #>
-[CmdletBinding()]  
+[CmdletBinding()]
 param()
 
 #Get function files
-Write-Verbose $PSScriptRoot 
+Write-Verbose $PSScriptRoot
 
-Get-ChildItem $PSScriptRoot\ -Recurse -Filter *.ps1 -ErrorAction SilentlyContinue | 
+Get-ChildItem $PSScriptRoot\ -Recurse -Filter "*.ps1" -Exclude "*.ps1xml" |
 
-    ForEach-Object {
-    
-        Try{
-            
-           #Dot Source each file
-            . $_.fullname
+ForEach-Object {
 
-        }
+	Try {
 
-        Catch{
+		#Dot Source each file
+		. $_.fullname
 
-            Write-Error "Failed to import function $($_.fullname)"
+	}
 
-        }
-        
-    
-    }
+	Catch {
+
+		Write-Error "Failed to import function $($_.fullname)"
+
+	}
+
+
+}

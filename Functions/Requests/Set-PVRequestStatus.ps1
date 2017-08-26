@@ -88,7 +88,7 @@
 					[PSCustomObject] @{
 
 						"RequestID"         = $values[0]
-						"User"              = $values[1]
+						"Username"          = $values[1]
 						"Operation"         = $values[2]
 						"Safe"              = $values[3]
 						"File"              = $values[4]
@@ -109,6 +109,10 @@
 						"UserID"            = $values[19]
 						"FileID"            = $values[20]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

@@ -82,25 +82,29 @@
 					[PSCustomObject] @{
 
 						"Name"             = $values[0]
-						"Accessed"         = $values[1]
+						"InternalName"     = $values[1]
 						"CreationDate"     = $values[2]
 						"CreatedBy"        = $values[3]
 						"DeletionDate"     = $values[4]
 						"DeletionBy"       = $values[5]
 						"LastUsedDate"     = $values[6]
 						"LastUsedBy"       = $values[7]
-						"LockDate"         = $values[8]
-						"LockedBy"         = $values[9]
-						"LockedByGW"       = $values[10]
-						"Size"             = $values[11]
-						"History"          = $values[12]
-						"Draft"            = $values[13]
-						"RetrieveLock"     = $values[14]
-						"InternalName"     = $values[15]
-						"FileID"           = $values[16]
-						"LockedByUserID"   = $values[17]
-						"ValidationStatus" = $values[18]
+						"Size"             = $values[8]
+						"History"          = $values[9]
+						"RetrieveLock"     = $values[10]
+						"LockDate"         = $values[11]
+						"LockedBy"         = $values[12]
+						"FileID"           = $values[13]
+						"Draft"            = $values[14]
+						"Accessed"         = $values[15]
+						"LockedByGW"       = $values[16]
+						"ValidationStatus" = $values[17]
+						"LockedByUserID"   = $values[18]
 
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

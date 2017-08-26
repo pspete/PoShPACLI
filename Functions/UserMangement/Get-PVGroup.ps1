@@ -75,6 +75,7 @@
 					[PSCustomObject] @{
 
 						#assign values to properties
+						"GroupName"     = $group
 						"Description"   = $values[0]
 						"LDAPFullDN"    = $values[1]
 						"LDAPDirectory" = $values[2]
@@ -82,6 +83,11 @@
 						"MapName"       = $values[4]
 						"ExternalGroup" = $values[5]
 
+					} | Add-ObjectDetail -DefaultProperties GroupName, Description,
+					LDAPFullDN, LDAPDirectory, MapID, MapName, ExternalGroup -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

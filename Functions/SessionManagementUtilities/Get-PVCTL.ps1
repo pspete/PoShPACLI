@@ -58,6 +58,8 @@
 
 					"Name" = $Results[0]
 
+				} | Add-ObjectDetail -DefaultProperties Name -PropertyToAdd @{
+					"sessionID" = $sessionID
 				}
 
 			}

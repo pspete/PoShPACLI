@@ -175,7 +175,7 @@
 				[PSCustomObject] @{
 
 					"Time"          = $values[0]
-					"User"          = $values[1]
+					"Username"      = $values[1]
 					"Safe"          = $values[2]
 					"Activity"      = $values[3]
 					"Location"      = $values[4]
@@ -184,6 +184,10 @@
 					"RequestReason" = $values[7]
 					"Code"          = $values[8]
 
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Activity -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 				}
 
 			}

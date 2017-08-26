@@ -149,6 +149,13 @@
 
 			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
 
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 		}
 
 	}

@@ -79,6 +79,10 @@
 
 					"URL" = $Results[0]
 
+				} | Add-ObjectDetail -DefaultProperties URL -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 				}
 
 			}

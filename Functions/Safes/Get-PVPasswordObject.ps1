@@ -150,7 +150,11 @@
 
 					"Password" = $Results
 
-				}
+				} | Add-ObjectDetail -DefaultProperties Password -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 			}
 

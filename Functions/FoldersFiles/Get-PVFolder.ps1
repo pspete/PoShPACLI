@@ -80,6 +80,11 @@
 						"DeletionDate" = $values[3]
 						"DeletedBy"    = $values[4]
 
+					} | Add-ObjectDetail -DefaultProperties Name, Accessed, History,
+					DeletionDate, DeletedBy -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

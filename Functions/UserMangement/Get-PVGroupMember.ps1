@@ -78,6 +78,10 @@
 						"Name"   = $values[0]
 						"UserID" = $values[1]
 
+					} | Add-ObjectDetail -DefaultProperties Name, UserID -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}
