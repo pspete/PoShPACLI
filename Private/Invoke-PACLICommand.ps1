@@ -57,6 +57,8 @@
 			$PacliProcess.StartInfo.RedirectStandardOutput = $True
 			$PacliProcess.StartInfo.RedirectStandardError = $True
 			$PacliProcess.StartInfo.UseShellExecute = $False
+			$PacliProcess.StartInfo.CreateNoWindow = $True
+			$PacliProcess.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
 			$PacliProcess.start()
