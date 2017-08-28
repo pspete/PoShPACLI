@@ -80,19 +80,74 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("MY_REQUESTS", "INCOMING_REQUESTS", "ALL_REQUESTS")][string]$requestsType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$requestorPattern,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$safePattern,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$objectPattern,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$waiting,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$confirmed,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("ALL_REQUESTS", "ONLY_VALID", "ONLY_INVALID")][string]$displayInvalid,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeAlreadyHandled,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$requestID,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("ALL_OBJECTS", "GET_FILE", "GET_PASSWORD", "OPEN_SAFE")][string]$objectsType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("MY_REQUESTS", "INCOMING_REQUESTS", "ALL_REQUESTS")]
+		[string]$requestsType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$requestorPattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$safePattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$objectPattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$waiting,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$confirmed,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("ALL_REQUESTS", "ONLY_VALID", "ONLY_INVALID")]
+		[string]$displayInvalid,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeAlreadyHandled,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$requestID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("ALL_OBJECTS", "GET_FILE", "GET_PASSWORD", "OPEN_SAFE")]
+		[string]$objectsType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

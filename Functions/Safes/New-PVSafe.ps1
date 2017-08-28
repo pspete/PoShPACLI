@@ -182,46 +182,198 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$safe,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$location,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$size,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$description,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$fromHour,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$toHour,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$delay,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$dailyVersions,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$monthlyVersions,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$yearlyVersions,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$logRetention,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$fileRetention,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$requestsRetention,
-		#[Parameter(Mandatory=$False)][switch]$virusFree,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$textOnly,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$securityLevelParm,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("1", "2", "3", "4")][int]$ConfirmationType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$location,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$size,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$description,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$fromHour,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$toHour,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$delay,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$dailyVersions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$monthlyVersions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$yearlyVersions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$logRetention,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$fileRetention,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$requestsRetention,
+		#[Parameter(
+			Mandatory=$False)]
+		[switch]$virusFree,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$textOnly,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$securityLevelParm,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("1", "2", "3", "4")]
+		[int]$ConfirmationType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
 		[int]$confirmationCount,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$alwaysNeedsConfirmation,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("1", "2", "3", "4")][int]$safeKeyType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$safeKey,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][securestring]$password,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$keyFilePath,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$getNewFileAccessMark,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$getRetrievedFileAccessMark,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$getModifiedFileAccessMark,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$readOnlyByDefault,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("64", "128", "512", "256", "192", "576", "320", "640", "384", "768", "704", "448", "832", "896", "960")][int]$safeOptions,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$useFileCategories,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$requireReason,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$enforceExclusivePasswords,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$requireContentValidation,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$maxFileSize,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$allowedFileTypes,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$supportOLAC,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$alwaysNeedsConfirmation,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("1", "2", "3", "4")]
+		[int]$safeKeyType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$safeKey,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$keyFilePath,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$getNewFileAccessMark,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$getRetrievedFileAccessMark,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$getModifiedFileAccessMark,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$readOnlyByDefault,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("64", "128", "512", "256", "192", "576", "320", "640", "384", "768", "704", "448", "832", "896", "960")]
+		[int]$safeOptions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useFileCategories,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$requireReason,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$enforceExclusivePasswords,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$requireContentValidation,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$maxFileSize,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$allowedFileTypes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$supportOLAC,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

@@ -124,37 +124,163 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("Username")][String]$owner,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("Safename")][String]$safe,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$readOnlyByDefault,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$retrieve,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$store,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$delete,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$administer,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$supervise,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$backup,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$manageOwners,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$accessNoConfirmation,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$validateSafeContent,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$list,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$usePassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$updateObjectProperties,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$initiateCPMChange,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$initiateCPMChangeWithManualPassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$createFolder,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$deleteFolder,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$moveFrom,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$moveInto,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$viewAudit,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$viewPermissions,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$eventsList,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$addEvents,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$createObject,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$unlockObject,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$renameObject,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[String]$owner,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[String]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$readOnlyByDefault,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$retrieve,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$store,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$delete,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$administer,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$supervise,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$backup,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$manageOwners,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$accessNoConfirmation,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$validateSafeContent,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$list,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$usePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$updateObjectProperties,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChange,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChangeWithManualPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$deleteFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveFrom,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveInto,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewAudit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewPermissions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$eventsList,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$addEvents,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$unlockObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$renameObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

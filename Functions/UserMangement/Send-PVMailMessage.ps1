@@ -116,33 +116,142 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$mailServerIP,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$senderEmail,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$domainName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$recipientEmail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$recipientUser,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][Alias("Safename")][string]$safe,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$folder,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$file,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$subject,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$text,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$useBusinessMail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$useHomeMail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$useOtherMail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$templateFile,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm1,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm2,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm3,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm4,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm5,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm6,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm7,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm8,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm9,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$parm10,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$mailServerIP,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$senderEmail,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$domainName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$recipientEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$recipientUser,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$file,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$subject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$text,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useBusinessMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useHomeMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useOtherMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$templateFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm1,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm2,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm3,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm4,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm5,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm6,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm7,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm8,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm9,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm10,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

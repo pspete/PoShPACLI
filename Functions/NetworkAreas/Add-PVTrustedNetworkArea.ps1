@@ -46,15 +46,47 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]
-		[Alias("UserName")][string]$trusterName,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$networkArea,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$fromHour,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$toHour,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$maxViolationCount,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[string]$trusterName,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$networkArea,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$fromHour,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$toHour,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$maxViolationCount,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

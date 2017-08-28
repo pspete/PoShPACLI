@@ -31,9 +31,21 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$ctlFileName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$certFileName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$ctlFileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$certFileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

@@ -25,7 +25,9 @@ Function Test-PACLI {
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $False)]
 		[string]$pacliVar = "pacli"
 	)
 

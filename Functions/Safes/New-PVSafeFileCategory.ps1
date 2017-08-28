@@ -53,15 +53,53 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][Alias("Safename")][String]$safe,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$category,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("cat_text", "cat_numeric", "cat_list")][String]$type,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][String]$validValues,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][String]$defaultValue,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$required,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[String]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$category,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("cat_text", "cat_numeric", "cat_list")]
+		[String]$type,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$validValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$defaultValue,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$required,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 

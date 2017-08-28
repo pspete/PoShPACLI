@@ -65,15 +65,51 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][securestring]$password,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][securestring]$newPassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$logonFile,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$autoChangePassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$failIfConnected,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$radius
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$newPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$logonFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$autoChangePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$failIfConnected,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$radius
 	)
 
 	If(!(Test-PACLI)) {

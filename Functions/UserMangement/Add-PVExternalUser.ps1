@@ -43,15 +43,18 @@
 
 	[CmdLetBinding()]
 	param(
+
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$vault,
 
+
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$user,
+
 
 		[Parameter(
 			Mandatory = $True,
@@ -59,21 +62,25 @@
 		[Alias("UserName", "Name")]
 		[string]$destUser,
 
+
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("DN", "distinguishedName")]
 		[string]$ldapFullDN,
 
+
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$ldapDirectory,
 
+
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
 		[switch]$UpdateIfExists,
+
 
 		[Parameter(
 			Mandatory = $False,

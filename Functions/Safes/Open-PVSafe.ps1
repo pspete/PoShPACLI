@@ -80,20 +80,69 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")][string]$safe,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
-		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$usableFrom,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$usableTo,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$requestReason,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$useRequest,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$sendRequest,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$executeRequest,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")]
+		[string]$requestUsageType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("SINGLE", "MULTIPLE")]
+		[string]$requestAccessType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$usableFrom,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$usableTo,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$requestReason,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$sendRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$executeRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 

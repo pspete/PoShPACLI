@@ -114,31 +114,107 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)]
-		[Alias("Safename")][string]$safePattern,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)]
-		[Alias("Username")][string]$userPattern,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$logdays,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$alertsOnly,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$fileName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$codes,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[Alias("Safename")]
+		[string]$safePattern,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[Alias("Username")]
+		[string]$userPattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$logdays,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$alertsOnly,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$codes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$fromDate,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$toDate,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$requestID,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$categoriesNames,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$categoriesValues,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$categoriesSeperator,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("OR", "AND")][string]$categoryFilterType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$maxRecords,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$userType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")][int]$options,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$requestID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesNames,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesSeperator,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("OR", "AND")]
+		[string]$categoryFilterType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$maxRecords,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$userType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")]
+		[int]$options,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

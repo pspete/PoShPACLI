@@ -15,7 +15,9 @@ Function ConvertTo-InsecureString {
 	[CmdLetBinding()]
 	[OutputType('System.String')]
 	Param (
-		[Parameter(Mandatory = $True)]
+
+		[Parameter(
+			Mandatory = $True)]
 		[System.Security.SecureString]$SecureString
 	)
 

@@ -221,64 +221,288 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("Username")][string]$destUser,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[string]$destUser,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateSet("PA_AUTH", "NT_AUTH", "NT_OR_PA_AUTH", "PKI_AUTH", "RADIUS_AUTH", "LDAP_AUTH")]
 		[string]$authType,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$requireSecureIDAuth,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][securestring]$password,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$certFileName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$DN,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$location,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$usersAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$resetPassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$activateUsers,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$safesAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$networksAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$rulesAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$categoriesAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$auditAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$backupAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$restoreAdmin,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$retention,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$firstName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$middleName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$lastName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$quota,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$disabled,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$passwordNeverExpires,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$ChangePassword,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$expirationDate,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homeStreet,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homeCity,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homeState,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homeCountry,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homeZIP,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workPhone,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homePhone,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$cellular,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$fax,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$pager,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$hEmail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$bEmail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$oEmail,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$jobTitle,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$organization,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$department,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$profession,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workStreet,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workCity,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workState,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workCountry,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$workZip,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$homePage,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$notes,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$userTypeName,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$authorizedInterfaces,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$enableComponentMonitoring,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$requireSecureIDAuth,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$certFileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$DN,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$location,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$usersAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$resetPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$activateUsers,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$safesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$networksAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$rulesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$categoriesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$auditAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$backupAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$restoreAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$retention,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$firstName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$middleName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$lastName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$quota,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$disabled,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$passwordNeverExpires,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$ChangePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$expirationDate,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeStreet,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeCity,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeState,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeCountry,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeZIP,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workPhone,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homePhone,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$cellular,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fax,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$pager,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$hEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$bEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$oEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$jobTitle,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$organization,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$department,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$profession,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workStreet,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workCity,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workState,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workCountry,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workZip,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homePage,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$notes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$userTypeName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$authorizedInterfaces,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$enableComponentMonitoring,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
