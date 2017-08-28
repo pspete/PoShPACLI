@@ -41,13 +41,42 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][int]$requestID,
-		[Parameter(Mandatory = $True)][switch]$confirmRequest,
-		[Parameter(Mandatory = $False)][string]$reason,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$requestID,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$confirmRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$reason,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

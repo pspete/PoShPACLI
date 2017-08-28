@@ -35,10 +35,26 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$logonFile,
-		[Parameter(Mandatory = $False)][string]$username,
-		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$logonFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$username,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {

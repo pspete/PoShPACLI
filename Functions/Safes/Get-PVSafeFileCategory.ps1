@@ -41,11 +41,32 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$safe,
-		[Parameter(Mandatory = $False)][string]$category,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$category,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
@@ -86,10 +107,10 @@
 					"VaultCategory"        = $values[6]
 
 				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+				}
 
 			}
 

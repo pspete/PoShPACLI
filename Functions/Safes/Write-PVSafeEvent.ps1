@@ -47,13 +47,42 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][String]$safe,
-		[Parameter(Mandatory = $True)][String]$sourceID,
-		[Parameter(Mandatory = $True)][String]$eventTypeID,
-		[Parameter(Mandatory = $True)][String]$data,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$sourceID,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$eventTypeID,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$data,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 

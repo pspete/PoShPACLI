@@ -30,11 +30,17 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, Position = 1)]
+
+		[Parameter(
+			Mandatory = $True, Position = 1)]
 		[string]$PacliEXE,
-		[Parameter(Mandatory = $True, Position = 2)]
+
+		[Parameter(
+			Mandatory = $True, Position = 2)]
 		[string]$PacliCommand,
-		[Parameter(Mandatory = $False, Position = 3)]
+
+		[Parameter(
+			Mandatory = $False, Position = 3)]
 		[string]$CommandParameters
 	)
 
@@ -57,6 +63,8 @@
 			$PacliProcess.StartInfo.RedirectStandardOutput = $True
 			$PacliProcess.StartInfo.RedirectStandardError = $True
 			$PacliProcess.StartInfo.UseShellExecute = $False
+			$PacliProcess.StartInfo.CreateNoWindow = $True
+			$PacliProcess.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
 			$PacliProcess.start()

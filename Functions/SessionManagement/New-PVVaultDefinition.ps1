@@ -92,28 +92,107 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$address,
-		[Parameter(Mandatory = $False)][int]$port,
-		[Parameter(Mandatory = $False)][int]$timeout,
-		[Parameter(Mandatory = $False)][switch]$behindFirewall,
-		[Parameter(Mandatory = $False)][int]$reconnectPeriod,
-		[Parameter(Mandatory = $False)][switch]$useOnlyHTTP1,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$address,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$port,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$timeout,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$behindFirewall,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$reconnectPeriod,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useOnlyHTTP1,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
 		[ValidateSet("HTTP", "HTTPS", "SOCKS4", "SOCKS5", "NOPROXY")]
 		[string]$proxyType,
-		[Parameter(Mandatory = $False)][string]$proxyAddress,
-		[Parameter(Mandatory = $False)][int]$proxyPort,
-		[Parameter(Mandatory = $False)][string]$proxyUser,
-		[Parameter(Mandatory = $False)][securestring]$proxyPassword,
-		[Parameter(Mandatory = $False)][string]$proxyAuthDomain,
-		[Parameter(Mandatory = $False)][int]$numOfRecordsPerSend,
-		[Parameter(Mandatory = $False)][int]$numOfRecordsPerChunk,
-		[Parameter(Mandatory = $False)][switch]$enhancedSSL,
-		[Parameter(Mandatory = $False)][switch]$preAuthSecuredSession,
-		[Parameter(Mandatory = $False)][switch]$trustSSC,
-		[Parameter(Mandatory = $False)][switch]$allowSSCFor3PartyAuth,
-		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$proxyAddress,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$proxyPort,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$proxyUser,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[securestring]$proxyPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$proxyAuthDomain,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$numOfRecordsPerSend,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$numOfRecordsPerChunk,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$enhancedSSL,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$preAuthSecuredSession,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$trustSSC,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$allowSSCFor3PartyAuth,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
 	If(!(Test-PACLI)) {
