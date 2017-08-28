@@ -257,9 +257,10 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
 		[int]$requestsRetention,
+
 		#[Parameter(
-			Mandatory=$False)]
-		[switch]$virusFree,
+		#	Mandatory=$False)]
+		#[switch]$virusFree,
 
 		[Parameter(
 			Mandatory = $False,
