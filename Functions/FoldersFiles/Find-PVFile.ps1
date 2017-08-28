@@ -215,41 +215,42 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $False)][string]$filePattern,
-		[Parameter(Mandatory = $False)][switch]$fileRetrieved,
-		[Parameter(Mandatory = $False)][switch]$fileChanged,
-		[Parameter(Mandatory = $False)][switch]$fileNew,
-		[Parameter(Mandatory = $False)][switch]$fileLocked,
-		[Parameter(Mandatory = $False)][switch]$fileWithNoMark,
-		[Parameter(Mandatory = $False)][switch]$includeVersions,
-		[Parameter(Mandatory = $False)][switch]$onlyOpenSafes,
-		[Parameter(Mandatory = $False)][switch]$includeSubFolders,
-		[Parameter(Mandatory = $False)][ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")][string]$dateLimit,
-		[Parameter(Mandatory = $False)][ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")][string]$dateActionLimit,
-		[Parameter(Mandatory = $False)][int]$prevCount,
-		[Parameter(Mandatory = $False)]
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$safe,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$folder,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$filePattern,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$fileRetrieved,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$fileChanged,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$fileNew,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$fileLocked,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$fileWithNoMark,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeVersions,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$onlyOpenSafes,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeSubFolders,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")][string]$dateLimit,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")][string]$dateActionLimit,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$prevCount,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$fromDate,
-		[Parameter(Mandatory = $False)]
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$toDate,
-		[Parameter(Mandatory = $False)][switch]$searchInAll,
-		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$searchInAllAction,
-		[Parameter(Mandatory = $False)][string]$searchInAllValues,
-		[Parameter(Mandatory = $False)][string]$searchInAllCategoryList,
-		[Parameter(Mandatory = $False)][string]$listSeparator,
-		[Parameter(Mandatory = $False)][ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$searchInAll,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("OR", "AND")][string]$searchInAllAction,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$searchInAllValues,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$searchInAllCategoryList,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$listSeparator,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
 		[string]$deletedOption,
-		[Parameter(Mandatory = $False)][int]$sizeLimit,
-		[Parameter(Mandatory = $False)][ValidateSet("ATLEAST", "ATMOST")][string]$sizeLimitType,
-		[Parameter(Mandatory = $False)][string]$categoryIDList,
-		[Parameter(Mandatory = $False)][string]$categoryValues,
-		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$categoryListAction,
-		[Parameter(Mandatory = $False)][switch]$includeFileCategories,
-		[Parameter(Mandatory = $False)][string]$fileCategoriesSeparator,
-		[Parameter(Mandatory = $False)][string]$fileCategoryValueSeparator,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$sizeLimit,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("ATLEAST", "ATMOST")][string]$sizeLimitType,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$categoryIDList,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$categoryValues,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][ValidateSet("OR", "AND")][string]$categoryListAction,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeFileCategories,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$fileCategoriesSeparator,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$fileCategoryValueSeparator,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

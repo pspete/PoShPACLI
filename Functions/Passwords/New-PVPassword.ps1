@@ -61,14 +61,14 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)]
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)]
 		[ValidateRange(1, 170)][int]$length,
-		[Parameter(Mandatory = $False)][int]$minUpperCase,
-		[Parameter(Mandatory = $False)][int]$minSpecial,
-		[Parameter(Mandatory = $False)][int]$minLowerCase,
-		[Parameter(Mandatory = $False)][int]$minDigit,
-		[Parameter(Mandatory = $False)][int]$effectiveLength,
-		[Parameter(Mandatory = $False)][string]$forbiddenChars,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$minUpperCase,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$minSpecial,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$minLowerCase,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$minDigit,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$effectiveLength,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$forbiddenChars,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

@@ -28,8 +28,8 @@
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $False)][int]$sessionID,
-		[Parameter(Mandatory = $False)][string]$ctlFileName
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$sessionID,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$ctlFileName
 	)
 
 	If(!(Test-PACLI)) {

@@ -43,10 +43,10 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$networkArea,
-		[Parameter(Mandatory = $True)][string]$ipAddress,
-		[Parameter(Mandatory = $False)][string]$ipMask,
-		[Parameter(Mandatory = $True)][string]$toAddress,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$networkArea,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$ipAddress,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$ipMask,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$toAddress,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

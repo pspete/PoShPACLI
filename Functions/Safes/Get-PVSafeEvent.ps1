@@ -59,15 +59,16 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$safePatternName,
-		[Parameter(Mandatory = $False)][string]$sourceIDList,
-		[Parameter(Mandatory = $False)][string]$eventTypeIDList,
-		[Parameter(Mandatory = $False)]
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")][string]$safePatternName,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$sourceIDList,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$eventTypeIDList,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$fromDate,
-		[Parameter(Mandatory = $False)][string]$dataSubstring,
-		[Parameter(Mandatory = $False)][int]$numOfEvents,
-		[Parameter(Mandatory = $False)][switch]$caseSensitive,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$dataSubstring,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][int]$numOfEvents,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$caseSensitive,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

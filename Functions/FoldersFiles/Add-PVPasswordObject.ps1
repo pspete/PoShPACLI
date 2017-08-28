@@ -43,10 +43,10 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $True)][string]$file,
-		[Parameter(Mandatory = $True)][securestring]$password,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("Safename")][string]$safe,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$folder,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$file,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][securestring]$password,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

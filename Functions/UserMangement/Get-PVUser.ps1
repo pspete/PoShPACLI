@@ -34,7 +34,7 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$destUser,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("Username")][string]$destUser,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

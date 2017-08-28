@@ -50,12 +50,12 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$ldapMapName,
-		[Parameter(Mandatory = $True)][string]$updateBranchID,
-		[Parameter(Mandatory = $True)][string]$ldapDirName,
-		[Parameter(Mandatory = $True)][string]$ldapBranchName,
-		[Parameter(Mandatory = $False)][string]$ldapQuery,
-		[Parameter(Mandatory = $False)][string]$ldapGroupMatch,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$ldapMapName,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("LDAPBranchID")][string]$updateBranchID,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$ldapDirName,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$ldapBranchName,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$ldapQuery,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$ldapGroupMatch,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

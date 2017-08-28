@@ -48,11 +48,11 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$ruleID,
-		[Parameter(Mandatory = $True)][string]$userName,
-		[Parameter(Mandatory = $True)][string]$safeName,
-		[Parameter(Mandatory = $True)][string]$fullObjectName,
-		[Parameter(Mandatory = $False)][switch]$isFolder,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$ruleID,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$userName,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$safeName,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$fullObjectName,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$isFolder,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

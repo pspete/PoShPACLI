@@ -37,8 +37,8 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$networkArea,
-		[Parameter(Mandatory = $False)]
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$networkArea,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
 		[ValidateRange(1, 63)][int]$securityLevelParm,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)

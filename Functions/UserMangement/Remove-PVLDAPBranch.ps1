@@ -37,8 +37,8 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$ldapMapName,
-		[Parameter(Mandatory = $True)][string]$deleteBranchID,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$ldapMapName,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][Alias("LDAPBranchID")][string]$deleteBranchID,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

@@ -40,8 +40,8 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][int]$requestID,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$safe,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][int]$requestID,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

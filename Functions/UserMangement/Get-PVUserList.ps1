@@ -51,11 +51,11 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$location = "\",
-		[Parameter(Mandatory = $False)][switch]$includeSubLocations,
-		[Parameter(Mandatory = $False)][switch]$includeDisabledUsers,
-		[Parameter(Mandatory = $False)][switch]$onlyKnownUsers,
-		[Parameter(Mandatory = $False)][string]$userPattern,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$location,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeSubLocations,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$includeDisabledUsers,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$onlyKnownUsers,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$userPattern,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 

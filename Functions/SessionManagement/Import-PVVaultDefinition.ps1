@@ -32,7 +32,7 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$parmFile,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$parmFile,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)

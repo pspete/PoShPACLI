@@ -34,9 +34,11 @@
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)][ValidateScript( {Test-Path $_ -PathType container})][string]$pacliFolder,
-		[Parameter(Mandatory = $False)][string]$pacliExe = "PACLI.EXE",
-		[Parameter(Mandatory = $False)][ValidateSet("Global", "Local", "Script", "Private", 0, 1, 2, 3)][string]$scope = 1
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)]
+		[ValidateScript( {Test-Path $_ -PathType container})][string]$pacliFolder,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$pacliExe = "PACLI.EXE",
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("Global", "Local", "Script", "Private", 0, 1, 2, 3)][string]$scope = 1
 	)
 
 	#Force remove pacli variable in specified scope

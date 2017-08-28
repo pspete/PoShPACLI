@@ -105,21 +105,24 @@
 	param(
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$vault,
 		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $True)][string]$file,
-		[Parameter(Mandatory = $True)][string]$localFolder,
-		[Parameter(Mandatory = $True)][string]$localFile,
-		[Parameter(Mandatory = $False)][switch]$lockFile,
-		[Parameter(Mandatory = $False)][switch]$evenIfLocked,
-		[Parameter(Mandatory = $False)][ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
-		[Parameter(Mandatory = $False)][ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
-		[Parameter(Mandatory = $False)][string]$usableFrom,
-		[Parameter(Mandatory = $False)][string]$usableTo,
-		[Parameter(Mandatory = $False)][string]$requestReason,
-		[Parameter(Mandatory = $False)][switch]$userRequest,
-		[Parameter(Mandatory = $False)][switch]$sendRequest,
-		[Parameter(Mandatory = $False)][switch]$executeRequest,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")][string]$safe,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$folder,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)][string]$file,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$localFolder,
+		[Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $False)][string]$localFile,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$lockFile,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$evenIfLocked,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$usableFrom,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$usableTo,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][string]$requestReason,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$userRequest,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$sendRequest,
+		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $False)][switch]$executeRequest,
 		[Parameter(Mandatory = $False, ValueFromPipelineByPropertyName = $True)][int]$sessionID
 	)
 
