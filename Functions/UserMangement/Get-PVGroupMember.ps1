@@ -92,8 +92,8 @@
 					[PSCustomObject] @{
 
 						#assign values to properties
-						"Name"   = $values[0]
-						"UserID" = $values[1]
+						"Username" = $values[0]
+						"UserID"   = $values[1]
 
 					} | Add-ObjectDetail -DefaultProperties Name, UserID -PropertyToAdd @{
 						"vault"     = $vault

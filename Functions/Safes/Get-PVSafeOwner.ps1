@@ -109,9 +109,9 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						"Name"              = $values[0]
+						"Username"          = $values[0]
 						"Group"             = $values[1]
-						"SafeName"          = $values[2]
+						"Safename"          = $values[2]
 						"AccessLevel"       = $values[3]
 						"OpenDate"          = $values[4]
 						"OpenState"         = $values[5]

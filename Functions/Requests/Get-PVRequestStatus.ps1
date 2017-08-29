@@ -100,14 +100,14 @@
 					[PSCustomObject] @{
 
 						"UserName"   = $values[0]
-						"GroupName"  = $values[1]
+						"Groupname"  = $values[1]
 						"Action"     = $values[2]
 						"ActionDate" = $values[3]
 						"Reason"     = $values[4]
 						"UserID"     = $values[5]
 						"GroupID"    = $values[6]
 
-					} | Add-ObjectDetail -DefaultProperties UserName, Action, ActionDate, Reason -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
