@@ -121,7 +121,7 @@
 						"CategoryID"    = $values[2]
 
 					} | Add-ObjectDetail -DefaultProperties CategoryName,
-					Category Value, CategoryID -PropertyToAdd @{
+					CategoryValue, CategoryID -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID

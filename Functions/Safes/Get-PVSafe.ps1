@@ -91,7 +91,7 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						"Name"                      = $safe
+						"Safename"                  = $safe
 						"Description"               = $values[0]
 						"Delay"                     = $values[1]
 						"Retention"                 = $values[2]

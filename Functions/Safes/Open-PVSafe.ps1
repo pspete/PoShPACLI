@@ -176,9 +176,9 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					#(possiblity these may not all be in the correct order -
+					#(possibility these may not all be in the correct order -
 					#...but most are)
-					"Name"                      = $Results[0]
+					"Safename"                  = $Results[0]
 					"Status"                    = $Results[1]
 					"LastUsed"                  = $Results[2]
 					"Accessed"                  = $Results[3]

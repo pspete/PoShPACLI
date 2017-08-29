@@ -91,7 +91,7 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						"Name"           = $values[0]
+						"Safename"       = $values[0]
 						"AccessLevel"    = $values[1]
 						"ExpirationDate" = $values[2]
 

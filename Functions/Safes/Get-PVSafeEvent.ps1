@@ -192,14 +192,14 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						"SafeName"       = $values[0]
+						"Safename"       = $values[0]
 						"SafeID"         = $values[1]
 						"EventID"        = $values[2]
 						"SourceID"       = $values[3]
 						"EventTypeID"    = $values[4]
 						"CreationDate"   = $values[5]
 						"ExpirationDate" = $values[6]
-						"UserName"       = $values[7]
+						"Username"       = $values[7]
 						"UserID"         = $values[8]
 						"AgentName"      = $values[9]
 						"AgentID"        = $values[10]

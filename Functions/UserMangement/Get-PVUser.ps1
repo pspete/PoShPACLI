@@ -92,7 +92,7 @@
 					[PSCustomObject] @{
 
 						#assign values to properties
-						"Name"                      = $values[0]
+						"Username"                  = $values[0]
 						"Retention"                 = $values[1]
 						"UsersAdmin"                = $values[2]
 						"SafesAdmin"                = $values[3]

@@ -127,7 +127,7 @@
 					#output object for each user
 					[PSCustomObject] @{
 
-						"Name"                      = $values[0]
+						"Username"                  = $values[0]
 						"Quota"                     = $values[1]
 						"UsedQuota"                 = $values[2]
 						"Location"                  = $values[3]

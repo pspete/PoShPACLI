@@ -108,8 +108,8 @@
 					[PSCustomObject] @{
 
 						"RuleID"           = $values[0]
-						"UserName"         = $values[1]
-						"SafeName"         = $values[2]
+						"Username"         = $values[1]
+						"Safename"         = $values[2]
 						"FullObjectName"   = $values[3]
 						"Effect"           = $values[4]
 						"RuleCreationDate" = $values[5]

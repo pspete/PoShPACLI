@@ -93,7 +93,7 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"Name"                      = $values[0]
+					"Safename"                  = $values[0]
 					"Size"                      = $values[1]
 					"Status"                    = $values[2]
 					"LastUsed"                  = $values[3]
