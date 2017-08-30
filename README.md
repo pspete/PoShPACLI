@@ -86,28 +86,34 @@ Open-PVSafe -vault "VAULT" -user "User" -safe "SAFE_Name"
 
 #Add Password to Safe
 
-Add-PVPasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -password (Read-Host -AsSecureString)
+Add-PVPasswordObject -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+ -file "passwordFile" -password (Read-Host -AsSecureString)
 
 #Add Device Type for password
 
-Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "DeviceType" -value
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+-file "passwordFile" -category "DeviceType" -value
 "Device_Type"
 
 #Add PolicyID for password
 
-Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "PolicyID" -value "Policy_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+-file "passwordFile" -category "PolicyID" -value "Policy_Name"
 
 #Add Logon Domain for password
 
-Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "LogonDomain" -value "Domain_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+-file "passwordFile" -category "LogonDomain" -value "Domain_Name"
 
 #Add Address for password
 
-Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category 'Address' -value "Address_Value"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+-file "passwordFile" -category 'Address' -value "Address_Value"
 
 #Add UserName for password
 
-Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" -file "passwordFile" -category "UserName" -value "Account_Name"
+Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" `
+-file "passwordFile" -category "UserName" -value "Account_Name"
 
 #Close Safe
 
