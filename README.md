@@ -8,14 +8,8 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ## Latest Updates
 
-- All functions (and related files) have been renamed using standard verbs and updated nouns.
-  - See [Issue #33](https://github.com/pspete/PoShPACLI/issues/33) for details.
-- Any Pacli output on StdErr is now written to the PowerShell error stream.
-- Boolean output from functions removed
-  - **NOTE:** This is a breaking change if the previous $True/$False values are required by an existing script.
-- SecureString values now required for any parameters relating to password input.
-- Major Change to Module Folder/File Structure.
-- All Functions reworked, reducing Parse errors and resolving lots of bugs.
+- [Pipeline Input](#Pipeline_Support)
+- [Custom Formats](#Custom_Formats) for Output
 
 ## Getting Started
 
@@ -62,6 +56,8 @@ An identical process to using the PACLI tool on its own should be followed:
 
 Example method to use the module to add a password object to a safe:
 
+#### Connecting to a Vault
+
 ```powershell
 #Locate/set path to PACLI executable
 
@@ -77,8 +73,13 @@ New-PVVaultDefinition -vault "VAULT" -address "vaultAddress"
 
 #Logon to vault
 
-Connect-PVVault -vault "VAULT" -user "User" -logonFile "credfile.xxx"
+Connect-PVVault -vault "VAULT" -user "User" -password (Read-Host -AsSecureString))
 
+```
+
+#### Add Password Object to Safe
+
+```powershell
 #Open Safe
 
 Open-PVSafe -vault "VAULT" -user "User" -safe "SAFE_Name"
@@ -111,6 +112,11 @@ Add-PVFileCategory -vault "VAULT" -user "User" -safe "SAFE_Name" -folder "Root" 
 #Close Safe
 
 Close-PVSafe -vault "VAULT" -user "User" -safe "SAFE_Name"
+```
+
+#### Disconnect from Vault
+
+```powershell
 
 #Logoff From Vault
 
@@ -119,6 +125,66 @@ Disconnect-PVVault  -vault "VAULT" -user "User"
 #Stop Pacli process
 
 Stop-PVPacli
+```
+
+### <a id="Pipeline_Support"></a>Working with the Pipeline
+
+Every command sent to the PACLI utility requires the name of the authenticated user as well as the name of the vault defined via ```New-PVVaultDefinition``` to be supplied. There is also the option to run multiple PACLI processes via the ```sessionID``` parameter.
+
+All PoShPACLI functions output the name, vault & sessionID parameter values, meaning they can be used for pipeline operations.
+[Custom Formats](Custom_Formats) suppresses display of these values.
+
+#### PACLI Pipeline Token
+
+Goal: Object Containing User, Vault & SessionID values
+
+```powershell
+#Start Pacli
+$token = Start-PVPACLI -sessionID 42|
+#Define Vault
+New-PVVaultDefinition -address 192.168.0.1 -vault "DEV" |
+#Logon
+Connect-PVVault -user PACLIUser -password $password
+
+$token | fl
+
+vault     : DEV
+user      : PACLIUser
+sessionID : 42
+
+```
+
+A token like the one above can be passed on the pipeline to other PoShPACLI functions, no longer, laboriously, having to type these parameter values for every function:
+
+```powershell
+#Open a Safe
+$token | Open-PVSafe -safe Safe
+#Find a file
+$token | Find-PVFile -safe TestSafe -folder Root -filePattern *
+
+#Get File List
+$token | Get-PVFileList -safe Safe2 -folder Root
+$token | Get-PVFileList -safe Safe3 -folder Root | ? {$_.InternalName -eq "000000000000024"} | Format-List
+
+#Etc...
+$token | get-PVSafeEvent -safePatternName XXXyyyZzZ
+$token | Get-PVUserList
+$token | Get-PVGroupMember -group xSecGroup1
+$token | Get-PVSafe -safe testsafe
+$token | Get-PVSafeList
+
+```
+
+### <a id="Custom_Formats"></a>Custom Formats
+
+All Output now either has Default Properties assigned, or a TypeName for which  views are configured via the [PoShPACLI.Format.ps1xml](PoShPACLI.Format.ps1xml) File.
+
+Table & List views are configured.
+
+In an attempt to keep output tidy, not all properties are always shown. To see all properties pipe to ```Format-List *```:
+
+```powershell
+$token | Get-PVSafe -safe PoShSafe | Format-List *
 ```
 
 ## Author
