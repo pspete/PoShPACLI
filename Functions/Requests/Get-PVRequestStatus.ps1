@@ -63,54 +63,58 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
-		ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			$Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
+		ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"UserName"   = $values[0]
-						"Groupname"  = $values[1]
-						"Action"     = $values[2]
-						"ActionDate" = $values[3]
-						"Reason"     = $values[4]
-						"UserID"     = $values[5]
-						"GroupID"    = $values[6]
+			else {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"UserName"   = $values[0]
+							"Groupname"  = $values[1]
+							"Action"     = $values[2]
+							"ActionDate" = $values[3]
+							"Reason"     = $values[4]
+							"UserID"     = $values[5]
+							"GroupID"    = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}
@@ -118,7 +122,6 @@
 			}
 
 		}
-
 	}
 
 }

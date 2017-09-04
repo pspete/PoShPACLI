@@ -79,69 +79,73 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#ConvertTo-ParameterString usually remove "Confirm", which conflists with a parameter of the function
-		$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($($PSBoundParameters.getEnumerator() |
-		ConvertTo-ParameterString -doNotQuote requestID) -replace "confirmRequest","confirm") OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#ConvertTo-ParameterString usually remove "Confirm", which conflists with a parameter of the function
+			$Return = Invoke-PACLICommand $pacli CONFIRMREQUEST "$($($PSBoundParameters.getEnumerator() |
+		ConvertTo-ParameterString -doNotQuote requestID) -replace "confirmRequest","confirm") OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 21) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 21)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"RequestID"         = $values[0]
-						"Username"          = $values[1]
-						"Operation"         = $values[2]
-						"Safe"              = $values[3]
-						"File"              = $values[4]
-						"Confirmed"         = $values[5]
-						"Reason"            = $values[6]
-						"Status"            = $values[7]
-						"InvalidReason"     = $values[8]
-						"Confirmations"     = $values[9]
-						"Rejections"        = $values[10]
-						"ConfirmationsLeft" = $values[11]
-						"CreationDate"      = $values[12]
-						"LastUsedDate"      = $values[13]
-						"ExpirationDate"    = $values[14]
-						"AccessType"        = $values[15]
-						"UsableFrom"        = $values[16]
-						"UsableTo"          = $values[17]
-						"SafeID"            = $values[18]
-						"UserID"            = $values[19]
-						"FileID"            = $values[20]
+			else {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 21) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 21)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"RequestID"         = $values[0]
+							"Username"          = $values[1]
+							"Operation"         = $values[2]
+							"Safe"              = $values[3]
+							"File"              = $values[4]
+							"Confirmed"         = $values[5]
+							"Reason"            = $values[6]
+							"Status"            = $values[7]
+							"InvalidReason"     = $values[8]
+							"Confirmations"     = $values[9]
+							"Rejections"        = $values[10]
+							"ConfirmationsLeft" = $values[11]
+							"CreationDate"      = $values[12]
+							"LastUsedDate"      = $values[13]
+							"ExpirationDate"    = $values[14]
+							"AccessType"        = $values[15]
+							"UsableFrom"        = $values[16]
+							"UsableTo"          = $values[17]
+							"SafeID"            = $values[18]
+							"UserID"            = $values[19]
+							"FileID"            = $values[20]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}
