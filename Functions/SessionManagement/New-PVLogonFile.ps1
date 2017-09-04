@@ -57,34 +57,38 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#$pacli variable not set or not a valid path
 
 		}
 
-		$Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		Else {
 
-		if($Return.ExitCode) {
+			#$PACLI variable set to executable path
 
-			Write-Error $Return.StdErr
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		}
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		elseif($Return.ExitCode -eq 0) {
+			}
 
-			Write-Verbose "Created Logon File $logonFile"
+			$Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Created Logon File $logonFile"
+
+			}
 
 		}
 

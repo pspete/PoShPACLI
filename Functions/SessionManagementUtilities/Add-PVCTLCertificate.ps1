@@ -48,33 +48,37 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli CTLADDCERT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Certificate $certFileName Added to CTL"
+			#$PACLI variable set to executable path
 
-			[pscustomobject] @{
+			$Return = Invoke-PACLICommand $pacli CTLADDCERT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Certificate $certFileName Added to CTL"
+
+				[pscustomobject] @{
+
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

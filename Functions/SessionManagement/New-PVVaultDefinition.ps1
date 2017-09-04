@@ -195,45 +195,49 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with proxyPassword SecureString
-		if($PSBoundParameters.ContainsKey("proxyPassword")) {
-
-			$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
+			#$pacli variable not set or not a valid path
 
 		}
 
-		Write-Verbose "Defining Vault"
+		Else {
 
-		$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
-			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+			#$PACLI variable set to executable path
 
-		if($Return.ExitCode) {
+			#deal with proxyPassword SecureString
+			if($PSBoundParameters.ContainsKey("proxyPassword")) {
 
-			Write-Error $Return.StdErr
+				$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
 
-		}
+			}
 
-		elseif($Return.ExitCode -eq 0) {
+			Write-Verbose "Defining Vault"
 
-			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
+			$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
+				proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
-			[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-				"vault"     = $vault
-				"sessionID" = $sessionID
+				Write-Error $Return.StdErr
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Vault Defined. Name: $vault, Address: $address"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

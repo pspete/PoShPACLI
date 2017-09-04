@@ -112,52 +112,56 @@
 		[switch]$radius
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#$pacli variable not set or not a valid path
 
 		}
 
-		#deal with newPassword SecureString
-		if($PSBoundParameters.ContainsKey("newPassword")) {
+		Else {
 
-			#Included decoded password in request
-			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
+			#$PACLI variable set to executable path
 
-		}
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		Write-Verbose "Logging onto Vault"
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		$Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			}
 
-		if($Return.ExitCode) {
+			#deal with newPassword SecureString
+			if($PSBoundParameters.ContainsKey("newPassword")) {
 
-			Write-Error $Return.StdErr
+				#Included decoded password in request
+				$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
 
-		}
+			}
 
-		else {
+			Write-Verbose "Logging onto Vault"
 
-			Write-Verbose "Successfully Logged on"
+			$Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-			[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				Write-Error $Return.StdErr
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
+
+			else {
+
+				Write-Verbose "Successfully Logged on"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

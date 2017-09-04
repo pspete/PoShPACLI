@@ -46,29 +46,33 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		Write-Verbose "Logging off from Vault"
-
-		$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Successfully Logged Off"
+			#$PACLI variable set to executable path
+
+			Write-Verbose "Logging off from Vault"
+
+			$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Successfully Logged Off"
+
+			}
 
 		}
 

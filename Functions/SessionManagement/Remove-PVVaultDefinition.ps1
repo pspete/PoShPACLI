@@ -40,27 +40,31 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Definition for Vault $vault Deleted"
+			#$PACLI variable set to executable path
+
+			$Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Definition for Vault $vault Deleted"
+
+			}
 
 		}
 

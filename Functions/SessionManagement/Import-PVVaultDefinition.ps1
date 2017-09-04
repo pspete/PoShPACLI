@@ -49,36 +49,40 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		Write-Verbose "Defining Vault"
-
-		$Return = Invoke-PACLICommand $pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Vault Config Read"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			Write-Verbose "Defining Vault"
 
-				"vault"     = $vault
-				"sessionID" = $sessionID
+			$Return = Invoke-PACLICommand $pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Vault Config Read"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 
