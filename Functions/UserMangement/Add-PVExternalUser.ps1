@@ -88,42 +88,46 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-		$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
+			$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				Write-Verbose "External User $destUser added."
+			if($Return.ExitCode) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				Write-Error $Return.StdErr
 
-				#Output Object
-				[PSCustomObject] @{
+			}
 
-					"UserName" = $Results
+			else {
 
-				} | Add-ObjectDetail -DefaultProperties UserName -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					Write-Verbose "External User $destUser added."
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#Output Object
+					[PSCustomObject] @{
+
+						"UserName" = $Results
+
+					} | Add-ObjectDetail -DefaultProperties UserName -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
+
 				}
 
 			}

@@ -64,39 +64,43 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
-
-			$PSBoundParameters.getEnumerator() |
-
-			ConvertTo-ParameterString -donotQuote quota)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Updated Location $location"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				$PSBoundParameters.getEnumerator() |
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				ConvertTo-ParameterString -donotQuote quota)
+
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Updated Location $location"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

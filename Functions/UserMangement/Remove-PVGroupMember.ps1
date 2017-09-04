@@ -64,35 +64,39 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli DELETEGROUPMEMBER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Deleted User $member From $group"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli DELETEGROUPMEMBER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Deleted User $member From $group"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

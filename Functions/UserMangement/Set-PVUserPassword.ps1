@@ -62,50 +62,54 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#$pacli variable not set or not a valid path
 
 		}
 
-		#deal with newPassword SecureString
-		if($PSBoundParameters.ContainsKey("newPassword")) {
+		Else {
 
-			#Included decoded password in request
-			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
+			#$PACLI variable set to executable path
 
-		}
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		$Return = Invoke-PACLICommand $pacli SETPASSWORD $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			#deal with newPassword SecureString
+			if($PSBoundParameters.ContainsKey("newPassword")) {
 
-		}
+				#Included decoded password in request
+				$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
 
-		elseif($Return.ExitCode -eq 0) {
+			}
 
-			Write-Verbose "Password Updated"
+			$Return = Invoke-PACLICommand $pacli SETPASSWORD $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-			[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				Write-Error $Return.StdErr
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Password Updated"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

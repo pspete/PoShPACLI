@@ -63,56 +63,60 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHDELETE "$(
-            $PSBoundParameters.getEnumerator() |
-                ConvertTo-ParameterString -donotQuote deleteBranchID) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli LDAPBRANCHDELETE "$(
+            $PSBoundParameters.getEnumerator() |
+                ConvertTo-ParameterString -donotQuote deleteBranchID) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"LDAPBranchID"   = $values[0]
-						"LDAPMapID"      = $values[1]
-						"LDAPMapName"    = $values[2]
-						"LDAPDirName"    = $values[3]
-						"LDAPBranchName" = $values[4]
-						"LDAPQuery"      = $values[5]
-						"LDAPGroupMatch" = $values[6]
+			else {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"LDAPBranchID"   = $values[0]
+							"LDAPMapID"      = $values[1]
+							"LDAPMapName"    = $values[2]
+							"LDAPDirName"    = $values[3]
+							"LDAPBranchName" = $values[4]
+							"LDAPQuery"      = $values[5]
+							"LDAPGroupMatch" = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

@@ -55,56 +55,60 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli GROUPDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli GROUPDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 6)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						#assign values to properties
-						"Groupname"     = $group
-						"Description"   = $values[0]
-						"LDAPFullDN"    = $values[1]
-						"LDAPDirectory" = $values[2]
-						"MapID"         = $values[3]
-						"MapName"       = $values[4]
-						"ExternalGroup" = $values[5]
+			else {
 
-					} | Add-ObjectDetail -DefaultProperties Groupname, Description,
-					LDAPFullDN, LDAPDirectory, MapID, MapName, ExternalGroup -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 6)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							#assign values to properties
+							"Groupname"     = $group
+							"Description"   = $values[0]
+							"LDAPFullDN"    = $values[1]
+							"LDAPDirectory" = $values[2]
+							"MapID"         = $values[3]
+							"MapName"       = $values[4]
+							"ExternalGroup" = $values[5]
+
+						} | Add-ObjectDetail -DefaultProperties Groupname, Description,
+						LDAPFullDN, LDAPDirectory, MapID, MapName, ExternalGroup -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}
