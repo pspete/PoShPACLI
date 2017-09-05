@@ -145,58 +145,61 @@
 		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(!(Test-PACLI)) {
 
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-				#Output Object
-				[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-					#(possibility these may not all be in the correct order -
-					#...but most are)
-					"Safename"                  = $Results[0]
-					"Status"                    = $Results[1]
-					"LastUsed"                  = $Results[2]
-					"Accessed"                  = $Results[3]
-					"Size"                      = $Results[4]
-					"Location"                  = $Results[5]
-					"SafeID"                    = $Results[6]
-					"LocationID"                = $Results[7]
-					"TextOnly"                  = $Results[8]
-					"ShareOptions"              = $Results[9]
-					"UseFileCategories"         = $Results[10]
-					"RequireContentValidation"  = $Results[11]
-					"RequireReason"             = $Results[12]
-					"EnforceExclusivePasswords" = $Results[13]
+				Write-Error $Return.StdErr
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
+			}
+
+			else {
+
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#Output Object
+					[PSCustomObject] @{
+
+						#(possibility these may not all be in the correct order -
+						#...but most are)
+						"Safename"                  = $Results[0]
+						"Status"                    = $Results[1]
+						"LastUsed"                  = $Results[2]
+						"Accessed"                  = $Results[3]
+						"Size"                      = $Results[4]
+						"Location"                  = $Results[5]
+						"SafeID"                    = $Results[6]
+						"LocationID"                = $Results[7]
+						"TextOnly"                  = $Results[8]
+						"ShareOptions"              = $Results[9]
+						"UseFileCategories"         = $Results[10]
+						"RequireContentValidation"  = $Results[11]
+						"RequireReason"             = $Results[12]
+						"EnforceExclusivePasswords" = $Results[13]
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
+
 				}
 
 			}

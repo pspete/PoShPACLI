@@ -65,35 +65,39 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli UNDELETEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Folder $folder Restored"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli UNDELETEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Folder $folder Restored"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

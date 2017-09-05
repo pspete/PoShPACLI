@@ -95,34 +95,38 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Stored File $file in Safe $safe "
-			[PSCustomObject] @{
+			#$PACLI variable set to executable path
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Stored File $file in Safe $safe "
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

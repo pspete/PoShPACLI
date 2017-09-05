@@ -54,35 +54,39 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli DELETENETWORKAREA $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Network Area $networkArea Deleted"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli DELETENETWORKAREA $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Network Area $networkArea Deleted"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

@@ -55,53 +55,57 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FOLDERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FOLDERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 5) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 5)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"Name"         = $values[0]
-						"Accessed"     = $values[1]
-						"History"      = $values[2]
-						"DeletionDate" = $values[3]
-						"DeletedBy"    = $values[4]
+			else {
 
-					} | Add-ObjectDetail -DefaultProperties Name, Accessed, History,
-					DeletionDate, DeletedBy -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 5) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 5)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"Name"         = $values[0]
+							"Accessed"     = $values[1]
+							"History"      = $values[2]
+							"DeletionDate" = $values[3]
+							"DeletedBy"    = $values[4]
+
+						} | Add-ObjectDetail -DefaultProperties Name, Accessed, History,
+						DeletionDate, DeletedBy -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

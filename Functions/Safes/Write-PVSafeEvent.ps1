@@ -85,38 +85,41 @@
 		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(!(Test-PACLI)) {
 
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
-
-			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			Write-Verbose "Safe Event Added"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			if($Return.ExitCode) {
+
+				Write-Error $Return.StdErr
+
+			}
+
+			else {
+
+				Write-Verbose "Safe Event Added"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

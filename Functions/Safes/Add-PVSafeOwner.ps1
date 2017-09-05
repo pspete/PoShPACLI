@@ -284,36 +284,40 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			write-verbose "Added Safe Owner: $owner"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+
+			}
+
+			else {
+
+				write-verbose "Added Safe Owner: $owner"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

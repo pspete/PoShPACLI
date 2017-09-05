@@ -46,52 +46,56 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli SAFESLOG "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli SAFESLOG "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 4) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 4)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						#assign values to properties
-						"Name"       = $values[0]
-						"UsersCount" = $values[1]
-						"OpenDate"   = $values[2]
-						"OpenState"  = $values[3]
+			else {
 
-					} | Add-ObjectDetail -DefaultProperties Name, UsersCount, OpenDate, OpenState -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 4) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 4)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							#assign values to properties
+							"Name"       = $values[0]
+							"UsersCount" = $values[1]
+							"OpenDate"   = $values[2]
+							"OpenState"  = $values[3]
+
+						} | Add-ObjectDetail -DefaultProperties Name, UsersCount, OpenDate, OpenState -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

@@ -55,77 +55,81 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli SAFEDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli SAFEDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 29)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"Safename"                  = $safe
-						"Description"               = $values[0]
-						"Delay"                     = $values[1]
-						"Retention"                 = $values[2]
-						"ObjectsRetention"          = $values[3]
-						"MaxSize"                   = $values[4]
-						"CurrSize"                  = $values[5]
-						"FromHour"                  = $values[6]
-						"ToHour"                    = $values[7]
-						"DailyVersions"             = $values[8]
-						"MonthlyVersions"           = $values[9]
-						"YearlyVersions"            = $values[10]
-						"QuotaOwner"                = $values[11]
-						"Location"                  = $values[12]
-						"RequestsRetention"         = $values[13]
-						"ConfirmationType"          = $values[14]
-						"SecurityLevel"             = $values[15]
-						"DefaultAccessMarks"        = $values[16]
-						"ReadOnlyByDefault"         = $values[17]
-						"UseFileCategories"         = $values[18]
-						"VirusFree"                 = $values[19]
-						"TextOnly"                  = $values[20]
-						"RequireReason"             = $values[21]
-						"EnforceExclusivePasswords" = $values[22]
-						"RequireContentValidation"  = $values[23]
-						"ShareOptions"              = $values[24]
-						"ConfirmationCount"         = $values[25]
-						"MaxFileSize"               = $values[26]
-						"AllowedFileTypes"          = $values[27]
-						"SupportOLAC"               = $values[28]
+			else {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 29)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"Safename"                  = $safe
+							"Description"               = $values[0]
+							"Delay"                     = $values[1]
+							"Retention"                 = $values[2]
+							"ObjectsRetention"          = $values[3]
+							"MaxSize"                   = $values[4]
+							"CurrSize"                  = $values[5]
+							"FromHour"                  = $values[6]
+							"ToHour"                    = $values[7]
+							"DailyVersions"             = $values[8]
+							"MonthlyVersions"           = $values[9]
+							"YearlyVersions"            = $values[10]
+							"QuotaOwner"                = $values[11]
+							"Location"                  = $values[12]
+							"RequestsRetention"         = $values[13]
+							"ConfirmationType"          = $values[14]
+							"SecurityLevel"             = $values[15]
+							"DefaultAccessMarks"        = $values[16]
+							"ReadOnlyByDefault"         = $values[17]
+							"UseFileCategories"         = $values[18]
+							"VirusFree"                 = $values[19]
+							"TextOnly"                  = $values[20]
+							"RequireReason"             = $values[21]
+							"EnforceExclusivePasswords" = $values[22]
+							"RequireContentValidation"  = $values[23]
+							"ShareOptions"              = $values[24]
+							"ConfirmationCount"         = $values[25]
+							"MaxFileSize"               = $values[26]
+							"AllowedFileTypes"          = $values[27]
+							"SupportOLAC"               = $values[28]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

@@ -78,36 +78,40 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli ADDAREAADDRESS $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Address Added to Network Area $networkArea"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli ADDAREAADDRESS $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Address Added to Network Area $networkArea"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

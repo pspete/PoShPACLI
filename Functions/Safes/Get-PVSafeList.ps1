@@ -64,59 +64,63 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
+			#$pacli variable not set or not a valid path
 
-	Else {
+		}
 
-		#$PACLI variable set to executable path
+		Else {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli SAFESLIST "$($PSBoundParameters.getEnumerator() |
+			#$PACLI variable set to executable path
+
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli SAFESLIST "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		#if result(s) returned
-		if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-			#Convert Output to array
-			$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#loop through results
-			For($i = 0 ; $i -lt $Results.length ; $i += 19) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 19) {
 
-				#Get Range from array
-				$values = $Results[$i..($i + 19)]
+					#Get Range from array
+					$values = $Results[$i..($i + 19)]
 
-				#Output Object
-				[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-					"Safename"                  = $values[0]
-					"Size"                      = $values[1]
-					"Status"                    = $values[2]
-					"LastUsed"                  = $values[3]
-					"Accessed"                  = $values[4]
-					"VirusFree"                 = $values[5]
-					"ShareOptions"              = $values[6]
-					"Location"                  = $values[7]
-					"UseFileCategories"         = $values[8]
-					"TextOnly"                  = $values[9]
-					"RequireReason"             = $values[10]
-					"EnforceExclusivePasswords" = $values[11]
-					"RequireContentValidation"  = $values[12]
-					"AccessLevel"               = $values[13]
-					"MaxSize"                   = $values[14]
-					"ReadOnlyByDefault"         = $values[15]
-					"SafeID"                    = $values[16]
-					"LocationID"                = $values[17]
-					"SupportOLAC"               = $values[18]
+						"Safename"                  = $values[0]
+						"Size"                      = $values[1]
+						"Status"                    = $values[2]
+						"LastUsed"                  = $values[3]
+						"Accessed"                  = $values[4]
+						"VirusFree"                 = $values[5]
+						"ShareOptions"              = $values[6]
+						"Location"                  = $values[7]
+						"UseFileCategories"         = $values[8]
+						"TextOnly"                  = $values[9]
+						"RequireReason"             = $values[10]
+						"EnforceExclusivePasswords" = $values[11]
+						"RequireContentValidation"  = $values[12]
+						"AccessLevel"               = $values[13]
+						"MaxSize"                   = $values[14]
+						"ReadOnlyByDefault"         = $values[15]
+						"SafeID"                    = $values[16]
+						"LocationID"                = $values[17]
+						"SupportOLAC"               = $values[18]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
+
 				}
 
 			}

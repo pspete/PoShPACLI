@@ -64,68 +64,72 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
-
-		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 19) {
+		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-					#Get Range from array
-					$values = $Results[$i..($i + 19)]
+			if($Return.ExitCode) {
 
-					#Output Object
-					[PSCustomObject] @{
+				Write-Error $Return.StdErr
 
-						"Name"             = $values[0]
-						"InternalName"     = $values[1]
-						"CreationDate"     = $values[2]
-						"CreatedBy"        = $values[3]
-						"DeletionDate"     = $values[4]
-						"DeletionBy"       = $values[5]
-						"LastUsedDate"     = $values[6]
-						"LastUsedBy"       = $values[7]
-						"Size"             = $values[8]
-						"History"          = $values[9]
-						"RetrieveLock"     = $values[10]
-						"LockDate"         = $values[11]
-						"LockedBy"         = $values[12]
-						"FileID"           = $values[13]
-						"Draft"            = $values[14]
-						"Accessed"         = $values[15]
-						"LockedByGW"       = $values[16]
-						"ValidationStatus" = $values[17]
-						"LockedByUserID"   = $values[18]
+			}
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+			else {
+
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 19) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 19)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"Name"             = $values[0]
+							"InternalName"     = $values[1]
+							"CreationDate"     = $values[2]
+							"CreatedBy"        = $values[3]
+							"DeletionDate"     = $values[4]
+							"DeletionBy"       = $values[5]
+							"LastUsedDate"     = $values[6]
+							"LastUsedBy"       = $values[7]
+							"Size"             = $values[8]
+							"History"          = $values[9]
+							"RetrieveLock"     = $values[10]
+							"LockDate"         = $values[11]
+							"LockedBy"         = $values[12]
+							"FileID"           = $values[13]
+							"Draft"            = $values[14]
+							"Accessed"         = $values[15]
+							"LockedByGW"       = $values[16]
+							"ValidationStatus" = $values[17]
+							"LockedByUserID"   = $values[18]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

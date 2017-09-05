@@ -377,47 +377,51 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#$pacli variable not set or not a valid path
 
 		}
 
-		$Return = Invoke-PACLICommand $pacli ADDSAFE $($PSBoundParameters.getEnumerator() |
+		Else {
 
-			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
-			dailyVersions, monthlyVersions, yearlyVersions, logRetention,
-			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
-			confirmationCount, safeKeyType, safeOptions, maxFileSize)
+			#$PACLI variable set to executable path
 
-		if($Return.ExitCode) {
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-			Write-Error $Return.StdErr
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		}
+			}
 
-		elseif($Return.ExitCode -eq 0) {
+			$Return = Invoke-PACLICommand $pacli ADDSAFE $($PSBoundParameters.getEnumerator() |
 
-			Write-Verbose "Safe Created: $safe"
+				ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
+				dailyVersions, monthlyVersions, yearlyVersions, logRetention,
+				fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
+				confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
-			[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				Write-Error $Return.StdErr
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Safe Created: $safe"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

@@ -111,107 +111,111 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
+			#$pacli variable not set or not a valid path
 
-	Else {
+		}
 
-		#$PACLI variable set to executable path
+		Else {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
+			#$PACLI variable set to executable path
+
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"
 
-		#If data returned
-		if($Return.StdOut) {
+			#If data returned
+			if($Return.StdOut) {
 
-			#Split the output in an array
-			#each element represents an event
-			$Events = ($Return.StdOut).Split("`n")
+				#Split the output in an array
+				#each element represents an event
+				$Events = ($Return.StdOut).Split("`n")
 
-			#loop through event data
-			For($i = 0 ; $i -lt $events.count ; $i++) {
-				#Event data can sometimes contain xml - detect this
-				#Object output is affected if not dealt with
-				If($events[$i] -match '(\<\?xml[\d\D]*\?\>)') {
+				#loop through event data
+				For($i = 0 ; $i -lt $events.count ; $i++) {
+					#Event data can sometimes contain xml - detect this
+					#Object output is affected if not dealt with
+					If($events[$i] -match '(\<\?xml[\d\D]*\?\>)') {
 
-					#Remove the XML Tag (causes parse issues if left)
-					$events[$i] = $events[$i] -replace '(\<\?xml[\d\D]*\?\>)', ''
+						#Remove the XML Tag (causes parse issues if left)
+						$events[$i] = $events[$i] -replace '(\<\?xml[\d\D]*\?\>)', ''
 
-					#find subsequent array elements that contain lines from the xml event data
-					if($events[$i + 1] -match '<EventData>') {
+						#find subsequent array elements that contain lines from the xml event data
+						if($events[$i + 1] -match '<EventData>') {
 
-						#define integer for loop
-						[int]$iXML = $i + 1
+							#define integer for loop
+							[int]$iXML = $i + 1
 
-						#define integer for xml start
-						[int]$FirstXML = $iXML
+							#define integer for xml start
+							[int]$FirstXML = $iXML
 
-						#increment the counter
-						do {
+							#increment the counter
+							do {
 
-							[int]$iXML += 1
-							#continue until close tag found
+								[int]$iXML += 1
+								#continue until close tag found
 
-						} until ($events[$iXML] -match '</EventData>')
+							} until ($events[$iXML] -match '</EventData>')
 
-						#join range of the array containing XML and flatten
-						$EventData = ((((((($events)[$FirstXML..$iXML] -join ' ') `
-												-replace ">(\s*)<", "><") `
-											-replace '\n', '') `
-										-replace '="', '=') `
-									-replace '">', '>') `
-								-replace '</EventData>', '</EventData>"') #`
-						#-replace '<EventData>','"<EventData>'
+							#join range of the array containing XML and flatten
+							$EventData = ((((((($events)[$FirstXML..$iXML] -join ' ') `
+													-replace ">(\s*)<", "><") `
+												-replace '\n', '') `
+											-replace '="', '=') `
+										-replace '">', '>') `
+									-replace '</EventData>', '</EventData>"') #`
+							#-replace '<EventData>','"<EventData>'
 
-						#whitespace, newlines, "quote marks" are all removed
-						#"quote marks" added to start and end of string
-						#increment outer counter to restart loop at next event
-						$i = $iXML + 1
+							#whitespace, newlines, "quote marks" are all removed
+							#"quote marks" added to start and end of string
+							#increment outer counter to restart loop at next event
+							$i = $iXML + 1
 
-					}
-
-				}
-
-				#Convert event data into output string
-				$Values = $events[$i]  | Select-String -Pattern "\S" | ConvertFrom-PacliOutput
-
-				#if we have output
-				if($Values) {
-
-					if($EventData) {
-
-						#add flattened xml to output if present
-						$Values += $EventData
+						}
 
 					}
 
-					#Output Object
-					[PSCustomObject] @{
+					#Convert event data into output string
+					$Values = $events[$i]  | Select-String -Pattern "\S" | ConvertFrom-PacliOutput
 
-						"Safename"       = $values[0]
-						"SafeID"         = $values[1]
-						"EventID"        = $values[2]
-						"SourceID"       = $values[3]
-						"EventTypeID"    = $values[4]
-						"CreationDate"   = $values[5]
-						"ExpirationDate" = $values[6]
-						"Username"       = $values[7]
-						"UserID"         = $values[8]
-						"AgentName"      = $values[9]
-						"AgentID"        = $values[10]
-						"ClientID"       = $values[11]
-						"Version"        = $values[12]
-						"FromIP"         = $values[13]
-						"Data"           = $values[14]
+					#if we have output
+					if($Values) {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+						if($EventData) {
+
+							#add flattened xml to output if present
+							$Values += $EventData
+
+						}
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"Safename"       = $values[0]
+							"SafeID"         = $values[1]
+							"EventID"        = $values[2]
+							"SourceID"       = $values[3]
+							"EventTypeID"    = $values[4]
+							"CreationDate"   = $values[5]
+							"ExpirationDate" = $values[6]
+							"Username"       = $values[7]
+							"UserID"         = $values[8]
+							"AgentName"      = $values[9]
+							"AgentID"        = $values[10]
+							"ClientID"       = $values[11]
+							"Version"        = $values[12]
+							"FromIP"         = $values[13]
+							"Data"           = $values[14]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

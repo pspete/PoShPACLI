@@ -79,42 +79,46 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#$pacli variable not set or not a valid path
 
 		}
 
-		$Return = Invoke-PACLICommand $pacli STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		Else {
 
-		if($Return.ExitCode) {
+			#$PACLI variable set to executable path
 
-			Write-Error $Return.StdErr
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		}
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		else {
+			}
 
-			Write-Verbose "Password Object Stored"
+			$Return = Invoke-PACLICommand $pacli STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
 
-			[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+				Write-Error $Return.StdErr
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
+
+			else {
+
+				Write-Verbose "Password Object Stored"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

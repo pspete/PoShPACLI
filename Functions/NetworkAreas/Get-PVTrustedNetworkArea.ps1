@@ -55,54 +55,58 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli TRUSTEDNETWORKAREASLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli TRUSTEDNETWORKAREASLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 6)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"Name"              = $values[0]
-						"FromHour"          = $values[1]
-						"ToHour"            = $values[2]
-						"Active"            = $values[3]
-						"MaxViolationCount" = $values[4]
-						"ViolationCount"    = $values[5]
+			else {
 
-					} | Add-ObjectDetail -DefaultProperties Name, FromHour, ToHour,
-					Active, MaxViolationCount, ViolationCount -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 6)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"Name"              = $values[0]
+							"FromHour"          = $values[1]
+							"ToHour"            = $values[2]
+							"Active"            = $values[3]
+							"MaxViolationCount" = $values[4]
+							"ViolationCount"    = $values[5]
+
+						} | Add-ObjectDetail -DefaultProperties Name, FromHour, ToHour,
+						Active, MaxViolationCount, ViolationCount -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

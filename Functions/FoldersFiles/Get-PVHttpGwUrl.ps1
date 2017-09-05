@@ -72,42 +72,46 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-				#Output Object
-				[PSCustomObject] @{
+			if($Return.ExitCode) {
 
-					"URL" = $Results[0]
+				Write-Error $Return.StdErr
 
-				} | Add-ObjectDetail -DefaultProperties URL -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
+			}
+
+			else {
+
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#Output Object
+					[PSCustomObject] @{
+
+						"URL" = $Results[0]
+
+					} | Add-ObjectDetail -DefaultProperties URL -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
+
 				}
 
 			}

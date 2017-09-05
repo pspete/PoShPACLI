@@ -314,54 +314,58 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		else {
+		Else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+			#$PACLI variable set to executable path
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
+			ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+			if($Return.ExitCode) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+				Write-Error $Return.StdErr
 
-					#Output Object
-					[PSCustomObject] @{
+			}
 
-						"RuleID"           = $values[0]
-						"UserName"         = $values[1]
-						"Safename"         = $values[2]
-						"FullObjectName"   = $values[3]
-						"Effect"           = $values[4]
-						"RuleCreationDate" = $values[5]
-						"AccessLevel"      = $values[6]
+			else {
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+				#if result(s) returned
+				if($Return.StdOut) {
+
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
+
+						#Output Object
+						[PSCustomObject] @{
+
+							"RuleID"           = $values[0]
+							"UserName"         = $values[1]
+							"Safename"         = $values[2]
+							"FullObjectName"   = $values[3]
+							"Effect"           = $values[4]
+							"RuleCreationDate" = $values[5]
+							"AccessLevel"      = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

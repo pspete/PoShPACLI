@@ -389,82 +389,86 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(!(Test-PACLI)) {
 
-	}
+			#$pacli variable not set or not a valid path
 
-	Else {
+		}
 
-		#$PACLI variable set to executable path
+		Else {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
+			#$PACLI variable set to executable path
+
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
 				searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 					categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode) {
+			if($Return.ExitCode) {
 
-			Write-Error $Return.StdErr
+				Write-Error $Return.StdErr
 
-		}
+			}
 
-		else {
+			else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+				#if result(s) returned
+				if($Return.StdOut) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 32) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 32) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 32)]
+						#Get Range from array
+						$values = $Results[$i..($i + 32)]
 
-					#Output Object
-					[PSCustomObject] @{
+						#Output Object
+						[PSCustomObject] @{
 
-						"Name"                       = $values[0]
-						"Accessed"                   = $values[1]
-						"CreationDate"               = $values[2]
-						"CreatedBy"                  = $values[3]
-						"DeletionDate"               = $values[4]
-						"DeletionBy"                 = $values[5]
-						"LastUsedDate"               = $values[6]
-						"LastUsedBy"                 = $values[7]
-						"LockDate"                   = $values[8]
-						"LockedBy"                   = $values[9]
-						"LockedByGW"                 = $values[10]
-						"Size"                       = $values[11]
-						"History"                    = $values[12]
-						"InternalName"               = $values[13]
-						"Safe"                       = $values[14]
-						"Folder"                     = $values[15]
-						"FileID"                     = $values[16]
-						"LockedByUserID"             = $values[17]
-						"ValidationStatus"           = $values[18]
-						"HumanCreationDate"          = $values[19]
-						"HumanCreatedBy"             = $values[20]
-						"HumanLastUsedDate"          = $values[21]
-						"HumanLastUsedBy"            = $values[22]
-						"HumanLastRetrievedByDate"   = $values[23]
-						"HumanLastRetrievedBy"       = $values[24]
-						"ComponentCreationDate"      = $values[25]
-						"ComponentCreatedBy"         = $values[26]
-						"ComponentLastUsedDate"      = $values[27]
-						"ComponentLastUsedBy"        = $values[28]
-						"ComponentLastRetrievedDate" = $values[29]
-						"ComponentLastRetrievedBy"   = $values[30]
-						"FileCategories"             = $values[31]
+							"Name"                       = $values[0]
+							"Accessed"                   = $values[1]
+							"CreationDate"               = $values[2]
+							"CreatedBy"                  = $values[3]
+							"DeletionDate"               = $values[4]
+							"DeletionBy"                 = $values[5]
+							"LastUsedDate"               = $values[6]
+							"LastUsedBy"                 = $values[7]
+							"LockDate"                   = $values[8]
+							"LockedBy"                   = $values[9]
+							"LockedByGW"                 = $values[10]
+							"Size"                       = $values[11]
+							"History"                    = $values[12]
+							"InternalName"               = $values[13]
+							"Safe"                       = $values[14]
+							"Folder"                     = $values[15]
+							"FileID"                     = $values[16]
+							"LockedByUserID"             = $values[17]
+							"ValidationStatus"           = $values[18]
+							"HumanCreationDate"          = $values[19]
+							"HumanCreatedBy"             = $values[20]
+							"HumanLastUsedDate"          = $values[21]
+							"HumanLastUsedBy"            = $values[22]
+							"HumanLastRetrievedByDate"   = $values[23]
+							"HumanLastRetrievedBy"       = $values[24]
+							"ComponentCreationDate"      = $values[25]
+							"ComponentCreatedBy"         = $values[26]
+							"ComponentLastUsedDate"      = $values[27]
+							"ComponentLastUsedBy"        = $values[28]
+							"ComponentLastRetrievedDate" = $values[29]
+							"ComponentLastRetrievedBy"   = $values[30]
+							"FileCategories"             = $values[31]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
+
 					}
 
 				}

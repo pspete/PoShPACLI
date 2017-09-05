@@ -102,37 +102,40 @@
 		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(!(Test-PACLI)) {
 
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote type)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+			#$pacli variable not set or not a valid path
 
 		}
 
-		elseif($Return.ExitCode -eq 0) {
+		Else {
 
-			Write-Verbose "Added Safe File Category $category"
+			#$PACLI variable set to executable path
 
-			[PSCustomObject] @{
+			$Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote type)
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
+			if($Return.ExitCode) {
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+				Write-Error $Return.StdErr
+
+			}
+
+			elseif($Return.ExitCode -eq 0) {
+
+				Write-Verbose "Added Safe File Category $category"
+
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 
