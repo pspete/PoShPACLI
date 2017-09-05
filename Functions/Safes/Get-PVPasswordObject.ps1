@@ -87,13 +87,14 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Get-PVPasswordObject -vault Lab -user administrator -safe Oracle -folder root -file Application-ORACLE-10.10.10.10-SYS -lockFile
+		Get-PVPasswordObject -vault Lab -user administrator -safe Oracle -folder root `
+		-file Application-ORACLE-10.10.10.10-SYS -lockFile
 
 		Retrieves the specified password from the Oracle safe
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
@@ -190,13 +191,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

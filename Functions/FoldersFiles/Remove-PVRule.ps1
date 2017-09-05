@@ -35,13 +35,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-PVRule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM -fullObjectName root\IDMPass -isFolder:$false
+		Remove-PVRule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM `
+		-fullObjectName root\IDMPass -isFolder:$false
 
 		Deletes OLAC rule 15 from object
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -90,13 +91,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

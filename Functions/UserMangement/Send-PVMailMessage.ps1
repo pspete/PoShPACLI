@@ -97,8 +97,8 @@
 	.EXAMPLE
 
 		Send-PVMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
-		-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports -folder Reports `
-		-file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
+		-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports `
+		-folder Reports -file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
 
 		Example for template file content:
 		Dear %%RecipientUser,
@@ -111,7 +111,7 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
@@ -256,17 +256,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

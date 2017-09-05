@@ -87,13 +87,14 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Get-PVFile -vault lab -user administrator -safe AWS -folder root -file AccessKey -localFolder d:\AWS -localFile key
+		Get-PVFile -vault lab -user administrator -safe AWS -folder root -file AccessKey -localFolder d:\AWS `
+		-localFile key
 
 		Retrieves file and saves to local folder.
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 
 			Comment:
 			If the userequest, sendrequest, and executerequest parameters are all
@@ -200,13 +201,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

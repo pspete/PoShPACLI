@@ -19,13 +19,14 @@
 	The parameters for the command i.e. vault="name" this="true" number=88 OUTPUT (ALL,ENCLOSE)
 
     .EXAMPLE
-	Invoke-PACLICommand $pacli PACLICMD "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+	Invoke-PACLICommand $pacli PACLICMD "$($PSBoundParameters.getEnumerator() |
+	ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value" OUTPUT (ALL,ENCLOSE)
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]

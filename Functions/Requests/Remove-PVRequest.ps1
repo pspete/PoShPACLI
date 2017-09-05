@@ -33,7 +33,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -67,13 +67,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

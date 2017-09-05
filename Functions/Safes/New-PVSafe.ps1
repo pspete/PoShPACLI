@@ -177,7 +177,7 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -333,7 +333,8 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
-		[ValidateSet("64", "128", "512", "256", "192", "576", "320", "640", "384", "768", "704", "448", "832", "896", "960")]
+		[ValidateSet("64", "128", "512", "256", "192", "576", "320",
+			"640", "384", "768", "704", "448", "832", "896", "960")]
 		[int]$safeOptions,
 
 		[Parameter(
@@ -379,13 +380,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

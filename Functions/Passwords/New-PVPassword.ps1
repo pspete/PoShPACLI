@@ -50,13 +50,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		New-PVPassword -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 -minDigit 1 -forbiddenChars xyz
+		New-PVPassword -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 `
+		-minDigit 1 -forbiddenChars xyz
 
 		Generates a new password as per the parameters
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -104,13 +105,7 @@
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
-
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
+	If(Test-PACLI) {
 
 		#$PACLI variable set to executable path
 

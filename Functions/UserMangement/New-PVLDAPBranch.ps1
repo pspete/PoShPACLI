@@ -40,7 +40,7 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -89,18 +89,13 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
 			#execute pacli with parameters
-			$Return = Invoke-PACLICommand $pacli LDAPBRANCHADD "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+			$Return = Invoke-PACLICommand $pacli LDAPBRANCHADD "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 			if($Return.ExitCode) {
 

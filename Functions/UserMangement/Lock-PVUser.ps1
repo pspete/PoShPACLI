@@ -24,7 +24,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -48,17 +48,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli LOCK $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli LOCK $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

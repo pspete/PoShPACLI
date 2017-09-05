@@ -206,13 +206,14 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		New-PVUser -vault Lab -user userAdmin -destUser backup1 -password (read-host -AsSecureString) -backupAdmin -location "\"
+		New-PVUser -vault Lab -user userAdmin -destUser backup1 -password (read-host -AsSecureString) `
+		-backupAdmin -location "\"
 
 		Creates a new vault user in the root location, named backup1, with backup admin vault rights.
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -506,13 +507,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
@@ -524,8 +519,7 @@
 			}
 
 			$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
-
-				ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
+					ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
 			if($Return.ExitCode) {
 

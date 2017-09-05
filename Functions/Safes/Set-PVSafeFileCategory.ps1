@@ -38,13 +38,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality -categoryNewName sev -validValues "1,2,3,4"
+		Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality `
+		-categoryNewName sev -validValues "1,2,3,4"
 
 		Changes Safe File Category name from "Criticality" to "sev"
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -99,13 +100,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

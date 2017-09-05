@@ -23,7 +23,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -40,19 +40,14 @@
 		[string]$ctlFileName
 	)
 
-	If(!(Test-PACLI)) {
-
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
+	If(Test-PACLI) {
 
 		#$PACLI variable set to executable path
 
 		Write-Verbose "Starting Pacli"
 
-		$Return = Invoke-PACLICommand $pacli INIT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $pacli INIT $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
 		if($Return.ExitCode) {
 

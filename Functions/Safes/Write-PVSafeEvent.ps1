@@ -36,13 +36,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Write-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
+		Write-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 `
+		-data "Event Data"
 
 		Adds event to safe Windows_Safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -87,13 +88,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

@@ -30,13 +30,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-PVFileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass -category AccountCategory
+		Remove-PVFileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass `
+		-category AccountCategory
 
 		Deletes AccountCategory file category from sys.pass file
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -81,17 +82,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli DELETEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli DELETEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

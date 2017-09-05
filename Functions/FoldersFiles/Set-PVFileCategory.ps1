@@ -33,13 +33,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-PVFileCategory -vault Lab -user administrator -safe Reports -folder root -file Access -category NextReview -value 1/6/18
+		Set-PVFileCategory -vault Lab -user administrator -safe Reports -folder root -file Access `
+		-category NextReview -value 1/6/18
 
 		Updates value of existing File Category "NextReview" on file "Access"
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -89,17 +90,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

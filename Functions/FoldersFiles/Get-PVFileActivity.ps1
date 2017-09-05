@@ -36,7 +36,7 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -81,19 +81,13 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
 			#execute pacli
 			$Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
+            	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
 			if($Return.ExitCode) {
 

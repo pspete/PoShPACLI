@@ -114,13 +114,14 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-PVSafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store -administer -supervise
+		Add-PVSafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store `
+		-administer -supervise
 
 		Adds user The_User to safe The_Safe with the specified safe permissions.
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
@@ -286,17 +287,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

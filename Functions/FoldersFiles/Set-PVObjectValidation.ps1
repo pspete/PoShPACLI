@@ -41,13 +41,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys -internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+		Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys `
+		-internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
 
 		Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
@@ -103,13 +104,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 

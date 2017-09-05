@@ -33,13 +33,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Add-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file SYSPass -category Criticality -value 7
+		Add-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file SYSPass `
+		-category Criticality -value 7
 
 		Adds predefined file category Criticality, with a value of 7 to file SYSPass in safe DEV
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -89,17 +90,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli ADDFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli ADDFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

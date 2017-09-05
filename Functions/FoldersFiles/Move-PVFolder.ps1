@@ -28,13 +28,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 -newLocation root
+		Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 `
+		-newLocation root
 
 		Moves folder "2017"to the root location of the safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -74,17 +75,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli MOVEFOLDER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli MOVEFOLDER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

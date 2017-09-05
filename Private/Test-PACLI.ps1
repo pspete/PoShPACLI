@@ -20,7 +20,7 @@ Function Test-PACLI {
 
     .NOTES
     	AUTHORS: Pete Maan, Brandon Lundt
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]

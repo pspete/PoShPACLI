@@ -30,13 +30,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root -file devpass -password (read-host -AsSecureString)
+		Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root `
+		-file devpass -password (read-host -AsSecureString)
 
 		Adds password object with specified value to Dev_Team safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -81,13 +82,7 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
@@ -98,7 +93,8 @@
 
 			}
 
-			$Return = Invoke-PACLICommand $pacli STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 

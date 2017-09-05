@@ -32,12 +32,13 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT -UpdateIfExists
+		Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
+		-UpdateIfExists
 
 		Updates user admin01 in vault from domain VIRTUALREAL.IT
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
         Work required to support LDAPFullDN & Parameter Validation / Parameter Sets
     #>
 
@@ -90,16 +91,11 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
-			$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+			$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 			if($Return.ExitCode) {
 

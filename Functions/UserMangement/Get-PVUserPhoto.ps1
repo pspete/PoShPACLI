@@ -27,13 +27,14 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-PVUserPhoto -vault Lab -user administrator -destUser user1 -localFolder D:\userphotos -localFile userphoto.jpg
+		Get-PVUserPhoto -vault Lab -user administrator -destUser user1 -localFolder D:\userphotos `
+		-localFile userphoto.jpg
 
 		Saves photo set on user account user1 to local drive
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
@@ -73,17 +74,12 @@
 
 	PROCESS {
 
-		If(!(Test-PACLI)) {
-
-			#$pacli variable not set or not a valid path
-
-		}
-
-		Else {
+		If(Test-PACLI) {
 
 			#$PACLI variable set to executable path
 
-			$Return = Invoke-PACLICommand $pacli GETUSERPHOTO $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			$Return = Invoke-PACLICommand $pacli GETUSERPHOTO $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
 			if($Return.ExitCode) {
 
