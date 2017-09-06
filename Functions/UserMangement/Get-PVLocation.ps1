@@ -80,12 +80,12 @@
 						[PSCustomObject] @{
 
 							#assign values to properties
-							"Name"       = $values[0]
+							"Location"   = $values[0]
 							"Quota"      = $values[1]
 							"UsedQuota"  = $values[2]
 							"LocationID" = $values[3]
 
-						} | Add-ObjectDetail -DefaultProperties Name, Quota,
+						} | Add-ObjectDetail -DefaultProperties Location, Quota,
 						UsedQuota, LocationID -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
