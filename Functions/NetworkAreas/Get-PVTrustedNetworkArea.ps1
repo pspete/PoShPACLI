@@ -5,7 +5,7 @@
     	Lists Trusted Network Areas
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "TRUSTEDNETWORKAREALIST"
+    	Exposes the PACLI Function: "TRUSTEDNETWORKAREASLIST"
 
     .PARAMETER vault
 	   The name of the Vault in which the Trusted Network Area is defined.
@@ -88,14 +88,14 @@
 						#Output Object
 						[PSCustomObject] @{
 
-							"Name"              = $values[0]
+							"NetworkArea"       = $values[0]
 							"FromHour"          = $values[1]
 							"ToHour"            = $values[2]
 							"Active"            = $values[3]
 							"MaxViolationCount" = $values[4]
 							"ViolationCount"    = $values[5]
 
-						} | Add-ObjectDetail -DefaultProperties Name, FromHour, ToHour,
+						} | Add-ObjectDetail -DefaultProperties NetworkArea, FromHour, ToHour,
 						Active, MaxViolationCount, ViolationCount -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user

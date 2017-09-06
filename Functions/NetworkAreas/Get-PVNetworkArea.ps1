@@ -79,10 +79,10 @@
 						#Output Object
 						[PSCustomObject] @{
 
-							"Name"          = $values[0]
+							"NetworkArea"   = $values[0]
 							"SecurityLevel" = $values[1]
 
-						} | Add-ObjectDetail -DefaultProperties Name, SecurityLevel -PropertyToAdd @{
+						} | Add-ObjectDetail -DefaultProperties NetworkArea, SecurityLevel -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
