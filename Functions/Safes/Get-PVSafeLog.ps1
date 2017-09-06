@@ -80,12 +80,13 @@
 						[PSCustomObject] @{
 
 							#assign values to properties
-							"Name"       = $values[0]
+							"Safename"   = $values[0]
 							"UsersCount" = $values[1]
 							"OpenDate"   = $values[2]
 							"OpenState"  = $values[3]
 
-						} | Add-ObjectDetail -DefaultProperties Name, UsersCount, OpenDate, OpenState -PropertyToAdd @{
+						} | Add-ObjectDetail -DefaultProperties Safename, UsersCount, OpenDate, OpenState
+						-PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
