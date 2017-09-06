@@ -55,9 +55,9 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"Name" = $Results[0]
+					"CertificateTrustList" = $Results[0]
 
-				} | Add-ObjectDetail -DefaultProperties Name -PropertyToAdd @{
+				} | Add-ObjectDetail -DefaultProperties CertificateTrustList -PropertyToAdd @{
 					"sessionID" = $sessionID
 				}
 
