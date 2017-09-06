@@ -97,7 +97,7 @@
 						#Output Object
 						[PSCustomObject] @{
 
-							"Name"             = $values[0]
+							"Filename"         = $values[0]
 							"InternalName"     = $values[1]
 							"CreationDate"     = $values[2]
 							"CreatedBy"        = $values[3]

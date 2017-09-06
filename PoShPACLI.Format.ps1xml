@@ -516,7 +516,7 @@
 					<TableRowEntry>
 						<TableColumnItems>
 							<TableColumnItem>
-								<PropertyName>Name</PropertyName>
+								<PropertyName>Filename</PropertyName>
 							</TableColumnItem>
 							<TableColumnItem>
 								<PropertyName>Size</PropertyName>
@@ -1533,7 +1533,7 @@
 					<ListEntry>
 						<ListItems>
 							<ListItem>
-								<PropertyName>Name</PropertyName>
+								<PropertyName>Filename</PropertyName>
 							</ListItem>
 							<ListItem>
 								<ItemSelectionCondition>
