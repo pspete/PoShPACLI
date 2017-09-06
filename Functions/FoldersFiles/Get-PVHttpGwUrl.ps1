@@ -64,6 +64,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Filename")]
 		[string]$file,
 
 		[Parameter(
