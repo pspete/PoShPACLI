@@ -88,13 +88,13 @@
 						#Output Object
 						[PSCustomObject] @{
 
-							"FolderName"   = $values[0]
+							"Folder"       = $values[0]
 							"Accessed"     = $values[1]
 							"History"      = $values[2]
 							"DeletionDate" = $values[3]
 							"DeletedBy"    = $values[4]
 
-						} | Add-ObjectDetail -DefaultProperties Foldername, Accessed, History,
+						} | Add-ObjectDetail -DefaultProperties Folder, Accessed, History,
 						DeletionDate, DeletedBy -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
