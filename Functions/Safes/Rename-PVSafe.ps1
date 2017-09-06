@@ -44,7 +44,6 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$user,
-		[Alias("Name")]
 
 		[Parameter(
 			Mandatory = $True,

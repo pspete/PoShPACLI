@@ -60,7 +60,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("UserName", "Name")]
+		[Alias("Username")]
 		[string]$destUser,
 
 
