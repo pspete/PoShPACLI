@@ -92,7 +92,7 @@
 							"AccessLevel"    = $values[1]
 							"ExpirationDate" = $values[2]
 
-						} | Add-ObjectDetail -DefaultProperties Name, AccessLevel, ExpirationDate -PropertyToAdd @{
+						} | Add-ObjectDetail -DefaultProperties Safename, AccessLevel, ExpirationDate -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
