@@ -91,6 +91,7 @@
 							"Safename"       = $values[0]
 							"AccessLevel"    = $values[1]
 							"ExpirationDate" = $values[2]
+							"Username"       = $owner
 
 						} | Add-ObjectDetail -DefaultProperties Safename, AccessLevel, ExpirationDate -PropertyToAdd @{
 							"vault"     = $vault
