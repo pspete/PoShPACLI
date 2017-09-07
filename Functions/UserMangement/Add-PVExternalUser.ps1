@@ -116,9 +116,9 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						"UserName" = $Results
+						"Username" = $Results
 
-					} | Add-ObjectDetail -DefaultProperties UserName -PropertyToAdd @{
+					} | Add-ObjectDetail -DefaultProperties Username -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID
