@@ -116,6 +116,8 @@
 							"LockedByGW"       = $values[16]
 							"ValidationStatus" = $values[17]
 							"LockedByUserID"   = $values[18]
+							"Safename"         = $safe
+							"Folder"           = $folder
 
 						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
 							"vault"     = $vault

@@ -117,8 +117,11 @@
 							"CategoryName"  = $values[0]
 							"CategoryValue" = $values[1]
 							"CategoryID"    = $values[2]
+							"Safename"      = $safe
+							"Folder"        = $folder
+							"Filename"      = $file
 
-						} | Add-ObjectDetail -DefaultProperties CategoryName,
+						} | Add-ObjectDetail -DefaultProperties Filename, CategoryName,
 						CategoryValue, CategoryID -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user

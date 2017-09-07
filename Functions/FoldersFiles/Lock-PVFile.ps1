@@ -96,6 +96,9 @@
 					"vault"     = $vault
 					"user"      = $user
 					"sessionID" = $sessionID
+					"Safename"  = $safe
+					"Folder"    = $folder
+					"Filename"  = $file
 
 				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 

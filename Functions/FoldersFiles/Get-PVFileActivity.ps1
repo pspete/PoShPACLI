@@ -120,6 +120,9 @@
 							"RequestID"        = $values[4]
 							"RequestReason"    = $values[5]
 							"Code"             = $values[6]
+							"Safename"         = $safe
+							"Folder"           = $folder
+							"Filename"         = $file
 
 						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity -PropertyToAdd @{
 							"vault"     = $vault
