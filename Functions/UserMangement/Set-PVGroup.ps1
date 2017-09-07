@@ -101,6 +101,7 @@
 
 				[PSCustomObject] @{
 
+					"Groupname" = $group
 					"vault"     = $vault
 					"user"      = $user
 					"sessionID" = $sessionID

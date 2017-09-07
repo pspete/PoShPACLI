@@ -89,10 +89,11 @@
 						[PSCustomObject] @{
 
 							#assign values to properties
-							"Username" = $values[0]
-							"UserID"   = $values[1]
+							"Groupname" = $group
+							"Username"  = $values[0]
+							"UserID"    = $values[1]
 
-						} | Add-ObjectDetail -DefaultProperties Username, UserID -PropertyToAdd @{
+						} | Add-ObjectDetail -DefaultProperties Groupname, Username, UserID -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
