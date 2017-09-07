@@ -67,6 +67,14 @@
 
 				Write-Verbose "Successfully Logged Off"
 
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
 			}
 
 		}
