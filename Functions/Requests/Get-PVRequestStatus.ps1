@@ -102,6 +102,8 @@
 							"Reason"     = $values[4]
 							"UserID"     = $values[5]
 							"GroupID"    = $values[6]
+							"RequestID"  = $requestID
+							"Safename"   = $safe
 
 						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status -PropertyToAdd @{
 							"vault"     = $vault
