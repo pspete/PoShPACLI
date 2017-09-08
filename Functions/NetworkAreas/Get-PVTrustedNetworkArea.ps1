@@ -94,6 +94,7 @@
 							"Active"            = $values[3]
 							"MaxViolationCount" = $values[4]
 							"ViolationCount"    = $values[5]
+							"Username"          = $trusterName
 
 						} | Add-ObjectDetail -DefaultProperties NetworkArea, FromHour, ToHour,
 						Active, MaxViolationCount, ViolationCount -PropertyToAdd @{
