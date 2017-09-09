@@ -138,7 +138,7 @@ Stop-PVPacli
 Every command sent to the PACLI utility requires the name of the authenticated user as well as the name of the vault defined via ```New-PVVaultDefinition``` to be supplied. There is also the option to run multiple PACLI processes via the ```sessionID``` parameter.
 
 All PoShPACLI functions output the name, vault & sessionID parameter values, meaning they can be used for pipeline operations.
-[Custom Formats](Custom_Formats) suppresses display of these values.
+[Custom Formats](Custom_Formats) are used to control display of these properties.
 
 #### PACLI Pipeline Token
 
@@ -146,10 +146,7 @@ Goal: Object Containing User, Vault & SessionID values
 
 ```powershell
 #Start Pacli
-$token = Start-PVPACLI -sessionID 42|
-#Define Vault
-New-PVVaultDefinition -address 192.168.0.1 -vault "DEV" |
-#Logon
+$token = Start-PVPACLI -sessionID 42| New-PVVaultDefinition -address 192.168.0.1 -vault "DEV" |
 Connect-PVVault -user PACLIUser -password $password
 
 $token | fl
@@ -180,6 +177,98 @@ $token | Get-PVSafe -safe testsafe
 $token | Get-PVSafeList
 
 ```
+
+#### PACLI Pipeline Examples
+
+Output can be piped between PoShPACLI functions as shown in the below high level examples:
+
+```powershell
+
+#open/close safe
+$token |
+Open-PVSafe -safe safename |
+Close-PVSafe
+
+#Open safe, get list of all files, get file activity for each file
+$token |
+Open-PVSafe -safe safename |
+Get-PVFileList -folder Root |
+Get-PVFileActivity
+
+#Open safe, find files, update filecategory in each file
+$token |
+Open-PVSafe -safe TestSafe |
+Find-PVFile -folder Root -filePattern * |
+Set-PVFileCategory -category username -value root
+
+#Get all safe activity of a safe owner
+$token |
+Get-PVUserSafeList -owner username |
+Get-PVSafeActivity
+
+#get all events from safes a user owns
+$token |
+Get-PVUserSafeList -owner username |
+Get-PVSafeEvent
+
+#Remove a specific owner from all safes
+$token |
+Get-PVUserSafeList -owner username |
+Remove-PVSafeOwner
+
+#Disable all users in a Location
+$token |
+Get-PVUserList |
+Where-Object {$_.Location -eq "\Inactive"} |
+Set-PVUser -disabled
+
+#Disable a User
+$token |
+Get-PVUser -destUser admin1 |
+Set-PVUser -disabled
+
+#Rename User
+$token |
+Get-PVUser -destUser OldUser |
+Rename-PVUser -newName NewUser
+
+#Remove all group members
+$token |
+Get-PVGroupMember -group xGroup1 |
+Remove-PVGroupMember
+
+#Add members of one group to another group
+$token |
+Get-PVGroupMember -group xGroup1 |
+Add-PVGroupMember -group xGroup2
+
+#Get Status of all requests
+$token | Get-PVRequest | Get-PVRequestStatus
+
+#Disable specific Trusted Network Area
+$token |
+Get-PVTrustedNetworkArea -trusterName NewUser |
+Where-Object {$_.NetworkArea -eq "All"} |
+Disable-PVTrustedNetworkArea
+
+#Find/Delete File
+$token |
+Open-PVSafe -safe safename |
+Get-PVFileList -folder Root |
+Where-Object {$_.InternalName -eq "000000000000042"} |
+Remove-PVFile
+
+```
+
+**Note:**
+
+- This is the first release supporting pipeline operations; every possible combination of pipeline command will not yet have been tested.
+
+  - Updates may be required.
+
+  - Please log an issue for any encountered problems.
+
+- The ```-WhatIf``` & ```-Confirm``` switches are available to ascertain what the pipeline operation will do.
 
 ### <a id="Custom_Formats"></a>Custom Formats
 
