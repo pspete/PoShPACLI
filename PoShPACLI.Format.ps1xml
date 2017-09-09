@@ -8,10 +8,18 @@
 			</ViewSelectedBy>
 			<TableControl>
 				<TableHeaders>
+					<TableColumnHeader />
+					<TableColumnHeader />
 				</TableHeaders>
 				<TableRowEntries>
 					<TableRowEntry>
 						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>vault</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>user</PropertyName>
+							</TableColumnItem>
 						</TableColumnItems>
 					</TableRowEntry>
 				</TableRowEntries>
