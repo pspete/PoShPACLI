@@ -41,50 +41,95 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys -internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+		Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys `
+		-internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
 
 		Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $True)][string]$object,
-		[Parameter(Mandatory = $True)][string]$internalName,
-		[Parameter(Mandatory = $True)][ValidateSet("VALID", "INVALID", "PENDING")][string]$validationAction,
-		[Parameter(Mandatory = $True)][string]$reason,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$object,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$internalName,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("VALID", "INVALID", "PENDING")]
+		[string]$validationAction,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$reason,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli VALIDATEOBJECT $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote validationAction)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli VALIDATEOBJECT $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote validationAction)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			elseif($Return.ExitCode -eq 0) {
 
-		}
+				Write-Verbose "File $file Marked as $ValidationAction"
 
-		elseif($Return.ExitCode -eq 0) {
+				[PSCustomObject] @{
 
-			Write-Verbose "File $file Marked as $ValidationAction"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

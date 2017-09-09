@@ -109,80 +109,160 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safePattern,
-		[Parameter(Mandatory = $True)][string]$userPattern,
-		[Parameter(Mandatory = $False)][int]$logdays,
-		[Parameter(Mandatory = $False)][switch]$alertsOnly,
-		[Parameter(Mandatory = $False)][string]$fileName,
-		[Parameter(Mandatory = $False)][string]$codes,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safePattern,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[string]$userPattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$logdays,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$alertsOnly,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$codes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$fromDate,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$toDate,
-		[Parameter(Mandatory = $False)][string]$requestID,
-		[Parameter(Mandatory = $False)][string]$categoriesNames,
-		[Parameter(Mandatory = $False)][string]$categoriesValues,
-		[Parameter(Mandatory = $False)][string]$categoriesSeperator,
-		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$categoryFilterType,
-		[Parameter(Mandatory = $False)][int]$maxRecords,
-		[Parameter(Mandatory = $False)][string]$userType,
-		[Parameter(Mandatory = $False)][ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")][int]$options,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$requestID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesNames,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoriesSeperator,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("OR", "AND")]
+		[string]$categoryFilterType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$maxRecords,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$userType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")]
+		[int]$options,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.StdErr) {
+			if($Return.StdErr) {
 
-			Write-Error $Return.StdErr
+				Write-Error $Return.StdErr
 
-		}
+			}
 
-		#if result(s) returned
-		elseif($Return.StdOut) {
+			#if result(s) returned
+			elseif($Return.StdOut) {
 
-			#Convert Output to array
-			$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#loop through results
-			For($i = 0 ; $i -lt $Results.length ; $i += 9) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 9) {
 
-				#Get Range from array
-				$values = $Results[$i..($i + 9)]
+					#Get Range from array
+					$values = $Results[$i..($i + 9)]
 
-				#Output Object
-				[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-					"Time"          = $values[0]
-					"User"          = $values[1]
-					"Safe"          = $values[2]
-					"Activity"      = $values[3]
-					"Location"      = $values[4]
-					"NewLocation"   = $values[5]
-					"RequestID"     = $values[6]
-					"RequestReason" = $values[7]
-					"Code"          = $values[8]
+						"Time"          = $values[0]
+						"Username"      = $values[1]
+						"Safe"          = $values[2]
+						"Activity"      = $values[3]
+						"Location"      = $values[4]
+						"NewLocation"   = $values[5]
+						"RequestID"     = $values[6]
+						"RequestReason" = $values[7]
+						"Code"          = $values[8]
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Activity -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 				}
 

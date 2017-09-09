@@ -30,61 +30,86 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][int]$requestID,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$requestID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
-		ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+							"UserName"   = $values[0]
+							"Groupname"  = $values[1]
+							"Action"     = $values[2]
+							"ActionDate" = $values[3]
+							"Reason"     = $values[4]
+							"UserID"     = $values[5]
+							"GroupID"    = $values[6]
+							"RequestID"  = $requestID
+							"Safename"   = $safe
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"UserName"   = $values[0]
-						"GroupName"  = $values[1]
-						"Action"     = $values[2]
-						"ActionDate" = $values[3]
-						"Reason"     = $values[4]
-						"UserID"     = $values[5]
-						"GroupID"    = $values[6]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 
@@ -93,7 +118,6 @@
 			}
 
 		}
-
 	}
 
 }

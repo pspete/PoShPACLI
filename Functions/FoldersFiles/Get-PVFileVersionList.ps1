@@ -27,79 +27,111 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root -file administrator.domain.com
+		Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root `
+		-file administrator.domain.com
 
 		Lists the versions of the specified file
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $True)][string]$file,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Filename")]
+		[string]$file,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FILEVERSIONSLIST "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FILEVERSIONSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 18) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 18)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 18) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 18)]
+							"Filename"         = $values[0]
+							"Accessed"         = $values[1]
+							"CreationDate"     = $values[2]
+							"CreatedBy"        = $values[3]
+							"DeletionDate"     = $values[4]
+							"DeletionBy"       = $values[5]
+							"LastUsedDate"     = $values[6]
+							"LastUsedBy"       = $values[7]
+							"LockDate"         = $values[8]
+							"LockedBy"         = $values[9]
+							"Size"             = $values[10]
+							"History"          = $values[11]
+							"Draft"            = $values[12]
+							"RetrieveLock"     = $values[13]
+							"InternalName"     = $values[14]
+							"FileID"           = $values[15]
+							"LockedByUserID"   = $values[16]
+							"ValidationStatus" = $values[17]
+							"Safename"         = $safe
+							"Folder"           = $folder
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"Name"             = $values[0]
-						"Accessed"         = $values[1]
-						"CreationDate"     = $values[2]
-						"CreatedBy"        = $values[3]
-						"DeletionDate"     = $values[4]
-						"DeletionBy"       = $values[5]
-						"LastUsedDate"     = $values[6]
-						"LastUsedBy"       = $values[7]
-						"LockDate"         = $values[8]
-						"LockedBy"         = $values[9]
-						"Size"             = $values[10]
-						"History"          = $values[11]
-						"Draft"            = $values[12]
-						"RetrieveLock"     = $values[13]
-						"InternalName"     = $values[14]
-						"FileID"           = $values[15]
-						"LockedByUserID"   = $values[16]
-						"ValidationStatus" = $values[17]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

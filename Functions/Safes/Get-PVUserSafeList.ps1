@@ -27,56 +27,77 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][String]$owner,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[String]$owner,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli OWNERSAFESLIST "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli OWNERSAFESLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 3) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 3)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 3) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 3)]
+							"Safename"       = $values[0]
+							"AccessLevel"    = $values[1]
+							"ExpirationDate" = $values[2]
+							"Username"       = $owner
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"Name"           = $values[0]
-						"AccessLevel"    = $values[1]
-						"ExpirationDate" = $values[2]
+						} | Add-ObjectDetail -DefaultProperties Safename, AccessLevel, ExpirationDate -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

@@ -30,45 +30,60 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$logonFile,
-		[Parameter(Mandatory = $False)][string]$username,
-		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$logonFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$username,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		#$PACLI variable set to executable path
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+			}
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			$Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		}
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			elseif($Return.ExitCode -eq 0) {
 
-		}
+				Write-Verbose "Created Logon File $logonFile"
 
-		elseif($Return.ExitCode -eq 0) {
-
-			Write-Verbose "Created Logon File $logonFile"
+			}
 
 		}
 

@@ -114,74 +114,206 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-PVSafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store -administer -supervise
+		Add-PVSafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store `
+		-administer -supervise
 
 		Adds user The_User to safe The_Safe with the specified safe permissions.
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$owner,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $False)][switch]$readOnlyByDefault,
-		[Parameter(Mandatory = $False)][switch]$retrieve,
-		[Parameter(Mandatory = $False)][switch]$store,
-		[Parameter(Mandatory = $False)][switch]$delete,
-		[Parameter(Mandatory = $False)][switch]$administer,
-		[Parameter(Mandatory = $False)][switch]$supervise,
-		[Parameter(Mandatory = $False)][switch]$backup,
-		[Parameter(Mandatory = $False)][switch]$manageOwners,
-		[Parameter(Mandatory = $False)][switch]$accessNoConfirmation,
-		[Parameter(Mandatory = $False)][switch]$validateSafeContent,
-		[Parameter(Mandatory = $False)][switch]$list,
-		[Parameter(Mandatory = $False)][switch]$usePassword,
-		[Parameter(Mandatory = $False)][switch]$updateObjectProperties,
-		[Parameter(Mandatory = $False)][switch]$initiateCPMChange,
-		[Parameter(Mandatory = $False)][switch]$initiateCPMChangeWithManualPassword,
-		[Parameter(Mandatory = $False)][switch]$createFolder,
-		[Parameter(Mandatory = $False)][switch]$deleteFolder,
-		[Parameter(Mandatory = $False)][switch]$moveFrom,
-		[Parameter(Mandatory = $False)][switch]$moveInto,
-		[Parameter(Mandatory = $False)][switch]$viewAudit,
-		[Parameter(Mandatory = $False)][switch]$viewPermissions,
-		[Parameter(Mandatory = $False)][switch]$eventsList,
-		[Parameter(Mandatory = $False)][switch]$addEvents,
-		[Parameter(Mandatory = $False)][switch]$createObject,
-		[Parameter(Mandatory = $False)][switch]$unlockObject,
-		[Parameter(Mandatory = $False)][switch]$renameObject,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[string]$owner,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$readOnlyByDefault,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$retrieve,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$store,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$delete,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$administer,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$supervise,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$backup,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$manageOwners,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$accessNoConfirmation,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$validateSafeContent,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$list,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$usePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$updateObjectProperties,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChange,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChangeWithManualPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$deleteFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveFrom,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveInto,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewAudit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewPermissions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$eventsList,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$addEvents,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$unlockObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$renameObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
-
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
+				Write-Error $Return.StdErr
 
 
-		}
+			}
 
-		else {
+			else {
 
-			write-verbose "Added Safe Owner: $owner"
+				write-verbose "Added Safe Owner: $owner"
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+				[PSCustomObject] @{
+
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

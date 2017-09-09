@@ -30,63 +30,85 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$ldapMapName,
-		[Parameter(Mandatory = $True)][string]$deleteBranchID,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$ldapMapName,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("LDAPBranchID")]
+		[string]$deleteBranchID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
-
-		#$PACLI variable set to executable path
-
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHDELETE "$(
-            $PSBoundParameters.getEnumerator() |
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli LDAPBRANCHDELETE "$($PSBoundParameters.getEnumerator() |
                 ConvertTo-ParameterString -donotQuote deleteBranchID) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode) {
+			if($Return.ExitCode) {
 
-			Write-Error $Return.StdErr
+				Write-Error $Return.StdErr
 
-		}
+			}
 
-		else {
+			else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+				#if result(s) returned
+				if($Return.StdOut) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-					#Output Object
-					[PSCustomObject] @{
+						#Output Object
+						[PSCustomObject] @{
 
-						"LDAPBranchID"   = $values[0]
-						"LDAPMapID"      = $values[1]
-						"LDAPMapName"    = $values[2]
-						"LDAPDirName"    = $values[3]
-						"LDAPBranchName" = $values[4]
-						"LDAPQuery"      = $values[5]
-						"LDAPGroupMatch" = $values[6]
+							"LDAPBranchID"   = $values[0]
+							"LDAPMapID"      = $values[1]
+							"LDAPMapName"    = $values[2]
+							"LDAPDirName"    = $values[3]
+							"LDAPBranchName" = $values[4]
+							"LDAPQuery"      = $values[5]
+							"LDAPGroupMatch" = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

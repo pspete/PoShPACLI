@@ -24,41 +24,58 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)]$vault,
-		[Parameter(Mandatory = $True)]$user,
-		[Parameter(Mandatory = $False)]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			Write-Verbose "Logging off from Vault"
 
-		#$PACLI variable set to executable path
+			$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		Write-Verbose "Logging off from Vault"
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				Write-Verbose "Successfully Logged Off"
 
-		else {
+				[PSCustomObject] @{
 
-			Write-Verbose "Successfully Logged Off"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

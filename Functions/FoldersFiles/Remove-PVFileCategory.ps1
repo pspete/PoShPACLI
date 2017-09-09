@@ -30,47 +30,85 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Remove-PVFileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass -category AccountCategory
+		Remove-PVFileCategory -vault lab -user administrator -safe ORACLE -folder root -file sys.pass `
+		-category AccountCategory
 
 		Deletes AccountCategory file category from sys.pass file
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $True)][string]$file,
-		[Parameter(Mandatory = $True)][string]$category,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Filename")]
+		[string]$file,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$category,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli DELETEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli DELETEFILECATEGORY $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			elseif($Return.ExitCode -eq 0) {
 
-		}
+				Write-Verbose "File Category $category Deleted"
 
-		elseif($Return.ExitCode -eq 0) {
+				[PSCustomObject] @{
 
-			Write-Verbose "File Category $category Deleted"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

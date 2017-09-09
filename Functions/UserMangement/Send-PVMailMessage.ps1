@@ -97,8 +97,8 @@
 	.EXAMPLE
 
 		Send-PVMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
-		-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports -folder Reports `
-		-file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
+		-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports `
+		-folder Reports -file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
 
 		Example for template file content:
 		Dear %%RecipientUser,
@@ -111,63 +111,178 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$mailServerIP,
-		[Parameter(Mandatory = $True)][string]$senderEmail,
-		[Parameter(Mandatory = $True)][string]$domainName,
-		[Parameter(Mandatory = $False)][string]$recipientEmail,
-		[Parameter(Mandatory = $False)][string]$recipientUser,
-		[Parameter(Mandatory = $False)][string]$safe,
-		[Parameter(Mandatory = $False)][string]$folder,
-		[Parameter(Mandatory = $False)][string]$file,
-		[Parameter(Mandatory = $False)][string]$subject,
-		[Parameter(Mandatory = $False)][string]$text,
-		[Parameter(Mandatory = $False)][switch]$useBusinessMail,
-		[Parameter(Mandatory = $False)][switch]$useHomeMail,
-		[Parameter(Mandatory = $False)][switch]$useOtherMail,
-		[Parameter(Mandatory = $False)][string]$templateFile,
-		[Parameter(Mandatory = $False)][string]$parm1,
-		[Parameter(Mandatory = $False)][string]$parm2,
-		[Parameter(Mandatory = $False)][string]$parm3,
-		[Parameter(Mandatory = $False)][string]$parm4,
-		[Parameter(Mandatory = $False)][string]$parm5,
-		[Parameter(Mandatory = $False)][string]$parm6,
-		[Parameter(Mandatory = $False)][string]$parm7,
-		[Parameter(Mandatory = $False)][string]$parm8,
-		[Parameter(Mandatory = $False)][string]$parm9,
-		[Parameter(Mandatory = $False)][string]$parm10,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$mailServerIP,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$senderEmail,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$domainName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$recipientEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$recipientUser,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Filename")]
+		[string]$file,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$subject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$text,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useBusinessMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useHomeMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useOtherMail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$templateFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm1,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm2,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm3,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm4,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm5,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm6,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm7,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm8,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm9,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$parm10,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli MAILUSER $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				Write-Verbose "Mail Message Sent"
 
-		else {
+				[PSCustomObject] @{
 
-			Write-Verbose "Mail Message Sent"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

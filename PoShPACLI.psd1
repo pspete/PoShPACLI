@@ -4,7 +4,7 @@
 	RootModule        = 'PoShPACLI.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '0.0.2'
+	ModuleVersion     = '0.1.0'
 
 	# ID used to uniquely identify this module
 	GUID              = '194c227f-87bf-43af-b401-4a34bd8e2ac6'
@@ -52,7 +52,7 @@
 	# TypesToProcess = @()
 
 	# Format files (.ps1xml) to be loaded when importing this module
-	#FormatsToProcess = @('')
+	FormatsToProcess  = @('PoShPACLI.Format.ps1xml')
 
 
 	# Functions to export from this module

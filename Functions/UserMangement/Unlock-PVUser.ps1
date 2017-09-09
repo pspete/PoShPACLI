@@ -27,46 +27,68 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		#$PACLI variable set to executable path
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+			}
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			$Return = Invoke-PACLICommand $pacli UNLOCK $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		}
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli UNLOCK $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				Write-Verbose "User Unlocked"
 
-		else {
+				[PSCustomObject] @{
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
-			Write-Verbose "User Unlocked"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

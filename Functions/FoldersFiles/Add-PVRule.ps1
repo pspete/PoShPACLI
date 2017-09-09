@@ -135,95 +135,231 @@
 		with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 -fullObjectName root\rootpass -effect Allow -retrieve -store -delete
+		Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 `
+		-fullObjectName root\rootpass -effect Allow -retrieve -store -delete
 
 		Adds rule on object rootpass safe DEV-1 fr user user1
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$userName,
-		[Parameter(Mandatory = $True)][string]$safeName,
-		[Parameter(Mandatory = $True)][string]$fullObjectName,
-		[Parameter(Mandatory = $False)][switch]$isFolder,
-		[Parameter(Mandatory = $True)][ValidateSet("Allow", "Deny")][string]$effect,
-		[Parameter(Mandatory = $False)][switch]$retrieve,
-		[Parameter(Mandatory = $False)][switch]$store,
-		[Parameter(Mandatory = $False)][switch]$delete,
-		[Parameter(Mandatory = $False)][switch]$administer,
-		[Parameter(Mandatory = $False)][switch]$supervise,
-		[Parameter(Mandatory = $False)][switch]$backup,
-		[Parameter(Mandatory = $False)][switch]$manageOwners,
-		[Parameter(Mandatory = $False)][switch]$accessNoConfirmation,
-		[Parameter(Mandatory = $False)][switch]$validateSafeContent,
-		[Parameter(Mandatory = $False)][switch]$list,
-		[Parameter(Mandatory = $False)][switch]$usePassword,
-		[Parameter(Mandatory = $False)][switch]$updateObjectProperties,
-		[Parameter(Mandatory = $False)][switch]$initiateCPMChange,
-		[Parameter(Mandatory = $False)][switch]$initiateCPMChangeWithManualPassword,
-		[Parameter(Mandatory = $False)][switch]$createFolder,
-		[Parameter(Mandatory = $False)][switch]$deleteFolder,
-		[Parameter(Mandatory = $False)][switch]$moveFrom,
-		[Parameter(Mandatory = $False)][switch]$moveInto,
-		[Parameter(Mandatory = $False)][switch]$viewAudit,
-		[Parameter(Mandatory = $False)][switch]$viewPermissions,
-		[Parameter(Mandatory = $False)][switch]$eventsList,
-		[Parameter(Mandatory = $False)][switch]$addEvents,
-		[Parameter(Mandatory = $False)][switch]$createObject,
-		[Parameter(Mandatory = $False)][switch]$unlockObject,
-		[Parameter(Mandatory = $False)][switch]$renameObject,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$userName,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$safeName,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$fullObjectName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$isFolder,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("Allow", "Deny")]
+		[string]$effect,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$retrieve,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$store,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$delete,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$administer,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$supervise,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$backup,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$manageOwners,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$accessNoConfirmation,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$validateSafeContent,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$list,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$usePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$updateObjectProperties,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChange,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$initiateCPMChangeWithManualPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$deleteFolder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveFrom,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$moveInto,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewAudit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$viewPermissions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$eventsList,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$addEvents,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$createObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$unlockObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$renameObject,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+							"RuleID"           = $values[0]
+							"UserName"         = $values[1]
+							"Safename"         = $values[2]
+							"FullObjectName"   = $values[3]
+							"Effect"           = $values[4]
+							"RuleCreationDate" = $values[5]
+							"AccessLevel"      = $values[6]
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"RuleID"           = $values[0]
-						"UserName"         = $values[1]
-						"SafeName"         = $values[2]
-						"FullObjectName"   = $values[3]
-						"Effect"           = $values[4]
-						"RuleCreationDate" = $values[5]
-						"AccessLevel"      = $values[6]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

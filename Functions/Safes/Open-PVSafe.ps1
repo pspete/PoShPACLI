@@ -75,72 +75,124 @@
 
 		.NOTES
 			AUTHOR: Pete Maan
-			LASTEDIT: August 2017
+
 		#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $False)][ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")][string]$requestUsageType,
-		[Parameter(Mandatory = $False)][ValidateSet("SINGLE", "MULTIPLE")][string]$requestAccessType,
-		[Parameter(Mandatory = $False)][string]$usableFrom,
-		[Parameter(Mandatory = $False)][string]$usableTo,
-		[Parameter(Mandatory = $False)][string]$requestReason,
-		[Parameter(Mandatory = $False)][switch]$useRequest,
-		[Parameter(Mandatory = $False)][switch]$sendRequest,
-		[Parameter(Mandatory = $False)][switch]$executeRequest,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")]
+		[string]$requestUsageType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("SINGLE", "MULTIPLE")]
+		[string]$requestAccessType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$usableFrom,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$usableTo,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$requestReason,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$useRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$sendRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$executeRequest,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(Test-PACLI) {
 
-		#$pacli variable not set or not a valid path
+			#$PACLI variable set to executable path
 
-	}
-
-	Else {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
+			$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
 					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode) {
+			if($Return.ExitCode) {
 
-			Write-Error $Return.StdErr
+				Write-Error $Return.StdErr
 
-		}
+			}
 
-		else {
+			else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+				#if result(s) returned
+				if($Return.StdOut) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-				#Output Object
-				[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-					#(possiblity these may not all be in the correct order -
-					#...but most are)
-					"Name"                      = $Results[0]
-					"Status"                    = $Results[1]
-					"LastUsed"                  = $Results[2]
-					"Accessed"                  = $Results[3]
-					"Size"                      = $Results[4]
-					"Location"                  = $Results[5]
-					"SafeID"                    = $Results[6]
-					"LocationID"                = $Results[7]
-					"TextOnly"                  = $Results[8]
-					"ShareOptions"              = $Results[9]
-					"UseFileCategories"         = $Results[10]
-					"RequireContentValidation"  = $Results[11]
-					"RequireReason"             = $Results[12]
-					"EnforceExclusivePasswords" = $Results[13]
+						#(possibility these may not all be in the correct order -
+						#...but most are)
+						"Safename"                  = $Results[0]
+						"Status"                    = $Results[1]
+						"LastUsed"                  = $Results[2]
+						"Accessed"                  = $Results[3]
+						"Size"                      = $Results[4]
+						"Location"                  = $Results[5]
+						"SafeID"                    = $Results[6]
+						"LocationID"                = $Results[7]
+						"TextOnly"                  = $Results[8]
+						"ShareOptions"              = $Results[9]
+						"UseFileCategories"         = $Results[10]
+						"RequireContentValidation"  = $Results[11]
+						"RequireReason"             = $Results[12]
+						"EnforceExclusivePasswords" = $Results[13]
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 				}
 

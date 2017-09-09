@@ -216,100 +216,330 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$destUser,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
+		[string]$destUser,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateSet("PA_AUTH", "NT_AUTH", "NT_OR_PA_AUTH", "PKI_AUTH", "RADIUS_AUTH", "LDAP_AUTH")]
 		[string]$authType,
-		[Parameter(Mandatory = $False)][switch]$requireSecureIDAuth,
-		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False)][string]$certFileName,
-		[Parameter(Mandatory = $False)][string]$DN,
-		[Parameter(Mandatory = $False)][string]$location,
-		[Parameter(Mandatory = $False)][switch]$usersAdmin,
-		[Parameter(Mandatory = $False)][switch]$resetPassword,
-		[Parameter(Mandatory = $False)][switch]$activateUsers,
-		[Parameter(Mandatory = $False)][switch]$safesAdmin,
-		[Parameter(Mandatory = $False)][switch]$networksAdmin,
-		[Parameter(Mandatory = $False)][switch]$rulesAdmin,
-		[Parameter(Mandatory = $False)][switch]$categoriesAdmin,
-		[Parameter(Mandatory = $False)][switch]$auditAdmin,
-		[Parameter(Mandatory = $False)][switch]$backupAdmin,
-		[Parameter(Mandatory = $False)][switch]$restoreAdmin,
-		[Parameter(Mandatory = $False)][int]$retention,
-		[Parameter(Mandatory = $False)][string]$firstName,
-		[Parameter(Mandatory = $False)][string]$middleName,
-		[Parameter(Mandatory = $False)][string]$lastName,
-		[Parameter(Mandatory = $False)][int]$quota,
-		[Parameter(Mandatory = $False)][switch]$disabled,
-		[Parameter(Mandatory = $False)][switch]$passwordNeverExpires,
-		[Parameter(Mandatory = $False)][switch]$ChangePassword,
-		[Parameter(Mandatory = $False)][string]$expirationDate,
-		[Parameter(Mandatory = $False)][string]$homeStreet,
-		[Parameter(Mandatory = $False)][string]$homeCity,
-		[Parameter(Mandatory = $False)][string]$homeState,
-		[Parameter(Mandatory = $False)][string]$homeCountry,
-		[Parameter(Mandatory = $False)][string]$homeZIP,
-		[Parameter(Mandatory = $False)][string]$workPhone,
-		[Parameter(Mandatory = $False)][string]$homePhone,
-		[Parameter(Mandatory = $False)][string]$cellular,
-		[Parameter(Mandatory = $False)][string]$fax,
-		[Parameter(Mandatory = $False)][string]$pager,
-		[Parameter(Mandatory = $False)][string]$hEmail,
-		[Parameter(Mandatory = $False)][string]$bEmail,
-		[Parameter(Mandatory = $False)][string]$oEmail,
-		[Parameter(Mandatory = $False)][string]$jobTitle,
-		[Parameter(Mandatory = $False)][string]$organization,
-		[Parameter(Mandatory = $False)][string]$department,
-		[Parameter(Mandatory = $False)][string]$profession,
-		[Parameter(Mandatory = $False)][string]$workStreet,
-		[Parameter(Mandatory = $False)][string]$workCity,
-		[Parameter(Mandatory = $False)][string]$workState,
-		[Parameter(Mandatory = $False)][string]$workCountry,
-		[Parameter(Mandatory = $False)][string]$workZip,
-		[Parameter(Mandatory = $False)][string]$homePage,
-		[Parameter(Mandatory = $False)][string]$notes,
-		[Parameter(Mandatory = $False)][string]$userTypeName,
-		[Parameter(Mandatory = $False)][string]$authorizedInterfaces,
-		[Parameter(Mandatory = $False)][switch]$enableComponentMonitoring,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$requireSecureIDAuth,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$certFileName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$DN,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$location,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$usersAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$resetPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$activateUsers,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$safesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$networksAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$rulesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$categoriesAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$auditAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$backupAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$restoreAdmin,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$retention,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$firstName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$middleName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$lastName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$quota,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$disabled,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$passwordNeverExpires,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$ChangePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$expirationDate,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeStreet,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeCity,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeState,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeCountry,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homeZIP,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workPhone,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homePhone,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$cellular,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fax,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$pager,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$hEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$bEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$oEmail,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$jobTitle,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$organization,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$department,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$profession,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workStreet,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workCity,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workState,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workCountry,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$workZip,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$homePage,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$notes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$userTypeName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$authorizedInterfaces,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$enableComponentMonitoring,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		#$PACLI variable set to executable path
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+			}
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			$Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote authType, retention, quota)
 
-		}
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote authType, retention, quota)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			elseif($Return.ExitCode -eq 0) {
 
-		}
+				Write-Verbose "Updated User $destUser"
 
-		elseif($Return.ExitCode -eq 0) {
+				[PSCustomObject] @{
 
-			Write-Verbose "Updated User $destUser"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

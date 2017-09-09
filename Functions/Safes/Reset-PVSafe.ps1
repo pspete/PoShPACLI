@@ -27,41 +27,62 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][String]$safe,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(Test-PACLI) {
 
-		#$pacli variable not set or not a valid path
+			#$PACLI variable set to executable path
 
-	}
+			$Return = Invoke-PACLICommand $pacli RESETSAFE $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-	Else {
+			if($Return.ExitCode) {
 
-		#$PACLI variable set to executable path
+				Write-Error $Return.StdErr
 
-		$Return = Invoke-PACLICommand $pacli RESETSAFE $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+			}
 
-		if($Return.ExitCode) {
+			elseif($Return.ExitCode -eq 0) {
 
-			Write-Error $Return.StdErr
+				Write-Verbose "Safe $safe Reset"
 
-		}
+				[PSCustomObject] @{
 
-		elseif($Return.ExitCode -eq 0) {
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Verbose "Safe $safe Reset"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
-
+			}
 
 		}
 

@@ -22,27 +22,26 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
-
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
+	If(Test-PACLI) {
 
 		#$PACLI variable set to executable path
 
 		Write-Verbose "Stopping Pacli"
 
-		$Return = Invoke-PACLICommand $pacli TERM $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $pacli TERM $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
 		if($Return.ExitCode) {
 

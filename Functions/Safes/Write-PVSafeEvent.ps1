@@ -36,52 +36,85 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Write-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 -data "Event Data"
+		Write-PVSafeEvent -vault Lab -user administrator -safe Windows_Safe -sourceID 9999 -eventTypeID 9000 `
+		-data "Event Data"
 
 		Adds event to safe Windows_Safe
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][String]$safe,
-		[Parameter(Mandatory = $True)][String]$sourceID,
-		[Parameter(Mandatory = $True)][String]$eventTypeID,
-		[Parameter(Mandatory = $True)][String]$data,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$sourceID,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$eventTypeID,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$data,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(Test-PACLI) {
 
-		#$pacli variable not set or not a valid path
+			#$PACLI variable set to executable path
 
-	}
+			$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
 
-	Else {
+				ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
+				Write-Error $Return.StdErr
 
-			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
+			}
 
-		if($Return.ExitCode) {
+			else {
 
-			Write-Error $Return.StdErr
+				Write-Verbose "Safe Event Added"
 
-		}
+				[PSCustomObject] @{
 
-		else {
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Verbose "Safe Event Added"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+			}
 
 		}
 

@@ -30,64 +30,82 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][int]$logDays,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$logDays,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli INSPECTUSER "$($PSBoundParameters.getEnumerator() |
+            	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli INSPECTUSER "$($PSBoundParameters.getEnumerator() |
-            ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 9) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 9)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 9) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 9)]
+							#assign values to properties
+							"Time"          = $values[0]
+							"Username"      = $values[1]
+							"Safe"          = $values[2]
+							"Activity"      = $values[3]
+							"Location"      = $values[4]
+							"NewLocation"   = $values[5]
+							"RequestID"     = $values[6]
+							"RequestReason" = $values[7]
+							"Code"          = $values[8]
 
-					#Output Object
-					[PSCustomObject] @{
-
-						#assign values to properties
-						"Time"          = $values[0]
-						"User"          = $values[1]
-						"Safe"          = $values[2]
-						"Activity"      = $values[3]
-						"Location"      = $values[4]
-						"NewLocation"   = $values[5]
-						"RequestID"     = $values[6]
-						"RequestReason" = $values[7]
-						"Code"          = $values[8]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Activity -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

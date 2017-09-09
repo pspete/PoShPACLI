@@ -19,25 +19,24 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
-
-		#$pacli variable not set or not a valid path
-
-	}
-
-	Else {
+	If(Test-PACLI) {
 
 		#$PACLI variable set to executable path
 
-		$Return = Invoke-PACLICommand $pacli CTLGETFILENAME "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $pacli CTLGETFILENAME "$($PSBoundParameters.getEnumerator() |
+			ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode) {
 
@@ -56,8 +55,10 @@
 				#Output Object
 				[PSCustomObject] @{
 
-					"Name" = $Results[0]
+					"CertificateTrustList" = $Results[0]
 
+				} | Add-ObjectDetail -DefaultProperties CertificateTrustList -PropertyToAdd @{
+					"sessionID" = $sessionID
 				}
 
 			}

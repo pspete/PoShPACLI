@@ -31,75 +31,99 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FILESLIST "$($PSBoundParameters.getEnumerator() |
+				Write-Error $Return.StdErr
 
-		ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+			}
 
-		if($Return.ExitCode) {
+			else {
 
-			Write-Error $Return.StdErr
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		}
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-		else {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 19) {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+						#Get Range from array
+						$values = $Results[$i..($i + 19)]
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Output Object
+						[PSCustomObject] @{
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 19) {
+							"Filename"         = $values[0]
+							"InternalName"     = $values[1]
+							"CreationDate"     = $values[2]
+							"CreatedBy"        = $values[3]
+							"DeletionDate"     = $values[4]
+							"DeletionBy"       = $values[5]
+							"LastUsedDate"     = $values[6]
+							"LastUsedBy"       = $values[7]
+							"Size"             = $values[8]
+							"History"          = $values[9]
+							"RetrieveLock"     = $values[10]
+							"LockDate"         = $values[11]
+							"LockedBy"         = $values[12]
+							"FileID"           = $values[13]
+							"Draft"            = $values[14]
+							"Accessed"         = $values[15]
+							"LockedByGW"       = $values[16]
+							"ValidationStatus" = $values[17]
+							"LockedByUserID"   = $values[18]
+							"Safename"         = $safe
+							"Folder"           = $folder
 
-					#Get Range from array
-					$values = $Results[$i..($i + 19)]
-
-					#Output Object
-					[PSCustomObject] @{
-
-						"Name"             = $values[0]
-						"Accessed"         = $values[1]
-						"CreationDate"     = $values[2]
-						"CreatedBy"        = $values[3]
-						"DeletionDate"     = $values[4]
-						"DeletionBy"       = $values[5]
-						"LastUsedDate"     = $values[6]
-						"LastUsedBy"       = $values[7]
-						"LockDate"         = $values[8]
-						"LockedBy"         = $values[9]
-						"LockedByGW"       = $values[10]
-						"Size"             = $values[11]
-						"History"          = $values[12]
-						"Draft"            = $values[13]
-						"RetrieveLock"     = $values[14]
-						"InternalName"     = $values[15]
-						"FileID"           = $values[16]
-						"LockedByUserID"   = $values[17]
-						"ValidationStatus" = $values[18]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

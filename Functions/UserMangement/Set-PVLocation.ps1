@@ -32,43 +32,66 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$location,
-		[Parameter(Mandatory = $True)][int]$quota,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$location,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$quota,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli UPDATELOCATION $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote quota)
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli UPDATELOCATION $(
+				Write-Error $Return.StdErr
 
-			$PSBoundParameters.getEnumerator() |
+			}
 
-			ConvertTo-ParameterString -donotQuote quota)
+			elseif($Return.ExitCode -eq 0) {
 
-		if($Return.ExitCode) {
+				Write-Verbose "Updated Location $location"
 
-			Write-Error $Return.StdErr
+				[PSCustomObject] @{
 
-		}
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-		elseif($Return.ExitCode -eq 0) {
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
-			Write-Verbose "Updated Location $location"
+			}
 
 		}
 

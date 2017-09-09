@@ -60,62 +60,103 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][securestring]$password,
-		[Parameter(Mandatory = $False)][securestring]$newPassword,
-		[Parameter(Mandatory = $False)][string]$logonFile,
-		[Parameter(Mandatory = $False)][switch]$autoChangePassword,
-		[Parameter(Mandatory = $False)][int]$sessionID,
-		[Parameter(Mandatory = $False)][switch]$failIfConnected,
-		[Parameter(Mandatory = $False)][switch]$radius
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[securestring]$password,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[securestring]$newPassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$logonFile,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$autoChangePassword,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$failIfConnected,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$radius
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#deal with password SecureString
+			if($PSBoundParameters.ContainsKey("password")) {
 
-		#$PACLI variable set to executable path
+				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+			}
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			#deal with newPassword SecureString
+			if($PSBoundParameters.ContainsKey("newPassword")) {
 
-		}
+				#Included decoded password in request
+				$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
 
-		#deal with newPassword SecureString
-		if($PSBoundParameters.ContainsKey("newPassword")) {
+			}
 
-			#Included decoded password in request
-			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
+			Write-Verbose "Logging onto Vault"
 
-		}
+			$Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		Write-Verbose "Logging onto Vault"
+			if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli LOGON $($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				Write-Verbose "Successfully Logged on"
 
-		else {
+				[PSCustomObject] @{
 
-			Write-Verbose "Successfully Logged on"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Debug "Command Complete. Exit Code:$($Return.ExitCode)"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

@@ -20,12 +20,14 @@ Function Test-PACLI {
 
     .NOTES
     	AUTHORS: Pete Maan, Brandon Lundt
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $False)]
 		[string]$pacliVar = "pacli"
 	)
 

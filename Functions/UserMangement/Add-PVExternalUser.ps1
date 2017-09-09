@@ -32,64 +32,97 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT -UpdateIfExists
+		Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
+		-UpdateIfExists
 
 		Updates user admin01 in vault from domain VIRTUALREAL.IT
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
         Work required to support LDAPFullDN & Parameter Validation / Parameter Sets
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$vault,
-		[Parameter(Mandatory = $True)]
+
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$user,
-		[Parameter(Mandatory = $True)]
+
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Username")]
 		[string]$destUser,
-		[Parameter(Mandatory = $False)]
+
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("DN", "distinguishedName")]
 		[string]$ldapFullDN,
-		[Parameter(Mandatory = $True)]
+
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$ldapDirectory,
-		[Parameter(Mandatory = $False)]
+
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[switch]$UpdateIfExists,
-		[Parameter(Mandatory = $False)]
+
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
 		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
+			$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-	Else {
+			if($Return.ExitCode) {
 
-		#$PACLI variable set to executable path
-		$Return = Invoke-PACLICommand $pacli ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					Write-Verbose "External User $destUser added."
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-				Write-Verbose "External User $destUser added."
+					#Output Object
+					[PSCustomObject] @{
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						"Username" = $Results
 
-				#Output Object
-				[PSCustomObject] @{
-
-					"UserName" = $Results
+					} | Add-ObjectDetail -DefaultProperties Username -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
+					}
 
 				}
 

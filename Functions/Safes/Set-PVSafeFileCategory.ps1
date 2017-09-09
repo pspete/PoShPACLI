@@ -38,50 +38,94 @@
         with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality -categoryNewName sev -validValues "1,2,3,4"
+		Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality `
+		-categoryNewName sev -validValues "1,2,3,4"
 
 		Changes Safe File Category name from "Criticality" to "sev"
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][String]$safe,
-		[Parameter(Mandatory = $True)][string]$category,
-		[Parameter(Mandatory = $False)][String]$categoryNewName,
-		[Parameter(Mandatory = $False)][String]$validValues,
-		[Parameter(Mandatory = $False)][String]$defaultValue,
-		[Parameter(Mandatory = $False)][Switch]$required,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[String]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$category,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$categoryNewName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$validValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$defaultValue,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$required,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			$Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString)
 
-		#$PACLI variable set to executable path
+			if($Return.StdErr) {
 
-		$Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+				Write-Error $Return.StdErr
 
-		if($Return.StdErr) {
+			}
 
-			Write-Error $Return.StdErr
+			elseif($Return -match "True") {
 
-		}
+				Write-Verbose "Safe File Category Updated"
 
-		elseif($Return -match "True") {
+				[PSCustomObject] @{
 
-			Write-Verbose "Safe File Category Updated"
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

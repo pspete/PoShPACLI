@@ -57,14 +57,23 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipeline = $True)][array]$boundParameters,
-		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][array]$doNotQuote,
-		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][array]$excludedParameters = @(
+
+		[Parameter(
+			Mandatory = $True, ValueFromPipeline = $True)]
+		[array]$boundParameters,
+
+		[Parameter(
+			Mandatory = $False, ValueFromPipeline = $False)]
+		[array]$doNotQuote,
+
+		[Parameter(
+			Mandatory = $False, ValueFromPipeline = $False)]
+		[array]$excludedParameters = @(
 			"Debug", "ErrorAction", "ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable",
 			"Verbose", "WarningAction", "WarningVariable", "WhatIf", "Confirm")
 	)

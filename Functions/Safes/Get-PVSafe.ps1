@@ -27,82 +27,103 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][String]$safe,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli SAFEDETAILS "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli SAFEDETAILS "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 29) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 29)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 29)]
+							"Safename"                  = $safe
+							"Description"               = $values[0]
+							"Delay"                     = $values[1]
+							"Retention"                 = $values[2]
+							"ObjectsRetention"          = $values[3]
+							"MaxSize"                   = $values[4]
+							"CurrSize"                  = $values[5]
+							"FromHour"                  = $values[6]
+							"ToHour"                    = $values[7]
+							"DailyVersions"             = $values[8]
+							"MonthlyVersions"           = $values[9]
+							"YearlyVersions"            = $values[10]
+							"QuotaOwner"                = $values[11]
+							"Location"                  = $values[12]
+							"RequestsRetention"         = $values[13]
+							"ConfirmationType"          = $values[14]
+							"SecurityLevel"             = $values[15]
+							"DefaultAccessMarks"        = $values[16]
+							"ReadOnlyByDefault"         = $values[17]
+							"UseFileCategories"         = $values[18]
+							"VirusFree"                 = $values[19]
+							"TextOnly"                  = $values[20]
+							"RequireReason"             = $values[21]
+							"EnforceExclusivePasswords" = $values[22]
+							"RequireContentValidation"  = $values[23]
+							"ShareOptions"              = $values[24]
+							"ConfirmationCount"         = $values[25]
+							"MaxFileSize"               = $values[26]
+							"AllowedFileTypes"          = $values[27]
+							"SupportOLAC"               = $values[28]
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"Description"               = $values[0]
-						"Delay"                     = $values[1]
-						"Retention"                 = $values[2]
-						"ObjectsRetention"          = $values[3]
-						"MaxSize"                   = $values[4]
-						"CurrSize"                  = $values[5]
-						"FromHour"                  = $values[6]
-						"ToHour"                    = $values[7]
-						"DailyVersions"             = $values[8]
-						"MonthlyVersions"           = $values[9]
-						"YearlyVersions"            = $values[10]
-						"QuotaOwner"                = $values[11]
-						"Location"                  = $values[12]
-						"RequestsRetention"         = $values[13]
-						"ConfirmationType"          = $values[14]
-						"SecurityLevel"             = $values[15]
-						"DefaultAccessMarks"        = $values[16]
-						"ReadOnlyByDefault"         = $values[17]
-						"UseFileCategories"         = $values[18]
-						"VirusFree"                 = $values[19]
-						"TextOnly"                  = $values[20]
-						"RequireReason"             = $values[21]
-						"EnforceExclusivePasswords" = $values[22]
-						"RequireContentValidation"  = $values[23]
-						"ShareOptions"              = $values[24]
-						"ConfirmationCount"         = $values[25]
-						"MaxFileSize"               = $values[26]
-						"AllowedFileTypes"          = $values[27]
-						"SupportOLAC"               = $values[28]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

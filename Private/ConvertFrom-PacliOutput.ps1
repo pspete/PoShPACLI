@@ -44,14 +44,20 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	[OutputType('System.Object[]')]
 	param(
-		[Parameter(Mandatory = $True, ValueFromPipeline = $True)][string]$pacliOutput,
-		[Parameter(Mandatory = $False, ValueFromPipeline = $False)][string]$regEx = '"([^"]*)"'
+
+		[Parameter(
+			Mandatory = $True, ValueFromPipeline = $True)]
+		[string]$pacliOutput,
+
+		[Parameter(
+			Mandatory = $False, ValueFromPipeline = $False)]
+		[string]$regEx = '"([^"]*)"'
 	)
 
 	Begin {

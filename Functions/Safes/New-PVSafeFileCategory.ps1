@@ -48,45 +48,88 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][String]$safe,
-		[Parameter(Mandatory = $True)][string]$category,
-		[Parameter(Mandatory = $False)][ValidateSet("cat_text", "cat_numeric", "cat_list")][String]$type,
-		[Parameter(Mandatory = $False)][String]$validValues,
-		[Parameter(Mandatory = $False)][String]$defaultValue,
-		[Parameter(Mandatory = $False)][Switch]$required,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("Safename")]
+		[String]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$category,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("cat_text", "cat_numeric", "cat_list")]
+		[String]$type,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$validValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[String]$defaultValue,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$required,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
+	PROCESS {
 
-	If(!(Test-PACLI)) {
+		If(Test-PACLI) {
 
-		#$pacli variable not set or not a valid path
+			#$PACLI variable set to executable path
 
-	}
+			$Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+					ConvertTo-ParameterString -donotQuote type)
 
-	Else {
+			if($Return.ExitCode) {
 
-		#$PACLI variable set to executable path
+				Write-Error $Return.StdErr
 
-		$Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote type)
+			}
 
-		if($Return.ExitCode) {
+			elseif($Return.ExitCode -eq 0) {
 
-			Write-Error $Return.StdErr
+				Write-Verbose "Added Safe File Category $category"
 
-		}
+				[PSCustomObject] @{
 
-		elseif($Return.ExitCode -eq 0) {
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 
-			Write-Verbose "Added Safe File Category $category"
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+			}
 
 		}
 

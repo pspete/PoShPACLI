@@ -208,122 +208,260 @@
 
 	.NOTES
 		AUTHOR: Pete Maan
-		LASTEDIT: August 2017
+
 	#>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $True)][string]$safe,
-		[Parameter(Mandatory = $True)][string]$folder,
-		[Parameter(Mandatory = $False)][string]$filePattern,
-		[Parameter(Mandatory = $False)][switch]$fileRetrieved,
-		[Parameter(Mandatory = $False)][switch]$fileChanged,
-		[Parameter(Mandatory = $False)][switch]$fileNew,
-		[Parameter(Mandatory = $False)][switch]$fileLocked,
-		[Parameter(Mandatory = $False)][switch]$fileWithNoMark,
-		[Parameter(Mandatory = $False)][switch]$includeVersions,
-		[Parameter(Mandatory = $False)][switch]$onlyOpenSafes,
-		[Parameter(Mandatory = $False)][switch]$includeSubFolders,
-		[Parameter(Mandatory = $False)][ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")][string]$dateLimit,
-		[Parameter(Mandatory = $False)][ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")][string]$dateActionLimit,
-		[Parameter(Mandatory = $False)][int]$prevCount,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[Alias("safename")]
+		[string]$safe,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$folder,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$filePattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$fileRetrieved,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$fileChanged,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$fileNew,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$fileLocked,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$fileWithNoMark,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeVersions,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$onlyOpenSafes,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeSubFolders,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")]
+		[string]$dateLimit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")]
+		[string]$dateActionLimit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$prevCount,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$fromDate,
-		[Parameter(Mandatory = $False)]
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
 		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
 		[string]$toDate,
-		[Parameter(Mandatory = $False)][switch]$searchInAll,
-		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$searchInAllAction,
-		[Parameter(Mandatory = $False)][string]$searchInAllValues,
-		[Parameter(Mandatory = $False)][string]$searchInAllCategoryList,
-		[Parameter(Mandatory = $False)][string]$listSeparator,
-		[Parameter(Mandatory = $False)][ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$searchInAll,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("OR", "AND")]
+		[string]$searchInAllAction,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$searchInAllValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$searchInAllCategoryList,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$listSeparator,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
 		[string]$deletedOption,
-		[Parameter(Mandatory = $False)][int]$sizeLimit,
-		[Parameter(Mandatory = $False)][ValidateSet("ATLEAST", "ATMOST")][string]$sizeLimitType,
-		[Parameter(Mandatory = $False)][string]$categoryIDList,
-		[Parameter(Mandatory = $False)][string]$categoryValues,
-		[Parameter(Mandatory = $False)][ValidateSet("OR", "AND")][string]$categoryListAction,
-		[Parameter(Mandatory = $False)][switch]$includeFileCategories,
-		[Parameter(Mandatory = $False)][string]$fileCategoriesSeparator,
-		[Parameter(Mandatory = $False)][string]$fileCategoryValueSeparator,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[int]$sizeLimit,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("ATLEAST", "ATMOST")]
+		[string]$sizeLimitType,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoryIDList,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$categoryValues,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[ValidateSet("OR", "AND")]
+		[string]$categoryListAction,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeFileCategories,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fileCategoriesSeparator,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$fileCategoryValueSeparator,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli
+			$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
+						categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli
-		$Return = Invoke-PACLICommand $pacli FINDFILES "$($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
-				searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
-					categoryListAction ) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 32) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get Range from array
+						$values = $Results[$i..($i + 32)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 29) {
+						#Output Object
+						[PSCustomObject] @{
 
-					#Get Range from array
-					$values = $Results[$i..($i + 29)]
+							"Filename"                   = $values[0]
+							"Accessed"                   = $values[1]
+							"CreationDate"               = $values[2]
+							"CreatedBy"                  = $values[3]
+							"DeletionDate"               = $values[4]
+							"DeletionBy"                 = $values[5]
+							"LastUsedDate"               = $values[6]
+							"LastUsedBy"                 = $values[7]
+							"LockDate"                   = $values[8]
+							"LockedBy"                   = $values[9]
+							"LockedByGW"                 = $values[10]
+							"Size"                       = $values[11]
+							"History"                    = $values[12]
+							"InternalName"               = $values[13]
+							"Safe"                       = $values[14]
+							"Folder"                     = $values[15]
+							"FileID"                     = $values[16]
+							"LockedByUserID"             = $values[17]
+							"ValidationStatus"           = $values[18]
+							"HumanCreationDate"          = $values[19]
+							"HumanCreatedBy"             = $values[20]
+							"HumanLastUsedDate"          = $values[21]
+							"HumanLastUsedBy"            = $values[22]
+							"HumanLastRetrievedByDate"   = $values[23]
+							"HumanLastRetrievedBy"       = $values[24]
+							"ComponentCreationDate"      = $values[25]
+							"ComponentCreatedBy"         = $values[26]
+							"ComponentLastUsedDate"      = $values[27]
+							"ComponentLastUsedBy"        = $values[28]
+							"ComponentLastRetrievedDate" = $values[29]
+							"ComponentLastRetrievedBy"   = $values[30]
+							"FileCategories"             = $values[31]
 
-					#Output Object
-					[PSCustomObject] @{
-
-						"Name"                       = $values[0]
-						"Accessed"                   = $values[1]
-						"CreationDate"               = $values[2]
-						"CreatedBy"                  = $values[3]
-						"DeletionDate"               = $values[4]
-						"DeletionBy"                 = $values[5]
-						"LastUsedDate"               = $values[6]
-						"LastUsedBy"                 = $values[7]
-						"LockDate"                   = $values[8]
-						"LockedBy"                   = $values[9]
-						"LockedByGW"                 = $values[10]
-						"Size"                       = $values[11]
-						"History"                    = $values[12]
-						"InternalName"               = $values[13]
-						"Safe"                       = $values[14]
-						"Folder"                     = $values[15]
-						"FileID"                     = $values[16]
-						"LockedByUserID"             = $values[17]
-						"ValidationStatus"           = $values[18]
-						"HumanCreationDate"          = $values[19]
-						"HumanCreatedBy"             = $values[20]
-						"HumanLastUsedDate"          = $values[21]
-						"HumanLastUsedBy"            = $values[22]
-						"HumanLastRetrievedByDate"   = $values[23]
-						"HumanLastRetrievedBy"       = $values[24]
-						"ComponentCreationDate"      = $values[25]
-						"ComponentCreatedBy"         = $values[26]
-						"ComponentLastUsedDate"      = $values[27]
-						"ComponentLastUsedBy"        = $values[28]
-						"ComponentLastRetrievedDate" = $values[26]
-						"ComponentLastRetrievedBy"   = $values[27]
-						"FileCategories"             = $values[28]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 

@@ -44,71 +44,106 @@
 
     .NOTES
     	AUTHOR: Pete Maan
-    	LASTEDIT: August 2017
+
     #>
 
 	[CmdLetBinding()]
 	param(
-		[Parameter(Mandatory = $True)][string]$vault,
-		[Parameter(Mandatory = $True)][string]$user,
-		[Parameter(Mandatory = $False)][string]$location = "\",
-		[Parameter(Mandatory = $False)][switch]$includeSubLocations,
-		[Parameter(Mandatory = $False)][switch]$includeDisabledUsers,
-		[Parameter(Mandatory = $False)][switch]$onlyKnownUsers,
-		[Parameter(Mandatory = $False)][string]$userPattern,
-		[Parameter(Mandatory = $False)][int]$sessionID
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$user,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[string]$location,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeSubLocations,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$includeDisabledUsers,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$onlyKnownUsers,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[string]$userPattern,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True)]
+		[int]$sessionID
 	)
 
-	If(!(Test-PACLI)) {
+	PROCESS {
 
-		#$pacli variable not set or not a valid path
+		If(Test-PACLI) {
 
-	}
+			#$PACLI variable set to executable path
 
-	Else {
+			#execute pacli with parameters
+			$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		#$PACLI variable set to executable path
+			if($Return.ExitCode) {
 
-		#execute pacli with parameters
-		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+				Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+			}
 
-			Write-Error $Return.StdErr
+			else {
 
-		}
+				#if result(s) returned
+				if($Return.StdOut) {
 
-		else {
+					#Convert Output to array
+					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-			#if result(s) returned
-			if($Return.StdOut) {
+					#loop through results
+					For($i = 0 ; $i -lt $Results.length ; $i += 14) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+						#Get User Range from array
+						$values = $Results[$i..($i + 14)]
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 14) {
+						#output object for each user
+						[PSCustomObject] @{
 
-					#Get User Range from array
-					$values = $Results[$i..($i + 14)]
+							"Username"                  = $values[0]
+							"Quota"                     = $values[1]
+							"UsedQuota"                 = $values[2]
+							"Location"                  = $values[3]
+							"FirstName"                 = $values[4]
+							"LastName"                  = $values[5]
+							"LDAPUser"                  = $values[6]
+							"Template"                  = $values[7]
+							"GWAccount"                 = $values[8]
+							"Disabled"                  = $values[9]
+							"Type"                      = $values[10]
+							"UserID"                    = $values[11]
+							"LocationID"                = $values[12]
+							"EnableComponentMonitoring" = $values[13]
 
-					#output object for each user
-					[PSCustomObject] @{
-
-						"Name"                      = $values[0]
-						"Quota"                     = $values[1]
-						"UsedQuota"                 = $values[2]
-						"Location"                  = $values[3]
-						"FirstName"                 = $values[4]
-						"LastName"                  = $values[5]
-						"LDAPUser"                  = $values[6]
-						"Template"                  = $values[7]
-						"GWAccount"                 = $values[8]
-						"Disabled"                  = $values[9]
-						"Type"                      = $values[10]
-						"UserID"                    = $values[11]
-						"LocationID"                = $values[12]
-						"EnableComponentMonitoring" = $values[13]
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
+							"vault"     = $vault
+							"user"      = $user
+							"sessionID" = $sessionID
+						}
 
 					}
 
