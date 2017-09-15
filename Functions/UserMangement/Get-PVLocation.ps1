@@ -85,8 +85,7 @@
 							"UsedQuota"  = $values[2]
 							"LocationID" = $values[3]
 
-						} | Add-ObjectDetail -DefaultProperties Location, Quota,
-						UsedQuota, LocationID -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Location -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

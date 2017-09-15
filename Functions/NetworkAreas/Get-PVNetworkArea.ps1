@@ -82,7 +82,7 @@
 							"NetworkArea"   = $values[0]
 							"SecurityLevel" = $values[1]
 
-						} | Add-ObjectDetail -DefaultProperties NetworkArea, SecurityLevel -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

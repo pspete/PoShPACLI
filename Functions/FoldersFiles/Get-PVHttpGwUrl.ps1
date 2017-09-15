@@ -102,7 +102,7 @@
 
 						"URL" = $Results[0]
 
-					} | Add-ObjectDetail -DefaultProperties URL -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.URL -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID

@@ -57,7 +57,7 @@
 
 					"CertificateTrustList" = $Results[0]
 
-				} | Add-ObjectDetail -DefaultProperties CertificateTrustList -PropertyToAdd @{
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL -PropertyToAdd @{
 					"sessionID" = $sessionID
 				}
 

@@ -97,8 +97,7 @@
 							"MapName"       = $values[4]
 							"ExternalGroup" = $values[5]
 
-						} | Add-ObjectDetail -DefaultProperties Groupname, Description,
-						LDAPFullDN, LDAPDirectory, MapID, MapName, ExternalGroup -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
