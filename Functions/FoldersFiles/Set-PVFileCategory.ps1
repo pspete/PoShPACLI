@@ -76,11 +76,13 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
+		[Alias("CategoryName")]
 		[string]$category,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $False)]
+		[Alias("CategoryValue")]
 		[string]$value,
 
 		[Parameter(
