@@ -93,9 +93,9 @@
 							"History"      = $values[2]
 							"DeletionDate" = $values[3]
 							"DeletedBy"    = $values[4]
+							"Safename"     = $safe
 
-						} | Add-ObjectDetail -DefaultProperties Folder, Accessed, History,
-						DeletionDate, DeletedBy -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID
