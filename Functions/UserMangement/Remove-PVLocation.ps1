@@ -46,7 +46,7 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$location,
 
 		[Parameter(
