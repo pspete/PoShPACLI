@@ -1,0 +1,1294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+	<Type>
+		<Name>pacli.PoShPACLI</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.User</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Move</Name>
+				<Script>
+					Param([string]$location=$(throw "A Target Location Must Be Specified."))
+					$this | Set-PVUser -location $location
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Disable</Name>
+				<Script>
+					$this | Set-PVUser -disabled
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Enable</Name>
+				<Script>
+					$this | Set-PVUser -disabled:$false
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>AddToGroup</Name>
+				<Script>
+					Param([string]$group=$(throw "A Group Name Must Be Specified."))
+					$this | Add-PVGroupMember -group $group
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>RemoveFromGroup</Name>
+				<Script>
+					Param([string]$group=$(throw "A Group Name Must Be Specified."))
+					$this | Remove-PVGroupMember -group $group
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Rename</Name>
+				<Script>
+					Param([string]$newName=$(throw "A New Name Must Be Specified."))
+					$this | Rename-PVUser -newName $newName
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVUser -Confirm:$false
+
+					}
+
+					Else{
+
+					$this | Remove-PVUser -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.LDAP.Branch</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVLDAPBranch -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVLDAPBranch -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.User.Activity</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe.Activity</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>GetUser</Name>
+				<Script>
+					$this | Get-PVUser
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetSafe</Name>
+				<Script>
+					$this | Get-PVSafe
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe.Owner</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVSafeOwner -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVSafeOwner -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetOwner</Name>
+				<Script>
+					if ($this.Group -eq "YES") {
+
+					$this | Get-PVGroup -group $this.Username
+
+					}
+
+					elseif($this.Group -eq "NO"){
+
+					$this | Get-PVUser
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Open</Name>
+				<Script>
+					$this | Open-PVSafe
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Close</Name>
+				<Script>
+					$this | Close-PVSafe
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ClearHistory</Name>
+				<Script>
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Clear-PVSafeHistory -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetEvents</Name>
+				<Script>
+					$this | Get-PVSafeEvent
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetSafeFileCategories</Name>
+				<Script>
+					$this | Get-PVSafeFileCategory
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>NewSafeFileCategory</Name>
+				<Script>
+					Param([string]$category=$(throw "A Category Name Must Be Specified."))
+					$this | Open-PVSafe | Out-Null
+					Try {$this | New-PVSafeFileCategory -category $category -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetOwner</Name>
+				<Script>
+					Param([string]$ownerPattern="*")
+					$this | Get-PVSafeOwner -ownerPattern $ownerPattern
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Rename</Name>
+				<Script>
+					Param([string]$name=$(throw "A New Name Must Be Specified."))
+
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Rename-PVSafe -newName $name -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe -safe $name | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Reset</Name>
+				<Script>
+					Param([bool]$force)
+					$this | Open-PVSafe | Out-Null
+					Try {
+					if ($force) {
+
+					$this | Reset-PVSafe -Confirm:$false -ErrorAction Stop
+
+					}
+
+					else{
+
+					$this | Reset-PVSafe -Confirm -ErrorAction Stop
+
+					}
+					}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+					$this | Open-PVSafe | Out-Null
+					Try {
+
+					if ($force) {
+
+					$this | Remove-PVSafe -Confirm:$false -ErrorAction Stop
+
+					}
+
+					else{
+
+					$this | Remove-PVSafe -Confirm -ErrorAction Stop
+
+					}
+					}
+					Catch {Write-Error $_}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe.FileCategory</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVSafeFileCategory -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVSafeFileCategory -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe.Event</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Request</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>Status</Name>
+				<Script>
+					$this | Get-PVRequestStatus
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Approve</Name>
+				<Script>
+					$this | Set-PVRequestStatus -confirmRequest
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Deny</Name>
+				<Script>
+					$this | Set-PVRequestStatus -confirmRequest:$false
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVRequest -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVRequest -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Request.Status</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.File.Activity</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.File</Name>
+		<Members>
+			<ScriptMethod>
+				<Name>GetFileCategory</Name>
+				<Script>
+					Param([string]$category)
+
+					if($category){
+
+					$this | Get-PVFileCategory -category $category
+
+					}
+
+					Else{
+
+					$this | Get-PVFileCategory
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Versions</Name>
+				<Script>
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Get-PVFileVersionList -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Lock</Name>
+				<Script>
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Lock-PVFile -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Move</Name>
+				<Script>
+					Param([string]$folder=$(throw "A Folder Name Must Be Specified."))
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Move-PVFile -newFolder $folder -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+					$this | Open-PVSafe | Out-Null
+					Try {
+					if ($force) {
+
+					$this | Remove-PVFile -Confirm:$false -ErrorAction Stop
+
+					}
+
+					else{
+
+					$this | Remove-PVFile -Confirm -ErrorAction Stop
+
+					}
+					}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Reset</Name>
+				<Script>
+
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Reset-PVFile -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Restore</Name>
+				<Script>
+
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Restore-PVFile -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Unlock</Name>
+				<Script>
+
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Unlock-PVFile -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.File.Category</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Filename</Name>
+							<Name>CategoryName</Name>
+							<Name>CategoryValue</Name>
+							<Name>CategoryID</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>SetValue</Name>
+				<Script>
+					Param([string]$value=$(throw "A Category Value Must Be Specified."))
+
+					$this | Open-PVSafe | Out-Null
+
+					Try{$this | Set-PVFileCategory -value $value -ErrorAction Stop}
+
+					Catch{Write-Error $_}
+
+					Finally{$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					$this | Open-PVSafe | Out-Null
+
+					Try{
+					if ($force) {
+
+					$this | Remove-PVFileCategory -Confirm:$false -ErrorAction Stop
+
+					}
+
+					else{
+
+					$this | Remove-PVFileCategory -Confirm -ErrorAction Stop
+
+					}
+
+					}
+
+					Catch{Write-Error $_}
+
+					Finally{$this | close-PVSafe}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Folder</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Folder</Name>
+							<Name>Accessed</Name>
+							<Name>History</Name>
+							<Name>DeletionDate</Name>
+							<Name>DeletedBy</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>RemoveAsPreferred</Name>
+				<Script>
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Remove-PVPreferredFolder -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>AddAsPreferred</Name>
+				<Script>
+					$this | Open-PVSafe | Out-Null
+					Try {$this | Add-PVPreferredFolder -ErrorAction Stop}
+					Catch {Write-Error $_}
+					Finally {$this | Close-PVSafe | Out-Null}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Move</Name>
+				<Script>
+					Param([string]$location=$(throw "A New Location Must Be Specified."))
+					$this | Move-PVFolder -newLocation $location
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					$this | Open-PVSafe | out-null
+
+					try{
+
+					if ($force) {
+
+					$this | Remove-PVFolder -Confirm:$false -errorAction Stop
+
+					}
+
+					else{
+
+					$this | Remove-PVFolder -Confirm -errorAction Stop
+
+					}
+
+					}
+
+					Catch{Write-Error $_}
+
+					Finally{
+
+					$this | Close-PVSafe | out-null
+
+					}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.URL</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>URL</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.NetworkArea</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>NetworkArea</Name>
+							<Name>SecurityLevel</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>Move</Name>
+				<Script>
+					Param([string]$location=$(throw "A New Location Must Be Specified."))
+					$this | Move-PVNetworkArea -newLocation $location
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Rename</Name>
+				<Script>
+					Param([string]$NewName=$(throw "A New Name Must Be Specified."))
+					$this | Rename-PVNetworkArea -newName $NewName
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVNetworkArea -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVNetworkArea -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.NetworkArea.Trusted</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>NetworkArea</Name>
+							<Name>FromHour</Name>
+							<Name>ToHour</Name>
+							<Name>Active</Name>
+							<Name>MaxViolationCount</Name>
+							<Name>ViolationCount</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>Enable</Name>
+				<Script>
+					$this | Enable-PVTrustedNetworkArea
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVTrustedNetworkArea -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVTrustedNetworkArea -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Disable</Name>
+				<Script>
+					$this | Disable-PVTrustedNetworkArea
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Password</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Password</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ToSecureString</Name>
+				<Script>
+					$this | Select-Object -ExpandProperty Password | ConvertTo-SecureString -AsPlainText -Force
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Safe.Log</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Safename</Name>
+							<Name>UsersCount</Name>
+							<Name>OpenDate</Name>
+							<Name>OpenState</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>GetSafe</Name>
+				<Script>
+					$this | Get-PVSafe
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.User.Safe</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Safename</Name>
+							<Name>ExpirationDate</Name>
+							<Name>AccessLevel</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>GetSafe</Name>
+				<Script>
+					$this | Get-PVSafe
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.CTL</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>CertificateTrustList</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.CTL.Certificate</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Subject</Name>
+							<Name>Issuer</Name>
+							<Name>FromDate</Name>
+							<Name>ToDate</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.User.External</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>UserName</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Group</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Groupname</Name>
+							<Name>Description</Name>
+							<Name>LDAPFullDN</Name>
+							<Name>LDAPDirectory</Name>
+							<Name>MapID</Name>
+							<Name>MapName</Name>
+							<Name>ExternalGroup</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>Move</Name>
+				<Script>
+					Param([string]$location=$(throw "A Location Must Be Specified."))
+					$this | Set-PVGroup -location $location
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Members</Name>
+				<Script>
+					$this | Get-PVGroupMember
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>AddMember</Name>
+				<Script>
+					Param([string]$member=$(throw "A Member Name Must Be Specified."))
+					$this | Add-PVGroupMember -member $member
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVGroup -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVGroup -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Group.Member</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Groupname</Name>
+							<Name>Username</Name>
+							<Name>UserID</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVGroupMember -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVGroupMember -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+	<Type>
+		<Name>pacli.PoShPACLI.Location</Name>
+		<Members>
+			<MemberSet>
+				<Name>PSStandardMembers</Name>
+				<Members>
+					<PropertySet>
+						<Name>DefaultDisplayPropertySet</Name>
+						<ReferencedProperties>
+							<Name>Location</Name>
+							<Name>Quota</Name>
+							<Name>UsedQuota</Name>
+							<Name>LocationID</Name>
+						</ReferencedProperties>
+					</PropertySet>
+				</Members>
+			</MemberSet>
+			<ScriptMethod>
+				<Name>Rename</Name>
+				<Script>
+					Param([string]$newName=$(throw "A New Name Must Be Specified."))
+					$this | Rename-PVLocation -newName $newName
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>SetQuota</Name>
+				<Script>
+					Param([int]$quota=$(throw "A Quota Value Must Be Specified."))
+					$this | Set-PVLocation -quota $quota
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>LogOffPacli</Name>
+				<Script>
+					$this | Disconnect-PVVault
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>StopPacli</Name>
+				<Script>
+					$this | Stop-PVPacli
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>Delete</Name>
+				<Script>
+					Param([bool]$force)
+
+					if ($force) {
+
+					$this | Remove-PVLocation -Confirm:$false
+
+					}
+
+					else{
+
+					$this | Remove-PVLocation -Confirm
+
+					}
+				</Script>
+			</ScriptMethod>
+		</Members>
+	</Type>
+</Types>

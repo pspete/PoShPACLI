@@ -93,7 +93,7 @@
 							"ExpirationDate" = $values[2]
 							"Username"       = $owner
 
-						} | Add-ObjectDetail -DefaultProperties Safename, AccessLevel, ExpirationDate -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Safe -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

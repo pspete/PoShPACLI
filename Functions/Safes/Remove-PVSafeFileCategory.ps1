@@ -55,6 +55,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
+		[Alias("CategoryName")]
 		[string]$category,
 
 		[Parameter(

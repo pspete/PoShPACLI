@@ -121,8 +121,7 @@
 							"Folder"        = $folder
 							"Filename"      = $file
 
-						} | Add-ObjectDetail -DefaultProperties Filename, CategoryName,
-						CategoryValue, CategoryID -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Category -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

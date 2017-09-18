@@ -96,8 +96,7 @@
 							"ViolationCount"    = $values[5]
 							"Username"          = $trusterName
 
-						} | Add-ObjectDetail -DefaultProperties NetworkArea, FromHour, ToHour,
-						Active, MaxViolationCount, ViolationCount -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea.Trusted -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

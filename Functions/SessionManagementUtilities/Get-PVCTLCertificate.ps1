@@ -79,7 +79,7 @@
 							"FromDate" = $values[2]
 							"ToDate"   = $values[3]
 
-						} | Add-ObjectDetail -DefaultProperties Subject, Issuer, FromDate, ToDate -PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate -PropertyToAdd @{
 							"sessionID" = $sessionID
 						}
 

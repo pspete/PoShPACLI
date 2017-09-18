@@ -8,8 +8,9 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ## Latest Updates
 
+- Types added, including Custom Methods
+  - Use `Get-Member` on Output Objects to determine available ScriptMethods
 - [Pipeline Input](#Pipeline_Support)
-- [Custom Formats](#Custom_Formats) for Output
 
 ## Getting Started
 

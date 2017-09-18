@@ -128,7 +128,7 @@
 		[string]$file,
 
 		[Parameter(
-			Mandatory = $True,
+			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
 		[switch]$lockFile,
 
@@ -219,7 +219,7 @@
 
 						"Password" = $Results
 
-					} | Add-ObjectDetail -DefaultProperties Password -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID

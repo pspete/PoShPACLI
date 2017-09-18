@@ -85,8 +85,7 @@
 							"OpenDate"   = $values[2]
 							"OpenState"  = $values[3]
 
-						} | Add-ObjectDetail -DefaultProperties Safename, UsersCount, OpenDate, OpenState
-						-PropertyToAdd @{
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Log -PropertyToAdd @{
 							"vault"     = $vault
 							"user"      = $user
 							"sessionID" = $sessionID

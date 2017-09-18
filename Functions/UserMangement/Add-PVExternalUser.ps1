@@ -118,7 +118,7 @@
 
 						"Username" = $Results
 
-					} | Add-ObjectDetail -DefaultProperties Username -PropertyToAdd @{
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External -PropertyToAdd @{
 						"vault"     = $vault
 						"user"      = $user
 						"sessionID" = $sessionID

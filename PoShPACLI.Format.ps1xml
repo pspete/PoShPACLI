@@ -254,8 +254,6 @@
 					<TableColumnHeader />
 					<TableColumnHeader />
 					<TableColumnHeader />
-					<TableColumnHeader />
-					<TableColumnHeader />
 				</TableHeaders>
 				<TableRowEntries>
 					<TableRowEntry>
@@ -270,16 +268,10 @@
 								<PropertyName>CategoryType</PropertyName>
 							</TableColumnItem>
 							<TableColumnItem>
-								<PropertyName>CategoryValidValues</PropertyName>
-							</TableColumnItem>
-							<TableColumnItem>
 								<PropertyName>CategoryDefaultValue</PropertyName>
 							</TableColumnItem>
 							<TableColumnItem>
-								<PropertyName>CategoryRequired</PropertyName>
-							</TableColumnItem>
-							<TableColumnItem>
-								<PropertyName>VaultCategory</PropertyName>
+								<PropertyName>CategoryValidValues</PropertyName>
 							</TableColumnItem>
 						</TableColumnItems>
 					</TableRowEntry>
