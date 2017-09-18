@@ -128,7 +128,7 @@
 		[string]$file,
 
 		[Parameter(
-			Mandatory = $True,
+			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
 		[switch]$lockFile,
 
