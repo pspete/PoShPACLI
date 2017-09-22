@@ -18,7 +18,9 @@ Exposes the native functions of the CyberArk PACLI command line utility via a Po
 
 ### Prerequisites
 
+- Requires Powershell v3 (minimum)
 - The CyberArk PACLI executable must be present on the same computer as the module.
+- A CyberArk user with which to authenticate, which has appropriate Vault/Safe permissions.
 
 ### Install & Use
 
