@@ -25,13 +25,14 @@ Get-ChildItem $PSScriptRoot\ -Recurse -Filter "*.ps1" -Exclude "*.ps1xml" |
 ForEach-Object {
 
 	Try {
+		# Dot Source each file
+		. (
+			[scriptblock]::Create(
+				[io.file]::ReadAllText($_.fullname, [Text.Encoding]::UTF8)
+			)
+		)
 
-		#Dot Source each file
-		. $_.fullname
-
-	}
-
-	Catch {
+	} Catch {
 
 		Write-Error "Failed to import function $($_.fullname)"
 
