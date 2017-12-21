@@ -1,5 +1,5 @@
 _A similar PR may already be submitted.
-Please existing [Pull Requests](../) before creating one._
+Please search existing `Pull Requests` before creating one._
 
 Thanks for submitting a pull request! Please provide enough information so that others can review your pull request:
 
@@ -23,7 +23,7 @@ _Demonstrate the code is solid. Example: The exact commands you ran and their ou
 
 ## Closes issues
 
-<!-- Put `closes #XXXX` in your comment to auto-close the issue that your PR fixes (if such). -->
+<!-- Put `closes #XXXX` in your comment to auto-close the issue that your PR fixes. -->
 Fixes #
 
 ## Code formatting
