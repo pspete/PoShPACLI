@@ -1,4 +1,4 @@
-_Your issue may already be reported. Please search existing [issues](../) before creating one._
+_Your issue may already be reported. Please search existing `issues` before creating one._
 
 ## Your Environment
 
@@ -37,8 +37,10 @@ _Your issue may already be reported. Please search existing [issues](../) before
 4 .
 
 ## Sample Output
+
 <!--- Provide any output you see -->
 <!--- Include Verbose & Debug output where possible -->
+
 ## Context
 
 <!--- What are you trying to accomplish? -->
