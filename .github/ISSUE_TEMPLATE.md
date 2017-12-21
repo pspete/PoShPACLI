@@ -26,7 +26,7 @@ _Your issue may already be reported. Please search existing [issues](../) before
 
 ## Steps to Reproduce (for bug reports)
 
-<!--- Provide a link to a live example, or an unambiguous set of steps to -->
+<!--- Provide unambiguous set of steps to -->
 <!--- reproduce this bug. Include code to reproduce, if relevant -->
 1 .
 
@@ -36,6 +36,9 @@ _Your issue may already be reported. Please search existing [issues](../) before
 
 4 .
 
+## Sample Output
+<!--- Provide any output you see -->
+<!--- Include Verbose & Debug output where possible -->
 ## Context
 
 <!--- What are you trying to accomplish? -->

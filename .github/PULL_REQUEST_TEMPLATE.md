@@ -3,7 +3,7 @@ Please existing [Pull Requests](../) before creating one._
 
 Thanks for submitting a pull request! Please provide enough information so that others can review your pull request:
 
-For more information, see the [CONTRIBUTING](../CONTRIBUTING.md) guide.
+For more information, see the `CONTRIBUTING` guide.
 
 ## Summary
 
@@ -28,6 +28,6 @@ Fixes #
 
 ## Code formatting
 
-<!-- See the [CONTRIBUTING](../CONTRIBUTING.md) guide. -->
+<!-- See the `CONTRIBUTING` guide. -->
 
 _Ensure your code adheres to the project's PowerShell Styleguide_
