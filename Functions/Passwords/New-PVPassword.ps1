@@ -129,7 +129,7 @@
 				#Return Generated Password String
 				[PSCustomObject] @{
 
-					"Password" = $Return.StdOut
+					"Password" = $Return.StdOut.TrimEnd()
 
 				}
 
