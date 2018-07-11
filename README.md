@@ -76,7 +76,7 @@ New-PVVaultDefinition -vault "VAULT" -address "vaultAddress"
 
 #Logon to vault
 
-Connect-PVVault -vault "VAULT" -user "User" -password (Read-Host -AsSecureString))
+Connect-PVVault -vault "VAULT" -user "User" -password (Read-Host -AsSecureString)
 
 ```
 
