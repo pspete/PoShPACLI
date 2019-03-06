@@ -237,7 +237,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False)]
-		[int]$requestRetention,
+		[int]$requestsRetention,
 
 		[Parameter(
 			Mandatory = $False,
