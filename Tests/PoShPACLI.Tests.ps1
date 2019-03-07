@@ -48,7 +48,7 @@ Describe "Module" {
 
 		It "has a valid guid" {
 
-			$Module.Guid | Should Be 'fba9035e-5d32-4a7f-ab91-5658c84e0668'
+			$Module.Guid | Should Be '194c227f-87bf-43af-b401-4a34bd8e2ac6'
 
 		}
 
