@@ -99,7 +99,7 @@
 		0–64 – The number of authorized Owners that need to confirm (default=1)
 		255 – All authorized Owners need to confirm
 
-	.PARAMETER alwaysNeedsConfirmation
+	.PARAMETER alwaysNeedConfirmation
 		Whether or not all Owners require confirmation to access the Safe.
 
 		No – Confirmation is needed only if the request is from an Owner who is unauthorized
