@@ -57,6 +57,7 @@
 
 	# Functions to export from this module
 	FunctionsToExport = @(
+		'Set-PVConfiguration'
 		'Initialize-PoShPACLI',
 		'Start-PVPacli', #INIT
 		'Stop-PVPacli', #TERM
