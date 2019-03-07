@@ -20,7 +20,7 @@
     .PARAMETER folder
         The name of the folder in which the file is stored.
 
-    .PARAMETER file
+    .PARAMETER object
         The name of the file to validate.
 
     .PARAMETER internalName
