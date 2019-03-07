@@ -1,28 +1,27 @@
 ﻿Function Invoke-PACLICommand {
 
 	<#
-    .SYNOPSIS
-	Runs an executable with specified command and arguments
+	.SYNOPSIS
+	Defines specified PACLI command and arguments
 
     .DESCRIPTION
-	Designed to start PACLI process with PACLI Command a arguments required for that command.
-
-	Returns Object containing ExitCode, StdOut & StdErr
+	Defines a PACLI process object with arguments required for specific command.
 
 	.PARAMETER PacliEXE
-	The executable to run (i.e. PACLI.EXE)
+	The Path to PACLI.exe.
+	Defaults to value of $Script:PV.ClientPath, which is set during module import or via Set-PVConfiguration.
 
 	.PARAMETER PacliCommand
-	The command for the executable (i.e. INIT)
+	The PACLI command to execute, like INIT
 
 	.PARAMETER CommandParameters
-	The parameters for the command i.e. vault="name" this="true" number=88 OUTPUT (ALL,ENCLOSE)
+	The parameters for the command i.e. vault="name" this="true" number=88
 
     .EXAMPLE
 	Invoke-PACLICommand $pacli PACLICMD "$($PSBoundParameters.getEnumerator() |
-	ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+	ConvertTo-ParameterString)
 
-	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value" OUTPUT (ALL,ENCLOSE)
+	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value"
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -33,22 +32,52 @@
 	param(
 
 		[Parameter(
-			Mandatory = $True, Position = 1)]
-		[string]$PacliEXE,
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True,
+			Position = 1
+		)]
+		[string]$PacliEXE = $Script:PV.ClientPath,
 
 		[Parameter(
-			Mandatory = $True, Position = 2)]
+			Mandatory = $True,
+			ValueFromPipelineByPropertyName = $True,
+			Position = 2
+		)]
 		[string]$PacliCommand,
 
 		[Parameter(
-			Mandatory = $False, Position = 3)]
-		[string]$CommandParameters
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $True,
+			Position = 3
+		)]
+		[string]$CommandParameters,
+
+		[Parameter(Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False,
+			ValueFromRemainingArguments = $true
+		)]
+		$RemainingArgs
 	)
 
 	Begin {
 
+		$CallStack = $((Get-PSCallStack).Command)[1]
+		Write-Debug "Invocation Origin: $CallStack"
+
+		Try {
+
+			Get-Variable -Name PV -ErrorAction Stop
+
+			if($PV.PSObject.Properties.Name -notcontains "ClientPath") {
+
+				Write-Error "Heads Up!" -ErrorAction Stop
+
+			}
+
+		} Catch {throw "PACLI.exe not found `nRun Set-PVConfiguration to set path to PACLI"}
+
 		#Create process
-		$PacliProcess = new-object System.Diagnostics.Process
+		$Process = new-object System.Diagnostics.Process
 
 	}
 
@@ -59,26 +88,24 @@
 			Write-Debug "PACLI Command: $PacliCommand $CommandParameters"
 
 			#Assign process parameters
-			$PacliProcess.StartInfo.Filename = $PacliEXE
-			$PacliProcess.StartInfo.Arguments = "$PacliCommand $CommandParameters"
-			$PacliProcess.StartInfo.RedirectStandardOutput = $True
-			$PacliProcess.StartInfo.RedirectStandardError = $True
-			$PacliProcess.StartInfo.UseShellExecute = $False
-			$PacliProcess.StartInfo.CreateNoWindow = $True
-			$PacliProcess.StartInfo.WindowStyle = "hidden"
+			$Process.StartInfo.WorkingDirectory = "$(Split-Path $PacliEXE -Parent)"
+			$Process.StartInfo.Filename = $PacliEXE
+			$Process.StartInfo.Arguments = "$PacliCommand $CommandParameters"
+			$Process.StartInfo.RedirectStandardOutput = $True
+			$Process.StartInfo.RedirectStandardError = $True
+			$Process.StartInfo.UseShellExecute = $False
+			$Process.StartInfo.CreateNoWindow = $True
+			$Process.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
-			$PacliProcess.start()
+			$Result = Start-ClientProcess -Process $Process
 
-			#Read Output Stream First
-			$StdOut = $PacliProcess.StandardOutput.ReadToEnd()
-			$StdErr = $PacliProcess.StandardError.ReadToEnd()
+			if($Result.StdErr) {
 
-			#If you wait for the process to exit before reading StandardOutput
-			#the process can block trying to write to it, so the process never ends.
-			$PacliProcess.WaitForExit()
+				Write-Debug "$($Result.StdErr)"
+				Write-Error -Message "$($Result.StdErr)"
 
-			Write-Debug "Exit Code: $($PacliProcess.ExitCode)"
+			} Else {$Result}
 
 		}
 
@@ -86,15 +113,7 @@
 
 	End {
 
-		[PSCustomObject] @{
-
-			"ExitCode" = $PacliProcess.ExitCode
-			"StdOut"   = $StdOut
-			"StdErr"   = $StdErr
-
-		}
-
-		$PacliProcess.Dispose()
+		$Process.Dispose()
 
 	}
 
