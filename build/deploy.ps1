@@ -52,7 +52,7 @@ if ((! $ENV:APPVEYOR_PULL_REQUEST_NUMBER) -and ($ENV:APPVEYOR_REPO_BRANCH -eq 'm
 
 			git status
 
-			git commit -s -m "Update Version"
+			git commit -s -m ":bookmark: Update Version"
 
 			git push --porcelain origin master
 
