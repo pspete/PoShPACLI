@@ -51,33 +51,27 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		Write-Verbose "Defining Vault"
 
-			#$PACLI variable set to executable path
+		$Return = Invoke-PACLICommand $pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			Write-Verbose "Defining Vault"
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli DEFINEFROMFILE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Vault Config Read"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "Vault Config Read"
+				"vault"     = $vault
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

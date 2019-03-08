@@ -82,54 +82,48 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli
-			$Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() |
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() |
             	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#loop through results
-					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-						#Get Range from array
-						$values = $Results[$i..($i + 7)]
+					#Get Range from array
+					$values = $Results[$i..($i + 7)]
 
-						#Output Object
-						[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-							"Time"             = $values[0]
-							"Username"         = $values[1]
-							"Activity"         = $values[2]
-							"PreviousLocation" = $values[3]
-							"RequestID"        = $values[4]
-							"RequestReason"    = $values[5]
-							"Code"             = $values[6]
-							"Safename"         = $safe
-							"Folder"           = $folder
-							"Filename"         = $file
+						"Time"             = $values[0]
+						"Username"         = $values[1]
+						"Activity"         = $values[2]
+						"PreviousLocation" = $values[3]
+						"RequestID"        = $values[4]
+						"RequestReason"    = $values[5]
+						"Code"             = $values[6]
+						"Safename"         = $safe
+						"Folder"           = $folder
+						"Filename"         = $file
 
-						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity -PropertyToAdd @{
-							"vault"     = $vault
-							"user"      = $user
-							"sessionID" = $sessionID
-						}
-
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

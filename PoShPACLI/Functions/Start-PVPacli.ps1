@@ -41,33 +41,27 @@
 		[string]$ctlFileName
 	)
 
-	If(Test-PACLI) {
+	Write-Verbose "Starting Pacli"
 
-		#$PACLI variable set to executable path
+	$Return = Invoke-PACLICommand $pacli INIT $($PSBoundParameters.getEnumerator() |
+			ConvertTo-ParameterString)
 
-		Write-Verbose "Starting Pacli"
+	if($Return.ExitCode) {
 
-		$Return = Invoke-PACLICommand $pacli INIT $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		Write-Error $Return.StdErr
 
-		if($Return.ExitCode) {
+	}
 
-			Write-Error $Return.StdErr
+	elseif($Return.ExitCode -eq 0) {
 
-		}
-
-		elseif($Return.ExitCode -eq 0) {
-
-			Write-Verbose "Pacli Started"
+		Write-Verbose "Pacli Started"
 
 
-			[pscustomobject] @{
+		[pscustomobject] @{
 
-				"sessionID" = $sessionID
+			"sessionID" = $sessionID
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 	}
 

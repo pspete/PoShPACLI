@@ -67,32 +67,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli ADDLOCATION $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote quota)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli ADDLOCATION $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote quota)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Added Location $location"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Added Location $location"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -74,35 +74,29 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli LOCKFILE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli LOCKFILE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "$file Locked"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "$file Locked"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+				"Safename"  = $safe
+				"Folder"    = $folder
+				"Filename"  = $file
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-					"Safename"  = $safe
-					"Folder"    = $folder
-					"Filename"  = $file
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

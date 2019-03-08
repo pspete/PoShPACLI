@@ -106,33 +106,27 @@
 		[int]$sessionID
 	)
 
-	If(Test-PACLI) {
-
-		#$PACLI variable set to executable path
-
-		$Return = Invoke-PACLICommand $pacli GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
+	$Return = Invoke-PACLICommand $pacli GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
                 minDigit,effectiveLength) OUTPUT (ALL)"
 
-		if($Return.ExitCode) {
+	if($Return.ExitCode) {
 
-			Write-Error $Return.StdErr
+		Write-Error $Return.StdErr
 
-		}
+	}
 
-		else {
+	else {
 
-			#if result(s) returned
-			if($Return.StdOut) {
+		#if result(s) returned
+		if($Return.StdOut) {
 
-				Write-Verbose "Password Generated"
+			Write-Verbose "Password Generated"
 
-				#Return Generated Password String
-				[PSCustomObject] @{
+			#Return Generated Password String
+			[PSCustomObject] @{
 
-					"Password" = $Return.StdOut.TrimEnd()
-
-				}
+				"Password" = $Return.StdOut.TrimEnd()
 
 			}
 

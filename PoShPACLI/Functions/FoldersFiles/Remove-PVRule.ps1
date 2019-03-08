@@ -92,32 +92,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli DELETERULE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote ruleID)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli DELETERULE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote ruleID)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Rule $RuleID Deleted"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Rule $RuleID Deleted"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -88,33 +88,27 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
 
-			#$PACLI variable set to executable path
+			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 
-			$Return = Invoke-PACLICommand $pacli ADDEVENT $($PSBoundParameters.getEnumerator() |
+		if($Return.ExitCode) {
 
-				ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Safe Event Added"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "Safe Event Added"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -56,39 +56,33 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
 
-			#$PACLI variable set to executable path
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-			#deal with password SecureString
-			if($PSBoundParameters.ContainsKey("password")) {
+		}
 
-				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+		$Return = Invoke-PACLICommand $pacli UNLOCK $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			}
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli UNLOCK $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "User Unlocked"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "User Unlocked"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

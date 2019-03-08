@@ -65,32 +65,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli ADDPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli ADDPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Preferred Folder Set"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "Preferred Folder Set"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

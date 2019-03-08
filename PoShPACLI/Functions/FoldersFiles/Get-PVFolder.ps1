@@ -57,50 +57,44 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli
-			$Return = Invoke-PACLICommand $pacli FOLDERSLIST "$($PSBoundParameters.getEnumerator() |
+		#execute pacli
+		$Return = Invoke-PACLICommand $pacli FOLDERSLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#loop through results
-					For($i = 0 ; $i -lt $Results.length ; $i += 5) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 5) {
 
-						#Get Range from array
-						$values = $Results[$i..($i + 5)]
+					#Get Range from array
+					$values = $Results[$i..($i + 5)]
 
-						#Output Object
-						[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-							"Folder"       = $values[0]
-							"Accessed"     = $values[1]
-							"History"      = $values[2]
-							"DeletionDate" = $values[3]
-							"DeletedBy"    = $values[4]
-							"Safename"     = $safe
+						"Folder"       = $values[0]
+						"Accessed"     = $values[1]
+						"History"      = $values[2]
+						"DeletionDate" = $values[3]
+						"DeletedBy"    = $values[4]
+						"Safename"     = $safe
 
-						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder -PropertyToAdd @{
-							"vault"     = $vault
-							"user"      = $user
-							"sessionID" = $sessionID
-						}
-
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

@@ -192,39 +192,32 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli
-			$Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#Output Object
-					[PSCustomObject] @{
+				#Output Object
+				[PSCustomObject] @{
 
-						"Password" = $Results
+					"Password" = $Results
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
-
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 				}
 
 			}

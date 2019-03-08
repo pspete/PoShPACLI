@@ -35,26 +35,18 @@
 		[int]$sessionID
 	)
 
-	If(Test-PACLI) {
+	$Return = Invoke-PACLICommand $pacli TERM $($PSBoundParameters.getEnumerator() |
+			ConvertTo-ParameterString)
 
-		#$PACLI variable set to executable path
+	if($Return.ExitCode) {
 
-		Write-Verbose "Stopping Pacli"
+		Write-Error $Return.StdErr
 
-		$Return = Invoke-PACLICommand $pacli TERM $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+	}
 
-		if($Return.ExitCode) {
+	elseif($Return.ExitCode -eq 0) {
 
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
-
-			Write-Verbose "Pacli Stopped"
-
-		}
+		Write-Verbose "Pacli Stopped"
 
 	}
 

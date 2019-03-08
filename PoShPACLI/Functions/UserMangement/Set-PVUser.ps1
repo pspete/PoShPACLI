@@ -508,39 +508,33 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
 
-			#$PACLI variable set to executable path
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-			#deal with password SecureString
-			if($PSBoundParameters.ContainsKey("password")) {
+		}
 
-				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+		$Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote authType, retention, quota)
 
-			}
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli UPDATEUSER $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote authType, retention, quota)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Updated User $destUser"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Updated User $destUser"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -147,53 +147,47 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli OPENSAFE "$($PSBoundParameters.getEnumerator() |
 					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#Output Object
-					[PSCustomObject] @{
+				#Output Object
+				[PSCustomObject] @{
 
-						#(possibility these may not all be in the correct order -
-						#...but most are)
-						"Safename"                  = $Results[0]
-						"Status"                    = $Results[1]
-						"LastUsed"                  = $Results[2]
-						"Accessed"                  = $Results[3]
-						"Size"                      = $Results[4]
-						"Location"                  = $Results[5]
-						"SafeID"                    = $Results[6]
-						"LocationID"                = $Results[7]
-						"TextOnly"                  = $Results[8]
-						"ShareOptions"              = $Results[9]
-						"UseFileCategories"         = $Results[10]
-						"RequireContentValidation"  = $Results[11]
-						"RequireReason"             = $Results[12]
-						"EnforceExclusivePasswords" = $Results[13]
+					#(possibility these may not all be in the correct order -
+					#...but most are)
+					"Safename"                  = $Results[0]
+					"Status"                    = $Results[1]
+					"LastUsed"                  = $Results[2]
+					"Accessed"                  = $Results[3]
+					"Size"                      = $Results[4]
+					"Location"                  = $Results[5]
+					"SafeID"                    = $Results[6]
+					"LocationID"                = $Results[7]
+					"TextOnly"                  = $Results[8]
+					"ShareOptions"              = $Results[9]
+					"UseFileCategories"         = $Results[10]
+					"RequireContentValidation"  = $Results[11]
+					"RequireReason"             = $Results[12]
+					"EnforceExclusivePasswords" = $Results[13]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
-
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 				}
 
 			}

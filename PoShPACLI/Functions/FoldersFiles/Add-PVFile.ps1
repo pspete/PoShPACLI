@@ -98,31 +98,25 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Stored File $file in Safe $safe "
+			[PSCustomObject] @{
 
-			else {
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				Write-Verbose "Stored File $file in Safe $safe "
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

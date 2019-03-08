@@ -101,32 +101,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.StdErr) {
 
-			$Return = Invoke-PACLICommand $pacli UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.StdErr) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return -match "True") {
 
-			}
+			Write-Verbose "Safe File Category Updated"
 
-			elseif($Return -match "True") {
+			[PSCustomObject] @{
 
-				Write-Verbose "Safe File Category Updated"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

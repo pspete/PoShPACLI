@@ -317,50 +317,44 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli ADDRULE "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#loop through results
-					For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-						#Get Range from array
-						$values = $Results[$i..($i + 7)]
+					#Get Range from array
+					$values = $Results[$i..($i + 7)]
 
-						#Output Object
-						[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-							"RuleID"           = $values[0]
-							"UserName"         = $values[1]
-							"Safename"         = $values[2]
-							"FullObjectName"   = $values[3]
-							"Effect"           = $values[4]
-							"RuleCreationDate" = $values[5]
-							"AccessLevel"      = $values[6]
+						"RuleID"           = $values[0]
+						"UserName"         = $values[1]
+						"Safename"         = $values[2]
+						"FullObjectName"   = $values[3]
+						"Effect"           = $values[4]
+						"RuleCreationDate" = $values[5]
+						"AccessLevel"      = $values[6]
 
-						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
-							"vault"     = $vault
-							"user"      = $user
-							"sessionID" = $sessionID
-						}
-
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

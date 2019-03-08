@@ -333,34 +333,28 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli UPDATESAFE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
+			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
+			safeOptions, securityLevelParm, confirmationCount, maxFileSize)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli UPDATESAFE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
-				monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
-				safeOptions, securityLevelParm, confirmationCount, maxFileSize)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Updated Safe $safe"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Updated Safe $safe"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -43,24 +43,18 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
-
-			elseif($Return.ExitCode -eq 0) {
-
-				Write-Verbose "Definition for Vault $vault Deleted"
-
-			}
+			Write-Verbose "Definition for Vault $vault Deleted"
 
 		}
 

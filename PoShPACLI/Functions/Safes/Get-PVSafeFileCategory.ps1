@@ -71,43 +71,36 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli
-			$Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString) output (ALL,ENCLOSE)"
 
-			#if result(s) returned
-			if($Return.StdOut) {
+		#if result(s) returned
+		if($Return.StdOut) {
 
-				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			#Convert Output to array
+			$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+			#loop through results
+			For($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+				#Get Range from array
+				$values = $Results[$i..($i + 7)]
 
-					#Output Object
-					[PSCustomObject] @{
+				#Output Object
+				[PSCustomObject] @{
 
-						"CategoryID"           = $values[0]
-						"CategoryName"         = $values[1]
-						"CategoryType"         = $values[2]
-						"CategoryValidValues"  = $values[3]
-						"CategoryDefaultValue" = $values[4]
-						"CategoryRequired"     = $values[5]
-						"VaultCategory"        = $values[6]
+					"CategoryID"           = $values[0]
+					"CategoryName"         = $values[1]
+					"CategoryType"         = $values[2]
+					"CategoryValidValues"  = $values[3]
+					"CategoryDefaultValue" = $values[4]
+					"CategoryRequired"     = $values[5]
+					"VaultCategory"        = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
-
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
+					"vault"     = $vault
+					"user"      = $user
+					"sessionID" = $sessionID
 				}
 
 			}

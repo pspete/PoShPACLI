@@ -93,58 +93,51 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli with parameters
-			$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli USERSLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#loop through results
-					For($i = 0 ; $i -lt $Results.length ; $i += 14) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 14) {
 
-						#Get User Range from array
-						$values = $Results[$i..($i + 14)]
+					#Get User Range from array
+					$values = $Results[$i..($i + 14)]
 
-						#output object for each user
-						[PSCustomObject] @{
+					#output object for each user
+					[PSCustomObject] @{
 
-							"Username"                  = $values[0]
-							"Quota"                     = $values[1]
-							"UsedQuota"                 = $values[2]
-							"Location"                  = $values[3]
-							"FirstName"                 = $values[4]
-							"LastName"                  = $values[5]
-							"LDAPUser"                  = $values[6]
-							"Template"                  = $values[7]
-							"GWAccount"                 = $values[8]
-							"Disabled"                  = $values[9]
-							"Type"                      = $values[10]
-							"UserID"                    = $values[11]
-							"LocationID"                = $values[12]
-							"EnableComponentMonitoring" = $values[13]
+						"Username"                  = $values[0]
+						"Quota"                     = $values[1]
+						"UsedQuota"                 = $values[2]
+						"Location"                  = $values[3]
+						"FirstName"                 = $values[4]
+						"LastName"                  = $values[5]
+						"LDAPUser"                  = $values[6]
+						"Template"                  = $values[7]
+						"GWAccount"                 = $values[8]
+						"Disabled"                  = $values[9]
+						"Type"                      = $values[10]
+						"UserID"                    = $values[11]
+						"LocationID"                = $values[12]
+						"EnableComponentMonitoring" = $values[13]
 
-						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
-							"vault"     = $vault
-							"user"      = $user
-							"sessionID" = $sessionID
-						}
-
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}

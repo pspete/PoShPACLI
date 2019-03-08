@@ -202,32 +202,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "File Retrieved"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "File Retrieved"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -68,34 +68,29 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote requestID)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli DELETEREQUEST $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -doNotQuote requestID)
-
-			if($Return.ExitCode) {
-
-				Write-Error $Return.StdErr
-
-			}
-
-			elseif($Return.ExitCode -eq 0) {
-
-				Write-Verbose "Request $RequestID Deleted"
-
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			Write-Error $Return.StdErr
 
 		}
+
+		elseif($Return.ExitCode -eq 0) {
+
+			Write-Verbose "Request $RequestID Deleted"
+
+			[PSCustomObject] @{
+
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
+
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+
+		}
+
 	}
 
 }

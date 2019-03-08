@@ -198,41 +198,35 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		#deal with proxyPassword SecureString
+		if($PSBoundParameters.ContainsKey("proxyPassword")) {
 
-			#$PACLI variable set to executable path
+			$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
 
-			#deal with proxyPassword SecureString
-			if($PSBoundParameters.ContainsKey("proxyPassword")) {
+		}
 
-				$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
+		Write-Verbose "Defining Vault"
 
-			}
+		$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
+			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
-			Write-Verbose "Defining Vault"
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
-				proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Vault Defined. Name: $vault, Address: $address"
+				"vault"     = $vault
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

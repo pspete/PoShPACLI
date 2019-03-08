@@ -91,32 +91,26 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli ADDTRUSTEDNETWORKAREA $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli ADDTRUSTEDNETWORKAREA $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Trusted Network Area $networkarea Assigned to $trusterName"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "Trusted Network Area $networkarea Assigned to $trusterName"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

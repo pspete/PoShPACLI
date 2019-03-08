@@ -48,34 +48,28 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		Write-Verbose "Logging off from Vault"
 
-			#$PACLI variable set to executable path
+		$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			Write-Verbose "Logging off from Vault"
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli LOGOFF $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		else {
 
-			}
+			Write-Verbose "Successfully Logged Off"
 
-			else {
+			[PSCustomObject] @{
 
-				Write-Verbose "Successfully Logged Off"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

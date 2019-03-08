@@ -508,39 +508,33 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		#deal with password SecureString
+		if($PSBoundParameters.ContainsKey("password")) {
 
-			#$PACLI variable set to executable path
+			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
-			#deal with password SecureString
-			if($PSBoundParameters.ContainsKey("password")) {
+		}
 
-				$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+		$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
-			}
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
+			Write-Error $Return.StdErr
 
-			if($Return.ExitCode) {
+		}
 
-				Write-Error $Return.StdErr
+		elseif($Return.ExitCode -eq 0) {
 
-			}
+			Write-Verbose "Created Vault User $destUser"
 
-			elseif($Return.ExitCode -eq 0) {
+			[PSCustomObject] @{
 
-				Write-Verbose "Created Vault User $destUser"
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				[PSCustomObject] @{
-
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

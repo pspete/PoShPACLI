@@ -287,33 +287,27 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
+		$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() |
+				ConvertTo-ParameterString)
 
-			#$PACLI variable set to executable path
+		if($Return.ExitCode) {
 
-			$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() |
-					ConvertTo-ParameterString)
-
-			if($Return.ExitCode) {
-
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
 
-			}
+		}
 
-			else {
+		else {
 
-				write-verbose "Added Safe Owner: $owner"
+			write-verbose "Added Safe Owner: $owner"
 
-				[PSCustomObject] @{
+			[PSCustomObject] @{
 
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
+				"vault"     = $vault
+				"user"      = $user
+				"sessionID" = $sessionID
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

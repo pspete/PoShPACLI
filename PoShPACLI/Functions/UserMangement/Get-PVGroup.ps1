@@ -57,52 +57,45 @@
 
 	PROCESS {
 
-		If(Test-PACLI) {
-
-			#$PACLI variable set to executable path
-
-			#execute pacli with parameters
-			$Return = Invoke-PACLICommand $pacli GROUPDETAILS "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $pacli GROUPDETAILS "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-			if($Return.ExitCode) {
+		if($Return.ExitCode) {
 
-				Write-Error $Return.StdErr
+			Write-Error $Return.StdErr
 
-			}
+		}
 
-			else {
+		else {
 
-				#if result(s) returned
-				if($Return.StdOut) {
+			#if result(s) returned
+			if($Return.StdOut) {
 
-					#Convert Output to array
-					$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				#Convert Output to array
+				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
-					#loop through results
-					For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+				#loop through results
+				For($i = 0 ; $i -lt $Results.length ; $i += 6) {
 
-						#Get Range from array
-						$values = $Results[$i..($i + 6)]
+					#Get Range from array
+					$values = $Results[$i..($i + 6)]
 
-						#Output Object
-						[PSCustomObject] @{
+					#Output Object
+					[PSCustomObject] @{
 
-							#assign values to properties
-							"Groupname"     = $group
-							"Description"   = $values[0]
-							"LDAPFullDN"    = $values[1]
-							"LDAPDirectory" = $values[2]
-							"MapID"         = $values[3]
-							"MapName"       = $values[4]
-							"ExternalGroup" = $values[5]
+						#assign values to properties
+						"Groupname"     = $group
+						"Description"   = $values[0]
+						"LDAPFullDN"    = $values[1]
+						"LDAPDirectory" = $values[2]
+						"MapID"         = $values[3]
+						"MapName"       = $values[4]
+						"ExternalGroup" = $values[5]
 
-						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group -PropertyToAdd @{
-							"vault"     = $vault
-							"user"      = $user
-							"sessionID" = $sessionID
-						}
-
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group -PropertyToAdd @{
+						"vault"     = $vault
+						"user"      = $user
+						"sessionID" = $sessionID
 					}
 
 				}
