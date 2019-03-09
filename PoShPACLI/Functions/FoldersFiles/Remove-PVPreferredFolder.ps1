@@ -66,7 +66,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli DELETEPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

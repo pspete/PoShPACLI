@@ -98,7 +98,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

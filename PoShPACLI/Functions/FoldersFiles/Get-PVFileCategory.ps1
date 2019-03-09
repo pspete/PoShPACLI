@@ -84,7 +84,7 @@
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $pacli LISTFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

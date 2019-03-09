@@ -207,7 +207,7 @@
 
 		Write-Verbose "Defining Vault"
 
-		$Return = Invoke-PACLICommand $pacli DEFINE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
 			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 

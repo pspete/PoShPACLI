@@ -92,7 +92,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli DELETERULE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote ruleID)
 
 		if($Return.ExitCode -eq 0) {

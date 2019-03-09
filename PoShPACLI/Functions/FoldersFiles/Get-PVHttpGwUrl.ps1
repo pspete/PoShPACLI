@@ -76,7 +76,7 @@
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $pacli GETHTTPGWURL "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath GETHTTPGWURL "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

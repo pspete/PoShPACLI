@@ -152,7 +152,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli REQUESTSLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath REQUESTSLIST "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote requestsType,displayInvalid,objectsType) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

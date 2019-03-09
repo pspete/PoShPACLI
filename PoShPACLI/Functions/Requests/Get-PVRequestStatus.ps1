@@ -65,7 +65,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

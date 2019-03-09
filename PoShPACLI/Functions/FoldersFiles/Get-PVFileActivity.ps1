@@ -83,7 +83,7 @@
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTFILE "$($PSBoundParameters.getEnumerator() |
             	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

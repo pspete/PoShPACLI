@@ -90,7 +90,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHADD "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHADD "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

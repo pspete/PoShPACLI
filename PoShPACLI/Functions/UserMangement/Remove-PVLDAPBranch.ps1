@@ -66,7 +66,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHDELETE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHDELETE "$($PSBoundParameters.getEnumerator() |
                 ConvertTo-ParameterString -donotQuote deleteBranchID) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

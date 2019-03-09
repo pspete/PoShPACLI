@@ -99,7 +99,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHUPDATE "$(
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHUPDATE "$(
 			$PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
 

@@ -67,7 +67,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $pacli CREATELOGONFILE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

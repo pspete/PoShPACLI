@@ -43,7 +43,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli DELETEVAULT $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEVAULT $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

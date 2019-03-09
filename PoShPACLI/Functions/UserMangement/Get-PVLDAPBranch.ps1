@@ -56,7 +56,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli LDAPBRANCHESLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHESLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

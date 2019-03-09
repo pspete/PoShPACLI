@@ -387,7 +387,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $pacli ADDSAFE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters.getEnumerator() |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,

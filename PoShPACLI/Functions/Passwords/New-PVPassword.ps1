@@ -106,7 +106,7 @@
 		[int]$sessionID
 	)
 
-	$Return = Invoke-PACLICommand $pacli GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
                 minDigit,effectiveLength) OUTPUT (ALL)"
 

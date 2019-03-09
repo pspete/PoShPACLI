@@ -69,7 +69,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli DELETEOWNER $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEOWNER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

@@ -83,7 +83,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli UPDATEGROUP $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEGROUP $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

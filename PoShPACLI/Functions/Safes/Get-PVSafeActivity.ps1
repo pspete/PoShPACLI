@@ -219,7 +219,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $pacli INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.StdErr) {
