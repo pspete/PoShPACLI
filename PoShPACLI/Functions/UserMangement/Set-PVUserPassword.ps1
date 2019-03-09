@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "SETPASSWORD"
 
     .PARAMETER vault
-        The name of the Vault to which the User has access
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is logged on
+        The Username of the authenticated User.
 
     .PARAMETER password
         The User’s current password.

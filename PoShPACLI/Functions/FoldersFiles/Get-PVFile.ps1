@@ -8,7 +8,7 @@
 		Exposes the PACLI Function: "RETRIEVEFILE"
 
 	.PARAMETER vault
-		The name of the Vault to which the User has access.
+        The defined Vault name
 
 	.PARAMETER user
 		The Username of the User who is carrying out the task.

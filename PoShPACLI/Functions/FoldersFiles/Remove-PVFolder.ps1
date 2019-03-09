@@ -9,10 +9,10 @@
     	Exposes the PACLI Function: "DELETEFOLDER"
 
     .PARAMETER vault
-        The name of the Vault containing the appropriate Safe.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe in which the folder will be deleted.

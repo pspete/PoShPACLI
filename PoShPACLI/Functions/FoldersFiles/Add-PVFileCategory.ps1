@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDFILECATEGORY"
 
     .PARAMETER vault
-        The name of the Vault that the File Category is being added to.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe that the File Category is being added to.

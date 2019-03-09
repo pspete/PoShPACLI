@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDUPDATEEXTERNALUSERENTITY"
 
     .PARAMETER vault
-    	The name of the Vault.
+        The defined Vault name
 
     .PARAMETER user
-    	The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER destUser
     	The name (samaccountname) of the external User or Group that will be created

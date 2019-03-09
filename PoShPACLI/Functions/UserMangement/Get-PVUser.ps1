@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "USERDETAILS"
 
     .PARAMETER vault
-	   The name of the Vault
+        The defined Vault name
 
     .PARAMETER user
-	   The Username of the User who is logged on.
+        The Username of the authenticated User.
 
     .PARAMETER destUser
 	   The name of the User whose details will be listed.

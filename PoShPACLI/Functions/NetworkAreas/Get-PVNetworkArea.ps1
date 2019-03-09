@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "NETWORKAREASLIST"
 
     .PARAMETER vault
-        The name of the Vault in which the Network Area is defined.
+        The defined Vault name
 
     .PARAMETER user
-        The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working

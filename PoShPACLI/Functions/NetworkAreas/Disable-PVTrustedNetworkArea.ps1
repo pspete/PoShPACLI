@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "DEACTIVATETRUSTEDNETWORKAREA"
 
     .PARAMETER vault
-	   The name of the Vault in which the Trusted Network Area is defined.
+        The defined Vault name
 
     .PARAMETER user
-	   The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER trusterName
 	   The User who will not have access to the Trusted Network Area.

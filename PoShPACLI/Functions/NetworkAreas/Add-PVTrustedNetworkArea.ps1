@@ -9,10 +9,10 @@
     	Exposes the PACLI Function: "ADDTRUSTEDNETWORKAREA"
 
     .PARAMETER vault
-	   The name of the Vault to which to add the Trusted Network Area.
+        The defined Vault name
 
     .PARAMETER user
-	   The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER trusterName
 	   The User who will have access to the Trusted Network Area.

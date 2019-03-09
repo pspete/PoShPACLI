@@ -8,11 +8,11 @@
 		Exposes the PACLI Function: "RETRIEVEPASSWORDOBJECT"
 
 	.PARAMETER vault
-		The name of the Vault that contains the password object(s)
+        The defined Vault name
 		you are looking for.
 
 	.PARAMETER user
-		The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
 	.PARAMETER safe
 		The name of the Safe that contains the password object(s)

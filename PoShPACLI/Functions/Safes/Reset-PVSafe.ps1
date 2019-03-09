@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "RESETSAFE"
 
     .PARAMETER vault
-        The name of the Vault to reset.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is logged on.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe containing the access marks to reset.

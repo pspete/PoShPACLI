@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "LOCATIONSLIST"
 
     .PARAMETER vault
-       The name of the Vault in which the location is defined.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the command.
+        The Username of the authenticated User.
 
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working

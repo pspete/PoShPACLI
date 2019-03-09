@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "SAFEEVENTSLIST"
 
     .PARAMETER vault
-        The name of the Vault that contains the Events.
+        The defined Vault name
 
     .PARAMETER user
-        The name of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safePatternName
         A Safe name pattern to include in the returned Events list.

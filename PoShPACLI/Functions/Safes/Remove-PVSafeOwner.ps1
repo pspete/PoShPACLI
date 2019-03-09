@@ -10,10 +10,10 @@
     	Exposes the PACLI Function: "DELETEOWNER"
 
     .PARAMETER vault
-        The name of the Vault to which the Safe Owner has access.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User carrying out the task
+        The Username of the authenticated User.
 
     .PARAMETER owner
         The name of the Safe Owner to remove from the Vault.

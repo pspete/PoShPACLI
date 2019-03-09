@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "TRUSTEDNETWORKAREASLIST"
 
     .PARAMETER vault
-	   The name of the Vault in which the Trusted Network Area is defined.
+        The defined Vault name
 
     .PARAMETER user
-	   The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER trusterName
 	   The User who has access to the Trusted Network Area

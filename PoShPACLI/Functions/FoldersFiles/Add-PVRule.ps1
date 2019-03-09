@@ -8,7 +8,7 @@
 		Exposes the PACLI Function: "ADDRULE"
 
 	.PARAMETER vault
-		The name of the Vault.
+        The defined Vault name
 
 	.PARAMETER user
 		The Username of the User who is logged on.

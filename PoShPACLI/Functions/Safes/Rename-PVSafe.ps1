@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "RENAMESAFE"
 
     .PARAMETER vault
-        The name of the Vault containing the Safe
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User carrying out the task
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The current name of the Safe.

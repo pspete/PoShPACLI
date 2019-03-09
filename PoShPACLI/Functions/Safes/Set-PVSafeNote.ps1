@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDNOTE"
 
     .PARAMETER vault
-        The name of the Vault containing the Safe to which to add a note.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The Safe to which to add a note.

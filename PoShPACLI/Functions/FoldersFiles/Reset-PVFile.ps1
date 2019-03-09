@@ -8,7 +8,7 @@
     	Exposes the PACLI Function: "RESETFILE"
 
     .PARAMETER vault
-        The name of the Vault in which the file is stored.
+        The defined Vault name
 
     .PARAMETER user
         The Username of the User carrying out the task.

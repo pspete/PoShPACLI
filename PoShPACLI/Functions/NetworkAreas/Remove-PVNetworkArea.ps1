@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "DELETENETWORKAREA"
 
     .PARAMETER vault
-        The name of the Vault from which the Network Area will be deleted.
+        The defined Vault name
 
     .PARAMETER user
-        The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER networkArea
         The name of the Network Area to delete.

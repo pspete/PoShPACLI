@@ -11,10 +11,10 @@
     	Exposes the PACLI Function: "INSPECTUSER"
 
     .PARAMETER vault
-        The name of the Vault to which the User has access
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User issuing the command
+        The Username of the authenticated User.
 
     .PARAMETER logDays
         The number of days to include in the list of activities.

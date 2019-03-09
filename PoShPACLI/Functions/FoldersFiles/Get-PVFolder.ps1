@@ -8,7 +8,7 @@
     	Exposes the PACLI Function: "FOLDERSLIST"
 
     .PARAMETER vault
-        The name of the Vault containing the specified Safe.
+        The defined Vault name
 
     .PARAMETER user
         The Username of the User carrying out the task.

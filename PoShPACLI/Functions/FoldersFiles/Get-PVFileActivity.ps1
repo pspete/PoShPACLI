@@ -8,7 +8,7 @@
     	Exposes the PACLI Function: "INSPECTFILE"
 
     .PARAMETER vault
-        The name of the Vault containing the appropriate file.
+        The defined Vault name
 
     .PARAMETER user
         The Username of the User carrying out the task.

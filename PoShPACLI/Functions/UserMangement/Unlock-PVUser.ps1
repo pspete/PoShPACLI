@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "UNLOCK"
 
     .PARAMETER vault
-        The name of the Vault to which the User is logged on.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User whose account is locked
+        The Username of the authenticated User.
 
     .PARAMETER password
         The User’s password

@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "CLEARUSERHISTORY"
 
     .PARAMETER vault
-    	The name of the Vault in which to clear the history records
+        The defined Vault name
 
     .PARAMETER user
-    	The Username of the User carrying out the command.
+        The Username of the authenticated User.
 
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working

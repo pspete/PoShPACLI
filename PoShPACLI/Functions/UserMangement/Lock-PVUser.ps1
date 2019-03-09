@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "LOCK"
 
     .PARAMETER vault
-        The name of the Vault to which the User is logged on.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is logged on
+        The Username of the authenticated User.
 
     .PARAMETER sessionID
     	The ID number of the session. Use this parameter when working

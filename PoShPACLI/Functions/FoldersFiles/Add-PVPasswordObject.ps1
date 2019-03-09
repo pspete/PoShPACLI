@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "STOREPASSWORDOBJECT"
 
     .PARAMETER vault
-        The name of the Vault where the password object is stored.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe where the password object is stored

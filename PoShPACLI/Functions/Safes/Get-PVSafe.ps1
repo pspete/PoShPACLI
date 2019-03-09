@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "SAFEDETAILS"
 
     .PARAMETER vault
-        The name of the Vault to which the Safe Owner has access.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User carrying out the task
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe whose details will be listed.

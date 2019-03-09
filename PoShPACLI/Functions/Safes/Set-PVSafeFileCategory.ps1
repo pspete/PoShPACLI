@@ -8,11 +8,11 @@
     	Exposes the PACLI Function: "UPDATESAFEFILECATEGORY"
 
     .PARAMETER vault
-        The name of the Vault containing the Safe where the File Category is
+        The defined Vault name
         defined.
 
     .PARAMETER user
-        The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The Safe where the File Categories will be updated.

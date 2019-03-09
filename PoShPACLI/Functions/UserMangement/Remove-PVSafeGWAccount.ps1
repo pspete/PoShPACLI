@@ -10,10 +10,10 @@
     	Exposes the PACLI Function: "DELETESAFESHARE"
 
     .PARAMETER vault
-	   The Vault containing the shared Safe.
+        The defined Vault name
 
     .PARAMETER user
-	   The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
 	   The Safe from which to remove the sharing feature.

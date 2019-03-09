@@ -8,10 +8,10 @@
 		Exposes the PACLI Function: "CLOSESAFE"
 
 	.PARAMETER vault
-		The name of the Vault containing the Safes to close.
+        The defined Vault name
 
 	.PARAMETER user
-		The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
 	.PARAMETER safe
 		The name of the Safe to close.

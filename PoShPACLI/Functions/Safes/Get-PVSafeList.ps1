@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "SAFESLIST
 
     .PARAMETER vault
-        The name of the Vault containing the Safes to list.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is logged on.
+        The Username of the authenticated User.
 
     .PARAMETER location
         The location to search in for the Safes to include in the list.

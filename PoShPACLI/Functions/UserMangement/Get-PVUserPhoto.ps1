@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "GETUSERPHOTO"
 
     .PARAMETER vault
-    	The name of the Vault to which the User has access.
+        The defined Vault name
 
     .PARAMETER user
-    	The Username of the User who is carrying out the command.
+        The Username of the authenticated User.
 
     .PARAMETER destUser
     	The name of the User whose photo you wish to retrieve.

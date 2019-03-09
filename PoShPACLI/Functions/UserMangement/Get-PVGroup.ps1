@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "GROUPDETAILS"
 
     .PARAMETER vault
-       The name of the Vault in which the group is defined.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the command.
+        The Username of the authenticated User.
 
     .PARAMETER group
         The name of the group

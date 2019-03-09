@@ -9,10 +9,10 @@
 		Exposes the PACLI Function: "ADDUSER"
 
 	.PARAMETER vault
-		The name of the Vault to which the User will be added.
+        The defined Vault name
 
 	.PARAMETER user
-		The Username of the User who is logged on
+        The Username of the authenticated User.
 
 	.PARAMETER destUser
 		The name of the User to add to the Vault.

@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "DELETEFILECATEGORY"
 
     .PARAMETER vault
-        The name of the Vault where the File Category is being deleted.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe where the File Category is being deleted.

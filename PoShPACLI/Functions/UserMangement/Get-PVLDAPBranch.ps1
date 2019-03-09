@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "LDAPBRANCHESLIST"
 
     .PARAMETER vault
-		The name of the Vault.
+        The defined Vault name
 
     .PARAMETER user
-		The Username of the User who is logged on.
+        The Username of the authenticated User.
 
     .PARAMETER ldapMapName
 		The name of the Directory Map which contains the branches that will be listed.

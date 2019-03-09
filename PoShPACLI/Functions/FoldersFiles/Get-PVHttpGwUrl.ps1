@@ -9,7 +9,7 @@
     	Exposes the PACLI Function: "GETHTTPGWURL"
 
     .PARAMETER vault
-        The name of the Vault containing the specified Safe.
+        The defined Vault name
 
     .PARAMETER user
         The name of the user carrying out the task.

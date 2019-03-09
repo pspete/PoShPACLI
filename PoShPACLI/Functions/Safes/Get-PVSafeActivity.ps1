@@ -9,10 +9,10 @@
 		Exposes the PACLI Function: "INSPECTSAFE"
 
 	.PARAMETER vault
-		The name of the Vault containing the specified Safe.
+        The defined Vault name
 
 	.PARAMETER user
-		The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
 	.PARAMETER safePattern
 		The full name or part of the name of the Safe(s) to include in the report.

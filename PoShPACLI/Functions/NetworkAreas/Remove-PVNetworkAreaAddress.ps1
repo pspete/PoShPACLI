@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "DELETEAREAADDRESS"
 
     .PARAMETER vault
-        The name of the Vault in which the Network Area is defined.
+        The defined Vault name
 
     .PARAMETER user
-        The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER networkArea
         The name of the Network Area from which to delete an IP address

@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDNETWORKAREA"
 
     .PARAMETER vault
-        The name of the Vault to which the Network Area will be added.
+        The defined Vault name
 
     .PARAMETER user
-        The name of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER networkArea
         The name of the new Network Area.

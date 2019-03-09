@@ -9,10 +9,10 @@
     	Exposes the PACLI Function: "STOREFILE"
 
     .PARAMETER vault
-        The name of the Vault to which the User has access.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe where the file will be stored.

@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDFOLDER"
 
     .PARAMETER vault
-        The name of the Vault to which to add a folder.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe to which to add the folder.

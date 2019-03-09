@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "ADDSAFESHARE"
 
     .PARAMETER vault
-	   The name of the Vault to which the User has access.
+        The defined Vault name
 
     .PARAMETER user
-	   The Username of the User carrying out the task.
+        The Username of the authenticated User.
 
     .PARAMETER safe
 	   The Safe to share through the Gateway

@@ -9,10 +9,10 @@
 		Exposes the PACLI Function: "ADDSAFE"
 
 	.PARAMETER vault
-		The Vault to which the Safe will be added
+        The defined Vault name
 
 	.PARAMETER user
-		The Username of the User who is adding the Safe
+        The Username of the authenticated User.
 
 	.PARAMETER safe
 		The name of the Safe to be added.

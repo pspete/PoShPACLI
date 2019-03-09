@@ -9,7 +9,7 @@
 		Exposes the PACLI Function: "FINDFILES"
 
 	.PARAMETER vault
-		The name of the Vault containing the file(s) or password(s)
+        The defined Vault name
 		you are looking for.
 
 	.PARAMETER user

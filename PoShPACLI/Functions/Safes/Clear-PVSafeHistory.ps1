@@ -8,10 +8,10 @@
     	Exposes the PACLI Function: "CLEARSAFEHISTORY"
 
     .PARAMETER vault
-        The name of the Vault containing the appropriate Safe.
+        The defined Vault name
 
     .PARAMETER user
-        The Username of the User who is carrying out the command.
+        The Username of the authenticated User.
 
     .PARAMETER safe
         The name of the Safe to clear.
