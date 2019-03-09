@@ -290,14 +290,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDOWNER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			write-verbose "Added Safe Owner: $owner"
 

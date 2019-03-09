@@ -78,13 +78,7 @@
 		$Return = Invoke-PACLICommand $pacli OWNERSLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
 			if($Return.StdOut) {

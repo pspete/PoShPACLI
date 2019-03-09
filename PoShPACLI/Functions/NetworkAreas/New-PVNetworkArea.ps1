@@ -69,13 +69,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDNETWORKAREA $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote securityLevelParm)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Network Area $networkArea Created"
 

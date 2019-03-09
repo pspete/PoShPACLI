@@ -86,13 +86,7 @@
 		$Return = Invoke-PACLICommand $pacli INSPECTFILE "$($PSBoundParameters.getEnumerator() |
             	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
 			if($Return.StdOut) {

@@ -68,13 +68,7 @@
 		$Return = Invoke-PACLICommand $pacli MOVENETWORKAREA $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Network Area $networkArea Moved to $newLocation"
 

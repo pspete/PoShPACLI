@@ -101,13 +101,7 @@
 		$Return = Invoke-PACLICommand $pacli STOREFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Stored File $file in Safe $safe "
 			[PSCustomObject] @{

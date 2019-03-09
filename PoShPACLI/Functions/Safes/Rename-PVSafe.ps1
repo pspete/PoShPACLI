@@ -67,13 +67,7 @@
 		$Return = Invoke-PACLICommand $pacli RENAMESAFE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Safe Renamed to $newName"
 

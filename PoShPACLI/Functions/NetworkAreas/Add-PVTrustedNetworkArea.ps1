@@ -94,13 +94,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDTRUSTEDNETWORKAREA $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Trusted Network Area $networkarea Assigned to $trusterName"
 

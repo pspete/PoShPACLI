@@ -70,13 +70,7 @@
 		$Return = Invoke-PACLICommand $pacli UNDELETEFOLDER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Folder $folder Restored"
 

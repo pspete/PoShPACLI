@@ -205,13 +205,7 @@
 		$Return = Invoke-PACLICommand $pacli RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "File Retrieved"
 

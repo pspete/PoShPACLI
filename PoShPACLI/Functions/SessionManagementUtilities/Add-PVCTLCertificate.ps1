@@ -53,13 +53,7 @@
 		$Return = Invoke-PACLICommand $pacli CTLADDCERT $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		else {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Certificate $certFileName Added to CTL"
 
