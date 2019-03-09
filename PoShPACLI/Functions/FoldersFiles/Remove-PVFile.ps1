@@ -80,13 +80,7 @@
 		$Return = Invoke-PACLICommand $pacli DELETEFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "$file Removed"
 

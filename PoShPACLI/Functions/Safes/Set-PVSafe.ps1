@@ -338,13 +338,7 @@
 			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
 			safeOptions, securityLevelParm, confirmationCount, maxFileSize)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Updated Safe $safe"
 

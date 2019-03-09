@@ -518,13 +518,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDUSER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Created Vault User $destUser"
 

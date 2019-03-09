@@ -70,13 +70,7 @@
 		$Return = Invoke-PACLICommand $pacli UPDATELOCATION $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote quota)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Updated Location $location"
 

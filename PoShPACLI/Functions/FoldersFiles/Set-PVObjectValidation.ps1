@@ -108,13 +108,7 @@
 		$Return = Invoke-PACLICommand $pacli VALIDATEOBJECT $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote validationAction)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "File $file Marked as $ValidationAction"
 

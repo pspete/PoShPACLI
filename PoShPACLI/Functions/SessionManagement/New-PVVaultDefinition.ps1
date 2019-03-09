@@ -211,13 +211,7 @@
 				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
 			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
 

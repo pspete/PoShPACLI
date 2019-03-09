@@ -84,13 +84,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDAREAADDRESS $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Address Added to Network Area $networkArea"
 

@@ -108,13 +108,7 @@
 		$Return = Invoke-PACLICommand $pacli ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote type)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Added Safe File Category $category"
 

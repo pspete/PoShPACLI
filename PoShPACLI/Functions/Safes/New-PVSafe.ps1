@@ -394,13 +394,7 @@
 			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
 			confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
-		if($Return.ExitCode) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return.ExitCode -eq 0) {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Safe Created: $safe"
 
