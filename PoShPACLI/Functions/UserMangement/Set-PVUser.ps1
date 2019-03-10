@@ -515,7 +515,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER $($PSBoundParameters |
 				ConvertTo-ParameterString -donotQuote authType, retention, quota)
 
 		if($Return.ExitCode -eq 0) {

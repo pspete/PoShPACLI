@@ -51,7 +51,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLREMOVECERT $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLREMOVECERT $($PSBoundParameters |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

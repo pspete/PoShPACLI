@@ -43,7 +43,7 @@
 
 	Write-Verbose "Starting Pacli"
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters.getEnumerator() |
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters |
 			ConvertTo-ParameterString)
 
 	if($Return.ExitCode -eq 0) {

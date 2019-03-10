@@ -63,7 +63,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

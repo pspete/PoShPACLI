@@ -67,7 +67,7 @@
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILESLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILESLIST "$($PSBoundParameters |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

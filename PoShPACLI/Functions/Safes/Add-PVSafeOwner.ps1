@@ -287,7 +287,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

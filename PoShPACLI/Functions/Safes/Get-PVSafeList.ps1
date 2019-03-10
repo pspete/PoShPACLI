@@ -66,7 +66,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFESLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFESLIST "$($PSBoundParameters |
             ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		#if result(s) returned

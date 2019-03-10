@@ -191,7 +191,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEPASSWORDOBJECT "$($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

@@ -104,7 +104,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFEFILECATEGORY $($PSBoundParameters |
 				ConvertTo-ParameterString -donotQuote type)
 
 		if($Return.ExitCode -eq 0) {

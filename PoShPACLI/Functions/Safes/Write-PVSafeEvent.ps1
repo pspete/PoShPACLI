@@ -88,7 +88,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDEVENT $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDEVENT $($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 

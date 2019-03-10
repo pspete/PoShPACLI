@@ -67,7 +67,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATELOCATION $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATELOCATION $($PSBoundParameters |
 				ConvertTo-ParameterString -donotQuote quota)
 
 		if($Return.ExitCode -eq 0) {

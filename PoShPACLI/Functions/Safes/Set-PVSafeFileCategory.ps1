@@ -100,7 +100,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters |
 				ConvertTo-ParameterString)
 
 		if($Return.StdErr) {
