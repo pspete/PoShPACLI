@@ -1,40 +1,40 @@
 ﻿Function Set-PVSafeNote {
 
 	<#
-    .SYNOPSIS
-    	Adds a note to the specified Safe
+	.SYNOPSIS
+	Adds a note to the specified Safe
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "ADDNOTE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "ADDNOTE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The Safe to which to add a note.
+	.PARAMETER safe
+	The Safe to which to add a note.
 
-    .PARAMETER subject
-        The subject title of the note.
+	.PARAMETER subject
+	The subject title of the note.
 
-    .PARAMETER text
-        The content of the note.
+	.PARAMETER text
+	The content of the note.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Set-PVSafeNote -vault Lab -user administrator -safe xxTest -subject "New Note" -text "Things worth noting..."
+	.EXAMPLE
+	Set-PVSafeNote -vault Lab -user administrator -safe xxTest -subject "New Note" -text "Things worth noting..."
 
-		Adds a safe note to safe xxTest
+	Adds a safe note to safe xxTest
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

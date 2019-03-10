@@ -1,34 +1,34 @@
 ﻿Function Get-PVLDAPBranch {
 
 	<#
-    .SYNOPSIS
-    	Lists the LDAP branches in a specified CyberArk Directory Map
+	.SYNOPSIS
+	Lists the LDAP branches in a specified CyberArk Directory Map
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LDAPBRANCHESLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LDAPBRANCHESLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER ldapMapName
-		The name of the Directory Map which contains the branches that will be listed.
+	.PARAMETER ldapMapName
+	The name of the Directory Map which contains the branches that will be listed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping"
+	.EXAMPLE
+	Get-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping"
 
-		Lists LDAP branches for Vault Users Mapping
+	Lists LDAP branches for Vault Users Mapping
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

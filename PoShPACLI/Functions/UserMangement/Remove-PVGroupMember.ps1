@@ -2,34 +2,34 @@
 
 	<#
 	.SYNOPSIS
-		Removes a User as a member from a CyberArk group.
+	Removes a User as a member from a CyberArk group.
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "DELETEGROUPMEMBER"
+	Exposes the PACLI Function: "DELETEGROUPMEMBER"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER group
-		The name of the group.
+	The name of the group.
 
 	.PARAMETER member
-		The name of the group member to delete
+	The name of the group member to delete
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Remove-PVGroupMember -vault Lab -user administrator -group auditors -member WebService
+	Remove-PVGroupMember -vault Lab -user administrator -group auditors -member WebService
 
-		Deletes "WebService" as a member of vault group "Auditors"
+	Deletes "WebService" as a member of vault group "Auditors"
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

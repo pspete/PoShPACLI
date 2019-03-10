@@ -1,51 +1,51 @@
 ﻿Function Get-PVUserList {
 
 	<#
-    .SYNOPSIS
-    	Produces a list of Users who have access to the specified Vault.
-        You can only generate this list if you have administrative permissions.
+	.SYNOPSIS
+	Produces a list of Users who have access to the specified Vault.
+	You can only generate this list if you have administrative permissions.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "USERSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "USERSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER location
-	   The location to search for users.
-	   Note: A backslash ‘\’ must be added before the name of the location.
+	.PARAMETER location
+	The location to search for users.
+	Note: A backslash ‘\’ must be added before the name of the location.
 
-    .PARAMETER includeSubLocations
-	   Whether or not the output will include the sublocation in which the User
-       is defined.
+	.PARAMETER includeSubLocations
+	Whether or not the output will include the sublocation in which the User
+	is defined.
 
-    .PARAMETER includeDisabledUsers
-	   Whether or not the output will include disabled users
+	.PARAMETER includeDisabledUsers
+	Whether or not the output will include disabled users
 
-    .PARAMETER onlyKnownUsers
-	   Whether or not the output will include only Users who share Safes with
-       the User carrying out the command or all Users known by the specified Vault
+	.PARAMETER onlyKnownUsers
+	Whether or not the output will include only Users who share Safes with
+	the User carrying out the command or all Users known by the specified Vault
 
-    .PARAMETER userPattern
-	   The full name or part of the name of the User(s) to include in the report.
-       A wildcard can also be used in this parameter.
+	.PARAMETER userPattern
+	The full name or part of the name of the User(s) to include in the report.
+	A wildcard can also be used in this parameter.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVUserList -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
+	.EXAMPLE
+	Get-PVUserList -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
 
-		Returns all LDAP users/groups from vault
+	Returns all LDAP users/groups from vault
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

@@ -1,41 +1,41 @@
 ﻿Function Set-PVRequestStatus {
 
 	<#
-    .SYNOPSIS
-    	Enables authorized users or groups to confirm a request.
+	.SYNOPSIS
+	Enables authorized users or groups to confirm a request.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "CONFIRMREQUEST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "CONFIRMREQUEST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe for which the request has been created.
+	.PARAMETER safe
+	The name of the Safe for which the request has been created.
 
-    .PARAMETER requestID
-        The unique ID number of the request.
+	.PARAMETER requestID
+	The unique ID number of the request.
 
-    .PARAMETER confirmRequest
-        Whether to confirm or reject this request.
+	.PARAMETER confirmRequest
+	Whether to confirm or reject this request.
 
-    .PARAMETER reason
-        The reason for the action taken by the authorized user or group.
+	.PARAMETER reason
+	The reason for the action taken by the authorized user or group.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Set-PVRequestStatus -vault Lab -user administrator -safe SQL -requestID 11 -confirm
+	.EXAMPLE
+	Set-PVRequestStatus -vault Lab -user administrator -safe SQL -requestID 11 -confirm
 
-		Confirms request with ID 11 in safe SQL
+	Confirms request with ID 11 in safe SQL
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

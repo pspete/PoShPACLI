@@ -2,35 +2,34 @@
 
 	<#
     .SYNOPSIS
-    	Deletes a File Category at Safe level.
+    Deletes a File Category at Safe level.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "DELETESAFEFILECATEGORY"
+    Exposes the PACLI Function: "DELETESAFEFILECATEGORY"
 
     .PARAMETER vault
-        The defined Vault name
-        defined.
+    The defined Vault name
 
     .PARAMETER user
-        The Username of the authenticated User.
+    The Username of the authenticated User.
 
     .PARAMETER safe
-        The Safe where the File Categories is defined.
+    The Safe where the File Categories is defined.
 
     .PARAMETER category
-        The name of the File Category to delete.
+	The name of the File Category to delete.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-PVSafeFileCategory -vault lab -user administrator -safe EU_Infra -category CISOcat1
+	Remove-PVSafeFileCategory -vault lab -user administrator -safe EU_Infra -category CISOcat1
 
-		Deletes CISOcat1 file category from EU_Infra safe
+	Deletes CISOcat1 file category from EU_Infra safe
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

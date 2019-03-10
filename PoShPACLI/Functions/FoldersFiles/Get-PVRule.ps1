@@ -1,42 +1,42 @@
 ﻿Function Get-PVRule {
 
 	<#
-    .SYNOPSIS
-    	Lists all the service rules in a specified Safe.
+	.SYNOPSIS
+	Lists all the service rules in a specified Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "RULESLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "RULESLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User who is logged on.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safeName
-        The Safe where the rules are applied.
+	.PARAMETER safeName
+	The Safe where the rules are applied.
 
-    .PARAMETER fullObjectName
-        The file, password, or folder that the rule applies to.
+	.PARAMETER fullObjectName
+	The file, password, or folder that the rule applies to.
 
-    .PARAMETER isFolder
-        Whether the rule applies to files and passwords or for folders.
-            NO – Indicates files and passwords
-            YES – Indicates folders
+	.PARAMETER isFolder
+	Whether the rule applies to files and passwords or for folders.
+		NO – Indicates files and passwords
+		YES – Indicates folders
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVRule -vault lab -user administrator -safeName UNIX -fullObjectname root\rootpass -isFolder $false
+	.EXAMPLE
+	Get-PVRule -vault lab -user administrator -safeName UNIX -fullObjectname root\rootpass -isFolder $false
 
-		Lists OLAC rules for rootpass
+	Lists OLAC rules for rootpass
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

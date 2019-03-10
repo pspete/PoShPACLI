@@ -1,38 +1,38 @@
 ﻿Function Get-PVFileList {
 
 	<#
-    .SYNOPSIS
-    	Produces a list of files or passwords in the specified Safe that match
-        the criteria that is declared.
+	.SYNOPSIS
+	Produces a list of files or passwords in the specified Safe that match
+	the criteria that is declared.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "FILESLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "FILESLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe containing the files to list.
+	.PARAMETER safe
+	The name of the Safe containing the files to list.
 
-    .PARAMETER folder
-        The name of the folder containing the files to list.
+	.PARAMETER folder
+	The name of the folder containing the files to list.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVFileList -vault lab -user administrator -safe Reports -folder root
+	.EXAMPLE
+	Get-PVFileList -vault lab -user administrator -safe Reports -folder root
 
-		Lists files in the Reports safe
+	Lists files in the Reports safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

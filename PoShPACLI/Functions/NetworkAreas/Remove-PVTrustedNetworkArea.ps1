@@ -1,37 +1,37 @@
 ﻿Function Remove-PVTrustedNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Deletes a Trusted Network Area from a CyberArk Vault environment.
+	.SYNOPSIS
+	Deletes a Trusted Network Area from a CyberArk Vault environment.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETETRUSTEDNETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "DELETETRUSTEDNETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER trusterName
-	   The User whose access to the Trusted Network Area will be removed.
+	.PARAMETER trusterName
+	The User whose access to the Trusted Network Area will be removed.
 
-    .PARAMETER networkArea
-	   The name of the Trusted Network Area to delete.
+	.PARAMETER networkArea
+	The name of the Trusted Network Area to delete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Remove-PVTrustedNetworkArea -vault Lab -user administrator -trusterName cnAdmin -networkArea All\Vendor
+	.EXAMPLE
+	Remove-PVTrustedNetworkArea -vault Lab -user administrator -trusterName cnAdmin -networkArea All\Vendor
 
-		Deletes Trusted Network Area "Vendor" from cnAdmin account
+	Deletes Trusted Network Area "Vendor" from cnAdmin account
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

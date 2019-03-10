@@ -1,37 +1,37 @@
 ﻿Function Remove-PVLDAPBranch {
 
 	<#
-    .SYNOPSIS
-    	Deletes an LDAP branch from a CyberArk Directory Map
+	.SYNOPSIS
+	Deletes an LDAP branch from a CyberArk Directory Map
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LDAPBRANCHDELETE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LDAPBRANCHDELETE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER ldapMapName
-		The name of the Directory Map where the LDAP branch will be updated.
+	.PARAMETER ldapMapName
+	The name of the Directory Map where the LDAP branch will be updated.
 
-    .PARAMETER deleteBranchID
-		A 64-bit unique ID of the branch to update
+	.PARAMETER deleteBranchID
+	A 64-bit unique ID of the branch to update
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Remove-PVLDAPBranch -vault Lab -user administrator -ldapMapName EU_Users -deleteBranchID 4
+	.EXAMPLE
+	Remove-PVLDAPBranch -vault Lab -user administrator -ldapMapName EU_Users -deleteBranchID 4
 
-		Deletes Ldap Branch with ID of 4 from EU_Users Mapping
+	Deletes Ldap Branch with ID of 4 from EU_Users Mapping
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

@@ -1,43 +1,43 @@
 ﻿Function Get-PVFileActivity {
 
 	<#
-    .SYNOPSIS
-    	Inspect activity that has taken place in a specified Safe.
+	.SYNOPSIS
+	Inspect activity that has taken place in a specified Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "INSPECTFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "INSPECTFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe containing the file.
+	.PARAMETER safe
+	The name of the Safe containing the file.
 
-    .PARAMETER folder
-        The folder containing the file whose activity will be listed.
+	.PARAMETER folder
+	The folder containing the file whose activity will be listed.
 
-    .PARAMETER file
-        The name of the file or password whose activity will be listed.
+	.PARAMETER file
+	The name of the file or password whose activity will be listed.
 
-    .PARAMETER logDays
-        The number of days to include in the list of activities.
+	.PARAMETER logDays
+	The number of days to include in the list of activities.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVFileActivity -vault lab -user administrator -safe PROD -folder root -file prodpass
+	.EXAMPLE
+	Get-PVFileActivity -vault lab -user administrator -safe PROD -folder root -file prodpass
 
-		Lists file activity for prodpass in safe PROD
+	Lists file activity for prodpass in safe PROD
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

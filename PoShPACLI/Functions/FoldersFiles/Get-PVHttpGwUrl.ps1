@@ -1,41 +1,41 @@
 ﻿Function Get-PVHttpGwUrl {
 
 	<#
-    .SYNOPSIS
-    	Retrieves the HTTP Gateway URL for a file in the Safe.
-        Note: This command is no longer supported in version 5.5.
+	.SYNOPSIS
+	Retrieves the HTTP Gateway URL for a file in the Safe.
+	Note: This command is no longer supported in version 5.5.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "GETHTTPGWURL"
+	.DESCRIPTION
+	Exposes the PACLI Function: "GETHTTPGWURL"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The name of the user carrying out the task.
+	.PARAMETER user
+	The name of the user carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe that contains the file.
+	.PARAMETER safe
+	The name of the Safe that contains the file.
 
-    .PARAMETER folder
-        The name of the folder where the file is stored.
+	.PARAMETER folder
+	The name of the folder where the file is stored.
 
-    .PARAMETER file
-        The name of the specified file.
+	.PARAMETER file
+	The name of the specified file.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVHttpGwUrl -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
+	.EXAMPLE
+	Get-PVHttpGwUrl -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
 
-		Retrieves the HTTP Gateway URL for file TeamPass in the DEV Safe.
+	Retrieves the HTTP Gateway URL for file TeamPass in the DEV Safe.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

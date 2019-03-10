@@ -1,42 +1,42 @@
 ﻿Function Get-PVSafeOwner {
 
 	<#
-    .SYNOPSIS
-    	Produces a list of all the Safe Owners of the specified Safe(s).
+	.SYNOPSIS
+	Produces a list of all the Safe Owners of the specified Safe(s).
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "OWNERSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "OWNERSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safePattern
-        The full name or part of the name of the Safe(s) to include in the list.
-        Alternatively, a wildcard can be used in this parameter.
+	.PARAMETER safePattern
+	The full name or part of the name of the Safe(s) to include in the list.
+	Alternatively, a wildcard can be used in this parameter.
 
-    .PARAMETER ownerPattern
-        The full name or part of the name of the Owner(s) to include in the list.
-        Alternatively, a wildcard can be used in this parameter.
+	.PARAMETER ownerPattern
+	The full name or part of the name of the Owner(s) to include in the list.
+	Alternatively, a wildcard can be used in this parameter.
 
-    .PARAMETER includeGroupMembers
-        Whether or not to include individual members of Groups in the list.
+	.PARAMETER includeGroupMembers
+	Whether or not to include individual members of Groups in the list.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVSafeOwner -vault lab -user administrator -safePattern system -ownerPattern *
+	.EXAMPLE
+	Get-PVSafeOwner -vault lab -user administrator -safePattern system -ownerPattern *
 
-		Lists all owners of the SYSTEM safe
+	Lists all owners of the SYSTEM safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

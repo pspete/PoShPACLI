@@ -2,31 +2,31 @@
 
 	<#
     .SYNOPSIS
-    	Enables a User with the appropriate authority to delete a CyberArk User.
+    Enables a User with the appropriate authority to delete a CyberArk User.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "DELETEUSER"
+	Exposes the PACLI Function: "DELETEUSER"
 
     .PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
     .PARAMETER destUser
-    	The name of the User to be deleted.
+    The name of the User to be deleted.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+    The ID number of the session. Use this parameter when working
+    with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-PVUser -vault Lab -user administrator -destUser quitter
+	Remove-PVUser -vault Lab -user administrator -destUser quitter
 
-		Deletes vault user "quitter"
+	Deletes vault user "quitter"
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

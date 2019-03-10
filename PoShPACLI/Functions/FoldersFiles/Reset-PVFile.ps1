@@ -1,40 +1,40 @@
 ﻿Function Reset-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Reset the access marks on the specified file or password.
+	.SYNOPSIS
+	Reset the access marks on the specified file or password.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "RESETFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "RESETFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER file
-        The name of the file or password to reset.
+	.PARAMETER file
+	The name of the file or password to reset.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Reset-PVFile -vault lab -user administrator -safe EU_Admins -folder root -file eu.credential
+	.EXAMPLE
+	Reset-PVFile -vault lab -user administrator -safe EU_Admins -folder root -file eu.credential
 
-		Reset access mark on eu.credential file
+	Reset access mark on eu.credential file
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

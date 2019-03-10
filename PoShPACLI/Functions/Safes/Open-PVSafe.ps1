@@ -1,82 +1,82 @@
 ﻿Function Open-PVSafe {
 
 	<#
-		.SYNOPSIS
-			Open a Safe (Safe Owner authorizations required). When the Safe is opened,
-				various details about the Safe will be displayed, depending on the
-				parameters specified.
+	.SYNOPSIS
+	Open a Safe (Safe Owner authorizations required). When the Safe is opened,
+	various details about the Safe will be displayed, depending on the
+	parameters specified.
 
-		.DESCRIPTION
-			Exposes the PACLI Function: "OPENSAFE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "OPENSAFE"
 
-		.PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-		.PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
-		.PARAMETER safe
-		The name of the Safe to open.
+	.PARAMETER safe
+	The name of the Safe to open.
 
-		.PARAMETER requestUsageType
-		The operation that the user will carry out.
+	.PARAMETER requestUsageType
+	The operation that the user will carry out.
 
-				Possible options are:
-						REQUEST_AND_USE – create and send a request if
-						necessary, or use the confirmation if it has been granted to
-						open the Safe/file/password.
+	Possible options are:
+		REQUEST_AND_USE – create and send a request if
+		necessary, or use the confirmation if it has been granted to
+		open the Safe/file/password.
 
-						CHECK_DON’T_USE – check if a request has been sent or,
-						if not, create one and send an error. If a request is not
-						needed, carry out the action.
+		CHECK_DON’T_USE – check if a request has been sent or,
+		if not, create one and send an error. If a request is not
+		needed, carry out the action.
 
-						USE_ONLY – if the request has been confirmed, or if a
-						request is not needed, open the Safe/file/password.
+		USE_ONLY – if the request has been confirmed, or if a
+		request is not needed, open the Safe/file/password.
 
-		Note: In version 4.1, this parameter has no default value and
-		is obsolete. However, it can still be used as long as the
-		‘userequest’, ‘sendrequest’ and ‘executerequest’ parameters
-		are not specified.
+	Note: In version 4.1, this parameter has no default value and
+	is obsolete. However, it can still be used as long as the
+	‘userequest’, ‘sendrequest’ and ‘executerequest’ parameters
+	are not specified.
 
-		.PARAMETER requestAccessType
-		Whether the request is for a single or multiple access.
-		Possible options are:
-			SINGLE – for a single access.
+	.PARAMETER requestAccessType
+	Whether the request is for a single or multiple access.
+	Possible options are:
+		SINGLE – for a single access.
 
-			MULTIPLE – for multiple accesses.
+		MULTIPLE – for multiple accesses.
 
-		.PARAMETER usableFrom
-		The proposed date from when the request will be valid.
+	.PARAMETER usableFrom
+	The proposed date from when the request will be valid.
 
-		.PARAMETER usableTo
-		The proposed date until when the request will be valid.
+	.PARAMETER usableTo
+	The proposed date until when the request will be valid.
 
-		.PARAMETER requestReason
-		The reason for the request.
+	.PARAMETER requestReason
+	The reason for the request.
 
-		.PARAMETER useRequest
-		If a confirmed request exists, it will be used.
+	.PARAMETER useRequest
+	If a confirmed request exists, it will be used.
 
-		.PARAMETER sendRequest
-		A request will be sent, if needed.
+	.PARAMETER sendRequest
+	A request will be sent, if needed.
 
-		.PARAMETER executeRequest
-		The action will be executed, if a confirmation exists or is not
-		needed.
+	.PARAMETER executeRequest
+	The action will be executed, if a confirmation exists or is not
+	needed.
 
-		.PARAMETER sessionID
-			The ID number of the session. Use this parameter when working
-				with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-		.EXAMPLE
-			Open-PVSafe -vault lab -user administrator -safe System
+	.EXAMPLE
+	Open-PVSafe -vault lab -user administrator -safe System
 
-			Opens the System safe
+	Opens the System safe
 
-		.NOTES
-			AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-		#>
+	#>
 
 	[CmdLetBinding()]
 	param(

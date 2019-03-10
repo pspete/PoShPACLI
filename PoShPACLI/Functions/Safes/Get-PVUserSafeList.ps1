@@ -1,34 +1,34 @@
 ﻿Function Get-PVUserSafeList {
 
 	<#
-    .SYNOPSIS
-    	Lists of the Safes to which the specified Safe Owner has ownership.
+	.SYNOPSIS
+	Lists of the Safes to which the specified Safe Owner has ownership.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "OWNERSAFESLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "OWNERSAFESLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER owner
-        The name of the Safe Owner.
+	.PARAMETER owner
+	The name of the Safe Owner.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVUserSafeList -vault Lab -user administrator -owner sec_admin
+	.EXAMPLE
+	Get-PVUserSafeList -vault Lab -user administrator -owner sec_admin
 
-		Lists safes owned by user sec_admin
+	Lists safes owned by user sec_admin
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

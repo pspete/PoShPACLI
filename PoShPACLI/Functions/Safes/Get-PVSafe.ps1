@@ -1,34 +1,34 @@
 ﻿Function Get-PVSafe {
 
 	<#
-    .SYNOPSIS
-    	Lists Safe details
+	.SYNOPSIS
+	Lists Safe details
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "SAFEDETAILS"
+	.DESCRIPTION
+	Exposes the PACLI Function: "SAFEDETAILS"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe whose details will be listed.
+	.PARAMETER safe
+	The name of the Safe whose details will be listed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVSafe -vault lab -user administrator -safe system
+	.EXAMPLE
+	Get-PVSafe -vault lab -user administrator -safe system
 
-		Lists details of the SYSTEM safe
+	Lists details of the SYSTEM safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

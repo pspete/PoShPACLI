@@ -1,37 +1,37 @@
 ﻿Function Remove-PVPreferredFolder {
 
 	<#
-    .SYNOPSIS
-    	Deletes a preferred folder from a Safe.
+	.SYNOPSIS
+	Deletes a preferred folder from a Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETEPREFFEREDFOLDER"
+	.DESCRIPTION
+	Exposes the PACLI Function: "DELETEPREFFEREDFOLDER"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe containing the preferred folder.
+	.PARAMETER safe
+	The name of the Safe containing the preferred folder.
 
-    .PARAMETER folder
-        The name of the preferred folder to delete.
+	.PARAMETER folder
+	The name of the preferred folder to delete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Remove-PVPreferredFolder -vault lab -user administrator -safe Reports -folder root\reports
+	.EXAMPLE
+	Remove-PVPreferredFolder -vault lab -user administrator -safe Reports -folder root\reports
 
-		Deletes preferred folder
+	Deletes preferred folder
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

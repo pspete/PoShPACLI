@@ -1,42 +1,42 @@
 ﻿Function Move-PVFolder {
 
 	<#
-    .SYNOPSIS
-    	Moves a folder to a different location within the same Safe.
+	.SYNOPSIS
+	Moves a folder to a different location within the same Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "MOVEFOLDER"
+	.DESCRIPTION
+	Exposes the PACLI Function: "MOVEFOLDER"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe containing the folder to move.
+	.PARAMETER safe
+	The name of the Safe containing the folder to move.
 
-    .PARAMETER folder
-        The name of the folder.
+	.PARAMETER folder
+	The name of the folder.
 
-    .PARAMETER newLocation
-        The new location of the folder.
-        Note: Add a backslash ‘\’ before the name of the location.
+	.PARAMETER newLocation
+	The new location of the folder.
+	Note: Add a backslash ‘\’ before the name of the location.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 `
-		-newLocation root
+	.EXAMPLE
+	Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 `
+	-newLocation root
 
-		Moves folder "2017"to the root location of the safe
+	Moves folder "2017"to the root location of the safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

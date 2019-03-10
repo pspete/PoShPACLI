@@ -1,31 +1,31 @@
 ﻿Function Disconnect-PVVault {
 
 	<#
-    .SYNOPSIS
-    	This command enables log off from the Vault
+	.SYNOPSIS
+	This command enables log off from the Vault
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LOGOFF"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LOGOFF"
 
-    .PARAMETER vault
-        The name of the Vault to log off from.
+	.PARAMETER vault
+	The name of the Vault to log off from.
 
-    .PARAMETER user
-        The name of the User who is logging off.
+	.PARAMETER user
+	The name of the User who is logging off.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Disconnect-PVVault -vault VaultA -user administrator
+	.EXAMPLE
+	Disconnect-PVVault -vault VaultA -user administrator
 
-		Logs off administrator from defined vault VaultA
+	Logs off administrator from defined vault VaultA
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

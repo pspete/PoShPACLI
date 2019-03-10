@@ -2,32 +2,32 @@
 
 	<#
     .SYNOPSIS
-    	Deletes a Location
+	Deletes a Location
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "DELETELOCATION"
+    Exposes the PACLI Function: "DELETELOCATION"
 
     .PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
     .PARAMETER location
-        The name of the location to delete.
-        Note: Add a backslash ‘\’ before the name of the location
+    The name of the location to delete.
+    Note: Add a backslash ‘\’ before the name of the location
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+    The ID number of the session. Use this parameter when working
+    with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-PVLocation -vault Lab -user administrator -location \x51
+	Remove-PVLocation -vault Lab -user administrator -location \x51
 
-		Deletes location "x51" from the vault
+	Deletes location "x51" from the vault
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

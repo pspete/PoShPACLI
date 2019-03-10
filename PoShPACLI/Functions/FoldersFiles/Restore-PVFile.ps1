@@ -1,40 +1,40 @@
 ﻿Function Restore-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Undelete a file or password that has been previously deleted.
+	.SYNOPSIS
+	Undelete a file or password that has been previously deleted.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "UNDELETEFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "UNDELETEFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe in which the file was stored.
+	.PARAMETER safe
+	The name of the Safe in which the file was stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file was stored.
+	.PARAMETER folder
+	The name of the folder in which the file was stored.
 
-    .PARAMETER file
-        The name of the file or password to undelete.
+	.PARAMETER file
+	The name of the file or password to undelete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Restore-PVFile -vault lab -user administrator -safe US_Region -folder root -file deletedFile
+	.EXAMPLE
+	Restore-PVFile -vault lab -user administrator -safe US_Region -folder root -file deletedFile
 
-		"Un-deletes"/Restores deletedFile
+	"Un-deletes"/Restores deletedFile
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

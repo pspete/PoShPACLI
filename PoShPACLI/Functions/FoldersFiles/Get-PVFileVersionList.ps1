@@ -1,41 +1,41 @@
 ﻿Function Get-PVFileVersionList {
 
 	<#
-    .SYNOPSIS
-    	Lists the versions of the specified file or password.
+	.SYNOPSIS
+	Lists the versions of the specified file or password.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "FILEVERSIONSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "FILEVERSIONSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER file
-        The name of the file or password whose versions will be displayed.
+	.PARAMETER file
+	The name of the file or password whose versions will be displayed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root `
-		-file administrator.domain.com
+	.EXAMPLE
+	Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root `
+	-file administrator.domain.com
 
-		Lists the versions of the specified file
+	Lists the versions of the specified file
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

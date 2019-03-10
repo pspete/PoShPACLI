@@ -1,31 +1,31 @@
 ﻿Function Get-PVCTLCertificate {
 
 	<#
-    .SYNOPSIS
-    	Lists all the certificates in the Certificate Trust List store.
+	.SYNOPSIS
+	Lists all the certificates in the Certificate Trust List store.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "CTLLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "CTLLIST"
 
-    .PARAMETER ctlFileName
-    	The name of the CTL file that contains the certificates to list. If this
-        parameter is not supplied, the CTL file name that was supplied in
-        the INIT function is used.
+	.PARAMETER ctlFileName
+	The name of the CTL file that contains the certificates to list. If this
+	parameter is not supplied, the CTL file name that was supplied in
+	the INIT function is used.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Get-PVCTLCertificate
+	Get-PVCTLCertificate
 
-		lists all the certificates in the Certificate Trust List store/file
-		using the CTL file provided as parameter value to Start-PVPacli function.
+	lists all the certificates in the Certificate Trust List store/file
+	using the CTL file provided as parameter value to Start-PVPacli function.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

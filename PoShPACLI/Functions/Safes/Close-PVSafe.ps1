@@ -2,31 +2,31 @@
 
 	<#
 	.SYNOPSIS
-		Closes a Safe
+	Closes a Safe
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "CLOSESAFE"
+	Exposes the PACLI Function: "CLOSESAFE"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER safe
-		The name of the Safe to close.
+	The name of the Safe to close.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Close-PVSafe -vault Lab -user administrator -safe system
+	Close-PVSafe -vault Lab -user administrator -safe system
 
-		Closes the SYSTEM safe
+	Closes the SYSTEM safe
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

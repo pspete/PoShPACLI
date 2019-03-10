@@ -1,26 +1,26 @@
 ﻿Function Get-PVCTL {
 
 	<#
-    .SYNOPSIS
-    	Returns the name of the Certificate Trust List (CTL) that was defined
-        during the Start-PVPacli function.
+	.SYNOPSIS
+	Returns the name of the Certificate Trust List (CTL) that was defined
+	during the Start-PVPacli function.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "CTLGETFILENAME"
+	.DESCRIPTION
+	Exposes the PACLI Function: "CTLGETFILENAME"
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVCTL
+	.EXAMPLE
+	Get-PVCTL
 
-		Returns the name of the Certificate Trust List (CTL) provided to Start-PVPacli function.
+	Returns the name of the Certificate Trust List (CTL) provided to Start-PVPacli function.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

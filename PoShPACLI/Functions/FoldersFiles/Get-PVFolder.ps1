@@ -1,34 +1,34 @@
 ﻿Function Get-PVFolder {
 
 	<#
-    .SYNOPSIS
-    	Lists folders in the specified Safe.
+	.SYNOPSIS
+	Lists folders in the specified Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "FOLDERSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "FOLDERSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe whose folders will be listed.
+	.PARAMETER safe
+	The name of the Safe whose folders will be listed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVFolder -vault lab -user administrator -safe ORACLE
+	.EXAMPLE
+	Get-PVFolder -vault lab -user administrator -safe ORACLE
 
-		Lists all folders in the specified safe.
+	Lists all folders in the specified safe.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

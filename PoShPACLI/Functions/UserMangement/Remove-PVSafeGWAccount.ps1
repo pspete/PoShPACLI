@@ -2,36 +2,36 @@
 
 	<#
     .SYNOPSIS
-    	Removes the safe sharing feature through a specific Gateway account.
-        This means that this Safe will no longer be accessible through this
-        Gateway account.
+	Removes the safe sharing feature through a specific Gateway account.
+	This means that this Safe will no longer be accessible through this
+	Gateway account.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "DELETESAFESHARE"
+    Exposes the PACLI Function: "DELETESAFESHARE"
 
     .PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
     .PARAMETER safe
-	   The Safe from which to remove the sharing feature.
+	The Safe from which to remove the sharing feature.
 
     .PARAMETER gwAccount
-	   The name of the Gateway account through which the Safe will not be accessible.
+	The name of the Gateway account through which the Safe will not be accessible.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Remove-PVSafeGWAccount -vault Lab -user administrator -safe xxTest -gwAccount pvwagwuser
+	Remove-PVSafeGWAccount -vault Lab -user administrator -safe xxTest -gwAccount pvwagwuser
 
-		Deletes PVWAGWuser as a GW account on open safe xxTest
+	Deletes PVWAGWuser as a GW account on open safe xxTest
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

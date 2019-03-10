@@ -1,37 +1,37 @@
 ﻿Function Disable-PVTrustedNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Deactivates a Trusted Network Area.
+	.SYNOPSIS
+	Deactivates a Trusted Network Area.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DEACTIVATETRUSTEDNETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "DEACTIVATETRUSTEDNETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER trusterName
-	   The User who will not have access to the Trusted Network Area.
+	.PARAMETER trusterName
+	The User who will not have access to the Trusted Network Area.
 
-    .PARAMETER networkArea
-	   The name of the Network Area to deactivate.
+	.PARAMETER networkArea
+	The name of the Network Area to deactivate.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Disable-PVTrustedNetworkArea -vault lab -user administrator -trusterName user2 -networkArea All
+	.EXAMPLE
+	Disable-PVTrustedNetworkArea -vault lab -user administrator -trusterName user2 -networkArea All
 
-		Disables the "All" Trusted Network Area for user2
+	Disables the "All" Trusted Network Area for user2
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

@@ -2,41 +2,41 @@
 
 	<#
 	.SYNOPSIS
-		Updates CyberArk Group properties.
+	Updates CyberArk Group properties.
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "UPDATEGROUP"
+	Exposes the PACLI Function: "UPDATEGROUP"
 
 	.PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+    The Username of the authenticated User.
 
 	.PARAMETER group
-		The name of the group to update.
+	The name of the group to update.
 
 	.PARAMETER location
-		The name of the location containing the group
-		Note: Add a backslash ‘\’ before the name of the location.
+	The name of the location containing the group
+	Note: Add a backslash ‘\’ before the name of the location.
 
 	.PARAMETER description
-		The description of the group.
+	The description of the group.
 
 	.PARAMETER externalGroup
-		The name of an external group that is a member in the current group.
+	The name of an external group that is a member in the current group.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Set-PVGroup -vault Lab -user administrator -group group1 -location \ -description "New Description"
+	Set-PVGroup -vault Lab -user administrator -group group1 -location \ -description "New Description"
 
-			Sets new description on vault group 1
+	Sets new description on vault group 1
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

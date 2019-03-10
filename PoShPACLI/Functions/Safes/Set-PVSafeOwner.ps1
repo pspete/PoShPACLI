@@ -2,123 +2,123 @@
 
 	<#
 	.SYNOPSIS
-		Updates the Safe Owner authorizations of a particular Safe Owner.
-		In order to carry out this command successfully, the Safe must be open.
+	Updates the Safe Owner authorizations of a particular Safe Owner.
+	In order to carry out this command successfully, the Safe must be open.
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "UPDATEOWNER"
+	Exposes the PACLI Function: "UPDATEOWNER"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER owner
-		The name of the Safe Owner whose authorizations will be updated
+	The name of the Safe Owner whose authorizations will be updated
 
 	.PARAMETER safe
-		The name of the Safe in which the Safe Owner's authorizations apply.
+	The name of the Safe in which the Safe Owner's authorizations apply.
 
 	.PARAMETER readOnlyByDefault
-		Whether or not the user’s initial access to the files in the Safe is for
-		read-only format.
+	Whether or not the user’s initial access to the files in the Safe is for
+	read-only format.
 
 	.PARAMETER retrieve
-		Whether or not the Safe Owner will be able to retrieve files.
+	Whether or not the Safe Owner will be able to retrieve files.
 
 	.PARAMETER store
-		Whether or not the Safe Owner will be able to store files.
+	Whether or not the Safe Owner will be able to store files.
 
 	.PARAMETER delete
-		Whether or not the Safe Owner will be able to delete files.
+	Whether or not the Safe Owner will be able to delete files.
 
 	.PARAMETER administer
-		Whether or not the Safe Owner will be able to administer the Safe.
+	Whether or not the Safe Owner will be able to administer the Safe.
 
 	.PARAMETER supervise
-		Whether or not the Safe Owner will be able to supervise other Safe Owners
-		and confirm requests by other users to enter specific Safes.
+	Whether or not the Safe Owner will be able to supervise other Safe Owners
+	and confirm requests by other users to enter specific Safes.
 
 	.PARAMETER backup
-		Whether or not the Safe Owner will be able to backup the Safe.
+	Whether or not the Safe Owner will be able to backup the Safe.
 
 	.PARAMETER manageOwners
-		Whether or not the Safe Owner will be able to manage other Safe Owners.
+	Whether or not the Safe Owner will be able to manage other Safe Owners.
 
 	.PARAMETER accessNoConfirmation
-		Whether or not the Safe Owner will be able to access the Safe without
-		requiring confirmation from authorized users.
+	Whether or not the Safe Owner will be able to access the Safe without
+	requiring confirmation from authorized users.
 
 	.PARAMETER validateSafeContent
-		Whether or not the Safe Owner will be able to change the validation status
-		of the Safe contents.
+	Whether or not the Safe Owner will be able to change the validation status
+	of the Safe contents.
 
 	.PARAMETER list
-		Whether or not the Safe Owner will be able to list Safe contents
+	Whether or not the Safe Owner will be able to list Safe contents
 
 	.PARAMETER usePassword
-		Whether or not the Safe Owner will be able to use the password in the PVWA.
+	Whether or not the Safe Owner will be able to use the password in the PVWA.
 
 	.PARAMETER updateObjectProperties
-		Whether or not the Safe Owner will be able to update object properties.
+	Whether or not the Safe Owner will be able to update object properties.
 
 	.PARAMETER initiateCPMChange
-		Whether or not the Safe Owner will be able to initiate CPM changes for
-		passwords.
+	Whether or not the Safe Owner will be able to initiate CPM changes for
+	passwords.
 
 	.PARAMETER initiateCPMChangeWithManualPassword
-		Whether or not the Safe Owner will be able to initiate a CPM change with
-		a manual password.
+	Whether or not the Safe Owner will be able to initiate a CPM change with
+	a manual password.
 
 	.PARAMETER createFolder
-		Whether or not the Safe Owner will be able to create folders.
+	Whether or not the Safe Owner will be able to create folders.
 
 	.PARAMETER deleteFolder
-		Whether or not the Safe Owner will be able to delete folders.
+	Whether or not the Safe Owner will be able to delete folders.
 
 	.PARAMETER moveFrom
-		Whether or not the Safe Owner will be able to move objects from their
-		existing locations.
+	Whether or not the Safe Owner will be able to move objects from their
+	existing locations.
 
 	.PARAMETER moveInto
-		Whether or not the Safe Owner will be able to move objects into new
-		locations.
+	Whether or not the Safe Owner will be able to move objects into new
+	locations.
 
 	.PARAMETER viewAudit
-		Whether or not the Safe Owner will be able to view other users’ audits.
+	Whether or not the Safe Owner will be able to view other users’ audits.
 
 	.PARAMETER viewPermissions
-		Whether or not the Safe Owner will be able to view permissions of other
-		users.
+	Whether or not the Safe Owner will be able to view permissions of other
+	users.
 
 	.PARAMETER eventsList
-		Whether or not the Safe Owner will be able to list events.
-		Note: To allow Safe Owners to access the Safe, make sure this is set to YES.
+	Whether or not the Safe Owner will be able to list events.
+	Note: To allow Safe Owners to access the Safe, make sure this is set to YES.
 
 	.PARAMETER addEvents
-		Whether or not the Safe Owner will be able to add events.
+	Whether or not the Safe Owner will be able to add events.
 
 	.PARAMETER createObject
-		Whether or not the Safe Owner will be able to create new objects.
+	Whether or not the Safe Owner will be able to create new objects.
 
 	.PARAMETER unlockObject
-		Whether or not the Safe Owner will be able to unlock objects.
+	Whether or not the Safe Owner will be able to unlock objects.
 
 	.PARAMETER renameObject
-		Whether or not the Safe Owner will be able to rename objects.
+	Whether or not the Safe Owner will be able to rename objects.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Set-PVSafeOwner -vault lab -user administrator -owner magnus -safe VIP -manageOwners:$false
+	Set-PVSafeOwner -vault lab -user administrator -owner magnus -safe VIP -manageOwners:$false
 
-		Remove manageOwners right from user magnus on safe VIP
+	Remove manageOwners right from user magnus on safe VIP
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

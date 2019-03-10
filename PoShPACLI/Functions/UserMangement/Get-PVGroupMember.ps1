@@ -1,34 +1,34 @@
 ﻿Function Get-PVGroupMember {
 
 	<#
-    .SYNOPSIS
-    	Lists the members of a specified CyberArk group
+	.SYNOPSIS
+	Lists the members of a specified CyberArk group
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "GROUPMEMBERS"
+	.DESCRIPTION
+	Exposes the PACLI Function: "GROUPMEMBERS"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER group
-        The name of the group
+	.PARAMETER group
+	The name of the group
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVGroupMember -vault Lab -user administrator -group cybr_admins
+	.EXAMPLE
+	Get-PVGroupMember -vault Lab -user administrator -group cybr_admins
 
-		Lists members of the cybr_admins group
+	Lists members of the cybr_admins group
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

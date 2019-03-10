@@ -1,82 +1,82 @@
 ﻿Function Get-PVRequest {
 
 	<#
-    .SYNOPSIS
-    	Lists requests from users who wish to enter Safes that require manual
-        access confirmation from authorized users.
+	.SYNOPSIS
+	Lists requests from users who wish to enter Safes that require manual
+	access confirmation from authorized users.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "REQUESTSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "REQUESTSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER requestsType
-        The type of requests to display.
-        The options are:
-        		MY_REQUESTS – your user requests for access.
-        		INCOMING_REQUESTS – other users’ requests for you
-                    to authorize.
-                ALL_REQUESTS – other users’ requests as well as
-                    your own user requests (in the  CyberArk Vault
-                    version 3.5 and above).
+	.PARAMETER requestsType
+	The type of requests to display.
+	The options are:
+		MY_REQUESTS – your user requests for access.
+		INCOMING_REQUESTS – other users’ requests for you
+			to authorize.
+		ALL_REQUESTS – other users’ requests as well as
+			your own user requests (in the  CyberArk Vault
+			version 3.5 and above).
 
-    .PARAMETER requestorPattern
-        Pattern of the username of the user who created the request.
+	.PARAMETER requestorPattern
+	Pattern of the username of the user who created the request.
 
-    .PARAMETER safePattern
-        Pattern of the Safe specified in the request.
+	.PARAMETER safePattern
+	Pattern of the Safe specified in the request.
 
-    .PARAMETER objectPattern
-        Pattern of the file or password specified in the request.
-        Note: This parameter specifies the full object name, including
-        the folder. Either specify the full name of a specific object, or
-        use an asterisk (*) before the object name.
+	.PARAMETER objectPattern
+	Pattern of the file or password specified in the request.
+	Note: This parameter specifies the full object name, including
+	the folder. Either specify the full name of a specific object, or
+	use an asterisk (*) before the object name.
 
-    .PARAMETER waiting
-        Whether or not the request is waiting for a response.
+	.PARAMETER waiting
+	Whether or not the request is waiting for a response.
 
-    .PARAMETER confirmed
-        Whether or not the request is waiting for a confirmation.
+	.PARAMETER confirmed
+	Whether or not the request is waiting for a confirmation.
 
-    .PARAMETER displayInvalid
-        Whether to display all requests or only invalid ones.
-        The options are:
-        		ALL_REQUESTS
-        		ONLY_VALID
-        		ONLY_INVALID
+	.PARAMETER displayInvalid
+	Whether to display all requests or only invalid ones.
+	The options are:
+		ALL_REQUESTS
+		ONLY_VALID
+		ONLY_INVALID
 
-    .PARAMETER includeAlreadyHandled
-        Whether to include requests that have already been handled
-        in the list of requests.
+	.PARAMETER includeAlreadyHandled
+	Whether to include requests that have already been handled
+	in the list of requests.
 
-    .PARAMETER requestID
-        The unique ID number of the request.
+	.PARAMETER requestID
+	The unique ID number of the request.
 
-    .PARAMETER objectsType
-        The type of operation that generated this request.
-        Possible values:
-        		ALL_OBJECTS
-        		GET_FILE
-        		GET_PASSWORD
-        		OPEN_SAFE
+	.PARAMETER objectsType
+	The type of operation that generated this request.
+	Possible values:
+		ALL_OBJECTS
+		GET_FILE
+		GET_PASSWORD
+		OPEN_SAFE
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVRequest -vault Lab -user administrator -requestsType INCOMING_REQUESTS
+	.EXAMPLE
+	Get-PVRequest -vault Lab -user administrator -requestsType INCOMING_REQUESTS
 
-		Lists all Incoming Requests for the authenticated user
+	Lists all Incoming Requests for the authenticated user
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

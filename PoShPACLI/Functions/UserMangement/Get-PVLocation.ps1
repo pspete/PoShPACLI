@@ -1,31 +1,31 @@
 ﻿Function Get-PVLocation {
 
 	<#
-    .SYNOPSIS
-    	Generates a list of locations, and their allocated quotas.
+	.SYNOPSIS
+	Generates a list of locations, and their allocated quotas.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LOCATIONSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LOCATIONSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVLocation -vault Lab -user administrator
+	.EXAMPLE
+	Get-PVLocation -vault Lab -user administrator
 
-		Lists the locations defined in the vault
+	Lists the locations defined in the vault
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

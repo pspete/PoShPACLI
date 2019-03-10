@@ -2,44 +2,44 @@
 
 	<#
 	.SYNOPSIS
-		Adds an LDAP branch to an existing CyberArk Directory Map
+	Adds an LDAP branch to an existing CyberArk Directory Map
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "LDAPBRANCHADD"
+	Exposes the PACLI Function: "LDAPBRANCHADD"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER ldapMapName
-		The name of the Directory Map where the LDAP branch will be added.
+	The name of the Directory Map where the LDAP branch will be added.
 
 	.PARAMETER ldapDirName
-		The name of the LDAP directory.
+	The name of the LDAP directory.
 
 	.PARAMETER ldapBranchName
-		The DN of the LDAP directory branch.
+	The DN of the LDAP directory branch.
 
 	.PARAMETER ldapQuery
-		The LDAP filter that is applied to objects in the specified branch.
+	The LDAP filter that is applied to objects in the specified branch.
 
 	.PARAMETER ldapGroupMatch
-		A regular expression used to filter LDAP groups of objects in the branch.
+	A regular expression used to filter LDAP groups of objects in the branch.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		New-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping" -ldapDirName Domain.COM `
-		-ldapBranchName "DC=Domain,DC=Com" -ldapQuery "samaccountname=this_user"
+	New-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping" -ldapDirName Domain.COM `
+	-ldapBranchName "DC=Domain,DC=Com" -ldapQuery "samaccountname=this_user"
 
-		Adds LDAP Branch to Vault Users Mapping with specified LDAP Query
+	Adds LDAP Branch to Vault Users Mapping with specified LDAP Query
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

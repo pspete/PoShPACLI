@@ -2,35 +2,35 @@
 
 	<#
     .SYNOPSIS
-    	Enables you to change your CyberArk User password.
+   	Enables you to change your CyberArk User password.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "SETPASSWORD"
+   	Exposes the PACLI Function: "SETPASSWORD"
 
     .PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
     .PARAMETER password
-        The User’s current password.
+    The User’s current password.
 
     .PARAMETER newPassword
-        The User’s new password.
+    The User’s new password.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+   	The ID number of the session. Use this parameter when working
+    with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Set-PVUserPassword -vault Lab -user PacliUser -password (read-host -AsSecureString) `
-		-newPassword (Read-Host -AsSecureString)
+	Set-PVUserPassword -vault Lab -user PacliUser -password (read-host -AsSecureString) `
+	-newPassword (Read-Host -AsSecureString)
 
-		Resets the password of the authenticated user
+	Resets the password of the authenticated user
 
     .NOTES
-    	AUTHOR: Pete Maan
+   	AUTHOR: Pete Maan
 
     #>
 

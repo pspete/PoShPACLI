@@ -1,34 +1,34 @@
 ﻿Function Get-PVTrustedNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Lists Trusted Network Areas
+	.SYNOPSIS
+	Lists Trusted Network Areas
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "TRUSTEDNETWORKAREASLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "TRUSTEDNETWORKAREASLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER trusterName
-	   The User who has access to the Trusted Network Area
+	.PARAMETER trusterName
+	The User who has access to the Trusted Network Area
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVTrustedNetworkArea -vault lab -user administrator -trusterName lydia
+	.EXAMPLE
+	Get-PVTrustedNetworkArea -vault lab -user administrator -trusterName lydia
 
-		Lists Trusted Network Areas for user lydia
+	Lists Trusted Network Areas for user lydia
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

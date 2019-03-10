@@ -1,34 +1,34 @@
 ﻿Function Get-PVUser {
 
 	<#
-    .SYNOPSIS
-    	Returns details about a specific CyberArk User.
+	.SYNOPSIS
+	Returns details about a specific CyberArk User.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "USERDETAILS"
+	.DESCRIPTION
+	Exposes the PACLI Function: "USERDETAILS"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER destUser
-	   The name of the User whose details will be listed.
+	.PARAMETER destUser
+	The name of the User whose details will be listed.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVUser -vault Lab -user administrator -destUser zEST1
+	.EXAMPLE
+	Get-PVUser -vault Lab -user administrator -destUser zEST1
 
-		Lists properties of vault user zEST1
+	Lists properties of vault user zEST1
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

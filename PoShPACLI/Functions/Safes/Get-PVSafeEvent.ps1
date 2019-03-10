@@ -1,57 +1,57 @@
 ﻿Function Get-PVSafeEvent {
 
 	<#
-    .SYNOPSIS
-    	Lists Safe Events that are written in the current Safe.
+	.SYNOPSIS
+	Lists Safe Events that are written in the current Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "SAFEEVENTSLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "SAFEEVENTSLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safePatternName
-        A Safe name pattern to include in the returned Events list.
+	.PARAMETER safePatternName
+	A Safe name pattern to include in the returned Events list.
 
-    .PARAMETER sourceIDList
-        A specific source ID for filtering the Events list. If this parameter
-        is not specified, all the SourceId’s will be included in the
-        returned Events list.
-        Note: This parameter has been deprecated.
+	.PARAMETER sourceIDList
+	A specific source ID for filtering the Events list. If this parameter
+	is not specified, all the SourceId’s will be included in the
+	returned Events list.
+	Note: This parameter has been deprecated.
 
-    .PARAMETER eventTypeIDList
-        An Event type ID for filtering the Events list. If this parameter is
-        not specified, all the EventTypeId’s will be included in the
-        returned Events list.
+	.PARAMETER eventTypeIDList
+	An Event type ID for filtering the Events list. If this parameter is
+	not specified, all the EventTypeId’s will be included in the
+	returned Events list.
 
-    .PARAMETER fromDate
-        The first date to include in the returned Events list.
+	.PARAMETER fromDate
+	The first date to include in the returned Events list.
 
-    .PARAMETER dataSubstring
-        The string that is included in the Data field of the Event that will
-        be included in the returned Events list.
+	.PARAMETER dataSubstring
+	The string that is included in the Data field of the Event that will
+	be included in the returned Events list.
 
-    .PARAMETER numOfEvents
-        The number of recent Events to include in the returned Events list.
+	.PARAMETER numOfEvents
+	The number of recent Events to include in the returned Events list.
 
-    .PARAMETER caseSensitive
-        Whether or not the filter according to the ‘datasubstring’
-        parameter will be case-sensitive.
+	.PARAMETER caseSensitive
+	Whether or not the filter according to the ‘datasubstring’
+	parameter will be case-sensitive.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVSafeEvent -vault Lab -user administrator -safePatternName UNIX_Safe
+	.EXAMPLE
+	Get-PVSafeEvent -vault Lab -user administrator -safePatternName UNIX_Safe
 
-		Retrieves safe events from UNIX_Safe
+	Retrieves safe events from UNIX_Safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

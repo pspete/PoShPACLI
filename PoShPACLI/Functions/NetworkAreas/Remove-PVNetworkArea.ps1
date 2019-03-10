@@ -1,32 +1,32 @@
 ﻿Function Remove-PVNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Deletes a Network Area from the CyberArk Vault environment.
+	.SYNOPSIS
+	Deletes a Network Area from the CyberArk Vault environment.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETENETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "DELETENETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER networkArea
-        The name of the Network Area to delete.
+	.PARAMETER networkArea
+	The name of the Network Area to delete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Remove-PVNetworkArea -vault Lab -user administrator -networkArea all\EU\UK
+	.EXAMPLE
+	Remove-PVNetworkArea -vault Lab -user administrator -networkArea all\EU\UK
 
-		Deletes Network Area UK from EU
+	Deletes Network Area UK from EU
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
 	#>
 

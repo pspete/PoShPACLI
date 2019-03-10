@@ -1,31 +1,31 @@
 ﻿Function Clear-PVUserHistory {
 
 	<#
-    .SYNOPSIS
-    	Clears the history records for Users of the specified Vault
+	.SYNOPSIS
+	Clears the history records for Users of the specified Vault
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "CLEARUSERHISTORY"
+	.DESCRIPTION
+	Exposes the PACLI Function: "CLEARUSERHISTORY"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Clear-PVUserHistory -vault Lab -user administrator
+	.EXAMPLE
+	Clear-PVUserHistory -vault Lab -user administrator
 
-		Clears the history records for Users of the Vault "Lab"
+	Clears the history records for Users of the Vault "Lab"
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

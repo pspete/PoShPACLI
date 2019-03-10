@@ -2,146 +2,146 @@
 
 	<#
 	.SYNOPSIS
-		Adds an Object Level Access rule
+	Adds an Object Level Access rule
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "ADDRULE"
+	Exposes the PACLI Function: "ADDRULE"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-		The Username of the User who is logged on.
+	The Username of the authenticated User.
 
 	.PARAMETER userName
-		The user who will be affected by the rule.
+	The user who will be affected by the rule.
 
 	.PARAMETER safeName
 	The Safe where the rule is applied.
 
 	.PARAMETER fullObjectName
-		The file, password, or folder that the rule applies to.
+	The file, password, or folder that the rule applies to.
 
 	.PARAMETER isFolder
-		Whether the rule applies to files and passwords or for
-		folders.
-			NO – Indicates files and passwords
-			YES – Indicates folders
+	Whether the rule applies to files and passwords or for
+	folders.
+		NO – Indicates files and passwords
+		YES – Indicates folders
 
 	.PARAMETER effect
-		Whether or not the rule allows or denies the user
-		authorizations that are specified in the following parameters.
-		Possible values are:
-			Allow – The rule enables the authorizations marked ‘YES’.
-			Deny – The rule denies all the following permissions.
+	Whether or not the rule allows or denies the user
+	authorizations that are specified in the following parameters.
+	Possible values are:
+		Allow – The rule enables the authorizations marked ‘YES’.
+		Deny – The rule denies all the following permissions.
 
 	.PARAMETER retrieve
-		Whether or not the user is authorized to retrieve files.
+	Whether or not the user is authorized to retrieve files.
 
 	.PARAMETER store
-		Whether or not the user is authorized to store files.
+	Whether or not the user is authorized to store files.
 
 	.PARAMETER delete
-		Whether or not the user is authorized to delete files.
+	Whether or not the user is authorized to delete files.
 
 	.PARAMETER administer
-		Whether or not the user is authorized to administer the Safe.
+	Whether or not the user is authorized to administer the Safe.
 
 	.PARAMETER supervise
-		Whether or not the user is authorized to supervise other Safe
-		Owners and confirm requests by other users to enter specific
-		Safes
+	Whether or not the user is authorized to supervise other Safe
+	Owners and confirm requests by other users to enter specific
+	Safes
 
 	.PARAMETER backup
-		Whether or not the user is authorized to backup the Safe
+	Whether or not the user is authorized to backup the Safe
 
 	.PARAMETER manageOwners
-		Whether or not the user is authorized to manage other Safe
-		owners.
+	Whether or not the user is authorized to manage other Safe
+	owners.
 
 	.PARAMETER accessNoConfirmation
-		Whether or not the user is authorized to access the Safe
-		without receiving confirmation from authorized users.
+	Whether or not the user is authorized to access the Safe
+	without receiving confirmation from authorized users.
 
 	.PARAMETER validateSafeContent
-		Whether or not the user is authorized to validate the Safe
-		contents.
+	Whether or not the user is authorized to validate the Safe
+	contents.
 
 	.PARAMETER list
-		Whether or not the user is authorized to list the specified file,
-		password, or folder.
+	Whether or not the user is authorized to list the specified file,
+	password, or folder.
 
 	.PARAMETER usePassword
-		If the object is a password, whether or not the user can use
-		the password via the PVWA.
+	If the object is a password, whether or not the user can use
+	the password via the PVWA.
 
 	.PARAMETER updateObjectProperties
-		Whether or not the user is authorized to update the specified
-		file or password categories.
+	Whether or not the user is authorized to update the specified
+	file or password categories.
 
 	.PARAMETER initiateCPMChange
-		Whether or not the user is authorized to initiate a CPM
-		change for the specified password.
+	Whether or not the user is authorized to initiate a CPM
+	change for the specified password.
 
 	.PARAMETER initiateCPMChangeWithManualPassword
-		Whether or not the user is authorized to initiate a CPM
-		change with a manual password for the specified password.
+	Whether or not the user is authorized to initiate a CPM
+	change with a manual password for the specified password.
 
 	.PARAMETER createFolder
-		Whether or not the user is authorized to create a new folder.
+	Whether or not the user is authorized to create a new folder.
 
 	.PARAMETER deleteFolder
-		Whether or not the user is authorized to delete a folder.
+	Whether or not the user is authorized to delete a folder.
 
 	.PARAMETER moveFrom
-		Whether or not the user is authorized to move the specified
-		file or password from its current location.
+	Whether or not the user is authorized to move the specified
+	file or password from its current location.
 
 	.PARAMETER moveInto
-		Whether or not the user is authorized to move the specified
-		file or password into a different location.
+	Whether or not the user is authorized to move the specified
+	file or password into a different location.
 
 	.PARAMETER viewAudit
-		Whether or not the user is authorized to view the specified
-		file or password audits.
+	Whether or not the user is authorized to view the specified
+	file or password audits.
 
 	.PARAMETER viewPermissions
-		Whether or not the user is authorized to view the specified
-		file or password permissions.
+	Whether or not the user is authorized to view the specified
+	file or password permissions.
 
 	.PARAMETER eventsList
-		Whether or not the user is authorized to view events.
+	Whether or not the user is authorized to view events.
 
-		Note: To allow Safe Owners to access the Safe, make sure
-		this is set to YES.
+	Note: To allow Safe Owners to access the Safe, make sure
+	this is set to YES.
 
 	.PARAMETER addEvents
-		Whether or not the user is authorized to add events.
+	Whether or not the user is authorized to add events.
 
 	.PARAMETER createObject
-		Whether or not the user is authorized to create a new file or
-		password.
+	Whether or not the user is authorized to create a new file or
+	password.
 
 	.PARAMETER unlockObject
-		Whether or not the user is authorized to unlock the specified
-		file or password.
+	Whether or not the user is authorized to unlock the specified
+	file or password.
 
 	.PARAMETER renameObject
-		Whether or not the user is authorized to rename the
-		specified file or password.
+	Whether or not the user is authorized to rename the
+	specified file or password.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 `
-		-fullObjectName root\rootpass -effect Allow -retrieve -store -delete
+	Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 `
+	-fullObjectName root\rootpass -effect Allow -retrieve -store -delete
 
-		Adds rule on object rootpass safe DEV-1 fr user user1
+	Adds rule on object rootpass safe DEV-1 fr user user1
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

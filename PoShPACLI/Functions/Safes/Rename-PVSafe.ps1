@@ -1,36 +1,36 @@
 ﻿Function Rename-PVSafe {
 
 	<#
-    .SYNOPSIS
-    	Renames a Safe
+	.SYNOPSIS
+	Renames a Safe
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "RENAMESAFE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "RENAMESAFE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The current name of the Safe.
+	.PARAMETER safe
+	The current name of the Safe.
 
-    .PARAMETER newName
-        The new name of the Safe.
+	.PARAMETER newName
+	The new name of the Safe.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Rename-PVSafe -vault lab -user administrator -safe oldName -newName newName
+	.EXAMPLE
+	Rename-PVSafe -vault lab -user administrator -safe oldName -newName newName
 
-		Renames safe oldName to newName
-    .NOTES
-    	AUTHOR: Pete Maan
+	Renames safe oldName to newName
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

@@ -1,31 +1,31 @@
 ﻿Function Get-PVNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Lists all of the Network Areas that are defined in the Vault.
+	.SYNOPSIS
+	Lists all of the Network Areas that are defined in the Vault.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "NETWORKAREASLIST"
+	.DESCRIPTION
+	Exposes the PACLI Function: "NETWORKAREASLIST"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVNetworkArea -vault lab -user administrator
+	.EXAMPLE
+	Get-PVNetworkArea -vault lab -user administrator
 
-		Lists all network areas
+	Lists all network areas
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

@@ -2,31 +2,31 @@
 
 	<#
     .SYNOPSIS
-    	Unlocks the User account of the CyberArk User who is currently logged on.
+    Unlocks the User account of the CyberArk User who is currently logged on.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "UNLOCK"
+    Exposes the PACLI Function: "UNLOCK"
 
     .PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+    The Username of the authenticated User.
 
     .PARAMETER password
-        The User’s password
+    The User’s password
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+    The ID number of the session. Use this parameter when working
+    with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Unlock-PVUser -vault Lab -user administrator -password (read-host -AsSecureString)
+	Unlock-PVUser -vault Lab -user administrator -password (read-host -AsSecureString)
 
-		Unlocks the current user (administrator), after supplying password for the account.
+	Unlocks the current user (administrator), after supplying password for the account.
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

@@ -1,37 +1,37 @@
 ﻿Function Remove-PVNetworkAreaAddress {
 
 	<#
-    .SYNOPSIS
-    	Deletes an IP address from an existing Network Area.
+	.SYNOPSIS
+	Deletes an IP address from an existing Network Area.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "DELETEAREAADDRESS"
+	.DESCRIPTION
+	Exposes the PACLI Function: "DELETEAREAADDRESS"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER networkArea
-        The name of the Network Area from which to delete an IP address
+	.PARAMETER networkArea
+	The name of the Network Area from which to delete an IP address
 
-    .PARAMETER ipAddress
-        The IP address to delete from the Network Area.
+	.PARAMETER ipAddress
+	The IP address to delete from the Network Area.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Remove-PVNetworkAreaAddress -vault lab -user administrator -networkArea all\VPN -ipAddress 20.54.118.55
+	.EXAMPLE
+	Remove-PVNetworkAreaAddress -vault lab -user administrator -networkArea all\VPN -ipAddress 20.54.118.55
 
-		Deletes Area address 20.54.118.55 from VPN network area
+	Deletes Area address 20.54.118.55 from VPN network area
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

@@ -1,34 +1,34 @@
 ﻿Function Clear-PVSafeHistory {
 
 	<#
-    .SYNOPSIS
-    	Clears the history of all activity in the specified open Safe.
+	.SYNOPSIS
+	Clears the history of all activity in the specified open Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "CLEARSAFEHISTORY"
+	.DESCRIPTION
+	Exposes the PACLI Function: "CLEARSAFEHISTORY"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe to clear.
+	.PARAMETER safe
+	The name of the Safe to clear.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Clear-PVSafeHistory -vault Lab -user administrator -safe system
+	.EXAMPLE
+	Clear-PVSafeHistory -vault Lab -user administrator -safe system
 
-		Clears safe history on the SYSTEM safe
+	Clears safe history on the SYSTEM safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

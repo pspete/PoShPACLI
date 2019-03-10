@@ -1,41 +1,41 @@
 ﻿Function New-PVNetworkAreaAddress {
 
 	<#
-    .SYNOPSIS
-    	Adds an IP address to an existing Network Area.
+	.SYNOPSIS
+	Adds an IP address to an existing Network Area.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "ADDAREAADDRESS"
+	.DESCRIPTION
+	Exposes the PACLI Function: "ADDAREAADDRESS"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER networkArea
-        The name of the Network Area to which to add an IP address
+	.PARAMETER networkArea
+	The name of the Network Area to which to add an IP address
 
-    .PARAMETER ipAddress
-        The IP address to add to the Network Area.
+	.PARAMETER ipAddress
+	The IP address to add to the Network Area.
 
-    .PARAMETER ipMask
-        The first IP address in the IP mask to add to the Network Area.
+	.PARAMETER ipMask
+	The first IP address in the IP mask to add to the Network Area.
 
-    .PARAMETER toAddress
-        The final IP address in the mask of the Network Area.
+	.PARAMETER toAddress
+	The final IP address in the mask of the Network Area.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		New-PVNetworkAreaAddress -vault Lab -user administrator -networkArea All\EMEA -ipAddress 192.168.0.1 -toAddress 192.168.0.254
+	.EXAMPLE
+	New-PVNetworkAreaAddress -vault Lab -user administrator -networkArea All\EMEA -ipAddress 192.168.0.1 -toAddress 192.168.0.254
 
-		Adds address range to EMEA Network Area
+	Adds address range to EMEA Network Area
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

@@ -1,37 +1,37 @@
 ﻿Function Enable-PVTrustedNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Activates a Trusted Network Area.
+	.SYNOPSIS
+	Activates a Trusted Network Area.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "ACTIVATETRUSTEDNETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "ACTIVATETRUSTEDNETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER trusterName
-	   The User who will have access to the Trusted Network Area
+	.PARAMETER trusterName
+	The User who will have access to the Trusted Network Area
 
-    .PARAMETER networkArea
-	   The name of the Trusted Network Area to activate.
+	.PARAMETER networkArea
+	The name of the Trusted Network Area to activate.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Enable-PVTrustedNetworkArea -vault lab -user administrator -trusterName User2 -networkArea All
+	.EXAMPLE
+	Enable-PVTrustedNetworkArea -vault lab -user administrator -trusterName User2 -networkArea All
 
-		Enables the "All" trusted Network Area for USer2
+	Enables the "All" trusted Network Area for USer2
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

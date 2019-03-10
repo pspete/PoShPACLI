@@ -1,39 +1,39 @@
 ﻿Function Restore-PVFolder {
 
 	<#
-    .SYNOPSIS
-    	Undeletes a deleted folder in a Safe. A folder can only be undeleted if
-        the Safe History retention period has not expired for all activity in
-        the folder.
+	.SYNOPSIS
+	Undeletes a deleted folder in a Safe. A folder can only be undeleted if
+	the Safe History retention period has not expired for all activity in
+	the folder.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "UNDELETEFOLDER"
+	.DESCRIPTION
+	Exposes the PACLI Function: "UNDELETEFOLDER"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe in which the folder will be undeleted.
+	.PARAMETER safe
+	The name of the Safe in which the folder will be undeleted.
 
-    .PARAMETER folder
-        The name of the folder to undelete.
+	.PARAMETER folder
+	The name of the folder to undelete.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Restore-PVFolder -vault lab -user administrator -safe ASIAPAC -folder root\MFA
+	.EXAMPLE
+	Restore-PVFolder -vault lab -user administrator -safe ASIAPAC -folder root\MFA
 
-		Restores deleted MFA Folder to ASIAPAC safe
+	Restores deleted MFA Folder to ASIAPAC safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

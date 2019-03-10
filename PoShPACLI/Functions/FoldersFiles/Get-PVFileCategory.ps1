@@ -1,44 +1,44 @@
 ﻿Function Get-PVFileCategory {
 
 	<#
-    .SYNOPSIS
-    	Lists all the File Categories at both Vault and Safe level for the
-        specified file or password.
+	.SYNOPSIS
+	Lists all the File Categories at both Vault and Safe level for the
+	specified file or password.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LISTFILECATEGORIES"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LISTFILECATEGORIES"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe that the File Category is attached to.
+	.PARAMETER safe
+	The name of the Safe that the File Category is attached to.
 
-    .PARAMETER folder
-        The folder containing a file with a File Category attached to it.
+	.PARAMETER folder
+	The folder containing a file with a File Category attached to it.
 
-    .PARAMETER file
-        The name of the file or password that is attached to a File Category.
+	.PARAMETER file
+	The name of the file or password that is attached to a File Category.
 
-    .PARAMETER category
-        The name of the File Category.
+	.PARAMETER category
+	The name of the File Category.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
+	.EXAMPLE
+	Get-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
 
-		Lists file categories on file TeamPass in safe DEV.
+	Lists file categories on file TeamPass in safe DEV.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

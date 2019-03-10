@@ -1,43 +1,42 @@
 ﻿Function Get-PVSafeFileCategory {
 
 	<#
-    .SYNOPSIS
-    	Lists all the File Categories that are available in the specified Safe
+	.SYNOPSIS
+	Lists all the File Categories that are available in the specified Safe
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LISTSAFEFILECATEGORIES"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LISTSAFEFILECATEGORIES"
 
-    .PARAMETER vault
-        The defined Vault name
-        defined.
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The Safe where the File Categories is defined.
+	.PARAMETER safe
+	The Safe where the File Categories is defined.
 
-    .PARAMETER category
-        The name of the File Category to list.
+	.PARAMETER category
+	The name of the File Category to list.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
+	.EXAMPLE
+	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
 
-		lists specific file category details
+	lists specific file category details
 
-    .EXAMPLE
-    	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE
+	.EXAMPLE
+	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE
 
-		lists all file category details
+	lists all file category details
 
 	.NOTES
-    	AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

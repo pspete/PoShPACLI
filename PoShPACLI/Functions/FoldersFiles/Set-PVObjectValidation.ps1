@@ -1,55 +1,55 @@
 ﻿Function Set-PVObjectValidation {
 
 	<#
-    .SYNOPSIS
-    	Validates a file in a Safe that requires content validation before
-        users can access the objects in it.
+	.SYNOPSIS
+	Validates a file in a Safe that requires content validation before
+	users can access the objects in it.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "VALIDATEOBJECT"
+	.DESCRIPTION
+	Exposes the PACLI Function: "VALIDATEOBJECT"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER object
-        The name of the file to validate.
+	.PARAMETER object
+	The name of the file to validate.
 
-    .PARAMETER internalName
-        The internal name of the file version to validate
+	.PARAMETER internalName
+	The internal name of the file version to validate
 
-    .PARAMETER validationAction
-        The type of validation action that take place.
-        Possible values are:
-            VALID
-            INVALID
-            PENDING
+	.PARAMETER validationAction
+	The type of validation action that take place.
+	Possible values are:
+		VALID
+		INVALID
+		PENDING
 
-    .PARAMETER reason
-        The reason for validating the file.
+	.PARAMETER reason
+	The reason for validating the file.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys `
-		-internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+	.EXAMPLE
+	Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys `
+	-internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
 
-		Marks specified version of Oracle-sys in Prod_Env as INVALID.
+	Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]

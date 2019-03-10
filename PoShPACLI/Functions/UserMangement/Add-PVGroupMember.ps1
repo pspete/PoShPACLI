@@ -2,34 +2,34 @@
 
 	<#
 	.SYNOPSIS
-		Adds a CyberArk User to an existing CyberArk group
+	Adds a CyberArk User to an existing CyberArk group
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "ADDGROUPMEMBER"
+	Exposes the PACLI Function: "ADDGROUPMEMBER"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER group
-		The name of the group.
+	The name of the group.
 
 	.PARAMETER member
-		The name of the User to add to the group.
+	The name of the User to add to the group.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-		Add-PVGroupMember -vault Lab -user administrator -group xGroup1 -member xUser1
+	Add-PVGroupMember -vault Lab -user administrator -group xGroup1 -member xUser1
 
-		Adds user xUser1 to group xGroup1
+	Adds user xUser1 to group xGroup1
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

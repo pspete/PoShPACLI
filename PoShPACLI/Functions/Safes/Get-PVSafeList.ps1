@@ -1,39 +1,39 @@
 ﻿Function Get-PVSafeList {
 
 	<#
-    .SYNOPSIS
-    	Produces a list of Safes in the specified Vault
+	.SYNOPSIS
+	Produces a list of Safes in the specified Vault
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "SAFESLIST
+	.DESCRIPTION
+	Exposes the PACLI Function: "SAFESLIST
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER location
-        The location to search in for the Safes to include in the list.
-        Note: Add a backslash ‘\’ before the name of the location.
+	.PARAMETER location
+	The location to search in for the Safes to include in the list.
+	Note: Add a backslash ‘\’ before the name of the location.
 
-    .PARAMETER includeSubLocations
-        Whether or not in include sublocation(s) of the specified location in
-        the list.
+	.PARAMETER includeSubLocations
+	Whether or not in include sublocation(s) of the specified location in
+	the list.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVSafeList -vault lab -user administrator -location \
+	.EXAMPLE
+	Get-PVSafeList -vault lab -user administrator -location \
 
-		Lists all safes from the root location of the vault
+	Lists all safes from the root location of the vault
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

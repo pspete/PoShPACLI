@@ -1,44 +1,44 @@
 ﻿Function Move-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Moves a file or password to a different folder within the same Safe.
+	.SYNOPSIS
+	Moves a file or password to a different folder within the same Safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "MOVEFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "MOVEFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER file
-        The name of the file or password to move.
+	.PARAMETER file
+	The name of the file or password to move.
 
-    .PARAMETER newFolder
-        The name of the folder into which the file will be moved.
+	.PARAMETER newFolder
+	The name of the folder into which the file will be moved.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Move-PVFile -vault lab -user administrator -safe AuditReports -folder root -file Report1 `
-		-newFolder root\reports
+	.EXAMPLE
+	Move-PVFile -vault lab -user administrator -safe AuditReports -folder root -file Report1 `
+	-newFolder root\reports
 
-		Move file Report1 to Reports folder within AuditReports safe.
+	Move file Report1 to Reports folder within AuditReports safe.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

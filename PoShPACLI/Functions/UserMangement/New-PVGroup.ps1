@@ -2,41 +2,41 @@
 
 	<#
 	.SYNOPSIS
-		Adds a group to the CyberArk Vault
+	Adds a group to the CyberArk Vault
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "ADDGROUP"
+	Exposes the PACLI Function: "ADDGROUP"
 
 	.PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+	The Username of the authenticated User.
 
 	.PARAMETER group
-		The name of the group to add.
+	The name of the group to add.
 
 	.PARAMETER location
-		The location in which to add the group.
-		Note: Add a backslash ‘\’ before the name of the location.
+	The location in which to add the group.
+	Note: Add a backslash ‘\’ before the name of the location.
 
 	.PARAMETER description
-		A brief description of the group.
+	A brief description of the group.
 
 	.PARAMETER externalGroup
-		The name of an external group that is a member in the current group.
+	The name of an external group that is a member in the current group.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-			New-PVGroup -vault Lab -user administrator -group xGroup1 -location "\" -description "test description"
+		New-PVGroup -vault Lab -user administrator -group xGroup1 -location "\" -description "test description"
 
-			Adds group xGroup1 to vault.
+		Adds group xGroup1 to vault.
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 

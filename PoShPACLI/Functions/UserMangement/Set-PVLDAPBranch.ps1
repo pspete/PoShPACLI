@@ -2,47 +2,47 @@
 
 	<#
 	.SYNOPSIS
-		Updates an existing LDAP branch in a CyberArk Directory Map
+	Updates an existing LDAP branch in a CyberArk Directory Map
 
 	.DESCRIPTION
-		Exposes the PACLI Function: "LDAPBRANCHUPDATE"
+	Exposes the PACLI Function: "LDAPBRANCHUPDATE"
 
 	.PARAMETER vault
-        The defined Vault name
+    The defined Vault name
 
 	.PARAMETER user
-        The Username of the authenticated User.
+    The Username of the authenticated User.
 
 	.PARAMETER ldapMapName
-		The name of the Directory Map where the LDAP branch will be updated.
+	The name of the Directory Map where the LDAP branch will be updated.
 
 	.PARAMETER updateBranchID
-		A 64-bit unique ID of the branch to update
+	A 64-bit unique ID of the branch to update
 
 	.PARAMETER ldapDirName
-		The name of the LDAP directory.
+	The name of the LDAP directory.
 
 	.PARAMETER ldapBranchName
-		The DN of the LDAP directory branch.
+	The DN of the LDAP directory branch.
 
 	.PARAMETER ldapQuery
-		The LDAP filter that is applied to objects in the specified branch.
+	The LDAP filter that is applied to objects in the specified branch.
 
 	.PARAMETER ldapGroupMatch
-		A regular expression used to filter LDAP groups of objects in the branch.
+	A regular expression used to filter LDAP groups of objects in the branch.
 
 	.PARAMETER sessionID
-		The ID number of the session. Use this parameter when working
-		with multiple scripts simultaneously. The default is ‘0’.
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
 	.EXAMPLE
-			Set-PVLDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
-			-ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
+	Set-PVLDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
+	-ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
 
-			Sets LDAP Group Match on branch with ID of 3 in "Vault Users Mapping"
+	Sets LDAP Group Match on branch with ID of 3 in "Vault Users Mapping"
 
 	.NOTES
-		AUTHOR: Pete Maan
+	AUTHOR: Pete Maan
 
 	#>
 
@@ -101,7 +101,7 @@
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHUPDATE "$(
 			$PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
+			ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {
 

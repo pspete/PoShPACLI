@@ -1,40 +1,40 @@
 ﻿Function Lock-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Locks a file or password, preventing other Users from retrieving it.
+	.SYNOPSIS
+	Locks a file or password, preventing other Users from retrieving it.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LOCKFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LOCKFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER file
-        The name of the file or password to lock.
+	.PARAMETER file
+	The name of the file or password to lock.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Lock-PVFile -vault lab -user administrator -safe ORACLE -folder root -file SYSpass
+	.EXAMPLE
+	Lock-PVFile -vault lab -user administrator -safe ORACLE -folder root -file SYSpass
 
-		Locks file SYSpass in ORACLE safe.
+	Locks file SYSpass in ORACLE safe.
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

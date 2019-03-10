@@ -2,34 +2,34 @@
 
 	<#
     .SYNOPSIS
-    	Renames a CyberArk User
+   	Renames a CyberArk User
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "RENAMEUSER"
+   	Exposes the PACLI Function: "RENAMEUSER"
 
     .PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
     .PARAMETER destUser
-        The current name of the User to rename.
+	The current name of the User to rename.
 
     .PARAMETER newName
-        The new name of the User.
+	The new name of the User.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+   	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Rename-PVUser -vault Lab -user administrator -destUser Then -newName Now
+	Rename-PVUser -vault Lab -user administrator -destUser Then -newName Now
 
-		Renames user "Then" to user "Now"
+	Renames user "Then" to user "Now"
 
     .NOTES
-    	AUTHOR: Pete Maan
+   	AUTHOR: Pete Maan
 
     #>
 

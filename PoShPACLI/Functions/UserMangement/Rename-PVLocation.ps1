@@ -2,35 +2,35 @@
 
 	<#
     .SYNOPSIS
-    	Renames a Location.
+    Renames a Location.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "RENAMELOCATION"
+    Exposes the PACLI Function: "RENAMELOCATION"
 
     .PARAMETER vault
-        The defined Vault name
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
     .PARAMETER location
-        The current name of the Location to rename.
-        Note: Add a backslash ‘\’ before the name of the location
+	The current name of the Location to rename.
+	Note: Add a backslash ‘\’ before the name of the location
 
     .PARAMETER newName
-        The new name of the Location.
+	The new name of the Location.
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+    The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-		Rename-PVLocation -vault Lab -user administrator -location \Location2 -newName \Location3
+	Rename-PVLocation -vault Lab -user administrator -location \Location2 -newName \Location3
 
-		Renames Location2 to Location3 in the vault
+	Renames Location2 to Location3 in the vault
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

@@ -1,37 +1,37 @@
 ﻿Function Get-PVUserActivity {
 
 	<#
-    .SYNOPSIS
-    	This command generates a list of activities carried out in the specified
-        Vault for the user who issues this command.
-        The Safes included in the output are those to which the User carrying out
-        the command has authorization.
+	.SYNOPSIS
+	This command generates a list of activities carried out in the specified
+	Vault for the user who issues this command.
+	The Safes included in the output are those to which the User carrying out
+	the command has authorization.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "INSPECTUSER"
+	.DESCRIPTION
+	Exposes the PACLI Function: "INSPECTUSER"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER logDays
-        The number of days to include in the list of activities.
+	.PARAMETER logDays
+	The number of days to include in the list of activities.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVUserActivity -vault Lab -user administrator -logDays 5
+	.EXAMPLE
+	Get-PVUserActivity -vault Lab -user administrator -logDays 5
 
-		Lists vault user activity from the last 5 days
+	Lists vault user activity from the last 5 days
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

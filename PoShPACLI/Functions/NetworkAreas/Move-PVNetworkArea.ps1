@@ -1,36 +1,36 @@
 ﻿Function Move-PVNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Moves a Network Area to a new location in the Network Areas tree.
+	.SYNOPSIS
+	Moves a Network Area to a new location in the Network Areas tree.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "MOVENETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "MOVENETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER networkArea
-        The name of the Network Area.
+	.PARAMETER networkArea
+	The name of the Network Area.
 
-    .PARAMETER newLocation
-        The new location of the Network Area.
-        Note: Add a backslash ‘\’ before the name of the location.
+	.PARAMETER newLocation
+	The new location of the Network Area.
+	Note: Add a backslash ‘\’ before the name of the location.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-    	Move-PVNetworkArea -vault Lab -user administrator -networkArea All\DE -newLocation ALL\EMEA\DE
+	.EXAMPLE
+	Move-PVNetworkArea -vault Lab -user administrator -networkArea All\DE -newLocation ALL\EMEA\DE
 
-		Moves Network Area DE to EMEA\DE
+	Moves Network Area DE to EMEA\DE
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

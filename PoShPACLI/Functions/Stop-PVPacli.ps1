@@ -2,26 +2,26 @@
 
 	<#
     .SYNOPSIS
-    	This command terminates PACLI. Always run this at the end of every working
-        session.
+    This command terminates PACLI. Always run this at the end of every working
+    session.
 
     .DESCRIPTION
-    	Exposes the PACLI Function: "TERM"
+    Exposes the PACLI Function: "TERM"
 
     .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+    The ID number of the session. Use this parameter when working
+    with multiple scripts simultaneously. The default is ‘0’.
 
     .EXAMPLE
-    	Stop-PVPacli
-        Ends the PACLI process with a session ID of 0
+    Stop-PVPacli
+    Ends the PACLI process with a session ID of 0
 
     .EXAMPLE
-    	Stop-PVPacli -sessionID 7
-        Ends the PACLI process with a session ID of 7
+    Stop-PVPacli -sessionID 7
+    Ends the PACLI process with a session ID of 7
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

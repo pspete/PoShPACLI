@@ -2,37 +2,37 @@
 
 	<#
     .SYNOPSIS
-    	Saves a User’s photo in the Vault.
+   	Saves a User’s photo in the Vault.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "PUTUSERPHOTO"
+	.DESCRIPTION
+	Exposes the PACLI Function: "PUTUSERPHOTO"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER destUser
-    	The name of the User in the photograph.
+	.PARAMETER destUser
+	The name of the User in the photograph.
 
-    .PARAMETER localFolder
-    	The location of the folder in which the photograph is stored
+	.PARAMETER localFolder
+	The location of the folder in which the photograph is stored
 
-    .PARAMETER localFile
-    	The name of the file in which the photograph is stored
+	.PARAMETER localFile
+	The name of the file in which the photograph is stored
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Set-PVUserPhoto -vault Lab -user Administrator -destUser user1 -localFolder D:\ -localFile photo.jpg
+	.EXAMPLE
+	Set-PVUserPhoto -vault Lab -user Administrator -destUser user1 -localFolder D:\ -localFile photo.jpg
 
-		Sets D:\photo.jpg as user photo for vault user user1
+	Sets D:\photo.jpg as user photo for vault user user1
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

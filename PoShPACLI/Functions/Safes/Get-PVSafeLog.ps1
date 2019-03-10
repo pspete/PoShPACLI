@@ -1,31 +1,31 @@
 ﻿Function Get-PVSafeLog {
 
 	<#
-    .SYNOPSIS
-    	Generates a log of activities per Safe in the specified Vault.
+	.SYNOPSIS
+	Generates a log of activities per Safe in the specified Vault.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "SAFESLOG"
+	.DESCRIPTION
+	Exposes the PACLI Function: "SAFESLOG"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Get-PVSafeLog -vault lab -user auditor
+	.EXAMPLE
+	Get-PVSafeLog -vault lab -user auditor
 
-		Lists activities per Safe
+	Lists activities per Safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

@@ -1,31 +1,31 @@
 ﻿Function Lock-PVUser {
 
 	<#
-    .SYNOPSIS
-    	Locks the current User’s CyberArk account.
+	.SYNOPSIS
+	Locks the current User’s CyberArk account.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "LOCK"
+	.DESCRIPTION
+	Exposes the PACLI Function: "LOCK"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Lock-PVUser -vault Lab -user administrator
+	.EXAMPLE
+	Lock-PVUser -vault Lab -user administrator
 
-		Locks the current user (administrator)
+	Locks the current user (administrator)
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

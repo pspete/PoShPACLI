@@ -1,44 +1,44 @@
 ﻿Function Add-PVPasswordObject {
 
 	<#
-    .SYNOPSIS
-    	Stores a password object in the specified safe.
+	.SYNOPSIS
+	Stores a password object in the specified safe.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "STOREPASSWORDOBJECT"
+	.DESCRIPTION
+	Exposes the PACLI Function: "STOREPASSWORDOBJECT"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER safe
-        The name of the Safe where the password object is stored
+	.PARAMETER safe
+	The name of the Safe where the password object is stored
 
-    .PARAMETER folder
-        The name of the folder where the password object is stored.
+	.PARAMETER folder
+	The name of the folder where the password object is stored.
 
-    .PARAMETER file
-        The name of the password object.
+	.PARAMETER file
+	The name of the password object.
 
-    .PARAMETER password
-        The password being stored in the password object.
+	.PARAMETER password
+	The password being stored in the password object.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root `
-		-file devpass -password (read-host -AsSecureString)
+	.EXAMPLE
+	Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root `
+	-file devpass -password (read-host -AsSecureString)
 
-		Adds password object with specified value to Dev_Team safe
+	Adds password object with specified value to Dev_Team safe
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	param(

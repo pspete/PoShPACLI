@@ -1,38 +1,38 @@
 ﻿Function Unlock-PVFile {
 
 	<#
-    .SYNOPSIS
-    	Unlocks a file or password, enabling other Users to retrieve it.
+	.SYNOPSIS
+	Unlocks a file or password, enabling other Users to retrieve it.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "UNLOCKFILE"
+	.DESCRIPTION
+	Exposes the PACLI Function: "UNLOCKFILE"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the User carrying out the task.
+	.PARAMETER user
+	The Username of the User carrying out the task.
 
-    .PARAMETER safe
-        The name of the Safe in which the file is stored.
+	.PARAMETER safe
+	The name of the Safe in which the file is stored.
 
-    .PARAMETER folder
-        The name of the folder in which the file is stored.
+	.PARAMETER folder
+	The name of the folder in which the file is stored.
 
-    .PARAMETER file
-        The name of the file or password to unlock.
+	.PARAMETER file
+	The name of the file or password to unlock.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Unlock-PVFile -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
+	.EXAMPLE
+	Unlock-PVFile -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
 
-		Unlocks file Adminpass in safe Prod_Servers
+	Unlocks file Adminpass in safe Prod_Servers
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
     #>
 

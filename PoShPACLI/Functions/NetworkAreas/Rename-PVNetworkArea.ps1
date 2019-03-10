@@ -1,37 +1,37 @@
 ﻿Function Rename-PVNetworkArea {
 
 	<#
-    .SYNOPSIS
-    	Renames an existing Network Area.
+	.SYNOPSIS
+	Renames an existing Network Area.
 
-    .DESCRIPTION
-    	Exposes the PACLI Function: "RENAMENETWORKAREA"
+	.DESCRIPTION
+	Exposes the PACLI Function: "RENAMENETWORKAREA"
 
-    .PARAMETER vault
-        The defined Vault name
+	.PARAMETER vault
+	The defined Vault name
 
-    .PARAMETER user
-        The Username of the authenticated User.
+	.PARAMETER user
+	The Username of the authenticated User.
 
-    .PARAMETER networkArea
-        The name of the Network Area.
+	.PARAMETER networkArea
+	The name of the Network Area.
 
-    .PARAMETER newName
-        The new name of the Network Area.
+	.PARAMETER newName
+	The new name of the Network Area.
 
-    .PARAMETER sessionID
-    	The ID number of the session. Use this parameter when working
-        with multiple scripts simultaneously. The default is ‘0’.
+	.PARAMETER sessionID
+	The ID number of the session. Use this parameter when working
+	with multiple scripts simultaneously. The default is ‘0’.
 
-    .EXAMPLE
-		Rename-PVNetworkArea -vault lab -user administrator -networkArea All\EMEA -newName All\EU
+	.EXAMPLE
+	Rename-PVNetworkArea -vault lab -user administrator -networkArea All\EMEA -newName All\EU
 
-		Renames network area EMEA to EU
+	Renames network area EMEA to EU
 
-    .NOTES
-    	AUTHOR: Pete Maan
+	.NOTES
+	AUTHOR: Pete Maan
 
-    #>
+	#>
 
 	[CmdLetBinding()]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
