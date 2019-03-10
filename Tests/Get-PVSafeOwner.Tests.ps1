@@ -67,7 +67,7 @@ Describe $FunctionName {
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
-					$PacliCommand -eq "OWNERSAFESLIST"
+					$PacliCommand -eq "OWNERSLIST"
 
 				}
 
