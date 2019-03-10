@@ -57,12 +57,12 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVNetworkAreaAddress -ipAddress "1.2.3.4"} | Should Not throw
+				{$InputObj | New-PVNetworkAreaAddress -ipAddress "1.2.3.4" -toAddress "3.4.5.6"} | Should Not throw
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | New-PVNetworkAreaAddress -ipAddress "1.2.3.4"
+				$InputObj | New-PVNetworkAreaAddress -ipAddress "1.2.3.4" -toAddress "3.4.5.6"
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
