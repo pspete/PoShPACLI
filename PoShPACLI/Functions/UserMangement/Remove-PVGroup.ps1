@@ -58,7 +58,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEGROUP $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEGROUP $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

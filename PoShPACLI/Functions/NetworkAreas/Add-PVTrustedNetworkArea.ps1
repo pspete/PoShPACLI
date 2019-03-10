@@ -91,7 +91,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDTRUSTEDNETWORKAREA $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDTRUSTEDNETWORKAREA $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
 
 		if($Return.ExitCode -eq 0) {

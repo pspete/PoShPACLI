@@ -317,7 +317,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDRULE "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDRULE "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

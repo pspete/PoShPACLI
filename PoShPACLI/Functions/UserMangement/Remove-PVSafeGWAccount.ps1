@@ -68,7 +68,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

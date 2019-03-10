@@ -75,7 +75,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFOLDER $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFOLDER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

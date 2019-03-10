@@ -74,7 +74,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath PUTUSERPHOTO $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath PUTUSERPHOTO $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

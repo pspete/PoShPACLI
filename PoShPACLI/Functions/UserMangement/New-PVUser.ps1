@@ -515,7 +515,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUSER $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUSER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
 		if($Return.ExitCode -eq 0) {

@@ -68,7 +68,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEREQUEST $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEREQUEST $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -doNotQuote requestID)
 
 		if($Return.ExitCode -eq 0) {

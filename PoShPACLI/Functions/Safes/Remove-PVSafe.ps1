@@ -64,7 +64,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

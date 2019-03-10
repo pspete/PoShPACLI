@@ -57,7 +57,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath GROUPDETAILS "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath GROUPDETAILS "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

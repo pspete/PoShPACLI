@@ -96,7 +96,7 @@
 	Process {
 
 		#foreach element in passed array
-		$boundParameters.GetEnumerator() | ForEach-Object {
+		$boundParameters | ForEach-Object {
 
 			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -notContains $_.key)) {
 

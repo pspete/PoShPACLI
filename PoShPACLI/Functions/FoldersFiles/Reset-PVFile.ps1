@@ -75,7 +75,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETFILE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

@@ -35,7 +35,7 @@
 		[int]$sessionID
 	)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath TERM $($PSBoundParameters |
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath TERM $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
 	if($Return.ExitCode -eq 0) {

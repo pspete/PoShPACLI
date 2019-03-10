@@ -392,7 +392,7 @@
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
 					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 						categoryListAction ) OUTPUT (ALL,ENCLOSE)"

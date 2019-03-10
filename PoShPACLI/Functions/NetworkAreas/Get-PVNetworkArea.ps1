@@ -48,7 +48,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath NETWORKAREASLIST "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath NETWORKAREASLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

@@ -18,7 +18,7 @@
 	The parameters for the command i.e. vault="name" this="true" number=88
 
     .EXAMPLE
-	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters |
+	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters.getEnumerator() |
 	ConvertTo-ParameterString)
 
 	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value"

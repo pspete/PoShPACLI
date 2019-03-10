@@ -131,7 +131,7 @@
 
 		Write-Verbose "Logging onto Vault"
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

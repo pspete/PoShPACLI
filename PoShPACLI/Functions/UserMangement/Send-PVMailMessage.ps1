@@ -257,7 +257,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

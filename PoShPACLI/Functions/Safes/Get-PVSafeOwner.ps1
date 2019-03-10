@@ -75,7 +75,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OWNERSLIST "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath OWNERSLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

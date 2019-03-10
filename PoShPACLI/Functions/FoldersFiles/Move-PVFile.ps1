@@ -83,7 +83,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFILE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

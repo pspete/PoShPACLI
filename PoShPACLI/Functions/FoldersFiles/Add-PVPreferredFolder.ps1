@@ -65,7 +65,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDPREFERREDFOLDER $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

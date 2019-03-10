@@ -65,7 +65,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RENAMENETWORKAREA $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath RENAMENETWORKAREA $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

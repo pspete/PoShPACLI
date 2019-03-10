@@ -59,7 +59,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTUSER "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTUSER "$($PSBoundParameters.getEnumerator() |
             	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
 		if($Return.ExitCode -eq 0) {

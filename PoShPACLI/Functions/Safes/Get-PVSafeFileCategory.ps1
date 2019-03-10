@@ -70,7 +70,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTSAFEFILECATEGORIES "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString) output (ALL,ENCLOSE)"
 
 		#if result(s) returned

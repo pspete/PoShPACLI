@@ -77,7 +77,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

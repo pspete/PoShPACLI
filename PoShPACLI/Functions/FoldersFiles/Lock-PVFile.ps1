@@ -74,7 +74,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCKFILE $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCKFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {

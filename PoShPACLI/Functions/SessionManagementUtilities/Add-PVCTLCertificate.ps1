@@ -50,7 +50,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLADDCERT $($PSBoundParameters |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLADDCERT $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {
