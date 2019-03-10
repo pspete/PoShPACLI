@@ -31,6 +31,9 @@
 	The name of the file to be stored in the Vault as it is on the User’s
 	terminal.
 
+	.PARAMETER deleteMacros
+	Delete macros from the file
+
 	.PARAMETER sessionID
 	The ID number of the session. Use this parameter when working
 	with multiple scripts simultaneously. The default is ‘0’.
