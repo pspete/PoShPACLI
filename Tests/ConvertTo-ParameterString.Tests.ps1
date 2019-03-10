@@ -7,6 +7,17 @@ $FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests
 #Assume ModuleName from Repository Root folder
 $ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
+if( -not (Get-Module -Name $ModuleName -All)) {
+
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+}
+
+
 BeforeAll {
 
 	#$Script:RequestBody = $null
@@ -44,13 +55,13 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = @{
-					"Param1"="SomeValue"
-					"Param2"=$true
-					"Param3"=$false
-					"Param4"=666
-					"SessionID"=777
-					"Verbose"=$true
-					"Debug"=$false
+					"Param1"    = "SomeValue"
+					"Param2"    = $true
+					"Param3"    = $false
+					"Param4"    = 666
+					"SessionID" = 777
+					"Verbose"   = $true
+					"Debug"     = $false
 				}
 
 			}
