@@ -18,7 +18,7 @@ Function Start-ClientProcess {
 	Invokes the Start method on the $Process object
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 

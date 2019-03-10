@@ -24,7 +24,7 @@
 	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value"
 
     .NOTES
-    	AUTHOR: Pete Maan
+    AUTHOR: Pete Maan
 
     #>
 
