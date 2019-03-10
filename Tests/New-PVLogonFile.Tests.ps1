@@ -38,9 +38,9 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					logonFile = "SomeFile"
-					address   = "username"
-					password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+
+					address  = "username"
+					password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				}
 
@@ -55,13 +55,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVLogonFile} | Should Not throw
+				{$InputObj | New-PVLogonFile -logonFile "SomeFile"} | Should Not throw
 
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | New-PVLogonFile
+				$InputObj | New-PVLogonFile -logonFile "SomeFile"
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
