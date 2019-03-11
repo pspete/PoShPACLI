@@ -125,8 +125,9 @@
 
 			#loop through event data
 			For($i = 0 ; $i -lt $events.count ; $i++) {
-				#Event data can sometimes contain xml - detect this
-				#Object output is affected if not dealt with
+				#Event data can sometimes contain xml - detect this.
+				#Object output is affected if not dealt with.
+				#TODO: Process not currently covered by the Pester Tests.
 				If($events[$i] -match '(\<\?xml[\d\D]*\?\>)') {
 
 					#Remove the XML Tag (causes parse issues if left)
