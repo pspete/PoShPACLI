@@ -7,7 +7,7 @@ Write-Host "Current working directory: $pwd"
 #---------------------------------#
 # Run Pester Tests                #
 #---------------------------------#
-$files = Get-ChildItem ".\VaultControl" -Include *.ps1 -Recurse
+$files = Get-ChildItem ".\PoShPACLI" -Include *.ps1 -Recurse
 
 $res = Invoke-Pester -Path ".\Tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -CodeCoverage $files -PassThru
 
