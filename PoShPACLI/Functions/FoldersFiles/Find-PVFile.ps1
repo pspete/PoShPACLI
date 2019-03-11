@@ -300,14 +300,12 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-		[string]$fromDate,
+		[datetime]$fromDate,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-		[string]$toDate,
+		[datetime]$toDate,
 
 		[Parameter(
 			Mandatory = $False,
@@ -390,6 +388,16 @@
 	)
 
 	PROCESS {
+
+		("fromDate", "toDate") | ForEach-Object {
+
+			if($PSBoundParameters.ContainsKey($_)) {
+
+				$PSBoundParameters[$_] = (Get-Date $($PSBoundParameters[$_]) -Format dd/MM/yyyy)
+
+			}
+
+		}
 
 		#execute pacli
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters.getEnumerator() |

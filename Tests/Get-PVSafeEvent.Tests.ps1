@@ -38,8 +38,9 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-					user  = "SomeUser"
+					vault    = "SomeVault"
+					user     = "SomeUser"
+					fromDate = (Get-Date 1-1-1970)
 				}
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
@@ -56,7 +57,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVSafeEvent -fromDate "25/03/2013"} | Should Not throw
+				{$InputObj | Get-PVSafeEvent} | Should Not throw
 
 			}
 

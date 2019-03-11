@@ -42,6 +42,8 @@ Describe $FunctionName {
 					user        = "SomeUser"
 					safePattern = "someSafe"
 					userPattern = "LikeThis"
+					fromDate    = (Get-Date 12/11/1979)
+					toDate      = (Get-Date)
 				}
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
@@ -57,13 +59,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVSafeActivity -fromDate "12/11/1979" -toDate "25/03/2013"} | Should Not throw
+				{$InputObj | Get-PVSafeActivity} | Should Not throw
 
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | Get-PVSafeActivity -fromDate "12/11/1979" -toDate "25/03/2013"
+				$InputObj | Get-PVSafeActivity
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

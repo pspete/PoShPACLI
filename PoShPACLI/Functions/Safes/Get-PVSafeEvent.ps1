@@ -87,8 +87,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-		[string]$fromDate,
+		[datetime]$fromDate,
 
 		[Parameter(
 			Mandatory = $False,
@@ -112,6 +111,12 @@
 	)
 
 	PROCESS {
+
+		if($PSBoundParameters.ContainsKey("fromDate")) {
+
+			$PSBoundParameters["fromDate"] = (Get-Date $($PSBoundParameters["fromDate"]) -Format dd/MM/yyyy)
+
+		}
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"

@@ -43,6 +43,8 @@ Describe $FunctionName {
 					safeName = "SomeSafe"
 					folder   = "SomeFolder"
 					file     = "SomeFile"
+					fromDate = (Get-Date 12/11/1979)
+					toDate   = (Get-Date)
 				}
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
@@ -58,7 +60,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Find-PVFile -fromDate "12/11/1979" -toDate "25/03/2013"} | Should Not throw
+				{$InputObj | Find-PVFile} | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

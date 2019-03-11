@@ -160,14 +160,12 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-		[string]$fromDate,
+		[datetime]$fromDate,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {($_ -eq (get-date $_ -f dd/MM/yyyy))})]
-		[string]$toDate,
+		[datetime]$toDate,
 
 		[Parameter(
 			Mandatory = $False,
@@ -218,6 +216,16 @@
 	)
 
 	PROCESS {
+
+		("fromDate", "toDate") | ForEach-Object {
+
+			if($PSBoundParameters.ContainsKey($_)) {
+
+				$PSBoundParameters[$_] = (Get-Date $($PSBoundParameters[$_]) -Format dd/MM/yyyy)
+
+			}
+
+		}
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTSAFE "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)"
