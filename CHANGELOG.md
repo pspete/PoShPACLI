@@ -6,9 +6,12 @@ All notable changes to this project will be documented in this file.
 
 - 1.0 Release
 - Published to PowerShell Gallery
-- Breaking Change
+- Breaking Changes
   - `Initialize-PoShPACLI` function has been removed from the module.
     - `Set-PVConfiguration` should now be used in its place.
+  - `Find-PVFile` - Parameters `fromDate` & `toDate` changed to `[DateTime]` from `[String]`
+  - `Get-SafeActivity` - Parameters `fromDate` & `toDate` changed to `[DateTime]` from `[String]`
+  - `Get-SafeEvent` - Parameters `fromDate` changed to `[DateTime]` from `[String]`
 
 ## [0.2.1] - 2017-11-15
 
