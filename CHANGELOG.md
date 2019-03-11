@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 - 1.0 Release
 - Published to PowerShell Gallery
+- Breaking Change
+  - `Initialize-PoShPACLI` function has been removed from the module.
+    - `Set-PVConfiguration` should now be used in its place.
 
 ## [0.2.1] - 2017-11-15
 
