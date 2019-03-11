@@ -2,13 +2,26 @@
 
 ## **Powershell PACLI Module for CyberArk EPV**
 
-Exposes the native functions of the CyberArk PACLI command line utility via a PowerShell wrapper for interfacing with CyberArk EPV.
+[![appveyor][]][av-site]
+[![tests][]][tests-site]
+[![coveralls][]][cv-site]
+[![psgallery][]][ps-site]
+[![license][]][license-link]
+
+[appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
+[av-site]:https://ci.appveyor.com/project/pspete/poshpacli/branch/master
+[tests]:https://img.shields.io/appveyor/tests/pspete/poshpacli.svg
+[tests-site]:https://ci.appveyor.com/project/pspete/poshpacli
+[coveralls]:https://coveralls.io/repos/github/pspete/PoShPACLI/badge.svg
+[cv-site]:https://coveralls.io/github/pspete/PoShPACLI
+[psgallery]:https://img.shields.io/powershellgallery/v/PoShPACLI.svg
+[ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
+[license]:https://img.shields.io/github/license/pspete/poshpacli.svg
+[license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
+
+Use the native functions of the CyberArk PACLI command line utility in PowerShell.
 
 ----------
-
-## Latest Updates
-
-- Update for speedier module import.
 
 ## Getting Started
 
