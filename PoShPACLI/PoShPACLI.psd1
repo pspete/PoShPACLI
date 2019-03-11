@@ -1,10 +1,10 @@
-﻿@{
+@{
 
 	# Script module or binary module file associated with this manifest.
 	RootModule        = 'PoShPACLI.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '0.2.1'
+	ModuleVersion     = '1.0.0'
 
 	# ID used to uniquely identify this module
 	GUID              = '194c227f-87bf-43af-b401-4a34bd8e2ac6'
