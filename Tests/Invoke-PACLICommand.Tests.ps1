@@ -66,12 +66,6 @@ Describe $FunctionName {
 
 			}
 
-			It "tests path" {
-
-				{$InputObj | Invoke-PACLICommand -PacliEXE .\RandomFile.exe} | Should Throw
-
-			}
-
 			It "throws if `$PV variable not set in script scope" {
 
 				{$InputObj | Invoke-PACLICommand} | Should Throw
@@ -84,30 +78,27 @@ Describe $FunctionName {
 					prop1 = "Value1"
 					prop2 = "Value2"
 				}
-				New-Variable -Name PV -Value $object
 
-				{$InputObj | Invoke-PACLICommandent} | Should Throw
+				Mock Get-Variable -MockWith {
 
-			}
+					New-Variable -Name PV -Value $object
 
-			It "throws if `$PV.ClientPath is not resolvable" {
-
-				$object = [PSCustomObject]@{
-					ClientPath = ".\RandomFile.Exe"
-					prop2      = "Value2"
 				}
-				New-Variable -Name PV -Value $object
 
 				{$InputObj | Invoke-PACLICommand} | Should Throw
 
 			}
 
-			It "no throw if `$PV.ClientPath is resolvable" {
+			It "no throw if `$PV.ClientPath is present" {
 
 				$object = [PSCustomObject]@{
 					ClientPath = ".\README.md"
 				}
-				New-Variable -Name PV -Value $object
+				Mock Get-Variable -MockWith {
+
+					New-Variable -Name PV -Value $object
+
+				}
 
 				{$InputObj | Invoke-PACLICommand} | Should Throw
 
