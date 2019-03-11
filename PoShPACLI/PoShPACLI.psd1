@@ -19,7 +19,7 @@
 	Copyright         = '(c) 2017 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	Description       = 'PowerShell wrapper exposing CyberArk PACLI commandline utility functionality'
+	Description       = 'Invoke CyberArk PACLI.exe Utility Commands with PowerShell'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '3.0'
@@ -182,7 +182,7 @@
 		PSData = @{
 
 			# Tags applied to this module. These help with module discovery in online galleries.
-			Tags       = @('CyberArk', 'PACLI', 'CLI Wrapper')
+			Tags       = @('CyberArk', 'PACLI', 'Security')
 
 			# A URL to the license for this module.
 			LicenseUri = 'https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md'
