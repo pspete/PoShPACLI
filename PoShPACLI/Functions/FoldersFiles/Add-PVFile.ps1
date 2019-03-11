@@ -75,22 +75,22 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$file,
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$localFolder,
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$localFile,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$deleteMacros,
 
 		[Parameter(

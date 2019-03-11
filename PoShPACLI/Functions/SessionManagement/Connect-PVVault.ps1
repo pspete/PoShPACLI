@@ -83,7 +83,7 @@
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[securestring]$newPassword,
 
 		[Parameter(
@@ -93,7 +93,7 @@
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$autoChangePassword,
 
 		[Parameter(
@@ -103,12 +103,12 @@
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$failIfConnected,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$radius
 	)
 

@@ -66,12 +66,12 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$confirmRequest,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$reason,
 
 		[Parameter(

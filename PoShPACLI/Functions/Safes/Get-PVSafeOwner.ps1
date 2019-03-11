@@ -59,12 +59,12 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$ownerPattern,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$includeGroupMembers,
 
 		[Parameter(

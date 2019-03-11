@@ -74,22 +74,22 @@
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[String]$categoryNewName,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[String]$validValues,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[String]$defaultValue,
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[switch]$required,
 
 		[Parameter(

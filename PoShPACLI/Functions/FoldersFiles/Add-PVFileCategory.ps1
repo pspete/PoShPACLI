@@ -80,7 +80,7 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[string]$value,
 
 		[Parameter(

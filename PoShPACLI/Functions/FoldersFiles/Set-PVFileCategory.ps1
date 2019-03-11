@@ -82,7 +82,7 @@
 
 		[Parameter(
 			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $False)]
+			ValueFromPipelineByPropertyName = $True)]
 		[Alias("CategoryValue")]
 		[string]$value,
 
