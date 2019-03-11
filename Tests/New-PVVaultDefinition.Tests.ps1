@@ -56,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVVaultDefinition} | Should Not throw
+				{$InputObj | New-PVVaultDefinition -proxyPassword $Password } | Should Not throw
 
 			}
 

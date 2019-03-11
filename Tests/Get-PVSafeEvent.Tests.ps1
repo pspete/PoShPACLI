@@ -44,9 +44,10 @@ Describe $FunctionName {
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
+				$XMLData = ('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>,<EventData>,"1","2","3",</EventData>') -join "`n"
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = $((((1..15) * 7 -join '" "') -replace '^', '"') -replace '$', '"') + $XMLData
 						ExitCode = 0
 					}
 				}
@@ -55,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVSafeEvent} | Should Not throw
+				{$InputObj | Get-PVSafeEvent -fromDate "25/03/2013"} | Should Not throw
 
 			}
 

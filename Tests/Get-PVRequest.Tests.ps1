@@ -47,7 +47,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = $((((1..21) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
 						ExitCode = 0
 					}
 				}

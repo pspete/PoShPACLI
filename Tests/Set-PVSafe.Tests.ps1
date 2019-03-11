@@ -62,7 +62,7 @@ Describe $FunctionName {
 
 			It "invokes expected pacli command" {
 
-				$InputObj | Set-PVSafe
+				$InputObj | Set-PVSafe -confirmationCount 7
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

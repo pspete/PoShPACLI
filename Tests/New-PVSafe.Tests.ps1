@@ -56,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVSafe -password $Password -safe  "SomeSafe"} | Should Not throw
+				{$InputObj | New-PVSafe -password $Password -safe  "SomeSafe" -confirmationCount 7} | Should Not throw
 
 			}
 

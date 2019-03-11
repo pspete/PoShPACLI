@@ -49,7 +49,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = $((((1..32) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
 						ExitCode = 0
 					}
 				}
@@ -58,7 +58,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Find-PVFile } | Should Not throw
+				{$InputObj | Find-PVFile -fromDate "12/11/1979" -toDate "25/03/2013"} | Should Not throw
 			}
 
 			It "invokes expected pacli command" {
