@@ -103,13 +103,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
-		if($Return.StdErr) {
-
-			Write-Error $Return.StdErr
-
-		}
-
-		elseif($Return -match "True") {
+		if($Return.ExitCode -eq 0) {
 
 			Write-Verbose "Safe File Category Updated"
 
