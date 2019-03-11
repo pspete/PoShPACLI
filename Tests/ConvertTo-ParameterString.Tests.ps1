@@ -78,16 +78,48 @@ Describe $FunctionName {
 
 			}
 
-			It "outputs expected string" {
+			It "output string contains expected value for Param1" {
 
-				$InputObj.GetEnumerator() | ConvertTo-ParameterString | Should Be 'Param3=NO Param4="666" Param2=YES SessionID=777 Param1="SomeValue"'
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should BeLike '*Param1="SomeValue"*'
 
 			}
 
-			It "outputs expected string" {
+			It "output string contains expected value for Param2" {
 
-				$InputObj.GetEnumerator() | ConvertTo-ParameterString -doNotQuote Param4 | Should Be 'Param3=NO Param4=666 Param2=YES SessionID=777 Param1="SomeValue"'
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should BeLike '*Param2=YES*'
+			}
 
+			It "output string contains expected value for Param3" {
+
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should BeLike '*Param3=NO*'
+			}
+
+			It "output string contains expected value for Param4" {
+
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should BeLike '*Param4="666"*'
+			}
+
+			It "output string contains expected unquoted value for Param4" {
+
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString -doNotQuote Param4
+				$Output | Should BeLike '*Param4=666*'
+
+			}
+
+			It "output string does not contain value for verbose" {
+
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should Not Match 'Verbose'
+			}
+
+			It "output string contains expected value for Param1" {
+
+				$Output = $InputObj.GetEnumerator() | ConvertTo-ParameterString
+				$Output | Should Not Match 'Debug'
 			}
 
 		}
