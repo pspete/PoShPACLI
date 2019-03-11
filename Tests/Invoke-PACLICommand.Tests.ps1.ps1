@@ -13,7 +13,7 @@ $ModulePath = Resolve-Path "$Here\..\$ModuleName"
 $ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
 #Preference file must be removed and module must be re-imported for tests to complete
-Remove-Item -Path "$env:HOMEDRIVE$env:HomePath\PVConfiguration.xml" -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml" -Force -ErrorAction SilentlyContinue
 Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
 Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
 
@@ -198,11 +198,11 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PACLICommand
 
-				Assert-MockCalled Start-ClientProcess -Times 1 -Exactly -Scope It <# -ParameterFilter {
+				Assert-MockCalled Start-ClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
 
-					$Process.StartInfo.Arguments -eq $('SOMECMD  Some Command Parameters')
+					$Process.StartInfo.Arguments -eq $('SOMECMD Some Command Parameters')
 
-				} #>
+				}
 
 			}
 
