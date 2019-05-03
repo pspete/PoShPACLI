@@ -21,6 +21,10 @@
 
 Use the native functions of the CyberArk PACLI command line utility in PowerShell.
 
+If you are landing here and interested in using PowerShell to automate an aspect of CyberArk,
+
+**I recommend investigating my [psPAS](https://github.com/pspete/psPAS) module first**, to see if you can achieve what you need with the REST API.
+
 ----------
 
 - [PoShPACLI](#poshpacli)
