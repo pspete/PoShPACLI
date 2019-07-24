@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2019-07-24
+
+- Updated Function
+  - `Find-PVFile` - Corrected parameter name.
+    - `fileCategoryValueSeparator` renamed to `fileCategoryValuesSeparator`.
+
+- Updated Tests
+  - Skip PSScriptAnalyzer Tests to avoid timeout in Appveyor.
+
 ## [1.0.0] - 2019-03-11
 
 - 1.0 Release
