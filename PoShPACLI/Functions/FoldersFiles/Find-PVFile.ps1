@@ -188,13 +188,11 @@
 	output.
 
 	.PARAMETER fileCategoriesSeparator
-	If the ‘includefilecategories’ parameter is set to ‘YES’, this
-	character will be written in the search output to separate the
+	Character to be written in the search output to separate the
 	file categories. The default value is ‘#’.
 
-	.PARAMETER fileCategoryValueSeparator
-	If the ‘includefilecategories’ parameter is set to ‘YES’, this
-	character will be written in the search output to separate the
+	.PARAMETER fileCategoryValuesSeparator
+	Character to be written in the search output to separate the
 	file categories and their values. The default value is ‘:’.
 
 	.PARAMETER sessionID
@@ -379,7 +377,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$fileCategoryValueSeparator,
+		[string]$fileCategoryValuesSeparator,
 
 		[Parameter(
 			Mandatory = $False,
@@ -391,7 +389,7 @@
 
 		("fromDate", "toDate") | ForEach-Object {
 
-			if($PSBoundParameters.ContainsKey($_)) {
+			if ($PSBoundParameters.ContainsKey($_)) {
 
 				$PSBoundParameters[$_] = (Get-Date $($PSBoundParameters[$_]) -Format dd/MM/yyyy)
 
@@ -405,16 +403,16 @@
 					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 						categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 32) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 32) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 32)]
