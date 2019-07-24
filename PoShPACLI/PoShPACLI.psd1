@@ -4,7 +4,7 @@
 	RootModule        = 'PoShPACLI.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '1.0.0'
+	ModuleVersion     = '1.1.4'
 
 	# ID used to uniquely identify this module
 	GUID              = '194c227f-87bf-43af-b401-4a34bd8e2ac6'
