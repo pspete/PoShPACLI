@@ -1,4 +1,4 @@
-# PoShPACLI
+![Disconnect-from-Vault](/media/PoShPACLI.png)
 
 ## **Powershell PACLI Module for CyberArk EPV**
 
