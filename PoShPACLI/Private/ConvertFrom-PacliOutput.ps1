@@ -79,7 +79,7 @@
 
 			#assign returned values to array and remove quotes
 			$pacliValues += $_.Value -replace '"', ''
-			write-debug "Parameter Value #$($pacliValues.count): $($_.Value)"
+			
 
 		}
 

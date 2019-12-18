@@ -99,7 +99,7 @@
 			#if result(s) returned
 			if($Return.StdOut) {
 
-				Write-Verbose "External User $destUser added."
+				
 
 				#Convert Output to array
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)

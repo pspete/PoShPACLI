@@ -71,7 +71,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Trusted Network Area $NetworkArea Removed from $trusterName"
+			
 
 			[PSCustomObject] @{
 

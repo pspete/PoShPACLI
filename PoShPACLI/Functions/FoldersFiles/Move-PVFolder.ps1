@@ -80,7 +80,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Moved Folder to $newLocation"
+			
 
 			[PSCustomObject] @{
 

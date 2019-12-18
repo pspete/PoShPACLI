@@ -520,7 +520,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Created Vault User $destUser"
+			
 
 			[PSCustomObject] @{
 

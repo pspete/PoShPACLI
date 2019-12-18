@@ -79,7 +79,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "User Photo Retrieved"
+			
 
 			[PSCustomObject] @{
 

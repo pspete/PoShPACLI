@@ -51,14 +51,14 @@
 
 	PROCESS {
 
-		Write-Verbose "Defining Vault"
+		
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINEFROMFILE $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Vault Config Read"
+			
 
 			[PSCustomObject] @{
 

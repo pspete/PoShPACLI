@@ -71,8 +71,6 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "User $member Added to $group"
-
 			[PSCustomObject] @{
 
 				"vault"     = $vault

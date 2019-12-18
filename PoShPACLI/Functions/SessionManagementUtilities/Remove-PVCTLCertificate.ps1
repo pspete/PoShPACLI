@@ -56,7 +56,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Certificate $certFileName Deleted from CTL"
+			
 
 			[PSCustomObject] @{
 

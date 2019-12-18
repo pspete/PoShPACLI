@@ -62,7 +62,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Cleared Safe History on Safe $safe"
+			
 
 			[PSCustomObject] @{
 

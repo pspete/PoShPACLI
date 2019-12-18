@@ -109,7 +109,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Added Safe File Category $category"
+			
 
 			[PSCustomObject] @{
 

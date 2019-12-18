@@ -106,7 +106,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Stored File $file in Safe $safe "
+			
 			[PSCustomObject] @{
 
 				"vault"     = $vault

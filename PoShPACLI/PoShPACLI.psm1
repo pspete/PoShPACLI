@@ -52,7 +52,7 @@ $ConfigFile = "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml"
 
 If(Test-Path $ConfigFile) {
 
-	Write-Verbose "Importing Settings: $ConfigFile"
+	
 
 	$config = Import-Clixml -Path $ConfigFile
 

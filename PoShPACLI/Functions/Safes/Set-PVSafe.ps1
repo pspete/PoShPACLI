@@ -340,7 +340,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Updated Safe $safe"
+			
 
 			[PSCustomObject] @{
 

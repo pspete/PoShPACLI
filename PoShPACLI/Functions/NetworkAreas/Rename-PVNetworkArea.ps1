@@ -70,7 +70,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Network Area Renamed to $newName"
+			
 
 			[PSCustomObject] @{
 

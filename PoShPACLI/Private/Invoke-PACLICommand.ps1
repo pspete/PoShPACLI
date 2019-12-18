@@ -61,9 +61,6 @@
 
 	Begin {
 
-		$CallStack = $((Get-PSCallStack).Command)[1]
-		Write-Debug "Invocation Origin: $CallStack"
-
 		Try {
 
 			Get-Variable -Name PV -ErrorAction Stop
@@ -102,7 +99,7 @@
 
 			if($Result.StdErr) {
 
-				Write-Debug "$($Result.StdErr)"
+				
 				Write-Error -Message "$($Result.StdErr)"
 
 			} Else {$Result}

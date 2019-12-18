@@ -72,7 +72,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Folder $folder Restored"
+			
 
 			[PSCustomObject] @{
 

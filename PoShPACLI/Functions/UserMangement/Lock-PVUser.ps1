@@ -53,7 +53,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Locked User $user"
+			
 
 			[PSCustomObject] @{
 

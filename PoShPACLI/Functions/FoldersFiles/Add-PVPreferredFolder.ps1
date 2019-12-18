@@ -70,7 +70,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Preferred Folder Set"
+			
 
 			[PSCustomObject] @{
 

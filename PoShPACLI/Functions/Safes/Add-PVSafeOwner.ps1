@@ -292,7 +292,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			write-verbose "Added Safe Owner: $owner"
+			
 
 			[PSCustomObject] @{
 

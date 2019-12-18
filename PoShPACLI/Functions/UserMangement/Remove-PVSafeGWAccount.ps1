@@ -73,7 +73,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "$safe Share via $gwAccount Deleted"
+			
 
 			[PSCustomObject] @{
 

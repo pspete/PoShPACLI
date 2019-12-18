@@ -79,7 +79,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Note Added to Safe $safe"
+			
 
 			[PSCustomObject] @{
 

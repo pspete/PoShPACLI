@@ -96,7 +96,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "File Category Added"
+			
 
 			[PSCustomObject] @{
 

@@ -68,7 +68,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "User Unlocked"
+			
 
 			[PSCustomObject] @{
 

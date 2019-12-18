@@ -80,7 +80,7 @@
 
 	Begin {
 
-		write-debug "Processing Bound Parameters"
+		
 		#define array to hold parameters
 		$parameters = @()
 
@@ -126,7 +126,7 @@
 
 			$parameters = $parameters -join ' '
 
-			write-debug $parameters
+			
 			#output parameter string
 			$parameters
 

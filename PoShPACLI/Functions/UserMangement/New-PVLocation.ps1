@@ -72,7 +72,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Added Location $location"
+			
 
 			[PSCustomObject] @{
 

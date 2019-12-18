@@ -70,7 +70,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Address $ipAddress Removed from Network Area $networkArea"
+			
 
 			[PSCustomObject] @{
 

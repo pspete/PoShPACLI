@@ -48,7 +48,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Definition for Vault $vault Deleted"
+			
 
 		}
 

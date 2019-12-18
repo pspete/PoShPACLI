@@ -70,7 +70,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Trusted Network Area $networkArea Disabled for $trusterName"
+			
 
 			[PSCustomObject] @{
 

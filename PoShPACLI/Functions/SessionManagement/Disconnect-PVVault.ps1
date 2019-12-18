@@ -48,14 +48,14 @@
 
 	PROCESS {
 
-		Write-Verbose "Logging off from Vault"
+		
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString)
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Successfully Logged Off"
+			
 
 			[PSCustomObject] @{
 

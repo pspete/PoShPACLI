@@ -71,7 +71,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Deleted Safe File Category $category"
+			
 
 			[PSCustomObject] @{
 

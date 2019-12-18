@@ -291,7 +291,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Owner $owner Updated on Safe $safe"
+			
 
 			[PSCustomObject] @{
 

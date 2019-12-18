@@ -115,7 +115,7 @@
 		#if result(s) returned
 		if($Return.StdOut) {
 
-			Write-Verbose "Password Generated"
+			
 
 			#Return Generated Password String
 			[PSCustomObject] @{

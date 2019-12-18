@@ -97,7 +97,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Rule $RuleID Deleted"
+			
 
 			[PSCustomObject] @{
 

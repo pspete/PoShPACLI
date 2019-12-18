@@ -55,7 +55,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Certificate $certFileName Added to CTL"
+			
 
 			[pscustomobject] @{
 

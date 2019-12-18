@@ -74,7 +74,7 @@
 
 		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Removed Safe Owner: $owner"
+			
 
 			[PSCustomObject] @{
 
