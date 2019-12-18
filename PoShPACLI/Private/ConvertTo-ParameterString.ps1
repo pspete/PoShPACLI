@@ -73,13 +73,10 @@
 
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
-		[array]$excludedParameters = @(
-			"Debug", "ErrorAction", "ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable",
-			"Verbose", "WarningAction", "WarningVariable", "WhatIf", "Confirm")
+		[array]$excludedParameters = @([System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters)
 	)
 
 	Begin {
-
 		
 		#define array to hold parameters
 		$parameters = @()
@@ -126,7 +123,6 @@
 
 			$parameters = $parameters -join ' '
 
-			
 			#output parameter string
 			$parameters
 
