@@ -46,12 +46,6 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEVAULT $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			
-
-		}
-
 	}
 
 }

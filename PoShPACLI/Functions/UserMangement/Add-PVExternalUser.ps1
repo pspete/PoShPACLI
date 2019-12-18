@@ -99,8 +99,6 @@
 			#if result(s) returned
 			if ($Return.StdOut) {
 
-				
-
 				#Convert Output to array
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 

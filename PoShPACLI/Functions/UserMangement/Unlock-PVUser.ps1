@@ -68,8 +68,6 @@
 
 		if ($Return.ExitCode -eq 0) {
 
-			
-
 			[PSCustomObject] @{
 
 				"vault"     = $vault

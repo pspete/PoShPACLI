@@ -41,15 +41,10 @@
 		[string]$ctlFileName
 	)
 
-	
-
 	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters.getEnumerator() |
 		ConvertTo-ParameterString)
 
 	if ($Return.ExitCode -eq 0) {
-
-		
-
 
 		[pscustomobject] @{
 

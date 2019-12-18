@@ -55,9 +55,7 @@
 
 		if ($Return.ExitCode -eq 0) {
 
-			
-
-			[pscustomobject] @{
+			[PSCustomObject] @{
 
 				"sessionID" = $sessionID
 
