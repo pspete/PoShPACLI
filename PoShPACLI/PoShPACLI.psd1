@@ -13,16 +13,16 @@
 	Author            = 'Pete Maan'
 
 	# Company or vendor of this module
-	# CompanyName = ''
+	CompanyName = 'PSPETE LTD'
 
 	# Copyright statement for this module
-	Copyright         = '(c) 2017 Pete Maan. All rights reserved.'
+	Copyright         = '(c) 2020 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
 	Description       = 'Invoke CyberArk PACLI.exe Utility Commands with PowerShell'
 
 	# Minimum version of the Windows PowerShell engine required by this module
-	PowerShellVersion = '3.0'
+	PowerShellVersion = '5.0'
 
 	# Name of the Windows PowerShell host required by this module
 	# PowerShellHostName = ''
@@ -194,7 +194,7 @@
 			# IconUri = ''
 
 			# ReleaseNotes of this module
-			# ReleaseNotes = ''
+			ReleaseNotes = 'https://github.com/pspete/PoShPACLI/blob/master/CHANGELOG.md'
 
 		} # End of PSData hashtable
 
