@@ -1,18 +1,9 @@
 ﻿<#
 .SYNOPSIS
-
 .DESCRIPTION
-
 .EXAMPLE
-
 .INPUTS
-
 .OUTPUTS
-
-.NOTES
-
-.LINK
-
 #>
 [CmdletBinding()]
 param(
@@ -52,8 +43,6 @@ ForEach-Object {
 $ConfigFile = "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml"
 
 If (Test-Path $ConfigFile) {
-
-	
 
 	$config = Import-Clixml -Path $ConfigFile
 
