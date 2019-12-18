@@ -194,10 +194,10 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEPASSWORDOBJECT "$($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)

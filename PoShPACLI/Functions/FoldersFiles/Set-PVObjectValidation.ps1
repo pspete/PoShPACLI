@@ -106,9 +106,9 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote validationAction)
+			ConvertTo-ParameterString -donotQuote validationAction)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

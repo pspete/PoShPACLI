@@ -1,6 +1,6 @@
 ﻿Function Stop-PVPacli {
 
-	<#
+    <#
     .SYNOPSIS
     This command terminates PACLI. Always run this at the end of every working
     session.
@@ -25,23 +25,23 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
-	param(
+    [CmdLetBinding(SupportsShouldProcess)]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
+    param(
 
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
-	)
+        [Parameter(
+            Mandatory = $False,
+            ValueFromPipelineByPropertyName = $True)]
+        [int]$sessionID
+    )
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath TERM $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+    $Return = Invoke-PACLICommand $Script:PV.ClientPath TERM $($PSBoundParameters.getEnumerator() |
+        ConvertTo-ParameterString)
 
-	if($Return.ExitCode -eq 0) {
+    if ($Return.ExitCode -eq 0) {
 
 		
 
-	}
+    }
 
 }

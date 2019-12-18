@@ -282,7 +282,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
+		[ValidateScript( { ((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255)) })]
 		[int]$confirmationCount,
 
 		[Parameter(
@@ -381,7 +381,7 @@
 
 	PROCESS {
 
-		if($PSBoundParameters.ContainsKey("password")) {
+		if ($PSBoundParameters.ContainsKey("password")) {
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
@@ -394,7 +394,7 @@
 			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
 			confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

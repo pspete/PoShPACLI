@@ -110,10 +110,10 @@
             ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
                 minDigit,effectiveLength) OUTPUT (ALL)"
 
-	if($Return.ExitCode -eq 0) {
+	if ($Return.ExitCode -eq 0) {
 
 		#if result(s) returned
-		if($Return.StdOut) {
+		if ($Return.StdOut) {
 
 			
 

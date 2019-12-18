@@ -67,9 +67,9 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote securityLevelParm)
+			ConvertTo-ParameterString -donotQuote securityLevelParm)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

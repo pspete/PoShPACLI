@@ -267,7 +267,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
+		[ValidateScript( { ((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255)) })]
 		[int]$confirmationCount,
 
 		[Parameter(
@@ -334,11 +334,11 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
+			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
 			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
 			safeOptions, securityLevelParm, confirmationCount, maxFileSize)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

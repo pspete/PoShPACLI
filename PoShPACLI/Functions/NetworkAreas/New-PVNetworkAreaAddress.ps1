@@ -82,9 +82,9 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDAREAADDRESS $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
+			ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

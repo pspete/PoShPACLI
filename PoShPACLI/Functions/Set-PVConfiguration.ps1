@@ -27,20 +27,20 @@ Function Set-PVConfiguration {
 			Mandatory = $false,
 			ValueFromPipelineByPropertyName = $true
 		)]
-		[ValidateScript( {Test-Path $_ -PathType Leaf})]
+		[ValidateScript( { Test-Path $_ -PathType Leaf })]
 		[ValidateNotNullOrEmpty()]
 		[string]$ClientPath
 	)
 
 	Begin {
 
-		$Defaults = [pscustomobject]@{}
+		$Defaults = [pscustomobject]@{ }
 
 	}
 
 	Process {
 
-		If($PSBoundParameters.Keys -contains "ClientPath") {
+		If ($PSBoundParameters.Keys -contains "ClientPath") {
 
 			$Defaults | Add-Member -MemberType NoteProperty -Name ClientPath -Value $ClientPath
 

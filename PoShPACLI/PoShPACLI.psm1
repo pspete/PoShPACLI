@@ -28,7 +28,8 @@ ForEach-Object {
 
 	if ($DotSourceModule) {
 		. $_.FullName
-	} else {
+	}
+ else {
 		$ExecutionContext.InvokeCommand.InvokeScript(
 			$false,
 			(
@@ -50,7 +51,7 @@ ForEach-Object {
 #Read config and make available in script scope
 $ConfigFile = "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml"
 
-If(Test-Path $ConfigFile) {
+If (Test-Path $ConfigFile) {
 
 	
 

@@ -70,7 +70,7 @@
 	Process {
 
 		#remove line break characters in pacli output data,
-		($pacliOutput -replace "\r\n","," |
+		($pacliOutput -replace "\r\n", "," |
 
 			#find all values between quotes
 			Select-String -Pattern $regEx -AllMatches).matches |

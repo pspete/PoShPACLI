@@ -85,7 +85,7 @@
 		$parameters = @()
 
 		#Ensure sessionID is never enclosed in quotes
-		if($doNotQuote -notcontains "sessionID") {
+		if ($doNotQuote -notcontains "sessionID") {
 
 			$doNotQuote += "sessionID"
 
@@ -98,7 +98,7 @@
 		#foreach element in passed array
 		$boundParameters | ForEach-Object {
 
-			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -notContains $_.key)) {
+			If (($excludedParameters -notContains $_.key) -and ($doNotQuote -notContains $_.key)) {
 
 				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
 				#Quote Parameter Value so Key="Value"
@@ -109,7 +109,7 @@
 					#boolean values YES/NO should never be "in quotes"
 			}
 
-			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -Contains $_.key)) {
+			If (($excludedParameters -notContains $_.key) -and ($doNotQuote -Contains $_.key)) {
 
 				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
 				$parameters += $($_.Key) + "=" + $($_.Value)
@@ -122,7 +122,7 @@
 
 	End {
 
-		if($parameters) {
+		if ($parameters) {
 
 			$parameters = $parameters -join ' '
 

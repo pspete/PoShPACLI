@@ -92,7 +92,7 @@
 
 			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

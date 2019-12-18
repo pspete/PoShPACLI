@@ -67,14 +67,14 @@
 	PROCESS {
 
 		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+		if ($PSBoundParameters.ContainsKey("password")) {
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
 		}
 
 		#deal with newPassword SecureString
-		if($PSBoundParameters.ContainsKey("newPassword")) {
+		if ($PSBoundParameters.ContainsKey("newPassword")) {
 
 			#Included decoded password in request
 			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
@@ -82,9 +82,9 @@
 		}
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+			ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

@@ -67,9 +67,9 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+			ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

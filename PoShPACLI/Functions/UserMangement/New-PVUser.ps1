@@ -509,16 +509,16 @@
 	PROCESS {
 
 		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+		if ($PSBoundParameters.ContainsKey("password")) {
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
 		}
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUSER $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
+			ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

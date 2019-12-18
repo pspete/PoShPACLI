@@ -199,7 +199,7 @@
 	PROCESS {
 
 		#deal with proxyPassword SecureString
-		if($PSBoundParameters.ContainsKey("proxyPassword")) {
+		if ($PSBoundParameters.ContainsKey("proxyPassword")) {
 
 			$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
 
@@ -208,10 +208,10 @@
 		
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
+			ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
 			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 

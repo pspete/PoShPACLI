@@ -61,16 +61,16 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath FOLDERSLIST "$($PSBoundParameters.getEnumerator() |
 				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
 				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 5) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 5) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 5)]

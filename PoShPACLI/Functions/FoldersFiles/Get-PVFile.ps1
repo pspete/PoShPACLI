@@ -203,9 +203,9 @@
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
+			ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			
 
