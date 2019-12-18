@@ -50,8 +50,6 @@ Function Start-ClientProcess {
 		#the process can block trying to write to it, so the process never ends.
 		$Process.WaitForExit()
 
-		
-
 		[PSCustomObject] @{
 
 			"ExitCode" = $Process.ExitCode
