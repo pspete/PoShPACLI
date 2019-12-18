@@ -23,7 +23,7 @@ Function Start-ClientProcess {
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLI")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
 		[Parameter(
