@@ -46,6 +46,8 @@
 
 	if ($Return.ExitCode -eq 0) {
 
+		$Script:PV | Add-Member -MemberType NoteProperty -Name sessionID -Value $sessionID
+		
 		[pscustomobject] @{
 
 			"sessionID" = $sessionID

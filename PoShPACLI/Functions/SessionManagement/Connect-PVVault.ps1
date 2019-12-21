@@ -136,6 +136,8 @@
 
 		if ($Return.ExitCode -eq 0) {
 
+			$Script:PV | Add-Member -MemberType NoteProperty -Name user -Value $user
+
 			[PSCustomObject] @{
 
 				"vault"     = $vault
