@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "INSPECTFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe containing the file.
 
@@ -25,12 +19,8 @@
 	.PARAMETER logDays
 	The number of days to include in the list of activities.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVFileActivity -vault lab -user administrator -safe PROD -folder root -file prodpass
+	Get-PVFileActivity -safe PROD -folder root -file prodpass
 
 	Lists file activity for prodpass in safe PROD
 
@@ -41,16 +31,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -72,12 +52,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$logDays,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$logDays
 	)
 
 	PROCESS {
@@ -114,11 +89,7 @@
 						"Folder"           = $folder
 						"Filename"         = $file
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity
 
 				}
 

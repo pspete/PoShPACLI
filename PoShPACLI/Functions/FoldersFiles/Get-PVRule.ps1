@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "RULESLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safeName
 	The Safe where the rules are applied.
 
@@ -24,12 +18,8 @@
 		NO – Indicates files and passwords
 		YES – Indicates folders
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVRule -vault lab -user administrator -safeName UNIX -fullObjectname root\rootpass -isFolder $false
+	Get-PVRule -safeName UNIX -fullObjectname root\rootpass -isFolder $false
 
 	Lists OLAC rules for rootpass
 
@@ -44,16 +34,6 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[string]$safeName,
 
 		[Parameter(
@@ -64,12 +44,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$isFolder,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$isFolder
 	)
 
 	PROCESS {
@@ -102,11 +77,7 @@
 						"RuleCreationDate" = $values[5]
 						"AccessLevel"      = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule
 
 				}
 

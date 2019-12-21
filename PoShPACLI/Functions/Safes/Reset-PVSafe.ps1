@@ -7,21 +7,11 @@
     .DESCRIPTION
     Exposes the PACLI Function: "RESETSAFE"
 
-    .PARAMETER vault
-    The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
     .PARAMETER safe
     The name of the Safe containing the access marks to reset.
 
-    .PARAMETER sessionID
-    The ID number of the session. Use this parameter when working
-    with multiple scripts simultaneously. The default is ‘0’.
-
     .EXAMPLE
-	Reset-PVSafe -vault lab -user administrator -safe ORACLE
+	Reset-PVSafe -safe ORACLE
 
 	Resets access marks on ORACLE safe
 
@@ -37,23 +27,8 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
-		[string]$safe,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$safe
 	)
 
 	PROCESS {
@@ -61,17 +36,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETSAFE $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

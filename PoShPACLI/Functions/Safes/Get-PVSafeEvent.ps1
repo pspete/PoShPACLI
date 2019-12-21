@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "SAFEEVENTSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safePatternName
 	A Safe name pattern to include in the returned Events list.
 
@@ -41,12 +35,8 @@
 	Whether or not the filter according to the ‘datasubstring’
 	parameter will be case-sensitive.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeEvent -vault Lab -user administrator -safePatternName UNIX_Safe
+	Get-PVSafeEvent -safePatternName UNIX_Safe
 
 	Retrieves safe events from UNIX_Safe
 
@@ -57,16 +47,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $False,
@@ -102,12 +82,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$caseSensitive,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$caseSensitive
 	)
 
 	PROCESS {
@@ -205,11 +180,7 @@
 						"FromIP"         = $values[13]
 						"Data"           = $values[14]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event
 
 				}
 

@@ -10,9 +10,6 @@
 	password or by using an authentication parameter file. To create this file,
 	see the New-PVLogonFile command.
 
-	.PARAMETER vault
-	The name of the Vault to log onto
-
 	.PARAMETER user
 	The Username of the User logging on
 
@@ -39,10 +36,6 @@
 	It will generate a randomized new password, change to the new password on
 	logon, and will save it to the  authentication file after a successful logon.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.PARAMETER failIfConnected
 	Whether or not to disconnect the session if the user is already logged onto
 	the Vault through a different interface
@@ -54,9 +47,9 @@
 	The logonfile and radius parameters cannot be defined in the same command.
 
 	.EXAMPLE
-	Connect-PVVault -vault VaultA -user User1 -password (read-host -AsSecureString)
+	Connect-PVVault -user User1 -password (read-host -AsSecureString)
 
-	Logs onto defined vault VaultA using User1
+	Logs onto defined vault using User1
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -65,11 +58,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
 
 		[Parameter(
 			Mandatory = $True,
@@ -95,11 +83,6 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[switch]$autoChangePassword,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID,
 
 		[Parameter(
 			Mandatory = $False,
@@ -137,14 +120,6 @@
 		if ($Return.ExitCode -eq 0) {
 
 			$Script:PV | Add-Member -MemberType NoteProperty -Name user -Value $user
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

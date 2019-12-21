@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "OWNERSAFESLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER owner
 	The name of the Safe Owner.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVUserSafeList -vault Lab -user administrator -owner sec_admin
+	Get-PVUserSafeList -owner sec_admin
 
 	Lists safes owned by user sec_admin
 
@@ -36,23 +26,8 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
-		[String]$owner,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[String]$owner
 	)
 
 	PROCESS {
@@ -82,11 +57,7 @@
 						"ExpirationDate" = $values[2]
 						"Username"       = $owner
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Safe -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Safe
 
 				}
 

@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "REQUESTSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER requestsType
 	The type of requests to display.
 	The options are:
@@ -64,12 +58,8 @@
 		GET_PASSWORD
 		OPEN_SAFE
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVRequest -vault Lab -user administrator -requestsType INCOMING_REQUESTS
+	Get-PVRequest -requestsType INCOMING_REQUESTS
 
 	Lists all Incoming Requests for the authenticated user
 
@@ -80,16 +70,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $False,
@@ -142,12 +122,7 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[ValidateSet("ALL_OBJECTS", "GET_FILE", "GET_PASSWORD", "OPEN_SAFE")]
-		[string]$objectsType,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$objectsType
 	)
 
 	PROCESS {
@@ -194,11 +169,7 @@
 						"UserID"            = $values[19]
 						"FileID"            = $values[20]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
 
 				}
 

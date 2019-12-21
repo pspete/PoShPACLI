@@ -7,25 +7,14 @@
     .DESCRIPTION
    	Exposes the PACLI Function: "SETPASSWORD"
 
-    .PARAMETER vault
-    The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
     .PARAMETER password
     The User’s current password.
 
     .PARAMETER newPassword
     The User’s new password.
 
-    .PARAMETER sessionID
-   	The ID number of the session. Use this parameter when working
-    with multiple scripts simultaneously. The default is ‘0’.
-
     .EXAMPLE
-	Set-PVUserPassword -vault Lab -user PacliUser -password (read-host -AsSecureString) `
-	-newPassword (Read-Host -AsSecureString)
+	Set-PVUserPassword -password (read-host -AsSecureString) -newPassword (Read-Host -AsSecureString)
 
 	Resets the password of the authenticated user
 
@@ -41,27 +30,12 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[securestring]$password,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[securestring]$newPassword,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[securestring]$newPassword
 	)
 
 	PROCESS {
@@ -84,17 +58,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

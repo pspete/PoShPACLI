@@ -45,10 +45,6 @@
 	These characters do not have separators, but must be inside
 	quotation marks, eg., “/?\”
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	New-PVPassword -length 19 -minUpperCase 8 -minSpecial 3 -minLowerCase 6 `
 	-minDigit 1 -forbiddenChars xyz
@@ -98,12 +94,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$forbiddenChars,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$forbiddenChars
 	)
 
 	$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
@@ -114,8 +105,6 @@
 
 		#if result(s) returned
 		if ($Return.StdOut) {
-
-			
 
 			#Return Generated Password String
 			[PSCustomObject] @{

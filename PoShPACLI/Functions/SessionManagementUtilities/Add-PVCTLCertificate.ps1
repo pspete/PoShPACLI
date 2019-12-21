@@ -15,10 +15,6 @@
 	.PARAMETER certFileName
 	The full path and name of the certificate file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	Add-PVCTLCertificate -ctlFileName CTL.FILE -certFileName cert.File
 
@@ -40,28 +36,13 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$certFileName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$certFileName
 	)
 
 	PROCESS {
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLADDCERT $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
-
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

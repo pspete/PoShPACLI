@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "CONFIRMREQUEST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe for which the request has been created.
 
@@ -25,12 +19,8 @@
 	.PARAMETER reason
 	The reason for the action taken by the authorized user or group.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVRequestStatus -vault Lab -user administrator -safe SQL -requestID 11 -confirm
+	Set-PVRequestStatus -safe SQL -requestID 11 -confirm
 
 	Confirms request with ID 11 in safe SQL
 
@@ -42,16 +32,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -72,12 +52,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$reason,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$reason
 	)
 
 	PROCESS {
@@ -125,11 +100,7 @@
 						"UserID"            = $values[19]
 						"FileID"            = $values[20]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
 
 				}
 

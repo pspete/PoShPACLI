@@ -8,24 +8,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "FILESLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe containing the files to list.
 
 	.PARAMETER folder
 	The name of the folder containing the files to list.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVFileList -vault lab -user administrator -safe Reports -folder root
+	Get-PVFileList -safe Reports -folder root
 
 	Lists files in the Reports safe
 
@@ -40,28 +30,13 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
 		[string]$safe,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$folder,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$folder
 	)
 
 	PROCESS {
@@ -109,11 +84,7 @@
 						"Safename"         = $safe
 						"Folder"           = $folder
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
 
 				}
 

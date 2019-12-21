@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "RETRIEVEPASSWORDOBJECT"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe that contains the password object(s)
 	you are looking for. You can use a wildcard to specify a wider
@@ -81,12 +75,8 @@
 	.PARAMETER internalName
 	The name of a previous password version.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVPasswordObject -vault Lab -user administrator -safe Oracle -folder root `
+	Get-PVPasswordObject -safe Oracle -folder root `
 	-file Application-ORACLE-10.10.10.10-SYS -lockFile
 
 	Retrieves the specified password from the Oracle safe
@@ -98,16 +88,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -181,12 +161,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$internalName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$internalName
 	)
 
 	PROCESS {
@@ -207,11 +182,7 @@
 
 					"Password" = $Results
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password
 
 			}
 

@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "GETHTTPGWURL"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The name of the user carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe that contains the file.
 
@@ -23,12 +17,8 @@
 	.PARAMETER file
 	The name of the specified file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVHttpGwUrl -vault Lab -user administrator -safe DEV -folder Root -file TeamPass
+	Get-PVHttpGwUrl -safe DEV -folder Root -file TeamPass
 
 	Retrieves the HTTP Gateway URL for file TeamPass in the DEV Safe.
 
@@ -39,16 +29,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -65,12 +45,7 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Filename")]
-		[string]$file,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$file
 	)
 
 	PROCESS {
@@ -92,11 +67,7 @@
 
 					"URL" = $Results[0]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.URL -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.URL
 
 			}
 

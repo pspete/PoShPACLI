@@ -9,24 +9,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETEOWNER"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER owner
 	The name of the Safe Owner to remove from the Vault.
 
 	.PARAMETER safe
 	The name of the Safe from which to remove the Safe Owner.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVSafeOwner -vault lab -user administrator -safe EU_Safe -owner user1
+	Remove-PVSafeOwner -safe EU_Safe -owner user1
 
 	Deletes user1 as a safe member on EU_Safe
 
@@ -42,16 +32,6 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
 		[string]$safe,
 
@@ -59,12 +39,7 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
-		[String]$owner,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[String]$owner
 	)
 
 	PROCESS {
@@ -72,17 +47,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEOWNER $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

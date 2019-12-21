@@ -7,24 +7,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "RENAMESAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The current name of the Safe.
 
 	.PARAMETER newName
 	The new name of the Safe.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Rename-PVSafe -vault lab -user administrator -safe oldName -newName newName
+	Rename-PVSafe -safe oldName -newName newName
 
 	Renames safe oldName to newName
 	.NOTES
@@ -38,28 +28,13 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
 		[string]$safe,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$newName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$newName
 	)
 
 	PROCESS {
@@ -67,17 +42,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RENAMESAFE $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

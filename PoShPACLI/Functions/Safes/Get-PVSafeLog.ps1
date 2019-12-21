@@ -7,18 +7,8 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "SAFESLOG"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeLog -vault lab -user auditor
+	Get-PVSafeLog
 
 	Lists activities per Safe
 
@@ -28,23 +18,7 @@
 	#>
 
 	[CmdLetBinding()]
-	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
-	)
+	param()
 
 	PROCESS {
 
@@ -74,11 +48,7 @@
 						"OpenDate"   = $values[2]
 						"OpenState"  = $values[3]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Log -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Log
 
 				}
 

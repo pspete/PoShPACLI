@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDFILECATEGORY"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe that the File Category is being added to.
 
@@ -28,12 +22,8 @@
 	.PARAMETER value
 	The value of the File Category for the file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVFileCategory -vault Lab -user administrator -safe DEV -folder Root -file SYSPass `
+	Add-PVFileCategory -safe DEV -folder Root -file SYSPass `
 	-category Criticality -value 7
 
 	Adds predefined file category Criticality, with a value of 7 to file SYSPass in safe DEV
@@ -45,16 +35,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -81,12 +61,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$value,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$value
 	)
 
 	PROCESS {
@@ -94,17 +69,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDFILECATEGORY $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

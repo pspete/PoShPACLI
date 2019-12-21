@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDRULE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER userName
 	The user who will be affected by the rule.
 
@@ -130,12 +124,8 @@
 	Whether or not the user is authorized to rename the
 	specified file or password.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 `
+	Add-PVRule -userName user1 -safeName DEV-1 `
 	-fullObjectName root\rootpass -effect Allow -retrieve -store -delete
 
 	Adds rule on object rootpass safe DEV-1 fr user user1
@@ -147,16 +137,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -307,12 +287,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$renameObject,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$renameObject
 	)
 
 	PROCESS {
@@ -345,11 +320,7 @@
 						"RuleCreationDate" = $values[5]
 						"AccessLevel"      = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule
 
 				}
 

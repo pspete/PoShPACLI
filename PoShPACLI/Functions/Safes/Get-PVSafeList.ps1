@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "SAFESLIST
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER location
 	The location to search in for the Safes to include in the list.
 	Note: Add a backslash ‘\’ before the name of the location.
@@ -21,12 +15,8 @@
 	Whether or not in include sublocation(s) of the specified location in
 	the list.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeList -vault lab -user administrator -location \
+	Get-PVSafeList -location \
 
 	Lists all safes from the root location of the vault
 
@@ -39,16 +29,6 @@
 	param(
 
 		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$location,
@@ -56,12 +36,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$includeSubLocations,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$includeSubLocations
 	)
 
 	PROCESS {
@@ -104,11 +79,7 @@
 					"LocationID"                = $values[17]
 					"SupportOLAC"               = $values[18]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe
 
 			}
 

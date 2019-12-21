@@ -9,12 +9,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDOWNER"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER owner
 	The name of the Safe Owner to add to the Safe.
 
@@ -109,12 +103,8 @@
 	.PARAMETER renameObject
 	Whether or not the Safe Owner will be able to rename objects.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVSafeOwner -vault Lab -user Administrator -owner The_User -safe The_Safe -retrieve -store `
+	Add-PVSafeOwner -owner The_User -safe The_Safe -retrieve -store `
 	-administer -supervise
 
 	Adds user The_User to safe The_Safe with the specified safe permissions.
@@ -126,16 +116,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -277,12 +257,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$renameObject,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$renameObject
 	)
 
 	PROCESS {
@@ -290,17 +265,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

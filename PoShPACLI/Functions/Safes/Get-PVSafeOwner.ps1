@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "OWNERSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safePattern
 	The full name or part of the name of the Safe(s) to include in the list.
 	Alternatively, a wildcard can be used in this parameter.
@@ -24,12 +18,8 @@
 	.PARAMETER includeGroupMembers
 	Whether or not to include individual members of Groups in the list.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeOwner -vault lab -user administrator -safePattern system -ownerPattern *
+	Get-PVSafeOwner -safePattern system -ownerPattern *
 
 	Lists all owners of the SYSTEM safe
 
@@ -40,16 +30,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -65,12 +45,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$includeGroupMembers,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$includeGroupMembers
 	)
 
 	PROCESS {
@@ -107,11 +82,7 @@
 						"SafeID"            = $values[9]
 						"UserID"            = $values[10]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Owner -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Owner
 
 				}
 

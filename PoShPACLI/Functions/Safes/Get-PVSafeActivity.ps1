@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "INSPECTSAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safePattern
 	The full name or part of the name of the Safe(s) to include in the report.
 	Alternatively, a wildcard can be used in this parameter.
@@ -98,12 +92,8 @@
 	or regular expression.
 	256 – Shows system audit.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeActivity -vault Lab -user administrator -safePattern unix_safe -userPattern *
+	Get-PVSafeActivity -safePattern unix_safe -userPattern *
 
 	Gets safe activity for all users from safe unix_safe
 
@@ -114,16 +104,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -207,12 +187,7 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[ValidateSet("1", "2", "4", "16", "32", "64", "128", "256")]
-		[int]$options,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$options
 	)
 
 	PROCESS {
@@ -257,11 +232,7 @@
 						"RequestReason" = $values[7]
 						"Code"          = $values[8]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Activity -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Activity
 
 				}
 

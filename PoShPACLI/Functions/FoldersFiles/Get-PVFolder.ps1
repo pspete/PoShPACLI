@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "FOLDERSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe whose folders will be listed.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVFolder -vault lab -user administrator -safe ORACLE
+	Get-PVFolder -safe ORACLE
 
 	Lists all folders in the specified safe.
 
@@ -36,23 +26,8 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
-		[string]$safe,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$safe
 	)
 
 	PROCESS {
@@ -85,11 +60,7 @@
 						"DeletedBy"    = $values[4]
 						"Safename"     = $safe
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder
 
 				}
 

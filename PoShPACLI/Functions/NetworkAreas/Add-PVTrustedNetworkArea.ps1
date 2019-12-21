@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDTRUSTEDNETWORKAREA"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER trusterName
 	The User who will have access to the Trusted Network Area.
 
@@ -30,12 +24,8 @@
 	The maximum number of access violations permitted before the User is not
 	permitted to access the Vault.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVTrustedNetworkArea -vault Lab -user administrator -trusterName user1 -networkArea "All\VPN"
+	Add-PVTrustedNetworkArea -trusterName user1 -networkArea "All\VPN"
 
 	Adds VPN Trusted Network Area to user1
 
@@ -46,16 +36,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -81,12 +61,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$maxViolationCount,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$maxViolationCount
 	)
 
 	PROCESS {
@@ -94,17 +69,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDTRUSTEDNETWORKAREA $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

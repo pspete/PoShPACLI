@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDSAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe to be added.
 
@@ -165,12 +159,8 @@
 	Whether or not Object Level Access is supported.
 	The default is ‘No’.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	New-PVSafe -vault Lab -user administrator -safe PacliSafe `
+	New-PVSafe -safe PacliSafe `
 	-location \ -size 50 -description "new Safe" -dailyVersions 5 -logRetention 40
 
 	Creates safe "PacliSafe", in the root location, with size, daily versions & log retention set
@@ -183,16 +173,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -371,12 +351,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$supportOLAC,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$supportOLAC
 	)
 
 	PROCESS {
@@ -394,17 +369,7 @@
 			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
 			confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

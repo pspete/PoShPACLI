@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETENETWORKAREA"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER networkArea
 	The name of the Network Area to delete.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVNetworkArea -vault Lab -user administrator -networkArea all\EU\UK
+	Remove-PVNetworkArea -networkArea all\EU\UK
 
 	Deletes Network Area UK from EU
 
@@ -37,22 +27,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$networkArea,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$networkArea
 	)
 
 	PROCESS {
@@ -60,17 +35,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETENETWORKAREA $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

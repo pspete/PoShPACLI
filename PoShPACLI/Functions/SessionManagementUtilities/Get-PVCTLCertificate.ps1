@@ -12,10 +12,6 @@
 	parameter is not supplied, the CTL file name that was supplied in
 	the INIT function is used.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	Get-PVCTLCertificate
 
@@ -33,12 +29,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$ctlFileName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$ctlFileName
 	)
 
 	PROCESS {
@@ -69,9 +60,7 @@
 						"FromDate" = $values[2]
 						"ToDate"   = $values[3]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate -PropertyToAdd @{
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate
 
 				}
 

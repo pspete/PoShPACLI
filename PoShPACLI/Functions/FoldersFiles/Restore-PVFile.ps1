@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UNDELETEFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe in which the file was stored.
 
@@ -22,12 +16,8 @@
 	.PARAMETER file
 	The name of the file or password to undelete.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Restore-PVFile -vault lab -user administrator -safe US_Region -folder root -file deletedFile
+	Restore-PVFile -safe US_Region -folder root -file deletedFile
 
 	"Un-deletes"/Restores deletedFile
 
@@ -38,16 +28,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -64,12 +44,7 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Filename")]
-		[string]$file,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$file
 	)
 
 	PROCESS {
@@ -81,14 +56,11 @@
 
 			[PSCustomObject] @{
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
 				"Safename"  = $safe
 				"Folder"    = $folder
 				"Filename"  = $file
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
 
 		}
 

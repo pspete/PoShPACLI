@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "GROUPMEMBERS"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER group
 	The name of the group
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVGroupMember -vault Lab -user administrator -group cybr_admins
+	Get-PVGroupMember -group cybr_admins
 
 	Lists members of the cybr_admins group
 
@@ -36,23 +26,8 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Groupname")]
-		[string]$group,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$group
 	)
 
 	PROCESS {
@@ -82,11 +57,7 @@
 						"Username"  = $values[0]
 						"UserID"    = $values[1]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member
 
 				}
 

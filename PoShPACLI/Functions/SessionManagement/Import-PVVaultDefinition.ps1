@@ -16,12 +16,8 @@
 	specified in the text file, although specifying it in this command
 	overrides the Vault name in the file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Import-PVVaultDefinition -parmFile D:\PACLI\Vault.ini -vault "Demo Vault"
+	Import-PVVaultDefinition -parmFile D:\PACLI\Vault.ini -vault "DemoVault"
 
 	Defines a new vault connection using the details specified in the Vault.ini parameter file.
 
@@ -41,12 +37,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$vault
 	)
 
 	PROCESS {
@@ -59,13 +50,6 @@
 		if ($Return.ExitCode -eq 0) {
 
 			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault
-			
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

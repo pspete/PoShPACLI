@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "LDAPBRANCHESLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER ldapMapName
 	The name of the Directory Map which contains the branches that will be listed.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVLDAPBranch -vault Lab -user administrator -ldapMapName "Vault Users Mapping"
+	Get-PVLDAPBranch -ldapMapName "Vault Users Mapping"
 
 	Lists LDAP branches for Vault Users Mapping
 
@@ -36,22 +26,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$ldapMapName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$ldapMapName
 	)
 
 	PROCESS {
@@ -85,11 +60,7 @@
 						"LDAPQuery"      = $values[5]
 						"LDAPGroupMatch" = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch
 
 				}
 

@@ -75,10 +75,6 @@
 	Whether or not to allow 3rd party authentication with selfsigned certificates.
 	Note: This parameter can only be enabled if 'trustssc' is specified.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	New-PVVaultDefinition -vault VaultA -address 10.10.10.20
 
@@ -188,12 +184,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$allowSSCFor3PartyAuth,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$allowSSCFor3PartyAuth
 	)
 
 	PROCESS {
@@ -214,13 +205,6 @@
 		if ($Return.ExitCode -eq 0) {
 
 			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
 
 		}
 

@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "LDAPBRANCHUPDATE"
 
-	.PARAMETER vault
-    The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
 	.PARAMETER ldapMapName
 	The name of the Directory Map where the LDAP branch will be updated.
 
@@ -31,13 +25,8 @@
 	.PARAMETER ldapGroupMatch
 	A regular expression used to filter LDAP groups of objects in the branch.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVLDAPBranch -vault Lab -user map_admin -ldapMapName "Vault Users Mapping" -updateBranchID 3 `
-	-ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
+	Set-PVLDAPBranch -ldapMapName "Vault Users Mapping" -updateBranchID 3 -ldapGroupMatch new_group -ldapDirName COMPANY.COM -ldapBranchName "DC=COMPANY,DC=COM"
 
 	Sets LDAP Group Match on branch with ID of 3 in "Vault Users Mapping"
 
@@ -49,16 +38,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -89,12 +68,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$ldapGroupMatch,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$ldapGroupMatch
 	)
 
 	PROCESS {
@@ -128,11 +102,7 @@
 						"LDAPQuery"      = $values[5]
 						"LDAPGroupMatch" = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch
 
 				}
 

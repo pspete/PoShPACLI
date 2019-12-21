@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "USERSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER location
 	The location to search for users.
 	Note: A backslash ‘\’ must be added before the name of the location.
@@ -33,12 +27,8 @@
 	The full name or part of the name of the User(s) to include in the report.
 	A wildcard can also be used in this parameter.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVUserList -vault Lab -user administrator | Where-Object{$_.LDAPUser -eq "YES"}
+	Get-PVUserList  | Where-Object{$_.LDAPUser -eq "YES"}
 
 	Returns all LDAP users/groups from vault
 
@@ -49,16 +39,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $False,
@@ -83,12 +63,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$userPattern,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$userPattern
 	)
 
 	PROCESS {
@@ -128,11 +103,7 @@
 						"LocationID"                = $values[12]
 						"EnableComponentMonitoring" = $values[13]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User
 
 				}
 

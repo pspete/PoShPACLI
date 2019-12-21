@@ -7,24 +7,14 @@
     .DESCRIPTION
    	Exposes the PACLI Function: "RENAMEUSER"
 
-    .PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
     .PARAMETER destUser
 	The current name of the User to rename.
 
     .PARAMETER newName
 	The new name of the User.
 
-    .PARAMETER sessionID
-   	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
     .EXAMPLE
-	Rename-PVUser -vault Lab -user administrator -destUser Then -newName Now
+	Rename-PVUser -destUser Then -newName Now
 
 	Renames user "Then" to user "Now"
 
@@ -39,28 +29,13 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
 		[string]$destUser,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$newName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$newName
 	)
 
 	PROCESS {
@@ -68,17 +43,7 @@
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RENAMEUSER $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
+		
 
 	}
 

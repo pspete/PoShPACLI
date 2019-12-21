@@ -19,10 +19,6 @@
 	.PARAMETER password
 	The password to save in the logon file that will allow logon to the Vault.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	New-PVLogonFile -logonFile D:\PACLI\cred.file -username administrator -password $password
 
@@ -50,12 +46,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[securestring]$password,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[securestring]$password
 	)
 
 	PROCESS {

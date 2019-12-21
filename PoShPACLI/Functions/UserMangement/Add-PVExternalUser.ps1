@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDUPDATEEXTERNALUSERENTITY"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER destUser
 	The name (samaccountname) of the external User or Group that will be created
 	in the Vault.
@@ -27,12 +21,8 @@
 	Whether or not existing external Users and Groups definitions will be updated
 	in the Vault.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
+	Add-PVExternalUser -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
 	-UpdateIfExists
 
 	Updates user admin01 in vault from domain VIRTUALREAL.IT
@@ -80,13 +70,8 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$UpdateIfExists,
-
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$UpdateIfExists
+		
 	)
 
 	PROCESS {
@@ -107,11 +92,7 @@
 
 					"Username" = $Results
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External
 
 			}
 

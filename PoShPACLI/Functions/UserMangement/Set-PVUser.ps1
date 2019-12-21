@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UPDATEUSER"
 
-	.PARAMETER vault
-        The defined Vault name
-
-	.PARAMETER user
-        The Username of the authenticated User.
-
 	.PARAMETER destUser
 	The name of the User to be updated.
 
@@ -201,16 +195,12 @@
 	Whether or not email notifications are sent for component users who
 	have not accessed the Vault.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVUser -vault Lab -user administrator -destUser admin3 -password (read-host -AsSecureString)
+	Set-PVUser -destUser admin3 -password (read-host -AsSecureString)
 
 	Resets he password of user admin3 to the value provided.
 	.EXAMPLE
-	Set-PVUser -vault Lab -user administrator -destUser zest3 -location \Location3
+	Set-PVUser -destUser zest3 -location \Location3
 
 	Moves vault user to Location3
 
@@ -222,16 +212,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -498,12 +478,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$enableComponentMonitoring,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$enableComponentMonitoring
 	)
 
 	PROCESS {
@@ -517,18 +492,6 @@
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER $($PSBoundParameters.getEnumerator() |
 			ConvertTo-ParameterString -donotQuote authType, retention, quota)
-
-		if ($Return.ExitCode -eq 0) {
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

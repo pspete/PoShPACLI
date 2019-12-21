@@ -7,29 +7,19 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "LISTSAFEFILECATEGORIES"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The Safe where the File Categories is defined.
 
 	.PARAMETER category
 	The name of the File Category to list.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
+	Get-PVSafeFileCategory -safe ORACLE -category CISOcat1
 
 	lists specific file category details
 
 	.EXAMPLE
-	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE
+	Get-PVSafeFileCategory -safe ORACLE
 
 	lists all file category details
 
@@ -42,16 +32,6 @@
 	param(
 
 		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
@@ -60,12 +40,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$category,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$category
 	)
 
 	PROCESS {
@@ -96,11 +71,7 @@
 					"CategoryRequired"     = $values[5]
 					"VaultCategory"        = $values[6]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory
 
 			}
 

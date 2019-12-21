@@ -7,24 +7,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "LDAPBRANCHDELETE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER ldapMapName
 	The name of the Directory Map where the LDAP branch will be updated.
 
 	.PARAMETER deleteBranchID
 	A 64-bit unique ID of the branch to update
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVLDAPBranch -vault Lab -user administrator -ldapMapName EU_Users -deleteBranchID 4
+	Remove-PVLDAPBranch -ldapMapName EU_Users -deleteBranchID 4
 
 	Deletes Ldap Branch with ID of 4 from EU_Users Mapping
 
@@ -40,28 +30,13 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[string]$ldapMapName,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("LDAPBranchID")]
-		[string]$deleteBranchID,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$deleteBranchID
 	)
 
 	PROCESS {
@@ -94,11 +69,7 @@
 						"LDAPQuery"      = $values[5]
 						"LDAPGroupMatch" = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch 
 
 				}
 
