@@ -76,8 +76,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

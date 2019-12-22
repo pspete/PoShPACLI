@@ -41,7 +41,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote securityLevelParm)
 
 		

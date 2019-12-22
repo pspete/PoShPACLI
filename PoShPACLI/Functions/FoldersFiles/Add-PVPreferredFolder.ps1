@@ -40,8 +40,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDPREFERREDFOLDER $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDPREFERREDFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

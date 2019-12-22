@@ -49,8 +49,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCKFILE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCKFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

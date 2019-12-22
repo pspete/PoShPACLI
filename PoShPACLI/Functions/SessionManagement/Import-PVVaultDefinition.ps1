@@ -44,12 +44,11 @@
 
 		
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINEFROMFILE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINEFROMFILE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 		if ($Return.ExitCode -eq 0) {
 
-			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault
+			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault -Force
 
 		}
 

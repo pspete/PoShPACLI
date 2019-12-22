@@ -42,8 +42,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFOLDER $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

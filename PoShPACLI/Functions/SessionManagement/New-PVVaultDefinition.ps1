@@ -196,15 +196,12 @@
 
 		}
 
-		
-
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
-			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser `
+		-doNotQuote proxyType, port, timeout, reconnectPeriod, proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
 		if ($Return.ExitCode -eq 0) {
 
-			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault
+			$Script:PV | Add-Member -MemberType NoteProperty -Name vault -Value $vault -Force
 
 		}
 

@@ -32,8 +32,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEDETAILS "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEDETAILS "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
 
 		if ($Return.ExitCode -eq 0) {
 

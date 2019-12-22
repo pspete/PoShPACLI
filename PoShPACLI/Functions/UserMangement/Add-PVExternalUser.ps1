@@ -76,8 +76,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

@@ -21,7 +21,12 @@
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
     param()
 
-    $Return = Invoke-PACLICommand $Script:PV.ClientPath TERM $($PSBoundParameters.getEnumerator() |
-        ConvertTo-ParameterString)
+    $Return = Invoke-PACLICommand -PacliEXE $Script:PV.ClientPath -PacliCommand TERM -CommandParameters $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+
+    if ($Return.ExitCode -eq 0) {
+
+        $Script:PV.PSObject.Properties.Remove('sessionID')
+
+    }
 
 }

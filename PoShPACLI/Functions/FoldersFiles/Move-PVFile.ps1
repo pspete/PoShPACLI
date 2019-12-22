@@ -58,8 +58,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFILE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

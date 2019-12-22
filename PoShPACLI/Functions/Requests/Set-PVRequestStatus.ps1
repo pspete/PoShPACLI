@@ -58,7 +58,7 @@
 	PROCESS {
 
 		#ConvertTo-ParameterString usually remove "Confirm", which conflicts with a parameter of the function
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CONFIRMREQUEST "$($($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CONFIRMREQUEST "$($($PSBoundParameters |
 		ConvertTo-ParameterString -doNotQuote requestID) -replace "confirmRequest","confirm") OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

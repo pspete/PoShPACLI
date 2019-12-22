@@ -13,7 +13,7 @@
     .EXAMPLE
 	Unlock-PVUser -password (read-host -AsSecureString)
 
-	Unlocks the current user (administrator), after supplying password for the account.
+	Unlocks the current user, after supplying password for the account.
 
     .NOTES
     AUTHOR: Pete Maan
@@ -38,8 +38,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

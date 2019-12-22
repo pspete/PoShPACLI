@@ -32,8 +32,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CLOSESAFE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CLOSESAFE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

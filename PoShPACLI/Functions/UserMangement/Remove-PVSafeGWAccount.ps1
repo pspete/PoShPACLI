@@ -43,8 +43,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

@@ -21,8 +21,7 @@
 	[CmdLetBinding()]
 	param()
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLGETFILENAME "$($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLGETFILENAME "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 	if ($Return.ExitCode -eq 0) {
 

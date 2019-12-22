@@ -25,8 +25,13 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEVAULT $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEVAULT $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
+		
+		if ($Return.ExitCode -eq 0) {
+
+			$Script:PV.PSObject.Properties.Remove('vault')
+
+		}
 
 	}
 

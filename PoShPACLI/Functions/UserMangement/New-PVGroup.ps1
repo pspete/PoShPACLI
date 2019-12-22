@@ -58,8 +58,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDGROUP $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDGROUP $($PSBoundParameters | ConvertTo-ParameterString)
 
 	}
 

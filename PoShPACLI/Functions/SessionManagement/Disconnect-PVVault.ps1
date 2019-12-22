@@ -10,7 +10,7 @@
 	.EXAMPLE
 	Disconnect-PVVault
 
-	Logs off administrator from defined vault VaultA
+	Logs off from vault
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -21,8 +21,13 @@
 	param()
 
 	PROCESS {
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters | ConvertTo-ParameterString)
+
+		if ($Return.ExitCode -eq 0) {
+
+			$Script:PV.PSObject.Properties.Remove('user')
+
+		}
 	}
 
 }

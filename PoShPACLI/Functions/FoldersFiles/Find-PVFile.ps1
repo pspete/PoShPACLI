@@ -372,8 +372,7 @@
 		}
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
 					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 						categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 

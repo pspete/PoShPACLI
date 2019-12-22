@@ -69,8 +69,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

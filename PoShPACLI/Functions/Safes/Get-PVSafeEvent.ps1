@@ -93,7 +93,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters |
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"
 
 		#If data returned

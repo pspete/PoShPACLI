@@ -64,8 +64,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

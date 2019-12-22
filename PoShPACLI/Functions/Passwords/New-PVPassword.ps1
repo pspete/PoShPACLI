@@ -97,7 +97,7 @@
 		[string]$forbiddenChars
 	)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters.getEnumerator() |
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters |
             ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
                 minDigit,effectiveLength) OUTPUT (ALL)"
 

@@ -22,8 +22,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCK $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCK $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

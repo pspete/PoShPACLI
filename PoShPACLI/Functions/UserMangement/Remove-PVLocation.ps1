@@ -33,8 +33,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETELOCATION $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETELOCATION $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

@@ -40,8 +40,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVENETWORKAREA $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

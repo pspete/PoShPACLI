@@ -308,7 +308,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
 			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
 			safeOptions, securityLevelParm, confirmationCount, maxFileSize)

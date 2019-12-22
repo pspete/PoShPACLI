@@ -49,8 +49,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFILE $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

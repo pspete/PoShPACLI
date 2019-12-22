@@ -55,8 +55,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

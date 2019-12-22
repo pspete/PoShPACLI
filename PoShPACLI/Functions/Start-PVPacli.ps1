@@ -41,8 +41,7 @@
 		[string]$ctlFileName
 	)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters.getEnumerator() |
-		ConvertTo-ParameterString)
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser -NoSessionID)
 
 	if ($Return.ExitCode -eq 0) {
 

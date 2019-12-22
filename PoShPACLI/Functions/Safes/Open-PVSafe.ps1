@@ -122,7 +122,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OPENSAFE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath OPENSAFE "$($PSBoundParameters |
 					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

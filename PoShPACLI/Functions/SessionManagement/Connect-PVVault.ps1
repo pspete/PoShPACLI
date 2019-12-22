@@ -114,12 +114,11 @@
 
 		
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
 
 		if ($Return.ExitCode -eq 0) {
 
-			$Script:PV | Add-Member -MemberType NoteProperty -Name user -Value $user
+			$Script:PV | Add-Member -MemberType NoteProperty -Name user -Value $user -Force
 
 		}
 

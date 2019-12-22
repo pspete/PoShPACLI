@@ -49,8 +49,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath GETUSERPHOTO $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath GETUSERPHOTO $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 
