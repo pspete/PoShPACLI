@@ -118,7 +118,7 @@
 			
 			switch ($_) {
 
-				( { $doNotQuote -NotContains $PSItem.Key }) { $value = $($PSItem.Key) + "=" + $(((($PSItem.Value) -replace $ValueTerminators, '"') -replace $ValueTrue, "Yes") -replace $ValueFalse, "No") ; break }
+				( { $doNotQuote -NotContains $PSItem.Key }) { $value = $($PSItem.Key) + "=" + $(((($PSItem.Value).Replace($ValueTerminators, '"')).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")) ; break }
 				
 				( { $doNotQuote -Contains $PSItem.Key }) { $value = $($PSItem.Key) + "=" + $($PSItem.Value) ; break }
 				
