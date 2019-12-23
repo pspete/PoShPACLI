@@ -63,7 +63,7 @@
 	Begin {
 
 		#define array to hold values
-		$pacliValues = @()
+		$pacliValues = [System.Collections.ArrayList]@()
 
 	}
 
@@ -78,7 +78,7 @@
 		ForEach-Object {
 
 			#assign returned values to array and remove quotes
-			$pacliValues += $_.Value -replace '"', ''
+			$null = $pacliValues.Add(($_.Value).Replace( '"', ''))
 
 		}
 
