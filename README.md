@@ -3,9 +3,10 @@
 ## **Powershell PACLI Module for CyberArk EPV**
 
 [![appveyor][]][av-site]
-[![tests][]][tests-site]
+[![codefactor][]][cf-link]
 [![coveralls][]][cv-site]
 [![psgallery][]][ps-site]
+[![downloads][]][ps-site]
 [![license][]][license-link]
 
 [appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
@@ -18,6 +19,9 @@
 [ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
 [license]:https://img.shields.io/github/license/pspete/poshpacli.svg
 [license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
+[codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
+[cf-link]:https://www.codefactor.io/repository/github/pspete/poshpacli
+[downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 
 Use the native functions of the CyberArk PACLI command line utility in PowerShell.
 
