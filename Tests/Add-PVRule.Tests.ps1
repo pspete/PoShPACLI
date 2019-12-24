@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault          = "SomeVault"
-					user           = "SomeUser"
+					
+					
 					safeName       = "SomeSafe"
 					userName       = "SomeFolder"
 					fullObjectName = "SomeFile"

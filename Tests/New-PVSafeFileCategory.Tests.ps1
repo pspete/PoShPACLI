@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-					user  = "SomeUser"
+					
+					
 					safe  = "SomeSafe"
 				}
 
@@ -47,7 +47,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -56,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVSafeFileCategory -category x} | Should Not throw
+				{ $InputObj | New-PVSafeFileCategory -category x } | Should Not throw
 
 			}
 

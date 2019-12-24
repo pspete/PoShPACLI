@@ -107,7 +107,7 @@ Describe "Module" {
 		}
 
 		#Get Public Function Names
-		$PublicFunctions = Get-ChildItem "$ModulePath\Functions" -Filter *.ps1 -Recurse |
+		$PublicFunctions = Get-ChildItem "$ModulePath\Functions" -Include *.ps1 -Recurse |
 			Select-Object -ExpandProperty BaseName
 
 		Context "Exported Function Analysis" {
@@ -201,7 +201,7 @@ Describe "Module" {
 		}
 
 	}
-
+<#
 	Describe 'PSScriptAnalyzer' {
 
 		$Scripts = Get-ChildItem "$ModulePath" -Filter '*.ps1' -Exclude '*.ps1xml' -Recurse
@@ -227,5 +227,5 @@ Describe "Module" {
 		}
 
 	}
-
+#>
 }

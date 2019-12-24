@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
+					
+					
 					safeName = "SomeSafe"
 					folder   = "SomeFolder"
 
@@ -49,7 +49,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}

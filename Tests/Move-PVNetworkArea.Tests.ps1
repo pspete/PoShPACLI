@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault       = "SomeVault"
-					user        = "SomeUser"
+					
+					
 					networkArea = "SomeArea"
 
 				}
@@ -48,7 +48,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -57,7 +57,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Move-PVNetworkArea -newLocation "SomeLocation"} | Should Not throw
+				{ $InputObj | Move-PVNetworkArea -newLocation "SomeLocation" } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-					user  = "SomeUser"
+					
+					
 					safe  = "someSafe"
 				}
 
@@ -56,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVSafe} | Should Not throw
+				{ $InputObj | Get-PVSafe } | Should Not throw
 
 			}
 

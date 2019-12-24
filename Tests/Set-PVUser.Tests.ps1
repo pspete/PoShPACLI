@@ -39,16 +39,17 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
+					
+					
 					destUser = "SomeUser"
+
 				}
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}

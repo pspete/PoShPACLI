@@ -38,15 +38,16 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-					user  = "SomeUser"
+					
+					user = "SomeUser"
+					
 				}
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -55,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Connect-PVVault -password $Password -newPassword $Password} | Should Not throw
+				{ $InputObj | Connect-PVVault -password $Password -newPassword $Password } | Should Not throw
 
 			}
 

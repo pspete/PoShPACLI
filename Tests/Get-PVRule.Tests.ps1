@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault          = "SomeVault"
-					user           = "SomeUser"
+					
+					
 					safeName       = "SomeSafe"
 					fullObjectname = "someObject"
 				}
@@ -57,7 +57,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVRule} | Should Not throw
+				{ $InputObj | Get-PVRule } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

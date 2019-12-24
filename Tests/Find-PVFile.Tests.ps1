@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
+					
+					
 					safeName = "SomeSafe"
 					folder   = "SomeFolder"
 					file     = "SomeFile"
@@ -60,7 +60,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Find-PVFile} | Should Not throw
+				{ $InputObj | Find-PVFile } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

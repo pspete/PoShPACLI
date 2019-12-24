@@ -39,8 +39,7 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault          = "SomeVault"
-					user           = "SomeUser"
+					
 					ldapMapName    = "SomeLocation"
 					updateBranchID = "SomeID"
 					ldapDirName    = "SomeName"

@@ -55,7 +55,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVCTLCertificate} | Should Not throw
+				{ $InputObj | Get-PVCTLCertificate } | Should Not throw
 
 			}
 

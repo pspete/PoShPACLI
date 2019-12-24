@@ -47,7 +47,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -56,7 +56,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Remove-PVCTLCertificate} | Should Not throw
+				{ $InputObj | Remove-PVCTLCertificate } | Should Not throw
 
 			}
 

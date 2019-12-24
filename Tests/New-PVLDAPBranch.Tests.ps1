@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault       = "SomeVault"
-					user        = "SomeUser"
+					
+					
 					ldapMapName = "SomeMap"
 					ldapDirName = "SomeDir"
 
@@ -59,7 +59,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVLDAPBranch -ldapBranchName "SomeBranch"} | Should Not throw
+				{ $InputObj | New-PVLDAPBranch -ldapBranchName "SomeBranch" } | Should Not throw
 
 			}
 
