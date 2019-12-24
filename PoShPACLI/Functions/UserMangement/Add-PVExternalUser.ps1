@@ -22,10 +22,9 @@
 	in the Vault.
 
 	.EXAMPLE
-	Add-PVExternalUser -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
-	-UpdateIfExists
+	Add-PVExternalUser -destUser admin01 -ldapDirectory PSPETE.DEV -UpdateIfExists
 
-	Updates user admin01 in vault from domain VIRTUALREAL.IT
+	Updates user admin01 in vault from domain PSPETE.DEV
 	.NOTES
 	AUTHOR: Pete Maan
 
@@ -34,18 +33,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
 
 		[Parameter(
 			Mandatory = $True,
