@@ -57,12 +57,12 @@
 
 	# Functions to export from this module
 	FunctionsToExport = @(
-		'Set-PVConfiguration'
+		'Get-PVConfiguration',
+		'Set-PVConfiguration',
 		'Start-PVPacli', #INIT
 		'Stop-PVPacli', #TERM
 		'New-PVVaultDefinition', #DEFINE
 		'Import-PVVaultDefinition', #DEFINEFROMFILE
-		'Remove-PVVaultDefinition', #DELETEVAULT
 		'Connect-PVVault', #LOGON
 		'New-PVLogonFile', #CREATELOGONFILE
 		'Disconnect-PVVault', #LOGOFF
@@ -161,7 +161,6 @@
 		'Remove-PVFileCategory', #DELETEFILECATEGORY
 		'Get-PVFileCategory', #LISTFILECATEGORIES
 		'Set-PVObjectValidation', #VALIDATEOBJECT
-		'Get-PVHttpGwUrl', #GETHTTPGWURL
 		'Add-PVRule', #ADDRULE
 		'Remove-PVRule', #DELETERULE
 		'Get-PVRule', #RULESLIST
