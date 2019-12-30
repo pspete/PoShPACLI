@@ -19,7 +19,16 @@ Function Get-PVConfiguration {
 
 	Process {
 		
-		Get-Variable -Name PV -Scope Script -ValueOnly
+		try {
+			
+			Get-Variable -Name PV -Scope Script -ValueOnly -ErrorAction Stop
+		
+		}
+		catch {
+			
+			throw "PVConfiguration not found. Run Set-PVConfiguration."
+
+		}
 
 	}
 
