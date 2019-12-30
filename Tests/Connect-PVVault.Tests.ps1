@@ -37,7 +37,7 @@ Describe $FunctionName {
 
 			BeforeEach {
 
-				$Script:PV.ClientPath = "C:\Windows\System32\cmd.exe"
+				Set-PVConfiguration -ClientPath "C:\Windows\System32\cmd.exe"
 
 				$InputObj = [PSCustomObject]@{
 					
