@@ -42,7 +42,7 @@ Describe $FunctionName {
 				}
 
 				$InputObj = [pscustomobject]@{
-					ClientPath = "SomePath"
+					ClientPath = "C:\Windows\System32\cmd.exe"
 				}
 
 			}
@@ -55,13 +55,13 @@ Describe $FunctionName {
 
 			it "sets client path property value" {
 				$InputObj | Set-PVConfiguration
-				$($Script:PV.ClientPath) | Should Be "SomePath"
+				$($Script:PV.ClientPath) | Should Be "C:\Windows\System32\cmd.exe"
 			}
 
 			it "sets independent property value" {
 				Set-PVConfiguration -sessionID 666
 				$($Script:PV.sessionID) | Should Be "666"
-				$($Script:PV.ClientPath) | Should Be "SomePath"
+				$($Script:PV.ClientPath) | Should Be "C:\Windows\System32\cmd.exe"
 			}
 
 		}
