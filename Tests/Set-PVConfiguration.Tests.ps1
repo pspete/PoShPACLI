@@ -58,6 +58,12 @@ Describe $FunctionName {
 				$($Script:PV.ClientPath) | Should Be "SomePath"
 			}
 
+			it "sets independent property value" {
+				Set-PVConfiguration -sessionID 666
+				$($Script:PV.sessionID) | Should Be "666"
+				$($Script:PV.ClientPath) | Should Be "SomePath"
+			}
+
 		}
 
 	}

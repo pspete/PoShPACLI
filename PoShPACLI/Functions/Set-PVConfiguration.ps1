@@ -13,6 +13,12 @@ Function Set-PVConfiguration {
 	.PARAMETER ClientPath
 	The path to the PACLI.exe utility
 
+	.PARAMETER sessionID
+
+	.PARAMETER vault
+
+	.PARAMETER user
+
 	.EXAMPLE
 	Set-PVConfiguration -ClientPath D:\Path\To\PACLI.exe
 
@@ -29,7 +35,23 @@ Function Set-PVConfiguration {
 		)]
 		[ValidateScript( { Test-Path $_ -PathType Leaf })]
 		[ValidateNotNullOrEmpty()]
-		[string]$ClientPath
+		[string]$ClientPath,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[int]$sessionID,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[string]$user
+
 	)
 
 	Begin {
@@ -40,20 +62,41 @@ Function Set-PVConfiguration {
 
 	Process {
 
-		If ($PSBoundParameters.Keys -contains "ClientPath") {
+		If ($PSBoundParameters.Keys -notcontains "ClientPath") {
 
-			$Defaults | Add-Member -MemberType NoteProperty -Name ClientPath -Value $ClientPath
+			$ClientPath = $Script:PV.ClientPath
+
+		}
+		
+		If ($PSBoundParameters.Keys -notcontains "sessionID") {
+
+			$sessionID = $Script:PV.sessionID
 
 		}
 
-	}
+		If ($PSBoundParameters.Keys -notcontains "vault") {
 
-	End {
+			$vault = $Script:PV.vault
+
+		}
+		
+		If ($PSBoundParameters.Keys -notcontains "user") {
+
+			$user = $Script:PV.user
+
+		}
+
+		$Defaults | Add-Member -MemberType NoteProperty -Name ClientPath -Value $ClientPath
+		$Defaults | Add-Member -MemberType NoteProperty -Name sessionID -Value $sessionID
+		$Defaults | Add-Member -MemberType NoteProperty -Name vault -Value $vault
+		$Defaults | Add-Member -MemberType NoteProperty -Name user -Value $user
 
 		Set-Variable -Name PV -Value $Defaults -Scope Script
 
 		$Script:PV | Select-Object -Property * | Export-Clixml -Path "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml" -Force
 
 	}
+
+	End { }
 
 }
