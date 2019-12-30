@@ -37,6 +37,8 @@ Describe $FunctionName {
 
 			BeforeEach {
 
+				$Script:PV.ClientPath = "C:\Windows\System32\cmd.exe"
+				
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				Mock Invoke-PACLICommand -MockWith {

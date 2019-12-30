@@ -37,6 +37,8 @@ Describe $FunctionName {
 
 			BeforeEach {
 
+				$Script:PV.ClientPath = "C:\Windows\System32\cmd.exe"
+
 				$InputObj = [PSCustomObject]@{
 					
 					user = "SomeUser"
