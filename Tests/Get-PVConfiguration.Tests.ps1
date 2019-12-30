@@ -51,6 +51,15 @@ Describe $FunctionName {
 
 			}
 
+			it "returns expected error" {
+
+				Mock Get-Variable -MockWith {
+					throw someError
+				}
+				{ Get-PVConfiguration } | should throw "PVConfiguration not found. Run Set-PVConfiguration."
+
+			}
+
 		}
 
 	}
