@@ -64,14 +64,14 @@
 
 			Get-Variable -Name PV -ErrorAction Stop
 
-			if ($PV.PSObject.Properties.Name -notcontains "ClientPath") {
+			if ( ($PV.PSObject.Properties.Name -notcontains "ClientPath") -or (-not (Test-Path -Path $PV.ClientPath -PathType Leaf)) ) {
 
 				Write-Error "Heads Up!" -ErrorAction Stop
 
 			}
 
 		}
-		Catch { throw "PACLI.exe not found `nRun Set-PVConfiguration to set path to PACLI" }
+		Catch { throw "PACLI.exe not found. Run Set-PVConfiguration to set PACLI client path" }
 
 		#Create process
 		$Process = new-object System.Diagnostics.Process
