@@ -66,7 +66,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

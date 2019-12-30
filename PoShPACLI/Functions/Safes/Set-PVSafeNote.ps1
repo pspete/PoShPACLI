@@ -49,7 +49,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDNOTE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDNOTE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

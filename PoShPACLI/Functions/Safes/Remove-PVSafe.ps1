@@ -39,7 +39,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

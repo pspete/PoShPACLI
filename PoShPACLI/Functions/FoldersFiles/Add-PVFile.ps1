@@ -76,7 +76,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

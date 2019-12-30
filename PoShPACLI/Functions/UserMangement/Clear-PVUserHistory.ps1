@@ -22,7 +22,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CLEARUSERHISTORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath CLEARUSERHISTORY $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

@@ -58,7 +58,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
 	}
 

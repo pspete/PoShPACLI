@@ -79,7 +79,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFEFILECATEGORY $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFEFILECATEGORY $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote type)
 
 		

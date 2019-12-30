@@ -232,7 +232,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

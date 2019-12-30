@@ -42,7 +42,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATELOCATION $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATELOCATION $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote quota)
 
 		

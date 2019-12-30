@@ -40,7 +40,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RENAMENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

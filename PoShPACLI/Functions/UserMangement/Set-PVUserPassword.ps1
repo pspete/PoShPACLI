@@ -55,7 +55,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

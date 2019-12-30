@@ -32,7 +32,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

@@ -41,7 +41,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

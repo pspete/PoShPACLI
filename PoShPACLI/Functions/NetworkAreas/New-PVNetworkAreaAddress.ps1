@@ -56,7 +56,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDAREAADDRESS $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDAREAADDRESS $($PSBoundParameters |
 			ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
 		

@@ -80,7 +80,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote validationAction)
 
 		

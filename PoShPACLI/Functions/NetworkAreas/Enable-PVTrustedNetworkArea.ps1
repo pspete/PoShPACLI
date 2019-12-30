@@ -40,7 +40,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ACTIVATETRUSTEDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ACTIVATETRUSTEDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

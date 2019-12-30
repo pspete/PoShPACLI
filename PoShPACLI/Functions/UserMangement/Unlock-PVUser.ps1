@@ -38,7 +38,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

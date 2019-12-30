@@ -490,7 +490,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote authType, retention, quota)
 
 	}

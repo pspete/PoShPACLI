@@ -60,7 +60,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

@@ -362,7 +362,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,

@@ -262,7 +262,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters | ConvertTo-ParameterString)
 
 		
 

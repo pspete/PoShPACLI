@@ -64,7 +64,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

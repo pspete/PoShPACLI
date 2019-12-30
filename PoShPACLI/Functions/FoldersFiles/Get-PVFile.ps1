@@ -177,7 +177,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 	}
 

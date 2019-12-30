@@ -67,7 +67,7 @@
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote ruleID)
 
 		
