@@ -64,6 +64,21 @@ Describe $FunctionName {
 				$($Script:PV.ClientPath) | Should Be "C:\Windows\System32\cmd.exe"
 			}
 
+			it "throws as expected" { 
+
+				Mock Get-Item -MockWith {
+					[PSCustomObject]@{
+						VersionInfo = [PSCustomObject]@{
+							ProductVersion = 5.5
+						}
+					}
+				}
+				
+				{ $InputObj | Set-PVConfiguration } | should throw
+
+
+			}
+
 		}
 
 	}
