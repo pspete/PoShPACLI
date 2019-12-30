@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.x] - 2020-MM-dd
+
+- **5 Year Aniversary Update**
+- Breaking Changes
+  - Changed Parameter Requirments
+    - Removed Parameters `-User`, `-Vault` & `-SesionID`.
+      - Parameter values are now set in the module scope and are not required to be passed individually to each function.
+      - Where a functions output only contained `vault`, `user` & `sessionID` properties, there is now no output.
+      - Where `vault`, `user` & `sessionID` were added as properties of the output, they are no longer returned in the output object.
+  - Behavior Change
+    - `Start-PVPACLI`
+      - Invocation of function results in `sessionID` being set in module scope.
+      - The value for `sessionID` will be used for all subsequent module operations.
+      - value can be changed in the module scope using the `Set-PVConfiguration` function.
+    - `New-PVVaultDefinition`
+      - Invocation of function results in `vault` being set in module scope.
+      - The value for `vault` will be used for all subsequent module operations.
+      - value can be changed in the module scope using the `Set-PVConfiguration` function.
+    - `Import-PVVaultDefinition`
+      - Invocation of function results in `vault` being set in module scope.
+      - The value for `vault` will be used for all subsequent module operations.
+      - value can be changed in the module scope using the `Set-PVConfiguration` function.
+    - `Connect-PVVault`
+      - Invocation of function results in `user` being set in module scope.
+      - The value for `user` will be used for all subsequent module operations.
+      - value can be changed in the module scope using the `Set-PVConfiguration` function.
+- Other Updates
+  - Added
+    - `Get-PVConfiguration`
+      - Allows module user to query current values in use for `ClientPath`, `sessionID`, `user` & `vault`.
+  - Updated
+    - `Set-PVConfiguration`
+      - Added ability to set `sessionID`, `user` & `vault` values to be used by module functions for PACLI operations.
+      - Added file version check when setting ClientPath to ensure minimum required PACLI Executable is specified.
+        - Specifying PACLI.exe with a version less than 7.2 will riase an error.
+    - `Import-PVVaultDefinition`
+      - Parameter `vault` updated to be Mandatory, enables value to be set in module scope for subsequent module operations.
+  - Removed
+    - `Remove-PVVaultDefinition`
+      - Module requires at least PACLI 7.2, which does not support the `DELETEVAULT` command.
+    - `Get-PVHttpGwUrl`
+      - Module requires at least PACLI 7.2, which does not support the `GETHTTPGWURL` command.
+  - Performance improvements
+    - Using ArrayList for quicker parsing of output data.
+    - Extraneous/immaterial verbose & debug messages removed.
+    - Substitute Regex Replace with String Replace where possible to improve speed of required replace operations.
+    - Provide mechanism for masking secret values in debug/verbose messages.
+  
 ## [1.1.4] - 2019-07-24
 
 - Updated Function
