@@ -82,7 +82,7 @@
 
 		if ($PSCmdlet.ShouldProcess($PacliEXE, "$PacliCommand $CommandParameters")) {
 
-			Write-Debug "PACLI Command: $PacliCommand $CommandParameters"
+			Write-Debug "PACLI Command: $PacliCommand $(Hide-SecretValue -InputValue $CommandParameters)"
 
 			#Assign process parameters
 			$Process.StartInfo.WorkingDirectory = "$(Split-Path $PacliEXE -Parent)"
