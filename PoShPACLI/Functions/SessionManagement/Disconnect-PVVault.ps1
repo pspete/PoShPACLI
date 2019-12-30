@@ -21,13 +21,9 @@
 	param()
 
 	PROCESS {
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters | ConvertTo-ParameterString)
+		
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if ($Return.ExitCode -eq 0) {
-
-			$Script:PV.PSObject.Properties.Remove('user')
-
-		}
 	}
 
 }
