@@ -70,6 +70,14 @@ Function Set-PVConfiguration {
 			$ClientPath = $Script:PV.ClientPath
 
 		}
+		Else { 
+
+			[System.Version]$ClientVersion = Get-Item $ClientPath | Select-Object -ExpandProperty VersionInfo | Select-Object -ExpandProperty ProductVersion
+			If ($ClientVersion -lt [System.Version]"7.2") {
+				Throw "PACLI version 7.2 or higher required"
+			}
+
+		}
 		
 		If ($PSBoundParameters.Keys -notcontains "sessionID") {
 
