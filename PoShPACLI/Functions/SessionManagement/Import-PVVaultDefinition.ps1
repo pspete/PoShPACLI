@@ -12,9 +12,7 @@
 	defining the Vault.
 
 	.PARAMETER vault
-	The name of the Vault to create. This name can also be
-	specified in the text file, although specifying it in this command
-	overrides the Vault name in the file.
+	The name of the Vault to create. This overrides any Vault name specyfied in the vault parameter file.
 
 	.EXAMPLE
 	Import-PVVaultDefinition -parmFile D:\PACLI\Vault.ini -vault "DemoVault"
@@ -35,7 +33,7 @@
 		[string]$parmFile,
 
 		[Parameter(
-			Mandatory = $False,
+			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[string]$vault
 	)
