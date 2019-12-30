@@ -14,10 +14,13 @@ Function Set-PVConfiguration {
 	The path to the PACLI.exe utility
 
 	.PARAMETER sessionID
+	The sessionID value to use for PACLI Commands
 
 	.PARAMETER vault
+	The value to use for the vault parameter in PACLI Commands
 
 	.PARAMETER user
+	The value to use for the user parameter in PACLI commands
 
 	.EXAMPLE
 	Set-PVConfiguration -ClientPath D:\Path\To\PACLI.exe
