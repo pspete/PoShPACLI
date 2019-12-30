@@ -152,7 +152,6 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 |TERM|`Stop-PVPacli`|
 |DEFINEFROMFILE|`Import-PVVaultDefinition`|
 |DEFINE|`New-PVVaultDefinition`|
-|DELETEVAULT|`Remove-PVVaultDefinition`|
 |CREATELOGONFILE|`New-PVLogonFile`|
 |LOGON|`Connect-PVVault`|
 |LOGOFF|`Disconnect-PVVault`|
@@ -188,7 +187,6 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 |ADDGROUPMEMBER|`Add-PVGroupMember`|
 |GROUPMEMBERS|`Get-PVGroupMember`|
 |DELETEGROUPMEMBER|`Remove-PVGroupMember`|
-|GETHTTPGWURL|`Get-PVHttpGwUrl`|
 |LDAPBRANCHESLIST|`Get-PVLDAPBranch`|
 |LDAPBRANCHADD|`New-PVLDAPBranch`|
 |LDAPBRANCHDELETE|`Remove-PVLDAPBranch`|
