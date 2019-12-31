@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.x] - 2020-MM-dd
 
-- **5 Year Aniversary Update**
+- **5 Year Anniversary Update**
 - Breaking Changes
-  - Changed PowerShell Version Requirments
+  - Changed PowerShell Version Requirements
     - Module now requires PowerShell Version 5.
-  - Changed Parameter Requirments
+  - Changed Parameter Requirements
     - Removed Parameters `-User`, `-Vault` & `-SesionID`.
       - Parameter values are now set in the module scope and are not required to be passed individually to each function.
       - Where a functions output only contained `vault`, `user` & `sessionID` properties, there is now no output.

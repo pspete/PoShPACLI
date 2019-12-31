@@ -23,7 +23,7 @@
 [cf-link]:https://www.codefactor.io/repository/github/pspete/poshpacli
 [downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 
-Use the native functions of the CyberArk PACLI command line utility in PowerShell.
+Use the native functions of the CyberArk PACLI command line utility translated into PowerShell.
 
 If you are landing here and interested in using PowerShell to automate an aspect of CyberArk,
 
@@ -81,7 +81,6 @@ Output can be piped between PoShPACLI functions:
 ##### Pipeline Example
 
 ![Pipeline-Example-1](/media/_1_pipeline.png)
-
 
 ## PACLI to PoShPACLI Function Relationship
 
@@ -210,8 +209,7 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 
 - Requires Powershell v3 (minimum)
 - The CyberArk PACLI executable must be present on the same computer as the module.
-  - **NOTE**: Issues have been reported & observed when using the module with Pacli versions 4.X & 9.X.
-    - PACLI 7.2 was used for development, your mileage may vary with *any* other version.
+  - PACLI 7.2 was used for development, anything less is considered unsupported for use with this module.
 - A CyberArk user with which to authenticate, which has appropriate Vault/Safe permissions.
 
 ### Installation Options
