@@ -77,8 +77,13 @@
 
 		ForEach-Object {
 
-			#assign returned values to array and remove quotes
-			$null = $pacliValues.Add(($_.Value).Replace( '"', ''))
+			Try {
+				#assign returned values to array and remove quotes
+				$null = $pacliValues.Add(($_.Value).Replace( '"', ''))
+			}
+			Catch { 
+				
+			}
 
 		}
 
