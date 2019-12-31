@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 - **5 Year Aniversary Update**
 - Breaking Changes
+  - Changed PowerShell Version Requirments
+    - Module now requires PowerShell Version 5.
   - Changed Parameter Requirments
     - Removed Parameters `-User`, `-Vault` & `-SesionID`.
       - Parameter values are now set in the module scope and are not required to be passed individually to each function.
