@@ -42,7 +42,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath MOVENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

@@ -43,7 +43,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

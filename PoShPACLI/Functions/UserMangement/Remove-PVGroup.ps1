@@ -35,7 +35,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEGROUP $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

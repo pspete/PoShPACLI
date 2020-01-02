@@ -8,7 +8,7 @@
 	Exposes the PACLI Function: "NETWORKAREASLIST"
 
 	.EXAMPLE
-	Get-PVNetworkArea 
+	Get-PVNetworkArea
 
 	Lists all network areas
 

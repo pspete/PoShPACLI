@@ -34,7 +34,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

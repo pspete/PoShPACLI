@@ -70,7 +70,7 @@
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote ruleID)
 
-		
+
 
 	}
 
