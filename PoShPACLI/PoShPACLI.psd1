@@ -13,7 +13,7 @@
 	Author            = 'Pete Maan'
 
 	# Company or vendor of this module
-	CompanyName = 'PSPETE LTD'
+	CompanyName       = 'PSPETE LTD'
 
 	# Copyright statement for this module
 	Copyright         = '(c) 2020 Pete Maan. All rights reserved.'
@@ -181,13 +181,13 @@
 		PSData = @{
 
 			# Tags applied to this module. These help with module discovery in online galleries.
-			Tags       = @('CyberArk', 'PACLI', 'Security')
+			Tags         = @('CyberArk', 'PACLI', 'Security')
 
 			# A URL to the license for this module.
-			LicenseUri = 'https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md'
+			LicenseUri   = 'https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md'
 
 			# A URL to the main website for this project.
-			ProjectUri = 'https://github.com/pspete/PoShPACLI'
+			ProjectUri   = 'https://github.com/pspete/PoShPACLI'
 
 			# A URL to an icon representing this module.
 			# IconUri = ''

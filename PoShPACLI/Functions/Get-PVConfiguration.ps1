@@ -7,9 +7,9 @@ Function Get-PVConfiguration {
 	Gets properties from variable in the script scope which used by module functions to provide default values for required parameters.
 
 	.EXAMPLE
-	Get-PVConfiguration 
+	Get-PVConfiguration
 
-	Returns current values for ClientPath, sessionID, vault & user being used by module functions.  
+	Returns current values for ClientPath, sessionID, vault & user being used by module functions.
 
 	#>
 	[CmdletBinding(SupportsShouldProcess)]
@@ -18,14 +18,14 @@ Function Get-PVConfiguration {
 	Begin { }
 
 	Process {
-		
+
 		try {
-			
+
 			Get-Variable -Name PV -Scope Script -ValueOnly -ErrorAction Stop
-		
+
 		}
 		catch {
-			
+
 			throw "PVConfiguration not found. Run Set-PVConfiguration."
 
 		}

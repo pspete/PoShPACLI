@@ -42,7 +42,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DEACTIVATETRUSTEDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

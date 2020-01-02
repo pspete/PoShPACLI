@@ -51,7 +51,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath GETUSERPHOTO $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

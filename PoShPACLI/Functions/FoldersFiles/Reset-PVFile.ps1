@@ -56,9 +56,9 @@
 
 			[PSCustomObject] @{
 
-				"Safename"  = $safe
-				"Folder"    = $folder
-				"Filename"  = $file
+				"Safename" = $safe
+				"Folder"   = $folder
+				"Filename" = $file
 
 			}
 

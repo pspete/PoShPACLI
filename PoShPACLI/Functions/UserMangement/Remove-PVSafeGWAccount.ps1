@@ -45,7 +45,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

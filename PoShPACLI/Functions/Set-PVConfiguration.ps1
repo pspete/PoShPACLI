@@ -70,7 +70,7 @@ Function Set-PVConfiguration {
 			$ClientPath = $Script:PV.ClientPath
 
 		}
-		Else { 
+		Else {
 
 			[System.Version]$ClientVersion = Get-Item $ClientPath | Select-Object -ExpandProperty VersionInfo | Select-Object -ExpandProperty ProductVersion
 			If ($ClientVersion -lt [System.Version]"7.2") {
@@ -78,7 +78,7 @@ Function Set-PVConfiguration {
 			}
 
 		}
-		
+
 		If ($PSBoundParameters.Keys -notcontains "sessionID") {
 
 			$sessionID = $Script:PV.sessionID
@@ -90,7 +90,7 @@ Function Set-PVConfiguration {
 			$vault = $Script:PV.vault
 
 		}
-		
+
 		If ($PSBoundParameters.Keys -notcontains "user") {
 
 			$user = $Script:PV.user

@@ -8,7 +8,7 @@
 	Exposes the PACLI Function: "CLEARUSERHISTORY"
 
 	.EXAMPLE
-	Clear-PVUserHistory 
+	Clear-PVUserHistory
 
 	Clears the history records for Users of the Vault
 
@@ -24,7 +24,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath CLEARUSERHISTORY $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

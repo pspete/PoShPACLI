@@ -8,7 +8,7 @@
 	Exposes the PACLI Function: "LOCK"
 
 	.EXAMPLE
-	Lock-PVUser 
+	Lock-PVUser
 
 	Locks the current user
 
@@ -24,7 +24,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath LOCK $($PSBoundParameters | ConvertTo-ParameterString)
 
-		
+
 
 	}
 

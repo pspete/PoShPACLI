@@ -197,7 +197,7 @@
 		}
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser `
-		-doNotQuote proxyType, port, timeout, reconnectPeriod, proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+				-doNotQuote proxyType, port, timeout, reconnectPeriod, proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
 		if ($Return.ExitCode -eq 0) {
 
