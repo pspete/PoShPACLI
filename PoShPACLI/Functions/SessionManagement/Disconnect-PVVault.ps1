@@ -21,7 +21,7 @@
 	param()
 
 	PROCESS {
-
+		
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters | ConvertTo-ParameterString)
 
 	}

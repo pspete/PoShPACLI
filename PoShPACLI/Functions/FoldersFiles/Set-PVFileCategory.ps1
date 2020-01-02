@@ -71,7 +71,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
-
+		
 
 	}
 

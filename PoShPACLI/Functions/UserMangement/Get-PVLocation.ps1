@@ -8,7 +8,7 @@
 	Exposes the PACLI Function: "LOCATIONSLIST"
 
 	.EXAMPLE
-	Get-PVLocation
+	Get-PVLocation 
 
 	Lists the locations defined in the vault
 

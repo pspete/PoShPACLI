@@ -112,7 +112,7 @@
 
 		}
 
-
+		
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
 

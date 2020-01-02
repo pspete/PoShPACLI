@@ -19,7 +19,7 @@
 
 	.EXAMPLE
 	Hide-SecretValue -inputValue 'user="administrator" password="SecretValue" sessionID=666 vault="somevault"'
-
+	
 	user="administrator" password="******" sessionID=666 vault="somevault"
 
 	Masks secret value in command string

@@ -42,7 +42,7 @@
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMEUSER $($PSBoundParameters | ConvertTo-ParameterString)
 
-
+		
 
 	}
 
