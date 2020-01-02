@@ -63,7 +63,7 @@
 	Begin {
 
 		#define array to hold values
-		$pacliValues = [System.Collections.ArrayList]@()
+		$pacliValues = [Collections.Generic.List[String]]@()
 
 	}
 
@@ -81,8 +81,8 @@
 				#assign returned values to array and remove quotes
 				$null = $pacliValues.Add(($_.Value).Replace( '"', ''))
 			}
-			Catch { 
-				
+			Catch {
+
 			}
 
 		}
