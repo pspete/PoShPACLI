@@ -20,16 +20,6 @@
 	.PARAMETER doNotQuote
 	Optional parameterNames that will be included int he output without "quotes"
 
-	.PARAMETER excludedParameters
-	Array of parameters, of which the names and values should not be included in the
-	output string.
-
-	By default this contains all PowerShell common , and optional common Parameters
-
-	Common Parameters may be contained in the array passed to this function, and must
-	be excluded from the output as they will not be interpreted by the PACLI utility
-	and will therefore result in an error.
-
 	.PARAMETER NoVault
 	Specify switch parameter to not include vault parameter in output string
 
@@ -57,7 +47,7 @@
 	AUTHOR: Pete Maan
 
 	#>
-
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', 'Parameters', Justification = "False Positive")]
 	[CmdLetBinding()]
 	[OutputType('System.String')]
 	param(
@@ -72,70 +62,72 @@
 
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
-		[array]$excludedParameters = @([System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters),
-
-		[Parameter(
-			Mandatory = $False, ValueFromPipeline = $False)]
 		[switch]$NoVault,
 
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
 		[switch]$NoUser,
-		
+
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
 		[switch]$NoSessionID
 	)
 
 	Begin {
-		
-		#define array to hold parameters
-		$parameters = [System.Collections.ArrayList]@()
+
 		$doNotQuote += "sessionID"
 		$ValueTerminators = '^|$'
 		$ValueTrue = '"True"'
 		$ValueFalse = '"False"'
-		
+
+		$excludedParameters = [Collections.Generic.List[String]]@(
+			[System.Management.Automation.PSCmdlet]::CommonParameters +
+			[System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+		)
+
 	}
 
 	Process {
 
-		$Keys = @($boundParameters.Keys)
+		$boundParameters.Keys | ForEach-Object {
 
-		# Remove elements matching excludedParameters
-		$keys | ForEach-Object {
+			#Create collection to hold parameters
+			$Parameters = [Collections.Generic.List[String]]@()
 
-			if ($excludedParameters -contains $_) {
-				
-				$boundParameters.Remove($_)
+		} {
+
+			switch ($PSItem) {
+
+				( { $excludedParameters -Contains $PSItem }) { break }
+
+				( { $doNotQuote -NotContains $PSItem }) {
+
+					$null = $Parameters.Add($($PSItem) + "=" + $(((($($boundParameters[$PSItem]) -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")))
+					break
+
+				}
+
+				( { $doNotQuote -Contains $PSItem }) {
+
+					$null = $Parameters.Add($($PSItem) + "=" + $($boundParameters[$PSItem]))
+					break
+
+				}
 
 			}
 
-		}
+		} {
 
-		#foreach element in passed array
-		$boundParameters.GetEnumerator() | ForEach-Object {
-			
-			switch ($_) {
-
-				( { $doNotQuote -NotContains $PSItem.Key }) { $value = $($PSItem.Key) + "=" + $(((($($PSItem.Value) -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")) ; break }
-				
-				( { $doNotQuote -Contains $PSItem.Key }) { $value = $($PSItem.Key) + "=" + $($PSItem.Value) ; break }
-				
+			If ((-not ($NoSessionID.IsPresent)) -and $($Script:PV.sessionID)) {
+				$null = $Parameters.Add("sessionID=" + $($Script:PV.sessionID))
+			}
+			If ((-not ($NoVault.IsPresent)) -and $($Script:PV.vault)) {
+				$null = $Parameters.Add("vault=" + '"' + $($Script:PV.vault) + '"')
+			}
+			If ((-not ($NoUser.IsPresent)) -and $($Script:PV.user)) {
+				$null = $Parameters.Add("user=" + '"' + $($Script:PV.user) + '"')
 			}
 
-			$null = $parameters.Add($value)
-
-		}
-		
-		If (-not ($NoSessionID.IsPresent)) {
-			$null = $parameters.Add("sessionID=" + $($Script:PV.sessionID))
-		}
-		If (-not ($NoVault.IsPresent)) {
-			$null = $parameters.Add("vault=" + '"' + $($Script:PV.vault) + '"')
-		}
-		If (-not ($NoUser.IsPresent)) {
-			$null = $parameters.Add("user=" + '"' + $($Script:PV.user) + '"')
 		}
 
 	}
@@ -143,7 +135,7 @@
 	End {
 
 		#output parameter string
-		$parameters -join ' '
+		$Parameters -join ' '
 
 	}
 
