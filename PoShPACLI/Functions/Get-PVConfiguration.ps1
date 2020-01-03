@@ -12,7 +12,7 @@ Function Get-PVConfiguration {
 	Returns current values for ClientPath, sessionID, vault & user being used by module functions.
 
 	#>
-	[CmdletBinding(SupportsShouldProcess)]
+	[CmdletBinding()]
 	Param()
 
 	Begin { }
