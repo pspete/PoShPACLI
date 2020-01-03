@@ -41,7 +41,7 @@
 			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
 				For ($i = 0 ; $i -lt $Results.length ; $i += 5) {
