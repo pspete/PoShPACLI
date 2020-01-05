@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "SAFEEVENTSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safePatternName
 	A Safe name pattern to include in the returned Events list.
 
@@ -41,12 +35,8 @@
 	Whether or not the filter according to the ‘datasubstring’
 	parameter will be case-sensitive.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeEvent -vault Lab -user administrator -safePatternName UNIX_Safe
+	Get-PVSafeEvent -safePatternName UNIX_Safe
 
 	Retrieves safe events from UNIX_Safe
 
@@ -57,16 +47,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $False,
@@ -102,44 +82,39 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$caseSensitive,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$caseSensitive
 	)
 
 	PROCESS {
 
-		if($PSBoundParameters.ContainsKey("fromDate")) {
+		if ($PSBoundParameters.ContainsKey("fromDate")) {
 
 			$PSBoundParameters["fromDate"] = (Get-Date $($PSBoundParameters["fromDate"]) -Format dd/MM/yyyy)
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters |
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"
 
 		#If data returned
-		if($Return.StdOut) {
+		if ($Return.StdOut) {
 
 			#Split the output in an array
 			#each element represents an event
 			$Events = ($Return.StdOut).Split("`n")
 
 			#loop through event data
-			For($i = 0 ; $i -lt $events.count ; $i++) {
+			For ($i = 0 ; $i -lt $events.count ; $i++) {
 				#Event data can sometimes contain xml - detect this.
 				#Object output is affected if not dealt with.
 				#TODO: Process not currently covered by the Pester Tests.
-				If($events[$i] -match '(\<\?xml[\d\D]*\?\>)') {
+				If ($events[$i] -match '(\<\?xml[\d\D]*\?\>)') {
 
 					#Remove the XML Tag (causes parse issues if left)
 					$events[$i] = $events[$i] -replace '(\<\?xml[\d\D]*\?\>)', ''
 
 					#find subsequent array elements that contain lines from the xml event data
-					if($events[$i + 1] -match '<EventData>') {
+					if ($events[$i + 1] -match '<EventData>') {
 
 						#define integer for loop
 						[int]$iXML = $i + 1
@@ -174,12 +149,12 @@
 				}
 
 				#Convert event data into output string
-				$Values = $events[$i]  | Select-String -Pattern "\S" | ConvertFrom-PacliOutput
+				$Values = $events[$i] | Select-String -Pattern "\S" | ConvertFrom-PacliOutput
 
 				#if we have output
-				if($Values) {
+				if ($Values) {
 
-					if($EventData) {
+					if ($EventData) {
 
 						#add flattened xml to output if present
 						$Values += $EventData
@@ -205,11 +180,7 @@
 						"FromIP"         = $values[13]
 						"Data"           = $values[14]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Event
 
 				}
 

@@ -23,7 +23,7 @@ Function Start-ClientProcess {
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLI")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
 		[Parameter(
@@ -49,8 +49,6 @@ Function Start-ClientProcess {
 		#If you wait for the process to exit before reading StandardOutput
 		#the process can block trying to write to it, so the process never ends.
 		$Process.WaitForExit()
-
-		Write-Debug "Exit Code: $($Process.ExitCode)"
 
 		[PSCustomObject] @{
 

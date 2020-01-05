@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDRULE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER userName
 	The user who will be affected by the rule.
 
@@ -130,12 +124,8 @@
 	Whether or not the user is authorized to rename the
 	specified file or password.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVRule -vault lab -user administrator -userName user1 -safeName DEV-1 `
+	Add-PVRule -userName user1 -safeName DEV-1 `
 	-fullObjectName root\rootpass -effect Allow -retrieve -store -delete
 
 	Adds rule on object rootpass safe DEV-1 fr user user1
@@ -147,16 +137,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -307,29 +287,23 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$renameObject,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$renameObject
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDRULE "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDRULE "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 7)]
@@ -345,11 +319,7 @@
 						"RuleCreationDate" = $values[5]
 						"AccessLevel"      = $values[6]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule
 
 				}
 

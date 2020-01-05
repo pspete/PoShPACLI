@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
+					
+					
 					safeName = "SomeSafe"
 					folder   = "SomeFolder"
 					file     = "SomeFile"
@@ -51,7 +51,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -60,12 +60,12 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Add-PVFileCategory -value "This"} | Should Not throw
+				{ $InputObj | Add-PVFileCategory -value "This" } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj |  Add-PVFileCategory -value "This"
+				$InputObj | Add-PVFileCategory -value "This"
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

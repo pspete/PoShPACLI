@@ -10,9 +10,6 @@
 	password or by using an authentication parameter file. To create this file,
 	see the New-PVLogonFile command.
 
-	.PARAMETER vault
-	The name of the Vault to log onto
-
 	.PARAMETER user
 	The Username of the User logging on
 
@@ -39,10 +36,6 @@
 	It will generate a randomized new password, change to the new password on
 	logon, and will save it to the  authentication file after a successful logon.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.PARAMETER failIfConnected
 	Whether or not to disconnect the session if the user is already logged onto
 	the Vault through a different interface
@@ -54,9 +47,9 @@
 	The logonfile and radius parameters cannot be defined in the same command.
 
 	.EXAMPLE
-	Connect-PVVault -vault VaultA -user User1 -password (read-host -AsSecureString)
+	Connect-PVVault -user User1 -password (read-host -AsSecureString)
 
-	Logs onto defined vault VaultA using User1
+	Logs onto defined vault using User1
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -65,11 +58,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
 
 		[Parameter(
 			Mandatory = $True,
@@ -99,11 +87,6 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
 		[switch]$failIfConnected,
 
 		[Parameter(
@@ -115,36 +98,27 @@
 	PROCESS {
 
 		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+		if ($PSBoundParameters.ContainsKey("password")) {
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
 		}
 
 		#deal with newPassword SecureString
-		if($PSBoundParameters.ContainsKey("newPassword")) {
+		if ($PSBoundParameters.ContainsKey("newPassword")) {
 
 			#Included decoded password in request
 			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
 
 		}
 
-		Write-Verbose "Logging onto Vault"
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
 
-			Write-Verbose "Successfully Logged on"
+		if ($Return.ExitCode -eq 0) {
 
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			Set-PVConfiguration -user $user
 
 		}
 

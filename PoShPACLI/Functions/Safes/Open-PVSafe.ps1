@@ -9,12 +9,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "OPENSAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe to open.
 
@@ -64,12 +58,8 @@
 	The action will be executed, if a confirmation exists or is not
 	needed.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Open-PVSafe -vault lab -user administrator -safe System
+	Open-PVSafe -safe System
 
 	Opens the System safe
 
@@ -80,16 +70,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -137,26 +117,21 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$executeRequest,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$executeRequest
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OPENSAFE "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath OPENSAFE "$($PSBoundParameters |
 					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#Output Object
 				[PSCustomObject] @{
@@ -178,11 +153,7 @@
 					"RequireReason"             = $Results[12]
 					"EnforceExclusivePasswords" = $Results[13]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe
 
 			}
 

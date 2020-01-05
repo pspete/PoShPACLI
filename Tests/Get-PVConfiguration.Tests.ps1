@@ -33,43 +33,30 @@ Describe $FunctionName {
 
 	InModuleScope $ModuleName {
 
-		Context "Default" {
+		Context "General" {
 
 			BeforeEach {
 
-				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
-					safeName = "SomeSafe"
-					folder   = "someObject"
-					file     = "someFile"
-				}
-
-				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
-
-				Mock Invoke-PACLICommand -MockWith {
-					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
-						ExitCode = 0
-					}
+				Mock Get-Variable -MockWith {
+					
 				}
 
 			}
 
-			It "executes without exception" {
+			it "executes expected command" {
 
-				{$InputObj | Get-PVHttpGwUrl} | Should Not throw
+				Get-PVConfiguration
+
+				Assert-MockCalled -CommandName Get-Variable -Times 1 -Scope It
+
 			}
 
-			It "invokes expected pacli command" {
+			it "returns expected error" {
 
-				$InputObj | Get-PVHttpGwUrl
-
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
-
-					$PacliCommand -eq "GETHTTPGWURL"
-
+				Mock Get-Variable -MockWith {
+					throw someError
 				}
+				{ Get-PVConfiguration } | should throw "PVConfiguration not found. Run Set-PVConfiguration."
 
 			}
 

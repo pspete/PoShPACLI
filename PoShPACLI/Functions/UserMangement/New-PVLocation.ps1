@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDLOCATION"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER location
 	The name of the location to add.
 	Note: Add a backslash ‘\’ before the name of the location
@@ -21,12 +15,8 @@
 	The size of the quota to allocate to the location in MB.
 	The specification ‘-1’ indicates an unlimited quota allocation.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	New-PVLocation -vault Lab -user administrator -location \x51
+	New-PVLocation -location \x51
 
 	Adds location x51 to Vault root
 
@@ -42,47 +32,20 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[string]$location,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$quota,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$quota
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDLOCATION $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote quota)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDLOCATION $($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote quota)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Added Location $location"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

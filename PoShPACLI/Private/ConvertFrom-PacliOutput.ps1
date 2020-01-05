@@ -25,7 +25,7 @@
 	A Regular Expression String. This is applied to the quoted output from
 	the PACLI function to extract the quoted values from the string.
 
-	The default Regular Expression used is: '"([^"]*)"'
+	The default Regular Expression used is: '"(.*?)"(?=,|$)'
 
 	.EXAMPLE
 	foreach ($pacliLine in $pacliOutPut){
@@ -38,9 +38,9 @@
 	of PACLI output passed to this function.
 
 	.EXAMPLE
-	$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+	$Results = ($Return.StdOut | ConvertFrom-PacliOutput)
 
-	Converts StdOut of PACLI output (saved to $Return) to array (saved to $Results)
+	Converts StdOut of PACLI output
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -48,7 +48,6 @@
 	#>
 
 	[CmdLetBinding()]
-	[OutputType('System.Object[]')]
 	param(
 
 		[Parameter(
@@ -60,36 +59,14 @@
 		[string]$regEx = '"(.*?)"(?=,|$)'
 	)
 
-	Begin {
-
-		#define array to hold values
-		$pacliValues = @()
-
-	}
+	Begin { }
 
 	Process {
 
-		#remove line break characters in pacli output data,
-		($pacliOutput -replace "\r\n","," |
-
-			#find all values between quotes
-			Select-String -Pattern $regEx -AllMatches).matches |
-
-		ForEach-Object {
-
-			#assign returned values to array and remove quotes
-			$pacliValues += $_.Value -replace '"', ''
-			write-debug "Parameter Value #$($pacliValues.count): $($_.Value)"
-
-		}
+		(($pacliOutput | Select-String -Pattern "\S") -split "\r\n" | Select-String -Pattern $regEx -AllMatches).Matches.Groups.Where( { $PSItem.Name -eq 1 }).Value
 
 	}
 
-	End {
-
-		#return array of values
-		$pacliValues
-
-	}
+	End { }
 
 }

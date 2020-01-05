@@ -18,8 +18,7 @@
 	The parameters for the command i.e. vault="name" this="true" number=88
 
     .EXAMPLE
-	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters.getEnumerator() |
-	ConvertTo-ParameterString)
+	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters | ConvertTo-ParameterString)
 
 	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value"
 
@@ -61,20 +60,18 @@
 
 	Begin {
 
-		$CallStack = $((Get-PSCallStack).Command)[1]
-		Write-Debug "Invocation Origin: $CallStack"
-
 		Try {
 
 			Get-Variable -Name PV -ErrorAction Stop
 
-			if($PV.PSObject.Properties.Name -notcontains "ClientPath") {
+			if ( ($PV.PSObject.Properties.Name -notcontains "ClientPath") -or (-not (Test-Path -Path $PV.ClientPath -PathType Leaf)) ) {
 
 				Write-Error "Heads Up!" -ErrorAction Stop
 
 			}
 
-		} Catch {throw "PACLI.exe not found `nRun Set-PVConfiguration to set path to PACLI"}
+		}
+		Catch { throw "PACLI.exe not found. Run Set-PVConfiguration to set PACLI client path" }
 
 		#Create process
 		$Process = new-object System.Diagnostics.Process
@@ -85,7 +82,7 @@
 
 		if ($PSCmdlet.ShouldProcess($PacliEXE, "$PacliCommand $CommandParameters")) {
 
-			Write-Debug "PACLI Command: $PacliCommand $CommandParameters"
+			Write-Debug "PACLI Command: $PacliCommand $(Hide-SecretValue -InputValue $CommandParameters)"
 
 			#Assign process parameters
 			$Process.StartInfo.WorkingDirectory = "$(Split-Path $PacliEXE -Parent)"
@@ -100,12 +97,12 @@
 			#Start Process
 			$Result = Start-ClientProcess -Process $Process
 
-			if($Result.StdErr) {
+			if ($Result.StdErr) {
 
-				Write-Debug "$($Result.StdErr)"
 				Write-Error -Message "$($Result.StdErr)"
 
-			} Else {$Result}
+			}
+			Else { $Result }
 
 		}
 

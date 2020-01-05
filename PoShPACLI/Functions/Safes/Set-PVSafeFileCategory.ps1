@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UPDATESAFEFILECATEGORY"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The Safe where the File Categories will be updated.
 
@@ -32,12 +26,8 @@
 	Whether or not the File Category is a requirement when storing a file in
 	the Safe.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVSafeFileCategory -vault lab -user administrator -safe SAFEName -category criticality `
+	Set-PVSafeFileCategory -safe SAFEName -category criticality `
 	-categoryNewName sev -validValues "1,2,3,4"
 
 	Changes Safe File Category name from "Criticality" to "sev"
@@ -50,16 +40,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $False,
@@ -90,32 +70,14 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$required,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$required
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Safe File Category Updated"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

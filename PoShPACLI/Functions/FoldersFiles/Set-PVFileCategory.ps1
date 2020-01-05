@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UPDATEFILECATEGORY"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe where the File Category is being updated.
 
@@ -28,12 +22,8 @@
 	.PARAMETER value
 	The value of the File Category for the file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVFileCategory -vault Lab -user administrator -safe Reports -folder root -file Access `
+	Set-PVFileCategory -safe Reports -folder root -file Access `
 	-category NextReview -value 1/6/18
 
 	Updates value of existing File Category "NextReview" on file "Access"
@@ -46,16 +36,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -84,32 +64,14 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("CategoryValue")]
-		[string]$value,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$value
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATEFILECATEGORY $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "File Category $category Updated"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

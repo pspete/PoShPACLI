@@ -1,11 +1,12 @@
-# PoShPACLI
+![Disconnect-from-Vault](/media/PoShPACLI.png)
 
 ## **Powershell PACLI Module for CyberArk EPV**
 
 [![appveyor][]][av-site]
-[![tests][]][tests-site]
+[![codefactor][]][cf-link]
 [![coveralls][]][cv-site]
 [![psgallery][]][ps-site]
+[![downloads][]][ps-site]
 [![license][]][license-link]
 
 [appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
@@ -18,8 +19,11 @@
 [ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
 [license]:https://img.shields.io/github/license/pspete/poshpacli.svg
 [license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
+[codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
+[cf-link]:https://www.codefactor.io/repository/github/pspete/poshpacli
+[downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 
-Use the native functions of the CyberArk PACLI command line utility in PowerShell.
+Use the native functions of the CyberArk PACLI command line utility translated into PowerShell.
 
 If you are landing here and interested in using PowerShell to automate an aspect of CyberArk,
 
@@ -48,95 +52,35 @@ An identical process to using the PACLI tool on its own should be followed.
 `Set-PVConfiguration` must be run before using the module for the first time.
 This function identifies the location of the `PACLI.exe` utility to the module.
 
-![Set-PVConfiguration](/media/Set-PVConfiguration.png)
+![Set-PVConfiguration](/media/0-Set-PVConf.png)
 
 #### Example: Connecting to a Vault
 
-![Connecting-to-a-Vault](/media/Connecting-to-a-Vault.png)
+When starting PACLI, defining a vault, & Authenticating, any values provided for `SessionID`, `Vault` name & `User` name are automatically provided to future PoShPACLI commands.
+
+![Connecting-to-a-Vault](/media/1-Connection.png)
+
+The `Get-PVConfiguration` function is used to view the current values in use by the module.
 
 #### Example: Add Password Object to Safe
 
-![Add-Password-Object-to-Safe](/media/Add-Password-Object-to-Safe.png)
+Execute the sequence of commands to complete a required process.
+
+![Add-Password-Object-to-Safe](/media/2-add_account.png)
 
 #### Example: Disconnect from Vault
 
-![Disconnect-from-Vault](/media/Disconnect-from-Vault.png)
+The module provides the the required parameter values to the PACLI executable.
 
-#### PACLI Pipeline Token
-
-Goal: Object Containing User, Vault & SessionID values
-
-![PACLI-Pipeline-Token](/media/PACLI-Pipeline-Token.png)
-
-A variable, like the above `$token`, can be passed on the pipeline to other PoShPACLI functions, providing the necessary values for mandatory parameters:
-
-![Token-Example-1](/media/Token-Example-1.png)
-
-![Token-Example-2](/media/Token-Example-2.png)
-
-![Token-Example-3](/media/Token-Example-3.png)
-
-![Token-Example-4](/media/Token-Example-4.png)
+![Disconnect-from-Vault](/media/3-Disconnect.png)
 
 #### PACLI Pipeline Examples
 
-Output can be piped between PoShPACLI functions as shown in the following examples:
+Output can be piped between PoShPACLI functions:
 
-##### Open & Close Safes
+##### Pipeline Example
 
-![Pipeline-Example-1](/media/Pipeline-Example-1.png)
-
-##### Get File Activities
-
-![Pipeline-Example-2](/media/Pipeline-Example-2.png)
-
-##### Update File Categories
-
-![Pipeline-Example-3](/media/Pipeline-Example-3.png)
-
-##### Get Safe Owner Activities
-
-![Pipeline-Example-4](/media/Pipeline-Example-4.png)
-
-##### Get Safe Events
-
-![Pipeline-Example-5](/media/Pipeline-Example-5.png)
-
-##### Remove a Safe Owner
-
-![Pipeline-Example-6](/media/Pipeline-Example-6.png)
-
-##### Disable Users
-
-![Pipeline-Example-7](/media/Pipeline-Example-7.png)
-
-##### Disable a single User
-
-![Pipeline-Example-8](/media/Pipeline-Example-8.png)
-
-##### Rename a single User
-
-![Pipeline-Example-9](/media/Pipeline-Example-9.png)
-
-##### Remove Group Members
-
-![Pipeline-Example-10](/media/Pipeline-Example-10.png)
-
-##### Manage Group Members
-
-![Pipeline-Example-11](/media/Pipeline-Example-11.png)
-
-##### Get Status of Requests
-
-![Pipeline-Example-12](/media/Pipeline-Example-12.png)
-
-##### Disable Network Areas
-
-![Pipeline-Example-13](/media/Pipeline-Example-13.png)
-
-##### Find & Delete Files
-
-![Pipeline-Example-14](/media/Pipeline-Example-14.png)
+![Pipeline-Example-1](/media/_1_pipeline.png)
 
 ## PACLI to PoShPACLI Function Relationship
 
@@ -148,7 +92,6 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 |TERM|`Stop-PVPacli`|
 |DEFINEFROMFILE|`Import-PVVaultDefinition`|
 |DEFINE|`New-PVVaultDefinition`|
-|DELETEVAULT|`Remove-PVVaultDefinition`|
 |CREATELOGONFILE|`New-PVLogonFile`|
 |LOGON|`Connect-PVVault`|
 |LOGOFF|`Disconnect-PVVault`|
@@ -184,7 +127,6 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 |ADDGROUPMEMBER|`Add-PVGroupMember`|
 |GROUPMEMBERS|`Get-PVGroupMember`|
 |DELETEGROUPMEMBER|`Remove-PVGroupMember`|
-|GETHTTPGWURL|`Get-PVHttpGwUrl`|
 |LDAPBRANCHESLIST|`Get-PVLDAPBranch`|
 |LDAPBRANCHADD|`New-PVLDAPBranch`|
 |LDAPBRANCHDELETE|`Remove-PVLDAPBranch`|
@@ -265,10 +207,9 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 
 ### Prerequisites
 
-- Requires Powershell v3 (minimum)
+- Requires Powershell v5 (minimum)
 - The CyberArk PACLI executable must be present on the same computer as the module.
-  - **NOTE**: Issues have been reported & observed when using the module with Pacli versions 4.X & 9.X.
-    - PACLI 7.2 was used for development, your mileage may vary with *any* other version.
+  - PACLI 7.2 was used for development, anything less is considered unsupported for use with this module.
 - A CyberArk user with which to authenticate, which has appropriate Vault/Safe permissions.
 
 ### Installation Options

@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDSAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe to be added.
 
@@ -62,7 +56,10 @@
 	Indicates whether or not the Safe is a text-only Safe.
 
 	.PARAMETER securityLevelParm
-	The level of the Network Area security flags
+	Specify the Network Area security flags.
+	Valid values are combinations of the following:
+	Locations: Internal, External, Public.
+	Security Areas: HighlySecured, Secured, Unsecured
 
 	.PARAMETER ConfirmationType
 	The type of confirmation required to enable access to the Safe.
@@ -127,15 +124,11 @@
 	New owners of this Safe will initially retrieve in readonly access mode.
 
 	.PARAMETER safeOptions
-	This parameter enables to Safe to be shared with the following values or
-	combination of them:
-	64 – Enable access to partially impersonated users
-	128 – Enable access to fully impersonated users
-	512 – Enable access to impersonated users with additional Vault authentication
-	256 – Enforce Safe opening.
-
-	Note: This is combined with a value of 64 in order to allow access to partially
-	impersonated users.
+	This parameter enables to Safe to be shared with any combination of the following values:
+	PartiallyImpersonatedUsers (Enable access to partially impersonated users)
+	FullyImpersonatedUsers (Enable access to fully impersonated users)
+	ImpersonatedUsers (Enable access to impersonated users with additional Vault authentication)
+	EnforceSafeOpening (Enforce Safe opening from PrivateArk Client)
 
 	.PARAMETER useFileCategories
 	Whether or not to use Vault level file categories when storing a file in a Safe
@@ -165,15 +158,16 @@
 	Whether or not Object Level Access is supported.
 	The default is ‘No’.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	New-PVSafe -vault Lab -user administrator -safe PacliSafe `
+	New-PVSafe -safe PacliSafe `
 	-location \ -size 50 -description "new Safe" -dailyVersions 5 -logRetention 40
 
 	Creates safe "PacliSafe", in the root location, with size, daily versions & log retention set
+
+	.EXAMPLE
+	New-PVSafe -safe SomeSafe -securityLevelParm Internal, HighlySecured -safeOptions EnforceSafeOpening, FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers
+
+	Creates safe "SomeSafe" with declared security flags & Safe sharing options.
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -183,16 +177,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -259,10 +243,6 @@
 			ValueFromPipelineByPropertyName = $True)]
 		[int]$requestsRetention,
 
-		#[Parameter(
-		#	Mandatory=$False)]
-		#[switch]$virusFree,
-
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
@@ -271,7 +251,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$securityLevelParm,
+		[SecurityLevel]$securityLevelParm,
 
 		[Parameter(
 			Mandatory = $False,
@@ -282,7 +262,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
+		[ValidateScript( { ((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255)) })]
 		[int]$confirmationCount,
 
 		[Parameter(
@@ -334,9 +314,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("64", "128", "512", "256", "192", "576", "320",
-			"640", "384", "768", "704", "448", "832", "896", "960")]
-		[int]$safeOptions,
+		[SafeOptions]$safeOptions,
 
 		[Parameter(
 			Mandatory = $False,
@@ -371,42 +349,29 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$supportOLAC,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$supportOLAC
 	)
 
 	PROCESS {
 
-		if($PSBoundParameters.ContainsKey("password")) {
+		Switch ([array]$PSBoundParameters.Keys) {
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			{ $_ -Contains "password" } { $PSBoundParameters["password"] = ConvertTo-InsecureString $password; continue }
+
+			{ $_ -Contains "securityLevelParm" } { $PSBoundParameters["securityLevelParm"] = [int]$securityLevelParm; continue }
+
+			{ $_ -Contains "safeOptions" } { $PSBoundParameters["safeOptions"] = [int]$safeOptions; continue }
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters.getEnumerator() |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,
 			fileRetention, requestsRetention, securityLevelParm, ConfirmationType,
 			confirmationCount, safeKeyType, safeOptions, maxFileSize)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Safe Created: $safe"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

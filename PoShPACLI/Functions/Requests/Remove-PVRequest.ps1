@@ -10,26 +10,16 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETEREQUEST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe for which the request has been created.
 
 	.PARAMETER requestID
 	The unique ID number of the request.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVRequest -vault Lab -user Requestor -safe Admin_Safe -requestID 2
+	Remove-PVRequest -safe Admin_Safe -requestID 2
 
-	Deletes request from Requestor's My_Request list
+	Deletes request from My_Request list
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -43,47 +33,20 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[string]$safe,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$requestID,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$requestID
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEREQUEST $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote requestID)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEREQUEST $($PSBoundParameters |
+			ConvertTo-ParameterString -doNotQuote requestID)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Request $RequestID Deleted"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

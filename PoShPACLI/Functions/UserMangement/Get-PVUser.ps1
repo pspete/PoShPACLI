@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "USERDETAILS"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER destUser
 	The name of the User whose details will be listed.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVUser -vault Lab -user administrator -destUser zEST1
+	Get-PVUser -destUser zEST1
 
 	Lists properties of vault user zEST1
 
@@ -36,40 +26,24 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
-		[string]$destUser,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$destUser
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath USERDETAILS "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath USERDETAILS "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 65) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 65) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 65)]
@@ -144,11 +118,7 @@
 						"NonAllowedClients"         = $values[63]
 						"EnableComponentMonitoring" = $values[64]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User
 
 				}
 

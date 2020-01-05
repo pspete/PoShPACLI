@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault     = "SomeVault"
-					user      = "SomeUser"
+					
+					
 					safe      = "SomeSafe"
 					requestID = 123
 
@@ -58,7 +58,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Set-PVRequestStatus -confirmRequest} | Should Not throw
+				{ $InputObj | Set-PVRequestStatus -confirmRequest } | Should Not throw
 
 			}
 

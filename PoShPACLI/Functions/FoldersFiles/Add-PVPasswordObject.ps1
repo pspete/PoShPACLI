@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "STOREPASSWORDOBJECT"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe where the password object is stored
 
@@ -25,12 +19,8 @@
 	.PARAMETER password
 	The password being stored in the password object.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVPasswordObject -vault lab -user administrator -safe Dev_Team -folder Root `
+	Add-PVPasswordObject -safe Dev_Team -folder Root `
 	-file devpass -password (read-host -AsSecureString)
 
 	Adds password object with specified value to Dev_Team safe
@@ -42,16 +32,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -72,40 +52,19 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[securestring]$password,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[securestring]$password
 	)
 
 	PROCESS {
 
 		#deal with password SecureString
-		if($PSBoundParameters.ContainsKey("password")) {
+		if ($PSBoundParameters.ContainsKey("password")) {
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
-
-		if($Return.ExitCode -eq 0) {
-
-			Write-Verbose "Password Object Stored"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
-
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "FILEVERSIONSLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe in which the file is stored.
 
@@ -22,12 +16,8 @@
 	.PARAMETER file
 	The name of the file or password whose versions will be displayed.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVFileVersionList -vault lab -user administrator -safe Win_Admins -folder root `
+	Get-PVFileVersionList -safe Win_Admins -folder root `
 	-file administrator.domain.com
 
 	Lists the versions of the specified file
@@ -39,16 +29,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -65,30 +45,24 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Filename")]
-		[string]$file,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$file
 	)
 
 	PROCESS {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILEVERSIONSLIST "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILEVERSIONSLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 18) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 18) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 18)]
@@ -117,11 +91,7 @@
 						"Safename"         = $safe
 						"Folder"           = $folder
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
 
 				}
 

@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "STOREFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe where the file will be stored.
 
@@ -34,12 +28,8 @@
 	.PARAMETER deleteMacros
 	Delete macros from the file
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVFile -vault Lab -user administrator -safe caTools -folder Root -file pacli.exe `
+	Add-PVFile -safe caTools -folder Root -file pacli.exe `
 	-localFolder D:\PACLI -localFile pacli.exe
 
 	Stores local file, pacli.exe in the caTools safe
@@ -51,16 +41,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -91,31 +71,14 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$deleteMacros,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$deleteMacros
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Stored File $file in Safe $safe "
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

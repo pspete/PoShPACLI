@@ -41,21 +41,11 @@
 		[string]$ctlFileName
 	)
 
-	Write-Verbose "Starting Pacli"
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser -NoSessionID)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString)
+	if ($Return.ExitCode -eq 0) {
 
-	if($Return.ExitCode -eq 0) {
-
-		Write-Verbose "Pacli Started"
-
-
-		[pscustomobject] @{
-
-			"sessionID" = $sessionID
-
-		} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+		Set-PVConfiguration -sessionID $sessionID
 
 	}
 

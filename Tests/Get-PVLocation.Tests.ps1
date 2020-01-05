@@ -37,13 +37,6 @@ Describe $FunctionName {
 
 			BeforeEach {
 
-				$InputObj = [PSCustomObject]@{
-					vault    = "SomeVault"
-					user     = "SomeUser"
-					destUser = "UserName"
-
-				}
-
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				Mock Invoke-PACLICommand -MockWith {
@@ -57,13 +50,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVLocation} | Should Not throw
+				{ Get-PVLocation } | Should Not throw
 
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | Get-PVLocation
+				Get-PVLocation
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

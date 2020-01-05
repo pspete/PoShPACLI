@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UNLOCKFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe in which the file is stored.
 
@@ -22,12 +16,8 @@
 	.PARAMETER file
 	The name of the file or password to unlock.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Unlock-PVFile -vault lab -user administrator -safe Prod_Servers -folder root -file Adminpass
+	Unlock-PVFile -safe Prod_Servers -folder root -file Adminpass
 
 	Unlocks file Adminpass in safe Prod_Servers
 
@@ -38,16 +28,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -64,33 +44,22 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Filename")]
-		[string]$file,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$file
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCKFILE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCKFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
-
-			Write-Verbose "$file Unlocked"
+		if ($Return.ExitCode -eq 0) {
 
 			[PSCustomObject] @{
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-				"Safename"  = $safe
-				"Folder"    = $folder
-				"Filename"  = $file
+				"Safename" = $safe
+				"Folder"   = $folder
+				"Filename" = $file
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
 
 		}
 

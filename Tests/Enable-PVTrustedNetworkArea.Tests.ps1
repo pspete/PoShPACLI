@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault       = "SomeVault"
-					user        = "SomeUser"
+					
+					
 					trusterName = "ThatGuy"
 					networkArea = "SomeNetworkArea"
 
@@ -49,7 +49,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -58,7 +58,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Enable-PVTrustedNetworkArea} | Should Not throw
+				{ $InputObj | Enable-PVTrustedNetworkArea } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

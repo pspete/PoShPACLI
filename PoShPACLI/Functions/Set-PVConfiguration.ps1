@@ -13,6 +13,15 @@ Function Set-PVConfiguration {
 	.PARAMETER ClientPath
 	The path to the PACLI.exe utility
 
+	.PARAMETER sessionID
+	The sessionID value to use for PACLI Commands
+
+	.PARAMETER vault
+	The value to use for the vault parameter in PACLI Commands
+
+	.PARAMETER user
+	The value to use for the user parameter in PACLI commands
+
 	.EXAMPLE
 	Set-PVConfiguration -ClientPath D:\Path\To\PACLI.exe
 
@@ -27,33 +36,78 @@ Function Set-PVConfiguration {
 			Mandatory = $false,
 			ValueFromPipelineByPropertyName = $true
 		)]
-		[ValidateScript( {Test-Path $_ -PathType Leaf})]
+		[ValidateScript( { Test-Path $_ -PathType Leaf })]
 		[ValidateNotNullOrEmpty()]
-		[string]$ClientPath
+		[string]$ClientPath,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[int]$sessionID,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[string]$vault,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true)]
+		[string]$user
+
 	)
 
 	Begin {
 
-		$Defaults = [pscustomobject]@{}
+		$Defaults = [pscustomobject]@{ }
 
 	}
 
 	Process {
 
-		If($PSBoundParameters.Keys -contains "ClientPath") {
+		If ($PSBoundParameters.Keys -notcontains "ClientPath") {
 
-			$Defaults | Add-Member -MemberType NoteProperty -Name ClientPath -Value $ClientPath
+			$ClientPath = $Script:PV.ClientPath
+
+		}
+		Else {
+
+			[System.Version]$ClientVersion = Get-Item $ClientPath | Select-Object -ExpandProperty VersionInfo | Select-Object -ExpandProperty ProductVersion
+			If ($ClientVersion -lt [System.Version]"7.2") {
+				Throw "PACLI version 7.2 or higher required"
+			}
 
 		}
 
-	}
+		If ($PSBoundParameters.Keys -notcontains "sessionID") {
 
-	End {
+			$sessionID = $Script:PV.sessionID
+
+		}
+
+		If ($PSBoundParameters.Keys -notcontains "vault") {
+
+			$vault = $Script:PV.vault
+
+		}
+
+		If ($PSBoundParameters.Keys -notcontains "user") {
+
+			$user = $Script:PV.user
+
+		}
+
+		$Defaults | Add-Member -MemberType NoteProperty -Name ClientPath -Value $ClientPath
+		$Defaults | Add-Member -MemberType NoteProperty -Name sessionID -Value $sessionID
+		$Defaults | Add-Member -MemberType NoteProperty -Name vault -Value $vault
+		$Defaults | Add-Member -MemberType NoteProperty -Name user -Value $user
 
 		Set-Variable -Name PV -Value $Defaults -Scope Script
 
 		$Script:PV | Select-Object -Property * | Export-Clixml -Path "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml" -Force
 
 	}
+
+	End { }
 
 }

@@ -129,7 +129,7 @@ Describe $FunctionName {
 
 			it "does not throw after Set-PVConfiguration has set the `$PV variable" {
 
-				Set-PVConfiguration -ClientPath "C:\SomePath\PACLI.exe"
+				Set-PVConfiguration -ClientPath "C:\Windows\System32\cmd.exe"
 				{$InputObj | Invoke-PACLICommand} | Should Not throw
 
 			}

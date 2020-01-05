@@ -7,24 +7,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETEAREAADDRESS"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER networkArea
 	The name of the Network Area from which to delete an IP address
 
 	.PARAMETER ipAddress
 	The IP address to delete from the Network Area.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVNetworkAreaAddress -vault lab -user administrator -networkArea all\VPN -ipAddress 20.54.118.55
+	Remove-PVNetworkAreaAddress -networkArea all\VPN -ipAddress 20.54.118.55
 
 	Deletes Area address 20.54.118.55 from VPN network area
 
@@ -40,47 +30,19 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[string]$networkArea,
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$ipAddress,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$ipAddress
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEAREAADDRESS $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEAREAADDRESS $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Address $ipAddress Removed from Network Area $networkArea"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

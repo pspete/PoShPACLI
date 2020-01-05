@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "MOVEFOLDER"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe containing the folder to move.
 
@@ -23,12 +17,8 @@
 	The new location of the folder.
 	Note: Add a backslash ‘\’ before the name of the location.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Move-PVFolder -vault lab -user administrator -safe ComplianceReports -folder root\reports\2017 `
+	Move-PVFolder -safe ComplianceReports -folder root\reports\2017 `
 	-newLocation root
 
 	Moves folder "2017"to the root location of the safe
@@ -44,16 +34,6 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
 		[string]$safe,
 
@@ -65,32 +45,14 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$newLocation,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$newLocation
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MOVEFOLDER $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath MOVEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Moved Folder to $newLocation"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

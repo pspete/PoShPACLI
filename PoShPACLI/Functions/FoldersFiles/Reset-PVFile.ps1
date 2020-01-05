@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "RESETFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe in which the file is stored.
 
@@ -22,12 +16,8 @@
 	.PARAMETER file
 	The name of the file or password to reset.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Reset-PVFile -vault lab -user administrator -safe EU_Admins -folder root -file eu.credential
+	Reset-PVFile -safe EU_Admins -folder root -file eu.credential
 
 	Reset access mark on eu.credential file
 
@@ -39,16 +29,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -65,33 +45,22 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Filename")]
-		[string]$file,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$file
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETFILE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETFILE $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
-
-			Write-Verbose "File $file Reset"
+		if ($Return.ExitCode -eq 0) {
 
 			[PSCustomObject] @{
 
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-				"Safename"  = $safe
-				"Folder"    = $folder
-				"Filename"  = $file
+				"Safename" = $safe
+				"Folder"   = $folder
+				"Filename" = $file
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			}
 
 		}
 

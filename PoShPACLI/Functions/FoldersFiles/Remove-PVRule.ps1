@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETERULE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER ruleID
 	The unique ID of the rule to delete.
 
@@ -30,12 +24,8 @@
 		NO – Indicates files and passwords
 		YES – Indicates folders
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVRule -vault Lab -user administrator -ruleID 15 -userName kenny -safeName IDM `
+	Remove-PVRule -ruleID 15 -userName kenny -safeName IDM `
 	-fullObjectName root\IDMPass -isFolder:$false
 
 	Deletes OLAC rule 15 from object
@@ -48,16 +38,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -82,32 +62,15 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$isFolder,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$isFolder
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote ruleID)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote ruleID)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Rule $RuleID Deleted"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

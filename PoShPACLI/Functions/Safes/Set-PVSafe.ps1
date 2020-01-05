@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "UPDATESAFE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe to update.
 
@@ -146,12 +140,8 @@
 	Possible file types are:
 	DOC, DOT, XLS, XLT, EPS, BMP, GIF, TGA, TIF, TIFF, LOG, TXT, PAL.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVSafe -vault lab -user administrator -safe DEV -size 100
+	Set-PVSafe -safe DEV -size 100
 
 	Sets size of 100Mb on DEV safe
 
@@ -163,16 +153,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -267,7 +247,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateScript( {((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255))})]
+		[ValidateScript( { ((($_ -ge 0) -and ($_ -le 64)) -or ($_ -eq 255)) })]
 		[int]$confirmationCount,
 
 		[Parameter(
@@ -323,34 +303,17 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$allowedFileTypes,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$allowedFileTypes
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
 			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
 			safeOptions, securityLevelParm, confirmationCount, maxFileSize)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Updated Safe $safe"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

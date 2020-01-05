@@ -7,24 +7,14 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "DELETEGROUPMEMBER"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER group
 	The name of the group.
 
 	.PARAMETER member
 	The name of the group member to delete
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Remove-PVGroupMember -vault Lab -user administrator -group auditors -member WebService
+	Remove-PVGroupMember -group auditors -member WebService
 
 	Deletes "WebService" as a member of vault group "Auditors"
 
@@ -40,16 +30,6 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Groupname")]
 		[string]$group,
 
@@ -57,32 +37,14 @@
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
-		[string]$member,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$member
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETEGROUPMEMBER $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEGROUPMEMBER $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Deleted User $member From $group"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

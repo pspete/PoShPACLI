@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "RETRIEVEFILE"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the User who is carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe containing the file to retrieve.
 
@@ -82,12 +76,8 @@
 	If a confirmed request exists or a request is not needed, the
 	specified file will be retrieved.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVFile -vault lab -user administrator -safe AWS -folder root -file AccessKey -localFolder d:\AWS `
+	Get-PVFile -safe AWS -folder root -file AccessKey -localFolder d:\AWS `
 	-localFile key
 
 	Retrieves file and saves to local folder.
@@ -104,16 +94,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -192,33 +172,13 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$executeRequest,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$executeRequest
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
-
-		if($Return.ExitCode -eq 0) {
-
-			Write-Verbose "File Retrieved"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
-
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 	}
 
 }

@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "GROUPMEMBERS"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER group
 	The name of the group
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVGroupMember -vault Lab -user administrator -group cybr_admins
+	Get-PVGroupMember -group cybr_admins
 
 	Lists members of the cybr_admins group
 
@@ -36,40 +26,24 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Groupname")]
-		[string]$group,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$group
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath GROUPMEMBERS "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath GROUPMEMBERS "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 2) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 2)]
@@ -82,11 +56,7 @@
 						"Username"  = $values[0]
 						"UserID"    = $values[1]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member
 
 				}
 

@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "ADDUPDATEEXTERNALUSERENTITY"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER destUser
 	The name (samaccountname) of the external User or Group that will be created
 	in the Vault.
@@ -27,15 +21,10 @@
 	Whether or not existing external Users and Groups definitions will be updated
 	in the Vault.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Add-PVExternalUser -vault Lab -user Administrator -destUser admin01 -ldapDirectory VIRTUALREAL.IT `
-	-UpdateIfExists
+	Add-PVExternalUser -destUser admin01 -ldapDirectory PSPETE.DEV -UpdateIfExists
 
-	Updates user admin01 in vault from domain VIRTUALREAL.IT
+	Updates user admin01 in vault from domain PSPETE.DEV
 	.NOTES
 	AUTHOR: Pete Maan
 
@@ -44,18 +33,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
 
 		[Parameter(
 			Mandatory = $True,
@@ -80,40 +57,28 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$UpdateIfExists,
+		[switch]$UpdateIfExists
 
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
-
-				Write-Verbose "External User $destUser added."
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#Output Object
 				[PSCustomObject] @{
 
 					"Username" = $Results
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External
 
 			}
 

@@ -8,13 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "FINDFILES"
 
-	.PARAMETER vault
-	The defined Vault name
-	you are looking for.
-
-	.PARAMETER user
-	The Username of the User carrying out the task.
-
 	.PARAMETER safe
 	The name of the Safe containing the file(s) or password(s)
 	you are looking for. You can use a wildcard to specify a
@@ -195,12 +188,8 @@
 	Character to be written in the search output to separate the
 	file categories and their values. The default value is ‘:’.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Find-PVFile -vault Lab -user administrator -safe Reports -folder root
+	Find-PVFile -safe Reports -folder root
 
 	Finds all files in the root folder of Reports safe.
 
@@ -211,16 +200,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -377,12 +356,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$fileCategoryValuesSeparator,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$fileCategoryValuesSeparator
 	)
 
 	PROCESS {
@@ -398,8 +372,7 @@
 		}
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
 					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 						categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 
@@ -409,7 +382,7 @@
 			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
 				For ($i = 0 ; $i -lt $Results.length ; $i += 32) {
@@ -453,11 +426,7 @@
 						"ComponentLastRetrievedBy"   = $values[30]
 						"FileCategories"             = $values[31]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
 
 				}
 

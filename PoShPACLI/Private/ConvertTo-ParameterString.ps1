@@ -15,31 +15,19 @@
 	not be interpreted by the PACLI utility and will result in an error.
 
 	.PARAMETER boundParameters
-	The bound parameter object from a PowerShell function.
+	The $PSBoundParameters object from a PowerShell function.
 
 	.PARAMETER doNotQuote
 	Optional parameterNames that will be included int he output without "quotes"
 
-	.PARAMETER excludedParameters
-	Array of parameters, of which the names and values should not be included in the
-	output string.
+	.PARAMETER NoVault
+	Specify switch parameter to not include vault parameter in output string
 
-	By default this contains all PowerShell Common Parameter Names:
-		Debug
-		ErrorAction
-		ErrorVariable
-		OutVariable
-		OutBuffer
-		PipelineVariable
-		Verbose
-		WarningAction
-		WarningVariable
-		WhatIf
-		Confirm
+	.PARAMETER NoUser
+	Specify switch parameter to not include user parameter in output string
 
-	Common Parameters may be contained in the array passed to this function, and must
-	be excluded from the output as they will not be interpreted by the PACLI utility
-	and will therefore result in an error.
+	.PARAMETER NoSessionID
+	Specify switch parameter to not include sessionID parameter in output string
 
 	.EXAMPLE
 	$PSBoundParameters.getEnumerator() | ConvertTo-ParameterString
@@ -59,13 +47,14 @@
 	AUTHOR: Pete Maan
 
 	#>
-
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', 'Parameters', Justification = "False Positive")]
 	[CmdLetBinding()]
+	[OutputType('System.String')]
 	param(
 
 		[Parameter(
 			Mandatory = $True, ValueFromPipeline = $True)]
-		[array]$boundParameters,
+		[hashtable]$boundParameters,
 
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
@@ -73,47 +62,70 @@
 
 		[Parameter(
 			Mandatory = $False, ValueFromPipeline = $False)]
-		[array]$excludedParameters = @(
-			"Debug", "ErrorAction", "ErrorVariable", "OutVariable", "OutBuffer", "PipelineVariable",
-			"Verbose", "WarningAction", "WarningVariable", "WhatIf", "Confirm")
+		[switch]$NoVault,
+
+		[Parameter(
+			Mandatory = $False, ValueFromPipeline = $False)]
+		[switch]$NoUser,
+
+		[Parameter(
+			Mandatory = $False, ValueFromPipeline = $False)]
+		[switch]$NoSessionID
 	)
 
 	Begin {
 
-		write-debug "Processing Bound Parameters"
-		#define array to hold parameters
-		$parameters = @()
+		$doNotQuote += "sessionID"
+		$ValueTerminators = '^|$'
+		$ValueTrue = '"True"'
+		$ValueFalse = '"False"'
 
-		#Ensure sessionID is never enclosed in quotes
-		if($doNotQuote -notcontains "sessionID") {
-
-			$doNotQuote += "sessionID"
-
-		}
+		$excludedParameters = [Collections.Generic.List[String]]@(
+			[System.Management.Automation.PSCmdlet]::CommonParameters +
+			[System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+		)
 
 	}
 
 	Process {
 
-		#foreach element in passed array
-		$boundParameters | ForEach-Object {
+		$boundParameters.Keys | ForEach-Object {
 
-			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -notContains $_.key)) {
+			#Create collection to hold parameters
+			$Parameters = [Collections.Generic.List[String]]@()
 
-				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
-				#Quote Parameter Value so Key="Value"
-				$parameters += $($_.Key) + "=" + (((($($_.Value) -replace '^', '"') `
-								-replace '$', '"') `
-							-replace '"True"', 'YES') `
-						-replace '"False"', 'NO') `
-					#boolean values YES/NO should never be "in quotes"
+		} {
+
+			switch ($PSItem) {
+
+				( { $excludedParameters -Contains $PSItem }) { break }
+
+				( { $doNotQuote -NotContains $PSItem }) {
+
+					$null = $Parameters.Add($($PSItem) + "=" + $(((($($boundParameters[$PSItem]) -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")))
+					break
+
+				}
+
+				( { $doNotQuote -Contains $PSItem }) {
+
+					$null = $Parameters.Add($($PSItem) + "=" + $($boundParameters[$PSItem]))
+					break
+
+				}
+
 			}
 
-			If(($excludedParameters -notContains $_.key) -and ($doNotQuote -Contains $_.key)) {
+		} {
 
-				#add key=value to array, process switch values to equate TRUE=Yes, FALSE=No
-				$parameters += $($_.Key) + "=" + $($_.Value)
-
+			If ((-not ($NoSessionID.IsPresent)) -and $($Script:PV.sessionID)) {
+				$null = $Parameters.Add("sessionID=" + $($Script:PV.sessionID))
+			}
+			If ((-not ($NoVault.IsPresent)) -and $($Script:PV.vault)) {
+				$null = $Parameters.Add("vault=" + '"' + $($Script:PV.vault) + '"')
+			}
+			If ((-not ($NoUser.IsPresent)) -and $($Script:PV.user)) {
+				$null = $Parameters.Add("user=" + '"' + $($Script:PV.user) + '"')
 			}
 
 		}
@@ -122,15 +134,8 @@
 
 	End {
 
-		if($parameters) {
-
-			$parameters = $parameters -join ' '
-
-			write-debug $parameters
-			#output parameter string
-			$parameters
-
-		}
+		#output parameter string
+		$Parameters -join ' '
 
 	}
 

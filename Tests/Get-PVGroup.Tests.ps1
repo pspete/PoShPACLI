@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault     = "SomeVault"
-					user      = "SomeUser"
+					
+					
 					groupName = "SomeGroup"
 
 				}
@@ -57,7 +57,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVGroup} | Should Not throw
+				{ $InputObj | Get-PVGroup } | Should Not throw
 
 			}
 

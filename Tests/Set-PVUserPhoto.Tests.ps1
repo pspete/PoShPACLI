@@ -38,14 +38,9 @@ Describe $FunctionName {
 
 			BeforeEach {
 
-				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-					user  = "SomeUser"
-				}
-
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -54,13 +49,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Set-PVUserPhoto -destuser x -localfolder x -localfile x } | Should Not throw
+				{Set-PVUserPhoto -destuser x -localfolder x -localfile x } | Should Not throw
 
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | Set-PVUserPhoto -destuser x -localfolder x -localfile x
+				Set-PVUserPhoto -destuser x -localfolder x -localfile x
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

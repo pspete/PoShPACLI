@@ -46,7 +46,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -55,7 +55,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | New-PVLogonFile -logonFile "SomeFile"} | Should Not throw
+				{ $InputObj | New-PVLogonFile -logonFile "SomeFile" } | Should Not throw
 
 			}
 

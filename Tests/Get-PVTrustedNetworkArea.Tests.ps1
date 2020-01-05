@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					vault       = "SomeVault"
-					user        = "SomeUser"
+					
+					
 					trusterName = "SomeTrustee"
 
 				}
@@ -57,7 +57,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Get-PVTrustedNetworkArea} | Should Not throw
+				{ $InputObj | Get-PVTrustedNetworkArea } | Should Not throw
 			}
 
 			It "invokes expected pacli command" {

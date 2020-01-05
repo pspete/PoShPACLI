@@ -7,29 +7,19 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "LISTSAFEFILECATEGORIES"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The Safe where the File Categories is defined.
 
 	.PARAMETER category
 	The name of the File Category to list.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE -category CISOcat1
+	Get-PVSafeFileCategory -safe ORACLE -category CISOcat1
 
 	lists specific file category details
 
 	.EXAMPLE
-	Get-PVSafeFileCategory -vault lab -user administrator -safe ORACLE
+	Get-PVSafeFileCategory -safe ORACLE
 
 	lists all file category details
 
@@ -42,16 +32,6 @@
 	param(
 
 		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
@@ -60,27 +40,22 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$category,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$category
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTSAFEFILECATEGORIES "$($PSBoundParameters.getEnumerator() |
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTSAFEFILECATEGORIES "$($PSBoundParameters |
             ConvertTo-ParameterString) output (ALL,ENCLOSE)"
 
 		#if result(s) returned
-		if($Return.StdOut) {
+		if ($Return.StdOut) {
 
 			#Convert Output to array
-			$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 			#loop through results
-			For($i = 0 ; $i -lt $Results.length ; $i += 7) {
+			For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
 				#Get Range from array
 				$values = $Results[$i..($i + 7)]
@@ -96,11 +71,7 @@
 					"CategoryRequired"     = $values[5]
 					"VaultCategory"        = $values[6]
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory -PropertyToAdd @{
-					"vault"     = $vault
-					"user"      = $user
-					"sessionID" = $sessionID
-				}
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.FileCategory
 
 			}
 

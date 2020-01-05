@@ -8,10 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "CTLGETFILENAME"
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	Get-PVCTL
 
@@ -23,33 +19,24 @@
 	#>
 
 	[CmdLetBinding()]
-	param(
+	param()
 
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
-	)
+	$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLGETFILENAME "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLGETFILENAME "$($PSBoundParameters.getEnumerator() |
-			ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
-
-	if($Return.ExitCode -eq 0) {
+	if ($Return.ExitCode -eq 0) {
 
 		#if result(s) returned
-		if($Return.StdOut) {
+		if ($Return.StdOut) {
 
 			#Convert Output to array
-			$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+			$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 			#Output Object
 			[PSCustomObject] @{
 
 				"CertificateTrustList" = $Results[0]
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL -PropertyToAdd @{
-				"sessionID" = $sessionID
-			}
+			} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL
 
 		}
 

@@ -7,21 +7,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "TRUSTEDNETWORKAREASLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER trusterName
 	The User who has access to the Trusted Network Area
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVTrustedNetworkArea -vault lab -user administrator -trusterName lydia
+	Get-PVTrustedNetworkArea -trusterName lydia
 
 	Lists Trusted Network Areas for user lydia
 
@@ -36,40 +26,24 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
-		[string]$trusterName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$trusterName
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath TRUSTEDNETWORKAREASLIST "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath TRUSTEDNETWORKAREASLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 6) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 6) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 6)]
@@ -85,11 +59,7 @@
 						"ViolationCount"    = $values[5]
 						"Username"          = $trusterName
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea.Trusted -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea.Trusted
 
 				}
 

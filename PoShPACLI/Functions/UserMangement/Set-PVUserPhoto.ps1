@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "PUTUSERPHOTO"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER destUser
 	The name of the User in the photograph.
 
@@ -22,12 +16,8 @@
 	.PARAMETER localFile
 	The name of the file in which the photograph is stored
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVUserPhoto -vault Lab -user Administrator -destUser user1 -localFolder D:\ -localFile photo.jpg
+	Set-PVUserPhoto -destUser user1 -localFolder D:\ -localFile photo.jpg
 
 	Sets D:\photo.jpg as user photo for vault user user1
 
@@ -43,16 +33,6 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Username")]
 		[string]$destUser,
 
@@ -64,32 +44,14 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$localFile,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$localFile
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath PUTUSERPHOTO $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath PUTUSERPHOTO $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "User Photo Saved to Vault"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

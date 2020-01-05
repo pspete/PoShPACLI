@@ -12,10 +12,6 @@
 	parameter is not supplied, the CTL file name that was supplied in
 	the INIT function is used.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	Get-PVCTLCertificate
 
@@ -33,29 +29,23 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$ctlFileName,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$ctlFileName
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLLIST "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 3) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 3)]
@@ -69,9 +59,7 @@
 						"FromDate" = $values[2]
 						"ToDate"   = $values[3]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate -PropertyToAdd @{
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate
 
 				}
 

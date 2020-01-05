@@ -37,16 +37,13 @@ Describe $FunctionName {
 
 			BeforeEach {
 
-				$InputObj = [PSCustomObject]@{
-					vault = "SomeVault"
-
-				}
+				Set-PVConfiguration -ClientPath "C:\Windows\System32\cmd.exe"
 
 				$Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = "SomeOutput"
+						StdOut   = '"SomeOutput"'
 						ExitCode = 0
 					}
 				}
@@ -55,13 +52,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | Import-PVVaultDefinition -parmFile x} | Should Not throw
+				{ Import-PVVaultDefinition -parmFile x -vault y } | Should Not throw
 
 			}
 
 			It "invokes expected pacli command" {
 
-				$InputObj | Import-PVVaultDefinition -parmFile x
+				Import-PVVaultDefinition -parmFile x -vault y
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 

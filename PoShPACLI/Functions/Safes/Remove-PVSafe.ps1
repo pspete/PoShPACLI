@@ -13,21 +13,11 @@
 	A detailed description of the function or script. This keyword can be
 	used only once in each topic.
 
-    .PARAMETER vault
-    The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
     .PARAMETER safe
     The name of the Safe to delete.
 
-    .PARAMETER sessionID
-    The ID number of the session. Use this parameter when working
-    with multiple scripts simultaneously. The default is ‘0’.
-
     .EXAMPLE
-    Remove-PVSafe -vault lab -user administrator -safe Old_Safe
+    Remove-PVSafe -safe Old_Safe
 
 	Deletes safe Old_Safe
 
@@ -43,43 +33,15 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
 		[Alias("Safename")]
-		[string]$safe,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$safe
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Deleted Safe $safe"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

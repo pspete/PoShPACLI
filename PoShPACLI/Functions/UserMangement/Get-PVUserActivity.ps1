@@ -10,21 +10,11 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "INSPECTUSER"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER logDays
 	The number of days to include in the list of activities.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVUserActivity -vault Lab -user administrator -logDays 5
+	Get-PVUserActivity -logDays 5
 
 	Lists vault user activity from the last 5 days
 
@@ -37,41 +27,25 @@
 	param(
 
 		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$logDays,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[int]$logDays
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTUSER "$($PSBoundParameters.getEnumerator() |
-            	ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTUSER "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 9) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 9) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 9)]
@@ -90,11 +64,7 @@
 						"RequestReason" = $values[7]
 						"Code"          = $values[8]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Activity -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Activity
 
 				}
 

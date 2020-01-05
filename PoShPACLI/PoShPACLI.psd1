@@ -13,16 +13,16 @@
 	Author            = 'Pete Maan'
 
 	# Company or vendor of this module
-	# CompanyName = ''
+	CompanyName       = 'PSPETE LTD'
 
 	# Copyright statement for this module
-	Copyright         = '(c) 2017 Pete Maan. All rights reserved.'
+	Copyright         = '(c) 2020 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
 	Description       = 'Invoke CyberArk PACLI.exe Utility Commands with PowerShell'
 
 	# Minimum version of the Windows PowerShell engine required by this module
-	PowerShellVersion = '3.0'
+	PowerShellVersion = '5.0'
 
 	# Name of the Windows PowerShell host required by this module
 	# PowerShellHostName = ''
@@ -49,20 +49,20 @@
 	# ScriptsToProcess = @()
 
 	# Type files (.ps1xml) to be loaded when importing this module
-	TypesToProcess    = @('PoShPACLI.Types.ps1xml')
+	TypesToProcess    = @('xml\PoShPACLI.Types.ps1xml')
 
 	# Format files (.ps1xml) to be loaded when importing this module
-	FormatsToProcess  = @('PoShPACLI.Format.ps1xml')
+	FormatsToProcess  = @('xml\PoShPACLI.Format.ps1xml')
 
 
 	# Functions to export from this module
 	FunctionsToExport = @(
-		'Set-PVConfiguration'
+		'Get-PVConfiguration',
+		'Set-PVConfiguration',
 		'Start-PVPacli', #INIT
 		'Stop-PVPacli', #TERM
 		'New-PVVaultDefinition', #DEFINE
 		'Import-PVVaultDefinition', #DEFINEFROMFILE
-		'Remove-PVVaultDefinition', #DELETEVAULT
 		'Connect-PVVault', #LOGON
 		'New-PVLogonFile', #CREATELOGONFILE
 		'Disconnect-PVVault', #LOGOFF
@@ -161,7 +161,6 @@
 		'Remove-PVFileCategory', #DELETEFILECATEGORY
 		'Get-PVFileCategory', #LISTFILECATEGORIES
 		'Set-PVObjectValidation', #VALIDATEOBJECT
-		'Get-PVHttpGwUrl', #GETHTTPGWURL
 		'Add-PVRule', #ADDRULE
 		'Remove-PVRule', #DELETERULE
 		'Get-PVRule', #RULESLIST
@@ -182,19 +181,19 @@
 		PSData = @{
 
 			# Tags applied to this module. These help with module discovery in online galleries.
-			Tags       = @('CyberArk', 'PACLI', 'Security')
+			Tags         = @('CyberArk', 'PACLI', 'Security')
 
 			# A URL to the license for this module.
-			LicenseUri = 'https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md'
+			LicenseUri   = 'https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md'
 
 			# A URL to the main website for this project.
-			ProjectUri = 'https://github.com/pspete/PoShPACLI'
+			ProjectUri   = 'https://github.com/pspete/PoShPACLI'
 
 			# A URL to an icon representing this module.
 			# IconUri = ''
 
 			# ReleaseNotes of this module
-			# ReleaseNotes = ''
+			ReleaseNotes = 'https://github.com/pspete/PoShPACLI/blob/master/CHANGELOG.md'
 
 		} # End of PSData hashtable
 

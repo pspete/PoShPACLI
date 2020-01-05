@@ -7,12 +7,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "MAILUSER"
 
-	.PARAMETER vault
-    The defined Vault name
-
-	.PARAMETER user
-    The Username of the authenticated User.
-
 	.PARAMETER mailServerIP
 	The IP of the mail server
 
@@ -90,13 +84,9 @@
 	.PARAMETER parm10
 	Values for variables in the template file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 
-	Send-PVMailMessage -vault Lab -user Administrator -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
+	Send-PVMailMessage -mailServerIP 10.10.10.50 -senderEmail epv@company.com `
 	-domainName company.com -recipientEmail user@company.com -recipientUser CF0 -safe Audit_Reports `
 	-folder Reports -file ActivityReport -subject SUBJECT -templateFile template.txt -parm1 "Auditors"
 
@@ -116,16 +106,6 @@
 
 	[CmdLetBinding()]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -247,32 +227,14 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$parm10,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$parm10
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters | ConvertTo-ParameterString)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "Mail Message Sent"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

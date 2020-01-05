@@ -75,10 +75,6 @@
 	Whether or not to allow 3rd party authentication with selfsigned certificates.
 	Note: This parameter can only be enabled if 'trustssc' is specified.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
 	New-PVVaultDefinition -vault VaultA -address 10.10.10.20
 
@@ -188,39 +184,24 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$allowSSCFor3PartyAuth,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[switch]$allowSSCFor3PartyAuth
 	)
 
 	PROCESS {
 
 		#deal with proxyPassword SecureString
-		if($PSBoundParameters.ContainsKey("proxyPassword")) {
+		if ($PSBoundParameters.ContainsKey("proxyPassword")) {
 
 			$PSBoundParameters["proxyPassword"] = ConvertTo-InsecureString $proxyPassword
 
 		}
 
-		Write-Verbose "Defining Vault"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser `
+				-doNotQuote proxyType, port, timeout, reconnectPeriod, proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -doNotQuote proxyType, port, timeout, reconnectPeriod,
-			proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
+		if ($Return.ExitCode -eq 0) {
 
-		if($Return.ExitCode -eq 0) {
-
-			Write-Verbose "Vault Defined. Name: $vault, Address: $address"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
+			Set-PVConfiguration -vault $vault
 
 		}
 

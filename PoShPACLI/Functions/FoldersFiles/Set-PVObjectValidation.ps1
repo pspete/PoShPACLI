@@ -8,12 +8,6 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "VALIDATEOBJECT"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
 	.PARAMETER safe
 	The name of the Safe in which the file is stored.
 
@@ -36,13 +30,9 @@
 	.PARAMETER reason
 	The reason for validating the file.
 
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Set-PVObjectValidation -vault lab -user administrator -safe Prod_Env -folder root -object Oracle-sys `
-	-internalName 000000000000011 -validationAction INVALID -reason OK -sessionID 0
+	Set-PVObjectValidation -safe Prod_Env -folder root -object Oracle-sys `
+	-internalName 000000000000011 -validationAction INVALID -reason OK
 
 	Marks specified version of Oracle-sys in Prod_Env as INVALID.
 
@@ -54,16 +44,6 @@
 	[CmdLetBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
 
 		[Parameter(
 			Mandatory = $True,
@@ -95,32 +75,15 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$reason,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
+		[string]$reason
 	)
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString -donotQuote validationAction)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote validationAction)
 
-		if($Return.ExitCode -eq 0) {
 
-			Write-Verbose "File $file Marked as $ValidationAction"
-
-			[PSCustomObject] @{
-
-				"vault"     = $vault
-				"user"      = $user
-				"sessionID" = $sessionID
-
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI
-
-		}
 
 	}
 

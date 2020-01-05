@@ -7,18 +7,8 @@
 	.DESCRIPTION
 	Exposes the PACLI Function: "NETWORKAREASLIST"
 
-	.PARAMETER vault
-	The defined Vault name
-
-	.PARAMETER user
-	The Username of the authenticated User.
-
-	.PARAMETER sessionID
-	The ID number of the session. Use this parameter when working
-	with multiple scripts simultaneously. The default is ‘0’.
-
 	.EXAMPLE
-	Get-PVNetworkArea -vault lab -user administrator
+	Get-PVNetworkArea
 
 	Lists all network areas
 
@@ -28,39 +18,22 @@
 	#>
 
 	[CmdLetBinding()]
-	param(
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$vault,
-
-		[Parameter(
-			Mandatory = $True,
-			ValueFromPipelineByPropertyName = $True)]
-		[string]$user,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[int]$sessionID
-	)
+	param()
 
 	PROCESS {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath NETWORKAREASLIST "$($PSBoundParameters.getEnumerator() |
-				ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath NETWORKAREASLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
-		if($Return.ExitCode -eq 0) {
+		if ($Return.ExitCode -eq 0) {
 
 			#if result(s) returned
-			if($Return.StdOut) {
+			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = (($Return.StdOut | Select-String -Pattern "\S") | ConvertFrom-PacliOutput)
+				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
 				#loop through results
-				For($i = 0 ; $i -lt $Results.length ; $i += 2) {
+				For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
 
 					#Get Range from array
 					$values = $Results[$i..($i + 2)]
@@ -71,11 +44,7 @@
 						"NetworkArea"   = $values[0]
 						"SecurityLevel" = $values[1]
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea -PropertyToAdd @{
-						"vault"     = $vault
-						"user"      = $user
-						"sessionID" = $sessionID
-					}
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea
 
 				}
 
