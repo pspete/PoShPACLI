@@ -207,7 +207,7 @@ The table shows how the the PoShPACLI module functions relate to their native PA
 
 ### Prerequisites
 
-- Requires Powershell v3 (minimum)
+- Requires Powershell v5 (minimum)
 - The CyberArk PACLI executable must be present on the same computer as the module.
   - PACLI 7.2 was used for development, anything less is considered unsupported for use with this module.
 - A CyberArk user with which to authenticate, which has appropriate Vault/Safe permissions.
