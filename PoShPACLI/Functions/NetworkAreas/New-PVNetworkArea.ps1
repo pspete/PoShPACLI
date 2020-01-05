@@ -11,12 +11,20 @@
 	The name of the new Network Area.
 
 	.PARAMETER securityLevelParm
-	The level of the Network Area security flags.
+	Specify the Network Area security flags.
+	Valid values are combinations of the following:
+	Locations: Internal, External, Public.
+	Security Areas: HighlySecured, Secured, Unsecured
 
 	.EXAMPLE
 	New-PVNetworkArea -networkArea All\EMEA
 
 	Adds EMEA Network Area
+
+	.EXAMPLE
+	New-PVNetworkArea -networkArea All\APAC -securityLevelParm Internal, HighlySecured
+
+	Adds APAC Network Area with the internal & Highly Secured Network Area security flags
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -34,18 +42,22 @@
 
 		[Parameter(
 			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
-		[ValidateRange(1, 63)]
-		[int]$securityLevelParm
+			ValueFromPipelineByPropertyName = $True
+		)]
+		[SecurityLevel]$securityLevelParm
 	)
 
 	PROCESS {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters |
-			ConvertTo-ParameterString -donotQuote securityLevelParm)
+		If ($PSBoundParameters.ContainsKey("securityLevelParm")) {
 
+			$PSBoundParameters["securityLevelParm"] = [int]$securityLevelParm
 
+		}
+
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString -donotQuote securityLevelParm)
 
 	}
+
 
 }

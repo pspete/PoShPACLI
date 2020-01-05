@@ -66,6 +66,30 @@ Describe $FunctionName {
 
 			}
 
+			It "tranlates expected safeOptions enum value" {
+
+				New-PVSafe -password $Password -safe  "SomeSafe" -safeOptions EnforceSafeOpening, FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers, EnforceSafeOpening
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match "safeOptions=960"
+
+				}
+
+			}
+
+			It "tranlates expected securityLevelParm enum value" {
+
+				New-PVSafe -password $Password -safe  "SomeSafe" -securityLevelParm Internal, HighlySecured
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match "securityLevelParm=9"
+
+				}
+
+			}
+
 		}
 
 	}

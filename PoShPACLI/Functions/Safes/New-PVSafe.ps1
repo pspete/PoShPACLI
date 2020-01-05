@@ -56,7 +56,10 @@
 	Indicates whether or not the Safe is a text-only Safe.
 
 	.PARAMETER securityLevelParm
-	The level of the Network Area security flags
+	Specify the Network Area security flags.
+	Valid values are combinations of the following:
+	Locations: Internal, External, Public.
+	Security Areas: HighlySecured, Secured, Unsecured
 
 	.PARAMETER ConfirmationType
 	The type of confirmation required to enable access to the Safe.
@@ -121,15 +124,11 @@
 	New owners of this Safe will initially retrieve in readonly access mode.
 
 	.PARAMETER safeOptions
-	This parameter enables to Safe to be shared with the following values or
-	combination of them:
-	64 – Enable access to partially impersonated users
-	128 – Enable access to fully impersonated users
-	512 – Enable access to impersonated users with additional Vault authentication
-	256 – Enforce Safe opening.
-
-	Note: This is combined with a value of 64 in order to allow access to partially
-	impersonated users.
+	This parameter enables to Safe to be shared with any combination of the following values:
+	PartiallyImpersonatedUsers (Enable access to partially impersonated users)
+	FullyImpersonatedUsers (Enable access to fully impersonated users)
+	ImpersonatedUsers (Enable access to impersonated users with additional Vault authentication)
+	EnforceSafeOpening (Enforce Safe opening from PrivateArk Client)
 
 	.PARAMETER useFileCategories
 	Whether or not to use Vault level file categories when storing a file in a Safe
@@ -164,6 +163,11 @@
 	-location \ -size 50 -description "new Safe" -dailyVersions 5 -logRetention 40
 
 	Creates safe "PacliSafe", in the root location, with size, daily versions & log retention set
+
+	.EXAMPLE
+	New-PVSafe -safe SomeSafe -securityLevelParm Internal, HighlySecured -safeOptions EnforceSafeOpening, FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers
+
+	Creates safe "SomeSafe" with declared security flags & Safe sharing options.
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -239,10 +243,6 @@
 			ValueFromPipelineByPropertyName = $True)]
 		[int]$requestsRetention,
 
-		#[Parameter(
-		#	Mandatory=$False)]
-		#[switch]$virusFree,
-
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
@@ -251,7 +251,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$securityLevelParm,
+		[SecurityLevel]$securityLevelParm,
 
 		[Parameter(
 			Mandatory = $False,
@@ -314,9 +314,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("64", "128", "512", "256", "192", "576", "320",
-			"640", "384", "768", "704", "448", "832", "896", "960")]
-		[int]$safeOptions,
+		[SafeOptions]$safeOptions,
 
 		[Parameter(
 			Mandatory = $False,
@@ -356,9 +354,13 @@
 
 	PROCESS {
 
-		if ($PSBoundParameters.ContainsKey("password")) {
+		Switch ([array]$PSBoundParameters.Keys) {
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
+			{ $_ -Contains "password" } { $PSBoundParameters["password"] = ConvertTo-InsecureString $password; continue }
+
+			{ $_ -Contains "securityLevelParm" } { $PSBoundParameters["securityLevelParm"] = [int]$securityLevelParm; continue }
+
+			{ $_ -Contains "safeOptions" } { $PSBoundParameters["safeOptions"] = [int]$safeOptions; continue }
 
 		}
 

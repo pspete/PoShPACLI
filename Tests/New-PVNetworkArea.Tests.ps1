@@ -65,6 +65,18 @@ Describe $FunctionName {
 
 			}
 
+			It "tranlates expected securityLevelParm enum value" {
+
+				New-PVNetworkArea -networkArea "SomeArea" -securityLevelParm Internal, HighlySecured
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match "securityLevelParm=9"
+
+				}
+
+			}
+
 		}
 
 	}
