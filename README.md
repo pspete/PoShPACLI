@@ -2,26 +2,26 @@
 
 ## **Powershell PACLI Module for CyberArk EPV**
 
-[![appveyor][]][av-site]
-[![codefactor][]][cf-link]
-[![coveralls][]][cv-site]
-[![psgallery][]][ps-site]
-[![downloads][]][ps-site]
-[![license][]][license-link]
+| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
+|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
+|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![license][]][license-link]|
+|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                            |
 
 [appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/poshpacli/branch/master
-[tests]:https://img.shields.io/appveyor/tests/pspete/poshpacli.svg
-[tests-site]:https://ci.appveyor.com/project/pspete/poshpacli
 [coveralls]:https://coveralls.io/repos/github/pspete/PoShPACLI/badge.svg
 [cv-site]:https://coveralls.io/github/pspete/PoShPACLI
 [psgallery]:https://img.shields.io/powershellgallery/v/PoShPACLI.svg
 [ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
+[tests]:https://img.shields.io/appveyor/tests/pspete/poshpacli.svg
+[tests-site]:https://ci.appveyor.com/project/pspete/poshpacli
+[downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
+[cf-site]:https://www.codefactor.io/repository/github/pspete/poshpacli
+[codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
+[codecov]:https://codecov.io/gh/pspete/DoubleDeploy/branch/master/graph/badge.svg
+[codecov-link]:https://codecov.io/gh/pspete/PoShPACLI
 [license]:https://img.shields.io/github/license/pspete/poshpacli.svg
 [license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
-[codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
-[cf-link]:https://www.codefactor.io/repository/github/pspete/poshpacli
-[downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 
 Use the native functions of the CyberArk PACLI command line utility translated into PowerShell.
 
