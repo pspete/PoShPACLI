@@ -30,7 +30,7 @@
 	param(
 		[parameter(
 			Position = 0,
-			Mandatory = $true,
+			Mandatory = $false,
 			ValueFromPipeline = $true)]
 		[String]$InputValue,
 
