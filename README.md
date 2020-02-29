@@ -18,7 +18,7 @@
 [downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 [cf-site]:https://www.codefactor.io/repository/github/pspete/poshpacli
 [codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
-[codecov]:https://codecov.io/gh/pspete/DoubleDeploy/branch/master/graph/badge.svg
+[codecov]:https://codecov.io/gh/pspete/PoShPACLI/branch/master/graph/badge.svg
 [codecov-link]:https://codecov.io/gh/pspete/PoShPACLI
 [license]:https://img.shields.io/github/license/pspete/poshpacli.svg
 [license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
@@ -241,6 +241,9 @@ Find your PowerShell Module Paths with the following command:
 $env:PSModulePath.split(';')
 
 ```
+[Download a Release](https://github.com/pspete/PoShPACLI/releases)
+
+OR
 
 [Download the ```master``` branch](https://github.com/pspete/PoShPACLI/archive/master.zip)
 
