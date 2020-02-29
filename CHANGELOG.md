@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.23] - 2020-02-29
+## [2.0.24] - 2020-02-29
 
 - Fix issue where exception is generated if `sessionID` value is not specified for `Start-PVPacli`.
 
