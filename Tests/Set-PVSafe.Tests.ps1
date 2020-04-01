@@ -38,8 +38,8 @@ Describe $FunctionName {
 			BeforeEach {
 
 				$InputObj = [PSCustomObject]@{
-					
-					
+
+
 					safe  = "SomeSafe"
 				}
 
@@ -67,6 +67,30 @@ Describe $FunctionName {
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$PacliCommand -eq "UPDATESAFE"
+
+				}
+
+			}
+
+			It "tranlates expected safeOptions enum value" {
+
+				Set-PVSafe -safe  "SomeSafe" -safeOptions EnforceSafeOpening, FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers, EnforceSafeOpening
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match "safeOptions=960"
+
+				}
+
+			}
+
+			It "tranlates expected securityLevelParm enum value" {
+
+				Set-PVSafe -safe  "SomeSafe" -securityLevelParm Internal, HighlySecured
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match "securityLevelParm=9"
 
 				}
 
