@@ -86,7 +86,7 @@ Describe $FunctionName {
 
 			It "tranlates expected securityLevelParm enum value" {
 
-				Set-PVSafe -password $Password -safe  "SomeSafe" -securityLevelParm Internal, HighlySecured
+				Set-PVSafe -safe  "SomeSafe" -securityLevelParm Internal, HighlySecured
 
 				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
