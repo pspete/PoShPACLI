@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.27] - 2020-04-01
+
+- `New-PVSafe`
+  - Parameter `safeOptions` updated to use Enum
+    - Accepts values:
+      - `PartiallyImpersonatedUsers` (Enable access to partially impersonated users)
+      - `FullyImpersonatedUsers` (Enable access to fully impersonated users)
+      - `ImpersonatedUsers` (Enable access to impersonated users with additional Vault authentication)
+      - `EnforceSafeOpening` (Enforce Safe opening from PrivateArk Client)
+  - Parameter `securityLevelParm` updated to use Enum
+    - Accepts values:
+      - Locations: `Internal`, `External`, `Public`.
+      - Security Areas: `HighlySecured`, `Secured`, `Unsecured`
+
 ## [2.0.24] - 2020-02-29
 
 - Fix issue where exception is generated if `sessionID` value is not specified for `Start-PVPacli`.
