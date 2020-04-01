@@ -62,17 +62,17 @@
 	a filtered Safe.
 
 	.PARAMETER safeOptions
-	This parameter enables to Safe to be shared with the following values or
-	combination of them:
-	64 – Enable access to partially impersonated users
-	128 – Enable access to fully impersonated users
-	512 – Enable access to impersonated users with additional Vault authentication
-	256 – Enforce Safe opening.
-	Note: This is combined with a value of 64 in order to allow access to partially
-	impersonated users.
+	This parameter enables to Safe to be shared with any combination of the following values:
+	PartiallyImpersonatedUsers (Enable access to partially impersonated users)
+	FullyImpersonatedUsers (Enable access to fully impersonated users)
+	ImpersonatedUsers (Enable access to impersonated users with additional Vault authentication)
+	EnforceSafeOpening (Enforce Safe opening from PrivateArk Client)
 
 	.PARAMETER securityLevelParm
-	The level of the Network Area security flags
+	Specify the Network Area security flags.
+	Valid values are combinations of the following:
+	Locations: Internal, External, Public.
+	Security Areas: HighlySecured, Secured, Unsecured
 
 	.PARAMETER ConfirmationType
 	The type of confirmation required to enable access to the Safe.
@@ -144,6 +144,11 @@
 	Set-PVSafe -safe DEV -size 100
 
 	Sets size of 100Mb on DEV safe
+
+	.EXAMPLE
+	Set-PVSafe -safe SomeSafe -securityLevelParm Internal, HighlySecured -safeOptions FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers
+
+	Update safe "SomeSafe" with declared security flags & Safe sharing options.
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -229,14 +234,12 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("64", "128", "512", "256", "192", "576", "320",
-			"640", "384", "768", "704", "448", "832", "896", "960")]
-		[int]$safeOptions,
+		[SafeOptions]$safeOptions,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[int]$securityLevelParm,
+		[SecurityLevel]$securityLevelParm,
 
 		[Parameter(
 			Mandatory = $False,
@@ -307,6 +310,14 @@
 	)
 
 	PROCESS {
+
+		Switch ([array]$PSBoundParameters.Keys) {
+
+			{ $_ -Contains "securityLevelParm" } { $PSBoundParameters["securityLevelParm"] = [int]$securityLevelParm; continue }
+
+			{ $_ -Contains "safeOptions" } { $PSBoundParameters["safeOptions"] = [int]$safeOptions; continue }
+
+		}
 
 		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
