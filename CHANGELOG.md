@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.1.27] - 2020-04-01
 
-- `New-PVSafe`
+- `Set-PVSafe`
   - Parameter `safeOptions` updated to use Enum
     - Accepts values:
       - `PartiallyImpersonatedUsers` (Enable access to partially impersonated users)
