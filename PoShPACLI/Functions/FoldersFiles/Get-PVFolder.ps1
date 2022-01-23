@@ -43,7 +43,8 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				If ($Results) {
+				#Ensure expected number of property values
+				If ($($Results.length) % 5 -eq 0) {
 
 					#loop through results
 					For ($i = 0 ; $i -lt $Results.length ; $i += 5) {
