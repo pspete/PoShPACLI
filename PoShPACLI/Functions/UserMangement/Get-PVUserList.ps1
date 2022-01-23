@@ -78,31 +78,35 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 14) {
+				If ($Results) {
 
-					#Get User Range from array
-					$values = $Results[$i..($i + 14)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 14) {
 
-					#output object for each user
-					[PSCustomObject] @{
+						#Get User Range from array
+						$values = $Results[$i..($i + 14)]
 
-						"Username"                  = $values[0]
-						"Quota"                     = $values[1]
-						"UsedQuota"                 = $values[2]
-						"Location"                  = $values[3]
-						"FirstName"                 = $values[4]
-						"LastName"                  = $values[5]
-						"LDAPUser"                  = $values[6]
-						"Template"                  = $values[7]
-						"GWAccount"                 = $values[8]
-						"Disabled"                  = $values[9]
-						"Type"                      = $values[10]
-						"UserID"                    = $values[11]
-						"LocationID"                = $values[12]
-						"EnableComponentMonitoring" = $values[13]
+						#output object for each user
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User
+							'Username'                  = $values[0]
+							'Quota'                     = $values[1]
+							'UsedQuota'                 = $values[2]
+							'Location'                  = $values[3]
+							'FirstName'                 = $values[4]
+							'LastName'                  = $values[5]
+							'LDAPUser'                  = $values[6]
+							'Template'                  = $values[7]
+							'GWAccount'                 = $values[8]
+							'Disabled'                  = $values[9]
+							'Type'                      = $values[10]
+							'UserID'                    = $values[11]
+							'LocationID'                = $values[12]
+							'EnableComponentMonitoring' = $values[13]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User
+
+					}
 
 				}
 

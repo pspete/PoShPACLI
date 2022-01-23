@@ -31,13 +31,13 @@
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Groupname")]
+		[Alias('Groupname')]
 		[string]$group,
 
 		[Parameter(

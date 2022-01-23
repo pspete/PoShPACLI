@@ -26,7 +26,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Groupname")]
+		[Alias('Groupname')]
 		[string]$group
 	)
 
@@ -42,21 +42,25 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 2)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 2)]
 
-						#assign values to properties
-						"Groupname" = $group
-						"Username"  = $values[0]
-						"UserID"    = $values[1]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member
+							#assign values to properties
+							'Groupname' = $group
+							'Username'  = $values[0]
+							'UserID'    = $values[1]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Group.Member
+
+					}
 
 				}
 

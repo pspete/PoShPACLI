@@ -33,7 +33,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -44,7 +44,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Filename")]
+		[Alias('Filename')]
 		[string]$file
 	)
 
@@ -61,37 +61,41 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 18) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 18)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 18) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 18)]
 
-						"Filename"         = $values[0]
-						"Accessed"         = $values[1]
-						"CreationDate"     = $values[2]
-						"CreatedBy"        = $values[3]
-						"DeletionDate"     = $values[4]
-						"DeletionBy"       = $values[5]
-						"LastUsedDate"     = $values[6]
-						"LastUsedBy"       = $values[7]
-						"LockDate"         = $values[8]
-						"LockedBy"         = $values[9]
-						"Size"             = $values[10]
-						"History"          = $values[11]
-						"Draft"            = $values[12]
-						"RetrieveLock"     = $values[13]
-						"InternalName"     = $values[14]
-						"FileID"           = $values[15]
-						"LockedByUserID"   = $values[16]
-						"ValidationStatus" = $values[17]
-						"Safename"         = $safe
-						"Folder"           = $folder
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
+							'Filename'         = $values[0]
+							'Accessed'         = $values[1]
+							'CreationDate'     = $values[2]
+							'CreatedBy'        = $values[3]
+							'DeletionDate'     = $values[4]
+							'DeletionBy'       = $values[5]
+							'LastUsedDate'     = $values[6]
+							'LastUsedBy'       = $values[7]
+							'LockDate'         = $values[8]
+							'LockedBy'         = $values[9]
+							'Size'             = $values[10]
+							'History'          = $values[11]
+							'Draft'            = $values[12]
+							'RetrieveLock'     = $values[13]
+							'InternalName'     = $values[14]
+							'FileID'           = $values[15]
+							'LockedByUserID'   = $values[16]
+							'ValidationStatus' = $values[17]
+							'Safename'         = $safe
+							'Folder'           = $folder
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
+
+					}
 
 				}
 

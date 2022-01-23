@@ -44,27 +44,31 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 9) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 9)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 9) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 9)]
 
-						#assign values to properties
-						"Time"          = $values[0]
-						"Username"      = $values[1]
-						"Safe"          = $values[2]
-						"Activity"      = $values[3]
-						"Location"      = $values[4]
-						"NewLocation"   = $values[5]
-						"RequestID"     = $values[6]
-						"RequestReason" = $values[7]
-						"Code"          = $values[8]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Activity
+							#assign values to properties
+							'Time'          = $values[0]
+							'Username'      = $values[1]
+							'Safe'          = $values[2]
+							'Activity'      = $values[3]
+							'Location'      = $values[4]
+							'NewLocation'   = $values[5]
+							'RequestID'     = $values[6]
+							'RequestReason' = $values[7]
+							'Code'          = $values[8]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Activity
+
+					}
 
 				}
 

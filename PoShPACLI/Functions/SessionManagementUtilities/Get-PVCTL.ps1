@@ -31,12 +31,16 @@
 			#Convert Output to array
 			$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-			#Output Object
-			[PSCustomObject] @{
+			If ($Results) {
 
-				"CertificateTrustList" = $Results[0]
+				#Output Object
+				[PSCustomObject] @{
 
-			} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL
+					'CertificateTrustList' = $Results[0]
+
+				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL
+
+			}
 
 		}
 

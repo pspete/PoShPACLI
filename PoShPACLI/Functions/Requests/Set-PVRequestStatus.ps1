@@ -30,13 +30,13 @@
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -59,7 +59,7 @@
 
 		#ConvertTo-ParameterString usually remove "Confirm", which conflicts with a parameter of the function
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath CONFIRMREQUEST "$($($PSBoundParameters |
-		ConvertTo-ParameterString -doNotQuote requestID) -replace "confirmRequest","confirm") OUTPUT (ALL,ENCLOSE)"
+		ConvertTo-ParameterString -doNotQuote requestID) -replace 'confirmRequest','confirm') OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 
@@ -69,38 +69,42 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 21) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 21)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 21) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 21)]
 
-						"RequestID"         = $values[0]
-						"Username"          = $values[1]
-						"Operation"         = $values[2]
-						"Safe"              = $values[3]
-						"File"              = $values[4]
-						"Confirmed"         = $values[5]
-						"Reason"            = $values[6]
-						"Status"            = $values[7]
-						"InvalidReason"     = $values[8]
-						"Confirmations"     = $values[9]
-						"Rejections"        = $values[10]
-						"ConfirmationsLeft" = $values[11]
-						"CreationDate"      = $values[12]
-						"LastUsedDate"      = $values[13]
-						"ExpirationDate"    = $values[14]
-						"AccessType"        = $values[15]
-						"UsableFrom"        = $values[16]
-						"UsableTo"          = $values[17]
-						"SafeID"            = $values[18]
-						"UserID"            = $values[19]
-						"FileID"            = $values[20]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
+							'RequestID'         = $values[0]
+							'Username'          = $values[1]
+							'Operation'         = $values[2]
+							'Safe'              = $values[3]
+							'File'              = $values[4]
+							'Confirmed'         = $values[5]
+							'Reason'            = $values[6]
+							'Status'            = $values[7]
+							'InvalidReason'     = $values[8]
+							'Confirmations'     = $values[9]
+							'Rejections'        = $values[10]
+							'ConfirmationsLeft' = $values[11]
+							'CreationDate'      = $values[12]
+							'LastUsedDate'      = $values[13]
+							'ExpirationDate'    = $values[14]
+							'AccessType'        = $values[15]
+							'UsableFrom'        = $values[16]
+							'UsableTo'          = $values[17]
+							'SafeID'            = $values[18]
+							'UserID'            = $values[19]
+							'FileID'            = $values[20]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
+
+					}
 
 				}
 

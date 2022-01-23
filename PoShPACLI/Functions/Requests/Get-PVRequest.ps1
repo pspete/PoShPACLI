@@ -74,7 +74,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("MY_REQUESTS", "INCOMING_REQUESTS", "ALL_REQUESTS")]
+		[ValidateSet('MY_REQUESTS', 'INCOMING_REQUESTS', 'ALL_REQUESTS')]
 		[string]$requestsType,
 
 		[Parameter(
@@ -105,7 +105,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("ALL_REQUESTS", "ONLY_VALID", "ONLY_INVALID")]
+		[ValidateSet('ALL_REQUESTS', 'ONLY_VALID', 'ONLY_INVALID')]
 		[string]$displayInvalid,
 
 		[Parameter(
@@ -121,7 +121,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("ALL_OBJECTS", "GET_FILE", "GET_PASSWORD", "OPEN_SAFE")]
+		[ValidateSet('ALL_OBJECTS', 'GET_FILE', 'GET_PASSWORD', 'OPEN_SAFE')]
 		[string]$objectsType
 	)
 
@@ -138,38 +138,42 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 21) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 21)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 21) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 21)]
 
-						"RequestID"         = $values[0]
-						"Username"          = $values[1]
-						"Operation"         = $values[2]
-						"Safe"              = $values[3]
-						"File"              = $values[4]
-						"Confirmed"         = $values[5]
-						"Reason"            = $values[6]
-						"Status"            = $values[7]
-						"InvalidReason"     = $values[8]
-						"Confirmations"     = $values[9]
-						"Rejections"        = $values[10]
-						"ConfirmationsLeft" = $values[11]
-						"CreationDate"      = $values[12]
-						"LastUsedDate"      = $values[13]
-						"ExpirationDate"    = $values[14]
-						"AccessType"        = $values[15]
-						"UsableFrom"        = $values[16]
-						"UsableTo"          = $values[17]
-						"SafeID"            = $values[18]
-						"UserID"            = $values[19]
-						"FileID"            = $values[20]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
+							'RequestID'         = $values[0]
+							'Username'          = $values[1]
+							'Operation'         = $values[2]
+							'Safe'              = $values[3]
+							'File'              = $values[4]
+							'Confirmed'         = $values[5]
+							'Reason'            = $values[6]
+							'Status'            = $values[7]
+							'InvalidReason'     = $values[8]
+							'Confirmations'     = $values[9]
+							'Rejections'        = $values[10]
+							'ConfirmationsLeft' = $values[11]
+							'CreationDate'      = $values[12]
+							'LastUsedDate'      = $values[13]
+							'ExpirationDate'    = $values[14]
+							'AccessType'        = $values[15]
+							'UsableFrom'        = $values[16]
+							'UsableTo'          = $values[17]
+							'SafeID'            = $values[18]
+							'UserID'            = $values[19]
+							'FileID'            = $values[20]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request
+
+					}
 
 				}
 

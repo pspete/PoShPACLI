@@ -32,19 +32,23 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 2)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 2) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 2)]
 
-						"NetworkArea"   = $values[0]
-						"SecurityLevel" = $values[1]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea
+							'NetworkArea'   = $values[0]
+							'SecurityLevel' = $values[1]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.NetworkArea
+
+					}
 
 				}
 

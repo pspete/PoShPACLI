@@ -44,22 +44,26 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 3)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 3)]
 
-						#Add elements to hashtable
-						"Subject"  = $values[0]
-						"Issuer"   = $values[1]
-						"FromDate" = $values[2]
-						"ToDate"   = $values[3]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate
+							#Add elements to hashtable
+							'Subject'  = $values[0]
+							'Issuer'   = $values[1]
+							'FromDate' = $values[2]
+							'ToDate'   = $values[3]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.CTL.Certificate
+
+					}
 
 				}
 

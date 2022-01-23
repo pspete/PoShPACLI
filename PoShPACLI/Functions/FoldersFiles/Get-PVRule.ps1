@@ -59,24 +59,28 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-						"RuleID"           = $values[0]
-						"Username"         = $values[1]
-						"Safename"         = $values[2]
-						"FullObjectName"   = $values[3]
-						"Effect"           = $values[4]
-						"RuleCreationDate" = $values[5]
-						"AccessLevel"      = $values[6]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule
+							'RuleID'           = $values[0]
+							'Username'         = $values[1]
+							'Safename'         = $values[2]
+							'FullObjectName'   = $values[3]
+							'Effect'           = $values[4]
+							'RuleCreationDate' = $values[5]
+							'AccessLevel'      = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Rule
+
+					}
 
 				}
 

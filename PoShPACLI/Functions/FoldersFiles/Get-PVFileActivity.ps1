@@ -35,7 +35,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -46,7 +46,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Filename")]
+		[Alias('Filename')]
 		[string]$file,
 
 		[Parameter(
@@ -68,27 +68,31 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-						"Time"             = $values[0]
-						"Username"         = $values[1]
-						"Activity"         = $values[2]
-						"PreviousLocation" = $values[3]
-						"RequestID"        = $values[4]
-						"RequestReason"    = $values[5]
-						"Code"             = $values[6]
-						"Safename"         = $safe
-						"Folder"           = $folder
-						"Filename"         = $file
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity
+							'Time'             = $values[0]
+							'Username'         = $values[1]
+							'Activity'         = $values[2]
+							'PreviousLocation' = $values[3]
+							'RequestID'        = $values[4]
+							'RequestReason'    = $values[5]
+							'Code'             = $values[6]
+							'Safename'         = $safe
+							'Folder'           = $folder
+							'Filename'         = $file
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Activity
+
+					}
 
 				}
 

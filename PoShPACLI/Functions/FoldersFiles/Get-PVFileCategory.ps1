@@ -36,7 +36,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -47,7 +47,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Filename")]
+		[Alias('Filename')]
 		[string]$file,
 
 		[Parameter(
@@ -69,23 +69,27 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 3)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 3)]
 
-						"CategoryName"  = $values[0]
-						"CategoryValue" = $values[1]
-						"CategoryID"    = $values[2]
-						"Safename"      = $safe
-						"Folder"        = $folder
-						"Filename"      = $file
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Category
+							'CategoryName'  = $values[0]
+							'CategoryValue' = $values[1]
+							'CategoryID'    = $values[2]
+							'Safename'      = $safe
+							'Folder'        = $folder
+							'Filename'      = $file
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File.Category
+
+					}
 
 				}
 

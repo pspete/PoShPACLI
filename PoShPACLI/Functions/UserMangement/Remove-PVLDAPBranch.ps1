@@ -24,7 +24,7 @@
 	#>
 
 	[CmdLetBinding(SupportsShouldProcess)]
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
 		[Parameter(
@@ -35,7 +35,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("LDAPBranchID")]
+		[Alias('LDAPBranchID')]
 		[string]$deleteBranchID
 	)
 
@@ -52,24 +52,28 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-						"LDAPBranchID"   = $values[0]
-						"LDAPMapID"      = $values[1]
-						"LDAPMapName"    = $values[2]
-						"LDAPDirName"    = $values[3]
-						"LDAPBranchName" = $values[4]
-						"LDAPQuery"      = $values[5]
-						"LDAPGroupMatch" = $values[6]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch
+							'LDAPBranchID'   = $values[0]
+							'LDAPMapID'      = $values[1]
+							'LDAPMapName'    = $values[2]
+							'LDAPDirName'    = $values[3]
+							'LDAPBranchName' = $values[4]
+							'LDAPQuery'      = $values[5]
+							'LDAPGroupMatch' = $values[6]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.LDAP.Branch
+
+					}
 
 				}
 

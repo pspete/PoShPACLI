@@ -37,14 +37,14 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Username")]
+		[Alias('Username')]
 		[string]$destUser,
 
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("DN", "distinguishedName")]
+		[Alias('DN', 'distinguishedName')]
 		[string]$ldapFullDN,
 
 
@@ -73,12 +73,16 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#Output Object
-				[PSCustomObject] @{
+				If ($Results) {
 
-					"Username" = $Results
+					#Output Object
+					[PSCustomObject] @{
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External
+						'Username' = $Results
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External
+
+				}
 
 			}
 

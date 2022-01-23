@@ -34,7 +34,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safePattern,
 
 		[Parameter(
@@ -60,28 +60,32 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 11) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 11)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 11) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 11)]
 
-						"Username"          = $values[0]
-						"Group"             = $values[1]
-						"Safename"          = $values[2]
-						"AccessLevel"       = $values[3]
-						"OpenDate"          = $values[4]
-						"OpenState"         = $values[5]
-						"ExpirationDate"    = $values[6]
-						"GatewayAccount"    = $values[7]
-						"ReadOnlyByDefault" = $values[8]
-						"SafeID"            = $values[9]
-						"UserID"            = $values[10]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Owner
+							'Username'          = $values[0]
+							'Group'             = $values[1]
+							'Safename'          = $values[2]
+							'AccessLevel'       = $values[3]
+							'OpenDate'          = $values[4]
+							'OpenState'         = $values[5]
+							'ExpirationDate'    = $values[6]
+							'GatewayAccount'    = $values[7]
+							'ReadOnlyByDefault' = $values[8]
+							'SafeID'            = $values[9]
+							'UserID'            = $values[10]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe.Owner
+
+					}
 
 				}
 

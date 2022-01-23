@@ -26,7 +26,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe
 	)
 
@@ -43,23 +43,27 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 5) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 5)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 5) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 5)]
 
-						"Folder"       = $values[0]
-						"Accessed"     = $values[1]
-						"History"      = $values[2]
-						"DeletionDate" = $values[3]
-						"DeletedBy"    = $values[4]
-						"Safename"     = $safe
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder
+							'Folder'       = $values[0]
+							'Accessed'     = $values[1]
+							'History'      = $values[2]
+							'DeletionDate' = $values[3]
+							'DeletedBy'    = $values[4]
+							'Safename'     = $safe
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Folder
+
+					}
 
 				}
 

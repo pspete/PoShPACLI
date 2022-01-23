@@ -74,19 +74,19 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")]
+		[ValidateSet('REQUEST_AND_USE', 'CHECK_DON`T_USE', 'USE_ONLY')]
 		[string]$requestUsageType,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("SINGLE", "MULTIPLE")]
+		[ValidateSet('SINGLE', 'MULTIPLE')]
 		[string]$requestAccessType,
 
 		[Parameter(
@@ -133,27 +133,31 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#Output Object
-				[PSCustomObject] @{
+				If ($Results) {
 
-					#(possibility these may not all be in the correct order -
-					#...but most are)
-					"Safename"                  = $Results[0]
-					"Status"                    = $Results[1]
-					"LastUsed"                  = $Results[2]
-					"Accessed"                  = $Results[3]
-					"Size"                      = $Results[4]
-					"Location"                  = $Results[5]
-					"SafeID"                    = $Results[6]
-					"LocationID"                = $Results[7]
-					"TextOnly"                  = $Results[8]
-					"ShareOptions"              = $Results[9]
-					"UseFileCategories"         = $Results[10]
-					"RequireContentValidation"  = $Results[11]
-					"RequireReason"             = $Results[12]
-					"EnforceExclusivePasswords" = $Results[13]
+					#Output Object
+					[PSCustomObject] @{
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe
+						#(possibility these may not all be in the correct order -
+						#...but most are)
+						'Safename'                  = $Results[0]
+						'Status'                    = $Results[1]
+						'LastUsed'                  = $Results[2]
+						'Accessed'                  = $Results[3]
+						'Size'                      = $Results[4]
+						'Location'                  = $Results[5]
+						'SafeID'                    = $Results[6]
+						'LocationID'                = $Results[7]
+						'TextOnly'                  = $Results[8]
+						'ShareOptions'              = $Results[9]
+						'UseFileCategories'         = $Results[10]
+						'RequireContentValidation'  = $Results[11]
+						'RequireReason'             = $Results[12]
+						'EnforceExclusivePasswords' = $Results[13]
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Safe
+
+				}
 
 			}
 

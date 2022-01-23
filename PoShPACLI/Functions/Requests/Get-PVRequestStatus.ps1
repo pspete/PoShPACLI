@@ -29,7 +29,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -50,26 +50,30 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 7)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 7) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 7)]
 
-						"UserName"   = $values[0]
-						"Groupname"  = $values[1]
-						"Action"     = $values[2]
-						"ActionDate" = $values[3]
-						"Reason"     = $values[4]
-						"UserID"     = $values[5]
-						"GroupID"    = $values[6]
-						"RequestID"  = $requestID
-						"Safename"   = $safe
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status
+							'UserName'   = $values[0]
+							'Groupname'  = $values[1]
+							'Action'     = $values[2]
+							'ActionDate' = $values[3]
+							'Reason'     = $values[4]
+							'UserID'     = $values[5]
+							'GroupID'    = $values[6]
+							'RequestID'  = $requestID
+							'Safename'   = $safe
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Request.Status
+
+					}
 
 				}
 

@@ -92,7 +92,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Safename")]
+		[Alias('Safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -103,7 +103,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Filename")]
+		[Alias('Filename')]
 		[string]$file,
 
 		[Parameter(
@@ -119,13 +119,13 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("REQUEST_AND_USE", "CHECK_DON’T_USE", "USE_ONLY")]
+		[ValidateSet('REQUEST_AND_USE', "CHECK_DON`’T_USE", 'USE_ONLY')]
 		[string]$requestUsageType,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("SINGLE", "MULTIPLE")]
+		[ValidateSet('SINGLE', 'MULTIPLE')]
 		[string]$requestAccessType,
 
 		[Parameter(
@@ -177,12 +177,16 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#Output Object
-				[PSCustomObject] @{
+				If ($Results) {
 
-					"Password" = $Results
+					#Output Object
+					[PSCustomObject] @{
 
-				} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password
+						'Password' = $Results
+
+					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password
+
+				}
 
 			}
 

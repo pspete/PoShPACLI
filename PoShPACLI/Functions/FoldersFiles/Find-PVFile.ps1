@@ -204,7 +204,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("safename")]
+		[Alias('safename')]
 		[string]$safe,
 
 		[Parameter(
@@ -260,13 +260,13 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("NONE", "BETWEEN", "PREVMONTH", "PREVDAY")]
+		[ValidateSet('NONE', 'BETWEEN', 'PREVMONTH', 'PREVDAY')]
 		[string]$dateLimit,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("ACCESSEDFILE", "CREATED", "MODIFIED")]
+		[ValidateSet('ACCESSEDFILE', 'CREATED', 'MODIFIED')]
 		[string]$dateActionLimit,
 
 		[Parameter(
@@ -292,7 +292,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("OR", "AND")]
+		[ValidateSet('OR', 'AND')]
 		[string]$searchInAllAction,
 
 		[Parameter(
@@ -313,7 +313,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("INCLUDE_DELETED_WITH_ACCESSMARKS", "INCLUDE_DELETED", "ONLY_DELETED", "WITHOUT_DELETED")]
+		[ValidateSet('INCLUDE_DELETED_WITH_ACCESSMARKS', 'INCLUDE_DELETED', 'ONLY_DELETED', 'WITHOUT_DELETED')]
 		[string]$deletedOption,
 
 		[Parameter(
@@ -324,7 +324,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("ATLEAST", "ATMOST")]
+		[ValidateSet('ATLEAST', 'ATMOST')]
 		[string]$sizeLimitType,
 
 		[Parameter(
@@ -340,7 +340,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet("OR", "AND")]
+		[ValidateSet('OR', 'AND')]
 		[string]$categoryListAction,
 
 		[Parameter(
@@ -361,7 +361,7 @@
 
 	PROCESS {
 
-		("fromDate", "toDate") | ForEach-Object {
+		('fromDate', 'toDate') | ForEach-Object {
 
 			if ($PSBoundParameters.ContainsKey($_)) {
 
@@ -384,55 +384,59 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 32) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 32)]
+#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 32) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 32)]
 
-						"Filename"                   = $values[0]
-						"Accessed"                   = $values[1]
-						"CreationDate"               = $values[2]
-						"CreatedBy"                  = $values[3]
-						"DeletionDate"               = $values[4]
-						"DeletionBy"                 = $values[5]
-						"LastUsedDate"               = $values[6]
-						"LastUsedBy"                 = $values[7]
-						"LockDate"                   = $values[8]
-						"LockedBy"                   = $values[9]
-						"LockedByGW"                 = $values[10]
-						"Size"                       = $values[11]
-						"History"                    = $values[12]
-						"InternalName"               = $values[13]
-						"Safe"                       = $values[14]
-						"Folder"                     = $values[15]
-						"FileID"                     = $values[16]
-						"LockedByUserID"             = $values[17]
-						"ValidationStatus"           = $values[18]
-						"HumanCreationDate"          = $values[19]
-						"HumanCreatedBy"             = $values[20]
-						"HumanLastUsedDate"          = $values[21]
-						"HumanLastUsedBy"            = $values[22]
-						"HumanLastRetrievedByDate"   = $values[23]
-						"HumanLastRetrievedBy"       = $values[24]
-						"ComponentCreationDate"      = $values[25]
-						"ComponentCreatedBy"         = $values[26]
-						"ComponentLastUsedDate"      = $values[27]
-						"ComponentLastUsedBy"        = $values[28]
-						"ComponentLastRetrievedDate" = $values[29]
-						"ComponentLastRetrievedBy"   = $values[30]
-						"FileCategories"             = $values[31]
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
+							'Filename'                   = $values[0]
+							'Accessed'                   = $values[1]
+							'CreationDate'               = $values[2]
+							'CreatedBy'                  = $values[3]
+							'DeletionDate'               = $values[4]
+							'DeletionBy'                 = $values[5]
+							'LastUsedDate'               = $values[6]
+							'LastUsedBy'                 = $values[7]
+							'LockDate'                   = $values[8]
+							'LockedBy'                   = $values[9]
+							'LockedByGW'                 = $values[10]
+							'Size'                       = $values[11]
+							'History'                    = $values[12]
+							'InternalName'               = $values[13]
+							'Safe'                       = $values[14]
+							'Folder'                     = $values[15]
+							'FileID'                     = $values[16]
+							'LockedByUserID'             = $values[17]
+							'ValidationStatus'           = $values[18]
+							'HumanCreationDate'          = $values[19]
+							'HumanCreatedBy'             = $values[20]
+							'HumanLastUsedDate'          = $values[21]
+							'HumanLastUsedBy'            = $values[22]
+							'HumanLastRetrievedByDate'   = $values[23]
+							'HumanLastRetrievedBy'       = $values[24]
+							'ComponentCreationDate'      = $values[25]
+							'ComponentCreatedBy'         = $values[26]
+							'ComponentLastUsedDate'      = $values[27]
+							'ComponentLastUsedBy'        = $values[28]
+							'ComponentLastRetrievedDate' = $values[29]
+							'ComponentLastRetrievedBy'   = $values[30]
+							'FileCategories'             = $values[31]
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.File
+
+					}
 
 				}
 
 			}
 
 		}
-
 	}
+
 }

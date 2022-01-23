@@ -26,7 +26,7 @@
 		[Parameter(
 			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True)]
-		[Alias("Username")]
+		[Alias('Username')]
 		[String]$owner
 	)
 
@@ -42,21 +42,25 @@
 				#Convert Output to array
 				$Results = $Return.StdOut | ConvertFrom-PacliOutput
 
-				#loop through results
-				For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
+				If ($Results) {
 
-					#Get Range from array
-					$values = $Results[$i..($i + 3)]
+					#loop through results
+					For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
 
-					#Output Object
-					[PSCustomObject] @{
+						#Get Range from array
+						$values = $Results[$i..($i + 3)]
 
-						"Safename"       = $values[0]
-						"AccessLevel"    = $values[1]
-						"ExpirationDate" = $values[2]
-						"Username"       = $owner
+						#Output Object
+						[PSCustomObject] @{
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Safe
+							'Safename'       = $values[0]
+							'AccessLevel'    = $values[1]
+							'ExpirationDate' = $values[2]
+							'Username'       = $owner
+
+						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.Safe
+
+					}
 
 				}
 
