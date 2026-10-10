@@ -71,6 +71,19 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				$InputObj | New-PVLogonFile -logonFile "SomeFile"
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring])
+
+				}
+
+			}
+
 			It "does not include vault or user in pacli arguments" {
 
 				$PV = $Script:PV

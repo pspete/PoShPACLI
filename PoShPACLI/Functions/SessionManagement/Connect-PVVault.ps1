@@ -105,21 +105,11 @@
 
 			Write-Warning "Password is passed to PACLI in clear text on the process command line. Use a logon file to avoid exposure."
 
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		#deal with newPassword SecureString
-		if ($PSBoundParameters.ContainsKey("newPassword")) {
-
-			#Included decoded password in request
-			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
-
 		}
 
 
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
 
 		if ($Return.ExitCode -eq 0) {
 

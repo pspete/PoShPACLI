@@ -197,6 +197,51 @@ Describe $FunctionName {
 
 			}
 
+			It "outputs only the command result" {
+
+				@($InputObj | Invoke-PACLICommand).Count | Should Be 1
+
+			}
+
+			It "includes decoded secret values in command arguments" {
+
+				$Secrets = @{
+					password = ConvertTo-SecureString "Some Secret" -AsPlainText -Force
+					safe     = "SomeSafe"
+				}
+
+				$InputObj | Invoke-PACLICommand -SecretParameters $Secrets
+
+				Assert-MockCalled Start-ClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$Process.StartInfo.Arguments -eq $('SOMECMD password="Some Secret" Some Command Parameters')
+
+				}
+
+			}
+
+			It "masks secret values in debug output" {
+
+				$Secrets = @{
+					password = ConvertTo-SecureString "Some Secret" -AsPlainText -Force
+				}
+
+				$DebugPreference = "Continue"
+				$Debug = $InputObj | Invoke-PACLICommand -SecretParameters $Secrets 5>&1 | Where-Object { $PSItem -is [System.Management.Automation.DebugRecord] }
+				$DebugPreference = "SilentlyContinue"
+
+				$Debug.Message | Should Be 'PACLI Command: SOMECMD password="******" Some Command Parameters'
+
+			}
+
+			It "does not execute command with WhatIf" {
+
+				$InputObj | Invoke-PACLICommand -WhatIf
+
+				Assert-MockCalled Start-ClientProcess -Times 0 -Exactly -Scope It
+
+			}
+
 		}
 
 	}

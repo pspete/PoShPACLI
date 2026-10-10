@@ -74,6 +74,20 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				$InputObj | Connect-PVVault -password $Password -newPassword $Password -WarningAction SilentlyContinue
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring]) -and
+					($SecretParameters["newPassword"] -is [securestring])
+
+				}
+
+			}
+
 			It "warns when password is used" {
 
 				$InputObj | Connect-PVVault -password $Password -WarningVariable Warn -WarningAction SilentlyContinue

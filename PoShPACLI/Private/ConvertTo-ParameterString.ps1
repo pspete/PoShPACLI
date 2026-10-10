@@ -100,6 +100,8 @@
 
 				( { $excludedParameters -Contains $PSItem }) { break }
 
+				( { $boundParameters[$PSItem] -is [securestring] }) { break }
+
 				( { $doNotQuote -NotContains $PSItem }) {
 
 					$null = $Parameters.Add($($PSItem) + "=" + $(((($($boundParameters[$PSItem]) -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")))

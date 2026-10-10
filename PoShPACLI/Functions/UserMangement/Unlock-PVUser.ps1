@@ -31,14 +31,7 @@
 
 	PROCESS {
 
-		#deal with password SecureString
-		if ($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

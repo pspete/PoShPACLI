@@ -67,6 +67,20 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				Set-PVUserPassword -password $Password -newpassword $Password
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring]) -and
+					($SecretParameters["newPassword"] -is [securestring])
+
+				}
+
+			}
+
 		}
 
 	}

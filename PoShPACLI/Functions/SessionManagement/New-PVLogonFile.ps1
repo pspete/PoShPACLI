@@ -51,14 +51,7 @@
 
 	PROCESS {
 
-		#deal with password SecureString
-		if ($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 	}
 

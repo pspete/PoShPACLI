@@ -18,6 +18,13 @@ All notable changes to this project will be documented in this file.
 - Fix `New-PVPassword` only processing the last pipeline input object.
 - `Connect-PVVault` warns when `password` is used ([#76](https://github.com/pspete/PoShPACLI/issues/76))
   - PACLI receives the password in clear text on its command line; use a logon file to avoid this.
+- Secret values no longer recorded by PowerShell
+  - SecureString parameters stay encrypted until written to the PACLI process arguments; no plain text reaches parameter binding, so module logging (event 800) no longer records secrets.
+  - `-WhatIf` and `-Debug` output masks secret values, including values containing spaces.
+  - `Get-PVPasswordObject` no longer passes the retrieved password to other commands.
+  - Affects `Add-PVPasswordObject`, `Connect-PVVault`, `New-PVLogonFile`, `New-PVSafe`, `New-PVUser`, `New-PVVaultDefinition`, `Set-PVUser`, `Set-PVUserPassword`, `Unlock-PVUser`.
+- Fix `New-PVUser` sending `password` unquoted.
+- Fix `Get-PVSafeEvent` returning no output for events containing XML data; `Data` property now contains the event XML.
 
 ## [2.1.27] - 2020-04-01
 

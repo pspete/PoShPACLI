@@ -349,15 +349,13 @@
 
 		Switch ([array]$PSBoundParameters.Keys) {
 
-			{ $_ -Contains "password" } { $PSBoundParameters["password"] = ConvertTo-InsecureString $password; continue }
-
 			{ $_ -Contains "securityLevelParm" } { $PSBoundParameters["securityLevelParm"] = [int]$securityLevelParm; continue }
 
 			{ $_ -Contains "safeOptions" } { $PSBoundParameters["safeOptions"] = [int]$safeOptions; continue }
 
 		}
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE -SecretParameters $PSBoundParameters $($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,

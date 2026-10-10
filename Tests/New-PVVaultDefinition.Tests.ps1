@@ -73,6 +73,19 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				$InputObj | New-PVVaultDefinition -proxyPassword $Password
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["proxyPassword"] -is [securestring])
+
+				}
+
+			}
+
 		}
 
 	}

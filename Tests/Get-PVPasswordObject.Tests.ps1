@@ -86,6 +86,49 @@ Describe $FunctionName {
 
 			}
 
+			It "outputs password value" {
+
+				$Result = $InputObj | Get-PVPasswordObject
+
+				$Result.Password | Should Be 'SomeOutput'
+
+			}
+
+			It "outputs expected object type" {
+
+				$Result = $InputObj | Get-PVPasswordObject
+
+				$Result.PSObject.TypeNames[0] | Should Be 'pacli.PoShPACLI.Password'
+
+			}
+
+			It "preserves spaces, quotes and separators in password value" {
+
+				Mock Invoke-PACLICommand -MockWith {
+					[PSCustomObject]@{
+						StdOut   = "`"Some Pass`",`"word`"`r`n"
+						ExitCode = 0
+					}
+				}
+
+				$Result = $InputObj | Get-PVPasswordObject
+
+				$Result.Password | Should BeExactly 'Some Pass","word'
+
+			}
+
+			It "does not pass password value to other commands" {
+
+				Mock ConvertFrom-PacliOutput -MockWith { }
+				Mock Add-ObjectDetail -MockWith { }
+
+				$InputObj | Get-PVPasswordObject
+
+				Assert-MockCalled ConvertFrom-PacliOutput -Times 0 -Exactly -Scope It
+				Assert-MockCalled Add-ObjectDetail -Times 0 -Exactly -Scope It
+
+			}
+
 		}
 
 	}

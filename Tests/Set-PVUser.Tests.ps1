@@ -74,6 +74,19 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				$InputObj | Set-PVUser -password $Password
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring])
+
+				}
+
+			}
+
 			It "sends PACLI argument names for aliased parameters" {
 
 				$InputObj | Set-PVUser -password $Password -requireSecureIDAuth

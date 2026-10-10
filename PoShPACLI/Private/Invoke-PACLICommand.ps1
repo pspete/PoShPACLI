@@ -17,6 +17,10 @@
 	.PARAMETER CommandParameters
 	The parameters for the command i.e. vault="name" this="true" number=88
 
+	.PARAMETER SecretParameters
+	Hashtable of parameters for the command; any SecureString values are decoded into the PACLI command line.
+	Secret values are masked in WhatIf and Debug output.
+
     .EXAMPLE
 	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters | ConvertTo-ParameterString)
 
@@ -51,18 +55,18 @@
 		)]
 		[string]$CommandParameters,
 
-		[Parameter(Mandatory = $False,
-			ValueFromPipelineByPropertyName = $False,
-			ValueFromRemainingArguments = $true
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False
 		)]
-		$RemainingArgs
+		[System.Collections.IDictionary]$SecretParameters
 	)
 
 	Begin {
 
 		Try {
 
-			Get-Variable -Name PV -ErrorAction Stop
+			$null = Get-Variable -Name PV -ErrorAction Stop
 
 			if ( ($PV.PSObject.Properties.Name -notcontains "ClientPath") -or (-not (Test-Path -Path $PV.ClientPath -PathType Leaf)) ) {
 
@@ -74,20 +78,33 @@
 		Catch { throw "PACLI.exe not found. Run Set-PVConfiguration to set PACLI client path" }
 
 		#Create process
-		$Process = new-object System.Diagnostics.Process
+		$Process = [System.Diagnostics.Process]::new()
 
 	}
 
 	Process {
 
-		if ($PSCmdlet.ShouldProcess($PacliEXE, "$PacliCommand $CommandParameters")) {
+		$Secrets = @()
+		if ($SecretParameters) {
+			$Secrets = @($SecretParameters.Keys | Where-Object { $SecretParameters[$PSItem] -is [securestring] })
+		}
 
-			Write-Debug "PACLI Command: $PacliCommand $(Hide-SecretValue -InputValue $CommandParameters)"
+		$MaskedParameters = (@($Secrets | ForEach-Object { '{0}="******"' -f $PSItem }) + $CommandParameters) -join ' '
+
+		if ($PSCmdlet.ShouldProcess($PacliEXE, "$PacliCommand $MaskedParameters")) {
+
+			Write-Debug "PACLI Command: $PacliCommand $MaskedParameters"
+
+			$Arguments = [System.Text.StringBuilder]::new($PacliCommand)
+			foreach ($Secret in $Secrets) {
+				$null = $Arguments.AppendFormat(' {0}="{1}"', $Secret, (ConvertTo-InsecureString -SecureString $SecretParameters[$Secret]))
+			}
+			$null = $Arguments.Append(" $CommandParameters")
 
 			#Assign process parameters
 			$Process.StartInfo.WorkingDirectory = "$(Split-Path $PacliEXE -Parent)"
 			$Process.StartInfo.Filename = $PacliEXE
-			$Process.StartInfo.Arguments = "$PacliCommand $CommandParameters"
+			$Process.StartInfo.Arguments = $Arguments.ToString()
 			$Process.StartInfo.RedirectStandardOutput = $True
 			$Process.StartInfo.RedirectStandardError = $True
 			$Process.StartInfo.UseShellExecute = $False

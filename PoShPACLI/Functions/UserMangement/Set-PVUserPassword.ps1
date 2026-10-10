@@ -40,22 +40,7 @@
 
 	PROCESS {
 
-		#deal with password SecureString
-		if ($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		#deal with newPassword SecureString
-		if ($PSBoundParameters.ContainsKey("newPassword")) {
-
-			#Included decoded password in request
-			$PSBoundParameters["newPassword"] = ConvertTo-InsecureString $newPassword
-
-		}
-
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

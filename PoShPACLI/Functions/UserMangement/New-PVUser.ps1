@@ -483,15 +483,8 @@
 
 	PROCESS {
 
-		#deal with password SecureString
-		if ($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDUSER $($PSBoundParameters |
-			ConvertTo-ParameterString -doNotQuote password, retention, quota, authType)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDUSER -SecretParameters $PSBoundParameters $($PSBoundParameters |
+			ConvertTo-ParameterString -doNotQuote retention, quota, authType)
 
 
 

@@ -57,14 +57,7 @@
 
 	PROCESS {
 
-		#deal with password SecureString
-		if ($PSBoundParameters.ContainsKey("password")) {
-
-			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
-
-		}
-
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

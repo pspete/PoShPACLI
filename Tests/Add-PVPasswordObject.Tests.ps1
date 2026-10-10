@@ -73,6 +73,19 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				$InputObj | Add-PVPasswordObject -file "SomeFile" -Password $Password
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring])
+
+				}
+
+			}
+
 		}
 
 	}

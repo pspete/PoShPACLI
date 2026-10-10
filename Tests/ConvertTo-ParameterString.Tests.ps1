@@ -78,6 +78,14 @@ Describe $FunctionName {
 
 			}
 
+			It "excludes SecureString values" {
+
+				$InputObj["password"] = ConvertTo-SecureString "SomeSecret" -AsPlainText -Force
+				$Output = $InputObj | ConvertTo-ParameterString
+				$Output | Should Not Match 'password'
+
+			}
+
 			It "output string contains expected value for Param1" {
 
 				$Output = $InputObj | ConvertTo-ParameterString

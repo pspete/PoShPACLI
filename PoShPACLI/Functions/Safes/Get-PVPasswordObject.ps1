@@ -175,17 +175,27 @@
 			#if result(s) returned
 			if ($Return.StdOut) {
 
-				#Convert Output to array
-				$Results = $Return.StdOut | ConvertFrom-PacliOutput
+				#Parse inline; passing the value to another command records it in pipeline execution logs
+				$Value = $Return.StdOut.Trim()
 
-				If ($Results) {
+				If ($Value -match '(?s)^".*"$') {
+
+					$Value = $Value.Substring(1, $Value.Length - 2)
+
+				}
+
+				If ($Value) {
 
 					#Output Object
-					[PSCustomObject] @{
+					$Password = [PSCustomObject] @{
 
-						'Password' = $Results -join '","'
+						'Password' = $Value
 
-					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password
+					}
+
+					$Password.PSObject.TypeNames.Insert(0, 'pacli.PoShPACLI.Password')
+
+					$Password
 
 				}
 

@@ -66,6 +66,19 @@ Describe $FunctionName {
 
 			}
 
+			It "passes secret values as SecureString" {
+
+				New-PVSafe -password $Password -safe "SomeSafe"
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'SomePassword') -and
+					($SecretParameters["password"] -is [securestring])
+
+				}
+
+			}
+
 			It "tranlates expected safeOptions enum value" {
 
 				New-PVSafe -password $Password -safe  "SomeSafe" -safeOptions EnforceSafeOpening, FullyImpersonatedUsers, ImpersonatedUsers, PartiallyImpersonatedUsers, EnforceSafeOpening
