@@ -159,7 +159,7 @@ Describe "Module" {
 
 						}
 
-						$HelpParameters = $help.parameters.parameter | Where-Object name -NotIn @("WhatIf", "Confirm")
+						$HelpParameters = @($help.parameters.parameter | Where-Object { $PSItem.name -and $PSItem.name -NotIn @("WhatIf", "Confirm") })
 
 						$HelpParameters.foreach{
 
