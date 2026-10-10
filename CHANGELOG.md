@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [Unreleased] (major)
 
 - Fix parsing of multi-line values in PACLI output ([#72](https://github.com/pspete/PoShPACLI/issues/72))
   - `ConvertFrom-PacliOutput` returns one array per output record.
