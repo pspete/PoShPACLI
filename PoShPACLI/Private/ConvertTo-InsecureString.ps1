@@ -1,4 +1,4 @@
-Function ConvertTo-InsecureString {
+function ConvertTo-InsecureString {
 	<#
 	.SYNOPSIS
 	Returns string value from SecureString input
@@ -12,7 +12,7 @@ Function ConvertTo-InsecureString {
 	.EXAMPLE
 	ConvertTo-InsecureString $SecureStringValue
 	#>
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	[OutputType('System.String')]
 	Param (
 

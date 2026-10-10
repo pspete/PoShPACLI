@@ -242,10 +242,10 @@
 			<ScriptMethod>
 				<Name>ClearHistory</Name>
 				<Script>
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Clear-PVSafeHistory -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
@@ -264,10 +264,10 @@
 				<Name>NewSafeFileCategory</Name>
 				<Script>
 					Param([string]$category=$(throw "A Category Name Must Be Specified."))
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | New-PVSafeFileCategory -category $category -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
@@ -282,17 +282,17 @@
 				<Script>
 					Param([string]$name=$(throw "A New Name Must Be Specified."))
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Rename-PVSafe -newName $name -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe -safe $name | Out-Null}
+					Finally {$null = $this | Close-PVSafe -safe $name}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Reset</Name>
 				<Script>
 					Param([bool]$force)
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {
 					if ($force) {
 
@@ -307,14 +307,14 @@
 					}
 					}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Delete</Name>
 				<Script>
 					Param([bool]$force)
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {
 
 					if ($force) {
@@ -509,19 +509,19 @@
 			<ScriptMethod>
 				<Name>Versions</Name>
 				<Script>
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Get-PVFileVersionList -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Lock</Name>
 				<Script>
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Lock-PVFile -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 
 				</Script>
 			</ScriptMethod>
@@ -529,17 +529,17 @@
 				<Name>Move</Name>
 				<Script>
 					Param([string]$folder=$(throw "A Folder Name Must Be Specified."))
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Move-PVFile -newFolder $folder -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Delete</Name>
 				<Script>
 					Param([bool]$force)
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {
 					if ($force) {
 
@@ -554,37 +554,37 @@
 					}
 					}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Reset</Name>
 				<Script>
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Reset-PVFile -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Restore</Name>
 				<Script>
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Restore-PVFile -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>Unlock</Name>
 				<Script>
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Unlock-PVFile -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
@@ -635,13 +635,13 @@
 				<Script>
 					Param([string]$value=$(throw "A Category Value Must Be Specified."))
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 
 					Try{$this | Set-PVFileCategory -value $value -ErrorAction Stop}
 
 					Catch{Write-Error $_}
 
-					Finally{$this | Close-PVSafe | Out-Null}
+					Finally{$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
@@ -649,7 +649,7 @@
 				<Script>
 					Param([bool]$force)
 
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 
 					Try{
 					if ($force) {
@@ -706,19 +706,19 @@
 			<ScriptMethod>
 				<Name>RemoveAsPreferred</Name>
 				<Script>
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Remove-PVPreferredFolder -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>
 				<Name>AddAsPreferred</Name>
 				<Script>
-					$this | Open-PVSafe | Out-Null
+					$null = $this | Open-PVSafe
 					Try {$this | Add-PVPreferredFolder -ErrorAction Stop}
 					Catch {Write-Error $_}
-					Finally {$this | Close-PVSafe | Out-Null}
+					Finally {$null = $this | Close-PVSafe}
 				</Script>
 			</ScriptMethod>
 			<ScriptMethod>

@@ -1,3 +1,9 @@
 .vscode/cSpell.json
 .vscode/surrounding.json
 .vscode/settings.json
+CLAUDE.md
+Release/
+coverage.xml
+TestResults.xml
+codecov.exe
+build/

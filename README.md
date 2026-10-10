@@ -1,20 +1,17 @@
-![Disconnect-from-Vault](/media/PoShPACLI.png)
+![PoShPACLI](/media/PoShPACLI.png)
 
-## **Powershell PACLI Module for CyberArk EPV**
+# PoShPACLI
 
-| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
-|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
-|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![license][]][license-link]|
-|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                            |
+**PowerShell module for the CyberArk PACLI command line utility**
 
-[appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
-[av-site]:https://ci.appveyor.com/project/pspete/poshpacli/branch/master
-[coveralls]:https://coveralls.io/repos/github/pspete/PoShPACLI/badge.svg
-[cv-site]:https://coveralls.io/github/pspete/PoShPACLI
+[![build][]][build-site] [![dev][]][dev-site] [![codefactor][]][cf-site] [![codecov][]][codecov-link] [![psgallery][]][ps-site] [![downloads][]][ps-site] [![license][]][license-link]
+
+[build]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml/badge.svg?branch=master&event=push
+[build-site]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml?query=branch%3Amaster
+[dev]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml/badge.svg?branch=dev&event=push
+[dev-site]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml?query=branch%3Adev
 [psgallery]:https://img.shields.io/powershellgallery/v/PoShPACLI.svg
 [ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
-[tests]:https://img.shields.io/appveyor/tests/pspete/poshpacli.svg
-[tests-site]:https://ci.appveyor.com/project/pspete/poshpacli
 [downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 [cf-site]:https://www.codefactor.io/repository/github/pspete/poshpacli
 [codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
@@ -23,263 +20,330 @@
 [license]:https://img.shields.io/github/license/pspete/poshpacli.svg
 [license-link]:https://github.com/pspete/PoShPACLI/blob/master/LICENSE.md
 
-Use the native functions of the CyberArk PACLI command line utility translated into PowerShell.
+PoShPACLI runs CyberArk PACLI commands as PowerShell functions. Results come back as objects, so you can pipe them into other commands.
 
-If you are landing here and interested in using PowerShell to automate an aspect of CyberArk,
+> [!TIP]
+> Automating CyberArk? Look at [psPAS](https://github.com/pspete/psPAS) first: it uses the REST API, which covers most tasks.
+> PoShPACLI is for jobs that still need PACLI.
 
-**I recommend investigating my [psPAS](https://github.com/pspete/psPAS) module first**, to see if you can achieve what you need with the REST API.
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Command Reference](#command-reference)
+- [Changelog](#changelog) · [License](#license) · [Contributing](#contributing)
 
-----------
+## Features
 
-- [PoShPACLI](#poshpacli)
-  - [Usage & Examples](#usage-&-examples)
-  - [PACLI to PoShPACLI Function Relationship](#pacli-to-poshpacli-function-relationship)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation Options](#installation-options)
-  - [Changelog](#changelog)
-  - [License](#license)
-  - [Contributing](#contributing)
+- **One function per PACLI command**: 116 functions with full help (`Get-Help <Function> -Full`).
+- **Session values remembered**: `sessionID`, `vault` and `user` are kept by the module and added to every command for you.
+- **Object output**: list commands return typed objects with formatting, ready for the pipeline.
+- **Tab completion**: safe, user, group, location and network area names complete from the connected vault.
+- **Secret handling**: passwords are `SecureString` values. They are decoded only when the PACLI process starts, masked in `-WhatIf` and `-Debug` output, and kept out of PowerShell logging.
+- **`-WhatIf` support**: commands that create, change or remove vault data show the PACLI command line without running it.
 
-### Usage & Examples
+## Requirements
 
-An identical process to using the PACLI tool on its own should be followed.
+| Component          | Version                                                         |
+| ------------------ | --------------------------------------------------------------- |
+| PowerShell         | Windows PowerShell 5.1 or PowerShell 7.x on Windows               |
+| CyberArk PACLI     | 7.2 or later (current releases supported)                       |
+| CyberArk Vault user | Vault and Safe permissions for the operations you run          |
 
-- Check the [relationship table](#pacli-to-poshpacli-function-relationship) to determine what PoShPACLI function exposes which PACLI command.
+PACLI is part of the CyberArk PACLI package, available from the CyberArk Marketplace. Install it on the same computer as the module.
 
-#### Initial Configuration
+## Installation
 
-`Set-PVConfiguration` must be run before using the module for the first time.
-This function identifies the location of the `PACLI.exe` utility to the module.
-
-![Set-PVConfiguration](/media/0-Set-PVConf.png)
-
-#### Example: Connecting to a Vault
-
-When starting PACLI, defining a vault, & Authenticating, any values provided for `SessionID`, `Vault` name & `User` name are automatically provided to future PoShPACLI commands.
-
-![Connecting-to-a-Vault](/media/1-Connection.png)
-
-The `Get-PVConfiguration` function is used to view the current values in use by the module.
-
-#### Example: Add Password Object to Safe
-
-Execute the sequence of commands to complete a required process.
-
-![Add-Password-Object-to-Safe](/media/2-add_account.png)
-
-#### Example: Disconnect from Vault
-
-The module provides the the required parameter values to the PACLI executable.
-
-![Disconnect-from-Vault](/media/3-Disconnect.png)
-
-#### PACLI Pipeline Examples
-
-Output can be piped between PoShPACLI functions:
-
-##### Pipeline Example
-
-![Pipeline-Example-1](/media/_1_pipeline.png)
-
-## PACLI to PoShPACLI Function Relationship
-
-The table shows how the the PoShPACLI module functions relate to their native PACLI counterparts:
-
-|PACLI Command|PoshPACLI Function|
-|---:|:---|
-|INIT|`Start-PVPacli`|
-|TERM|`Stop-PVPacli`|
-|DEFINEFROMFILE|`Import-PVVaultDefinition`|
-|DEFINE|`New-PVVaultDefinition`|
-|CREATELOGONFILE|`New-PVLogonFile`|
-|LOGON|`Connect-PVVault`|
-|LOGOFF|`Disconnect-PVVault`|
-|CTLGETFILENAME|`Get-PVCTL`|
-|CTLADDCERT|`Add-PVCTLCertificate`|
-|CTLLIST|`Get-PVCTLCertificate`|
-|CTLREMOVECERT|`Remove-PVCTLCertificate`|
-|STOREFILE|`Add-PVFile`|
-|FINDFILES|`Find-PVFile`|
-|RETRIEVEFILE|`Get-PVFile`|
-|LOCKFILE|`Lock-PVFile`|
-|MOVEFILE|`Move-PVFile`|
-|DELETEFILE|`Remove-PVFile`|
-|RESETFILE|`Reset-PVFile`|
-|UNDELETEFILE|`Restore-PVFile`|
-|UNLOCKFILE|`Unlock-PVFile`|
-|INSPECTFILE|`Get-PVFileActivity`|
-|ADDFILECATEGORY|`Add-PVFileCategory`|
-|LISTFILECATEGORIES|`Get-PVFileCategory`|
-|DELETEFILECATEGORY|`Remove-PVFileCategory`|
-|UPDATEFILECATEGORY|`Set-PVFileCategory`|
-|FILESLIST|`Get-PVFileList`|
-|FILEVERSIONSLIST|`Get-PVFileVersionList`|
-|FOLDERSLIST|`Get-PVFolder`|
-|MOVEFOLDER|`Move-PVFolder`|
-|ADDFOLDER|`New-PVFolder`|
-|DELETEFOLDER|`Remove-PVFolder`|
-|UNDELETEFOLDER|`Restore-PVFolder`|
-|GROUPDETAILS|`Get-PVGroup`|
-|ADDGROUP|`New-PVGroup`|
-|DELETEGROUP|`Remove-PVGroup`|
-|UPDATEGROUP|`Set-PVGroup`|
-|ADDGROUPMEMBER|`Add-PVGroupMember`|
-|GROUPMEMBERS|`Get-PVGroupMember`|
-|DELETEGROUPMEMBER|`Remove-PVGroupMember`|
-|LDAPBRANCHESLIST|`Get-PVLDAPBranch`|
-|LDAPBRANCHADD|`New-PVLDAPBranch`|
-|LDAPBRANCHDELETE|`Remove-PVLDAPBranch`|
-|LDAPBRANCHUPDATE|`Set-PVLDAPBranch`|
-|LOCATIONSLIST|`Get-PVLocation`|
-|ADDLOCATION|`New-PVLocation`|
-|DELETELOCATION|`Remove-PVLocation`|
-|RENAMELOCATION|`Rename-PVLocation`|
-|UPDATELOCATION|`Set-PVLocation`|
-|MAILUSER|`Send-PVMailMessage`|
-|NETWORKAREASLIST|`Get-PVNetworkArea`|
-|MOVENETWORKAREA|`Move-PVNetworkArea`|
-|ADDNETWORKAREA|`New-PVNetworkArea`|
-|DELETENETWORKAREA|`Remove-PVNetworkArea`|
-|RENAMENETWORKAREA|`Rename-PVNetworkArea`|
-|ADDAREAADDRESS|`New-PVNetworkAreaAddress`|
-|DELETEAREAADDRESS|`Remove-PVNetworkAreaAddress`|
-|VALIDATEOBJECT|`Set-PVObjectValidation`|
-|GENERATEPASSWORD|`New-PVPassword`|
-|STOREPASSWORDOBJECT|`Add-PVPasswordObject`|
-|RETRIEVEPASSWORDOBJECT|`Get-PVPasswordObject`|
-|DELETEPREFFEREDFOLDER|`Remove-PVPreferredFolder`|
-|ADDPREFERREDFOLDER|`Add-PVPreferredFolder`|
-|REQUESTSLIST|`Get-PVRequest`|
-|DELETEREQUEST|`Remove-PVRequest`|
-|REQUESTCONFIRMATIONSTATUS|`Get-PVRequestStatus`|
-|CONFIRMREQUEST|`Set-PVRequestStatus`|
-|ADDRULE|`Add-PVRule`|
-|RULESLIST|`Get-PVRule`|
-|DELETERULE|`Remove-PVRule`|
-|CLOSESAFE|`Close-PVSafe`|
-|SAFEDETAILS|`Get-PVSafe`|
-|ADDSAFE|`New-PVSafe`|
-|OPENSAFE|`Open-PVSafe`|
-|DELETESAFE|`Remove-PVSafe`|
-|RENAMESAFE|`Rename-PVSafe`|
-|RESETSAFE|`Reset-PVSafe`|
-|UPDATESAFE|`Set-PVSafe`|
-|INSPECTSAFE|`Get-PVSafeActivity`|
-|SAFEEVENTSLIST|`Get-PVSafeEvent`|
-|ADDEVENT|`Write-PVSafeEvent`|
-|LISTSAFEFILECATEGORIES|`Get-PVSafeFileCategory`|
-|ADDSAFEFILECATEGORY|`New-PVSafeFileCategory`|
-|DELETESAFEFILECATEGORY|`Remove-PVSafeFileCategory`|
-|UPDATESAFEFILECATEGORY|`Set-PVSafeFileCategory`|
-|ADDSAFESHARE|`Add-PVSafeGWAccount`|
-|DELETESAFESHARE|`Remove-PVSafeGWAccount`|
-|CLEARSAFEHISTORY|`Clear-PVSafeHistory`|
-|SAFESLIST|`Get-PVSafeList`|
-|SAFESLOG|`Get-PVSafeLog`|
-|ADDNOTE|`Set-PVSafeNote`|
-|ADDOWNER|`Add-PVSafeOwner`|
-|OWNERSLIST|`Get-PVSafeOwner`|
-|DELETEOWNER|`Remove-PVSafeOwner`|
-|UPDATEOWNER|`Set-PVSafeOwner`|
-|ADDTRUSTEDNETWORKAREA|`Add-PVTrustedNetworkArea`|
-|DEACTIVATETRUSTEDNETWORKAREA|`Disable-PVTrustedNetworkArea`|
-|ACTIVATETRUSTEDNETWORKAREA|`Enable-PVTrustedNetworkArea`|
-|TRUSTEDNETWORKAREALIST|`Get-PVTrustedNetworkArea`|
-|DELETETRUSTEDNETWORKAREA|`Remove-PVTrustedNetworkArea`|
-|USERDETAILS|`Get-PVUser`|
-|LOCK|`Lock-PVUser`|
-|ADDUSER|`New-PVUser`|
-|DELETEUSER|`Remove-PVUser`|
-|RENAMEUSER|`Rename-PVUser`|
-|UPDATEUSER|`Set-PVUser`|
-|UNLOCK|`Unlock-PVUser`|
-|INSPECTUSER|`Get-PVUserActivity`|
-|CLEARUSERHISTORY|`Clear-PVUserHistory`|
-|USERSLIST|`Get-PVUserList`|
-|SETPASSWORD|`Set-PVUserPassword`|
-|GETUSERPHOTO|`Get-PVUserPhoto`|
-|PUTUSERPHOTO|`Set-PVUserPhoto`|
-|OWNERSAFESLIST|`Get-PVUserSafeList`|
-|ADDUPDATEEXTERNALUSERENTITY|`Add-PVExternalUser`|
-
-## Getting Started
-
-### Prerequisites
-
-- Requires Powershell v5 (minimum)
-- The CyberArk PACLI executable must be present on the same computer as the module.
-  - PACLI 7.2 was used for development, anything less is considered unsupported for use with this module.
-- A CyberArk user with which to authenticate, which has appropriate Vault/Safe permissions.
-
-### Installation Options
-
-This repository contains a folder named ```PoShPACLI```.
-
-The folder and it's contents needs to be present in one of your PowerShell Module Directories.
-
-Use one of the following methods:
-
-#### Option 1: Install from PowerShell Gallery
-
-Download the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PoShPACLI/).
-
-- PowerShell 5.0 or above required.
-
-From a PowerShell prompt, run:
-
-````powershell
-Install-Module -Name PoShPACLI -Scope CurrentUser
-````
-
-#### Option 2: Manual Install
-
-Find your PowerShell Module Paths with the following command:
+### From the PowerShell Gallery (recommended)
 
 ```powershell
-
-$env:PSModulePath.split(';')
-
+Install-Module -Name PoShPACLI -Scope CurrentUser
 ```
-[Download a Release](https://github.com/pspete/PoShPACLI/releases)
 
-OR
+### Manual install
 
-[Download the ```master``` branch](https://github.com/pspete/PoShPACLI/archive/master.zip)
+1. Download a [release](https://github.com/pspete/PoShPACLI/releases) or the [master branch](https://github.com/pspete/PoShPACLI/archive/master.zip).
+2. Copy the `PoShPACLI` folder to a directory listed in `$env:PSModulePath`.
 
-Extract the archive
+### Verify
 
-Copy the ```PoShPACLI``` folder to your "Powershell Modules" directory of choice.
-
-### Verification
-
-Validate Module Exists on your local machine:
-
-````powershell
-Get-Module -ListAvailable PoShPACLI
-````
-
-Import the module:
-
-````powershell
+```powershell
 Import-Module PoShPACLI
-````
-
-List Module Commands:
-
-````powershell
 Get-Command -Module PoShPACLI
-````
+```
 
-Get detailed information on specific commands:
+## Quick Start
 
-````powershell
-Get-Help Open-PVSafe -Full
-````
+```powershell
+# One-time: point the module at PACLI.exe (saved to ~\PV_Configuration.xml)
+Set-PVConfiguration -ClientPath D:\PACLI\Pacli.exe
+
+# Create a logon file once, instead of passing a password on the command line
+New-PVLogonFile -logonFile "$env:USERPROFILE\vault.cred" -username administrator -password (Read-Host -AsSecureString)
+
+# Start a session, define the vault and log on
+Start-PVPacli -sessionID 1
+New-PVVaultDefinition -vault Vault -address 10.0.0.10
+Connect-PVVault -user administrator -logonFile "$env:USERPROFILE\vault.cred"
+
+# Work with the vault
+Get-PVSafeList | Select-Object Safename, Location
+
+# Log off and stop PACLI
+Disconnect-PVVault
+Stop-PVPacli
+```
+
+After `Start-PVPacli`, `New-PVVaultDefinition` and `Connect-PVVault`, later commands use the same session, vault and user. Check the current values with `Get-PVConfiguration`.
+
+## Usage
+
+PoShPACLI follows the same steps as PACLI: start a session, define a vault, log on, open safes, run commands, then log off.
+[Command Reference](#command-reference) shows which function runs each PACLI command.
+
+### Store and retrieve a password object
+
+```powershell
+Open-PVSafe -safe Linux-Accounts
+New-PVFolder -safe Linux-Accounts -folder Root\Servers
+
+Add-PVPasswordObject -safe Linux-Accounts -folder Root\Servers -file root-web01 -password (Read-Host -AsSecureString)
+
+# Returns the password as a SecureString
+$Secret = Get-PVPasswordObject -safe Linux-Accounts -folder Root\Servers -file root-web01 -AsSecureString
+
+Close-PVSafe -safe Linux-Accounts
+```
+
+`-AsSecureString` keeps the password out of plain-text output and pipeline logs.
+
+### Pipeline
+
+Functions accept pipeline input by property name, so output from one command feeds the next:
+
+```powershell
+# Details of every safe in a location
+Get-PVSafeList -location \Linux | Get-PVSafe | Select-Object Safename, Size, Location
+
+# Open each safe in a location and list its files
+Get-PVSafeList -location \Linux | Open-PVSafe | Get-PVFileList -folder Root
+```
+
+### Tab completion
+
+When connected to a vault, `Tab` completes names from the vault:
+
+| Parameter                                    | Completes            |
+| -------------------------------------------- | -------------------- |
+| `safe`, `safeName`                           | Safe names           |
+| `destUser`, `owner`, `member`, `trusterName` | User and group names |
+| `group`                                      | Group names          |
+| `location`                                   | Location paths       |
+| `networkArea`                                | Network area names   |
+
+```powershell
+Open-PVSafe -safe Lin<Tab>
+# Open-PVSafe -safe Linux-Accounts
+```
+
+- Results are cached for 5 minutes per vault, user and session.
+- Locations complete with or without the leading `\`.
+- Parameters that take a new name, such as `New-PVSafe -safe`, are not completed.
+
+### Preview a command
+
+Commands that create, change or remove vault data support `-WhatIf`, which shows the PACLI command line without running it. Secret values are masked.
+
+```powershell
+Remove-PVSafeOwner -safe Linux-Accounts -owner jsmith -WhatIf
+```
+
+### Security notes
+
+- Use `Connect-PVVault -logonFile` instead of `-password`. PACLI receives passwords as plain text on its process command line, so other processes on the machine can read them. `Connect-PVVault` warns when `-password` is used.
+- `PV_Configuration.xml` in your profile stores the PACLI path, session ID, vault name and user name. It stores no credentials.
+
+## Command Reference
+
+Each function runs one PACLI command. The tables below are grouped by area.
+Full help: `Get-Help <Function> -Full`.
+
+<details>
+<summary><b>Module configuration</b></summary>
+
+| PACLI command | Function              |
+| ------------- | --------------------- |
+| -             | `Set-PVConfiguration` |
+| -             | `Get-PVConfiguration` |
+| INIT          | `Start-PVPacli`       |
+| TERM          | `Stop-PVPacli`        |
+
+</details>
+
+<details>
+<summary><b>Session management</b></summary>
+
+| PACLI command   | Function                   |
+| --------------- | -------------------------- |
+| DEFINE          | `New-PVVaultDefinition`    |
+| DEFINEFROMFILE  | `Import-PVVaultDefinition` |
+| CREATELOGONFILE | `New-PVLogonFile`          |
+| LOGON           | `Connect-PVVault`          |
+| LOGOFF          | `Disconnect-PVVault`       |
+| CTLGETFILENAME  | `Get-PVCTL`                |
+| CTLADDCERT      | `Add-PVCTLCertificate`     |
+| CTLLIST         | `Get-PVCTLCertificate`     |
+| CTLREMOVECERT   | `Remove-PVCTLCertificate`  |
+
+</details>
+
+<details>
+<summary><b>Safes</b></summary>
+
+| PACLI command          | Function                    |
+| ---------------------- | --------------------------- |
+| SAFESLIST              | `Get-PVSafeList`            |
+| SAFEDETAILS            | `Get-PVSafe`                |
+| ADDSAFE                | `New-PVSafe`                |
+| UPDATESAFE             | `Set-PVSafe`                |
+| RENAMESAFE             | `Rename-PVSafe`             |
+| DELETESAFE             | `Remove-PVSafe`             |
+| OPENSAFE               | `Open-PVSafe`               |
+| CLOSESAFE              | `Close-PVSafe`              |
+| RESETSAFE              | `Reset-PVSafe`              |
+| CLEARSAFEHISTORY       | `Clear-PVSafeHistory`       |
+| INSPECTSAFE            | `Get-PVSafeActivity`        |
+| SAFESLOG               | `Get-PVSafeLog`             |
+| ADDNOTE                | `Set-PVSafeNote`            |
+| SAFEEVENTSLIST         | `Get-PVSafeEvent`           |
+| ADDEVENT               | `Write-PVSafeEvent`         |
+| OWNERSLIST             | `Get-PVSafeOwner`           |
+| ADDOWNER               | `Add-PVSafeOwner`           |
+| UPDATEOWNER            | `Set-PVSafeOwner`           |
+| DELETEOWNER            | `Remove-PVSafeOwner`        |
+| OWNERSAFESLIST         | `Get-PVUserSafeList`        |
+| LISTSAFEFILECATEGORIES | `Get-PVSafeFileCategory`    |
+| ADDSAFEFILECATEGORY    | `New-PVSafeFileCategory`    |
+| UPDATESAFEFILECATEGORY | `Set-PVSafeFileCategory`    |
+| DELETESAFEFILECATEGORY | `Remove-PVSafeFileCategory` |
+| RETRIEVEPASSWORDOBJECT | `Get-PVPasswordObject`      |
+
+</details>
+
+<details>
+<summary><b>Folders and files</b></summary>
+
+| PACLI command         | Function                   |
+| --------------------- | -------------------------- |
+| FOLDERSLIST           | `Get-PVFolder`             |
+| ADDFOLDER             | `New-PVFolder`             |
+| MOVEFOLDER            | `Move-PVFolder`            |
+| DELETEFOLDER          | `Remove-PVFolder`          |
+| UNDELETEFOLDER        | `Restore-PVFolder`         |
+| ADDPREFERREDFOLDER    | `Add-PVPreferredFolder`    |
+| DELETEPREFERREDFOLDER | `Remove-PVPreferredFolder` |
+| FILESLIST             | `Get-PVFileList`           |
+| FILEVERSIONSLIST      | `Get-PVFileVersionList`    |
+| FINDFILES             | `Find-PVFile`              |
+| STOREFILE             | `Add-PVFile`               |
+| RETRIEVEFILE          | `Get-PVFile`               |
+| STOREPASSWORDOBJECT   | `Add-PVPasswordObject`     |
+| MOVEFILE              | `Move-PVFile`              |
+| DELETEFILE            | `Remove-PVFile`            |
+| UNDELETEFILE          | `Restore-PVFile`           |
+| RESETFILE             | `Reset-PVFile`             |
+| LOCKFILE              | `Lock-PVFile`              |
+| UNLOCKFILE            | `Unlock-PVFile`            |
+| INSPECTFILE           | `Get-PVFileActivity`       |
+| VALIDATEOBJECT        | `Set-PVObjectValidation`   |
+| LISTFILECATEGORIES    | `Get-PVFileCategory`       |
+| ADDFILECATEGORY       | `Add-PVFileCategory`       |
+| UPDATEFILECATEGORY    | `Set-PVFileCategory`       |
+| DELETEFILECATEGORY    | `Remove-PVFileCategory`    |
+| RULESLIST             | `Get-PVRule`               |
+| ADDRULE               | `Add-PVRule`               |
+| DELETERULE            | `Remove-PVRule`            |
+
+</details>
+
+<details>
+<summary><b>Users and groups</b></summary>
+
+| PACLI command               | Function               |
+| --------------------------- | ---------------------- |
+| USERSLIST                   | `Get-PVUserList`       |
+| USERDETAILS                 | `Get-PVUser`           |
+| ADDUSER                     | `New-PVUser`           |
+| UPDATEUSER                  | `Set-PVUser`           |
+| RENAMEUSER                  | `Rename-PVUser`        |
+| DELETEUSER                  | `Remove-PVUser`        |
+| LOCK                        | `Lock-PVUser`          |
+| UNLOCK                      | `Unlock-PVUser`        |
+| SETPASSWORD                 | `Set-PVUserPassword`   |
+| INSPECTUSER                 | `Get-PVUserActivity`   |
+| CLEARUSERHISTORY            | `Clear-PVUserHistory`  |
+| GETUSERPHOTO                | `Get-PVUserPhoto`      |
+| PUTUSERPHOTO                | `Set-PVUserPhoto`      |
+| MAILUSER                    | `Send-PVMailMessage`   |
+| ADDUPDATEEXTERNALUSERENTITY | `Add-PVExternalUser`   |
+| ADDSAFESHARE                | `Add-PVSafeGWAccount`  |
+| DELETESAFESHARE             | `Remove-PVSafeGWAccount` |
+| GROUPDETAILS                | `Get-PVGroup`          |
+| ADDGROUP                    | `New-PVGroup`          |
+| UPDATEGROUP                 | `Set-PVGroup`          |
+| DELETEGROUP                 | `Remove-PVGroup`       |
+| GROUPMEMBERS                | `Get-PVGroupMember`    |
+| ADDGROUPMEMBER              | `Add-PVGroupMember`    |
+| DELETEGROUPMEMBER           | `Remove-PVGroupMember` |
+| LOCATIONSLIST               | `Get-PVLocation`       |
+| ADDLOCATION                 | `New-PVLocation`       |
+| UPDATELOCATION              | `Set-PVLocation`       |
+| RENAMELOCATION              | `Rename-PVLocation`    |
+| DELETELOCATION              | `Remove-PVLocation`    |
+| LDAPBRANCHESLIST            | `Get-PVLDAPBranch`     |
+| LDAPBRANCHADD               | `New-PVLDAPBranch`     |
+| LDAPBRANCHUPDATE            | `Set-PVLDAPBranch`     |
+| LDAPBRANCHDELETE            | `Remove-PVLDAPBranch`  |
+
+</details>
+
+<details>
+<summary><b>Network areas</b></summary>
+
+| PACLI command                | Function                       |
+| ---------------------------- | ------------------------------ |
+| NETWORKAREASLIST             | `Get-PVNetworkArea`            |
+| ADDNETWORKAREA               | `New-PVNetworkArea`            |
+| MOVENETWORKAREA              | `Move-PVNetworkArea`           |
+| RENAMENETWORKAREA            | `Rename-PVNetworkArea`         |
+| DELETENETWORKAREA            | `Remove-PVNetworkArea`         |
+| ADDAREAADDRESS               | `New-PVNetworkAreaAddress`     |
+| DELETEAREAADDRESS            | `Remove-PVNetworkAreaAddress`  |
+| TRUSTEDNETWORKAREASLIST      | `Get-PVTrustedNetworkArea`     |
+| ADDTRUSTEDNETWORKAREA        | `Add-PVTrustedNetworkArea`     |
+| ACTIVATETRUSTEDNETWORKAREA   | `Enable-PVTrustedNetworkArea`  |
+| DEACTIVATETRUSTEDNETWORKAREA | `Disable-PVTrustedNetworkArea` |
+| DELETETRUSTEDNETWORKAREA     | `Remove-PVTrustedNetworkArea`  |
+
+</details>
+
+<details>
+<summary><b>Requests and passwords</b></summary>
+
+| PACLI command             | Function              |
+| ------------------------- | --------------------- |
+| REQUESTSLIST              | `Get-PVRequest`       |
+| REQUESTCONFIRMATIONSTATUS | `Get-PVRequestStatus` |
+| CONFIRMREQUEST            | `Set-PVRequestStatus` |
+| DELETEREQUEST             | `Remove-PVRequest`    |
+| GENERATEPASSWORD          | `New-PVPassword`      |
+
+</details>
 
 ## Changelog
 
-All notable changes to this project will be documented in the [Changelog](CHANGELOG.md)
+Notable changes are recorded in the [Changelog](CHANGELOG.md).
 
 ## Author
 
@@ -287,9 +351,8 @@ All notable changes to this project will be documented in the [Changelog](CHANGE
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+MIT. See [LICENSE.md](LICENSE.md).
 
 ## Contributing
 
-Any and all contributions to this project are appreciated.
-See the [CONTRIBUTING.md](CONTRIBUTING.md) for a few more details.
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).

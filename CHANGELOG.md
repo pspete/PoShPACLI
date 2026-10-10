@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased (major)
+
+- Fix parsing of multi-line values in PACLI output ([#72](https://github.com/pspete/PoShPACLI/issues/72))
+  - `ConvertFrom-PacliOutput` returns one array per output record.
+  - Values containing line breaks no longer shift subsequent properties in list command output (e.g. `Find-PVFile`, `Get-PVFileCategory`).
+- Fix `vault` and `user` values being sent to commands which do not accept them ([#75](https://github.com/pspete/PoShPACLI/issues/75))
+  - `New-PVLogonFile`, `Add-PVCTLCertificate`, `Get-PVCTL`, `Get-PVCTLCertificate`, `Remove-PVCTLCertificate`
+- Fix parameter names rejected by PACLI
+  - Old names retained as aliases.
+  - `Get-PVFile`, `Get-PVPasswordObject`: `userRequest` renamed to `useRequest`
+  - `New-PVUser`, `Set-PVUser`: `requireSecureIDAuth` renamed to `requireSecurIDAuth`
+  - `New-PVSafe`: `alwaysNeedsConfirmation` renamed to `alwaysNeedConfirmation`
+  - `New-PVSafe`: duplicate `safeKey` parameter removed; now an alias of `keyFilePath`
+- Fix `requestUsageType` value `CHECK_DONT_USE` rejected by PACLI
+  - `Open-PVSafe`, `Get-PVFile`, `Get-PVPasswordObject`: previously `CHECK_DON'T_USE`.
+- Fix `Open-PVSafe` error "Cannot index into a null array" when PACLI returns no output ([#73](https://github.com/pspete/PoShPACLI/issues/73))
+- New output properties returned by current PACLI versions
+  - `Get-PVFileList`: `CategoryModificationDate` ([#77](https://github.com/pspete/PoShPACLI/pull/77))
+  - `Get-PVUser`: `AuthMethod`
+- Fix `New-PVPassword` only processing the last pipeline input object.
+- `Connect-PVVault` warns when `password` is used ([#76](https://github.com/pspete/PoShPACLI/issues/76))
+  - PACLI receives the password in clear text on its command line; use a logon file to avoid this.
+- Secret values no longer recorded by PowerShell
+  - SecureString parameters stay encrypted until written to the PACLI process arguments; no plain text reaches parameter binding, so module logging (event 800) no longer records secrets.
+  - `-WhatIf` and `-Debug` output masks secret values, including values containing spaces.
+  - `Get-PVPasswordObject` no longer passes the retrieved password to other commands.
+  - Affects `Add-PVPasswordObject`, `Connect-PVVault`, `New-PVLogonFile`, `New-PVSafe`, `New-PVUser`, `New-PVVaultDefinition`, `Set-PVUser`, `Set-PVUserPassword`, `Unlock-PVUser`.
+- `Get-PVPasswordObject`: new `-AsSecureString` switch outputs the password as a SecureString.
+- Fix `New-PVUser` sending `password` unquoted.
+- Fix `Get-PVSafeEvent` returning no output for events containing XML data; `Data` property now contains the event XML.
+- Code style modernised: `::new()` over `New-Object`, `$null =` over `Out-Null`, named `Invoke-PACLICommand` arguments, consistent keyword casing, empty `begin`/`end` blocks removed.
+- `UserMangement` function folder renamed to `UserManagement`.
+- Tests migrated to Pester 5.7.1.
+  - Coverage published to Codecov in JaCoCo format; Coveralls removed.
+  - Tests no longer overwrite `PV_Configuration.xml` in the user profile.
+- Tab completion of vault values when connected to a vault.
+  - Results cached for 5 minutes per vault, user and session.
+  - `safe`, `safeName`: safe names.
+  - `destUser`, `owner`, `member`, `trusterName`: user and group names.
+  - `group`: group names.
+  - `location`: location paths.
+  - `networkArea`: network area names.
+- Help is now external help (`en-US/PoShPACLI-help.xml`), generated from the command markdown in `docs/collections/_commands`.
+- Released module is a single combined psm1, for faster import.
+- Build, test and release moved from AppVeyor to GitHub Actions; tests run on Windows PowerShell 5.1 and PowerShell 7.
+
 ## [2.1.27] - 2020-04-01
 
 - `Set-PVSafe`

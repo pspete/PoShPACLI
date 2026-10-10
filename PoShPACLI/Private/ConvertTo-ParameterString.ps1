@@ -1,4 +1,4 @@
-﻿Function ConvertTo-ParameterString {
+﻿function ConvertTo-ParameterString {
 
 	<#
 	.SYNOPSIS
@@ -48,7 +48,7 @@
 
 	#>
 	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', 'Parameters', Justification = "False Positive")]
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	[OutputType('System.String')]
 	param(
 
@@ -73,7 +73,7 @@
 		[switch]$NoSessionID
 	)
 
-	Begin {
+	begin {
 
 		$doNotQuote += "sessionID"
 		$ValueTerminators = '^|$'
@@ -87,7 +87,7 @@
 
 	}
 
-	Process {
+	process {
 
 		$boundParameters.Keys | ForEach-Object {
 
@@ -100,16 +100,18 @@
 
 				( { $excludedParameters -Contains $PSItem }) { break }
 
+				( { $boundParameters[$PSItem] -is [securestring] }) { break }
+
 				( { $doNotQuote -NotContains $PSItem }) {
 
-					$null = $Parameters.Add($($PSItem) + "=" + $(((($($boundParameters[$PSItem]) -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes")).Replace($ValueFalse, "No")))
+					$null = $Parameters.Add($PSItem + "=" + (($boundParameters[$PSItem] -replace $ValueTerminators, '"').ToString()).Replace($ValueTrue, "Yes").Replace($ValueFalse, "No"))
 					break
 
 				}
 
 				( { $doNotQuote -Contains $PSItem }) {
 
-					$null = $Parameters.Add($($PSItem) + "=" + $($boundParameters[$PSItem]))
+					$null = $Parameters.Add($PSItem + "=" + $boundParameters[$PSItem])
 					break
 
 				}
@@ -118,21 +120,21 @@
 
 		} {
 
-			If ((-not ($NoSessionID.IsPresent)) -and $($Script:PV.sessionID)) {
-				$null = $Parameters.Add("sessionID=" + $($Script:PV.sessionID))
+			If ((-not ($NoSessionID.IsPresent)) -and $Script:PV.sessionID) {
+				$null = $Parameters.Add("sessionID=" + $Script:PV.sessionID)
 			}
-			If ((-not ($NoVault.IsPresent)) -and $($Script:PV.vault)) {
-				$null = $Parameters.Add("vault=" + '"' + $($Script:PV.vault) + '"')
+			If ((-not ($NoVault.IsPresent)) -and $Script:PV.vault) {
+				$null = $Parameters.Add("vault=" + '"' + $Script:PV.vault + '"')
 			}
-			If ((-not ($NoUser.IsPresent)) -and $($Script:PV.user)) {
-				$null = $Parameters.Add("user=" + '"' + $($Script:PV.user) + '"')
+			If ((-not ($NoUser.IsPresent)) -and $Script:PV.user) {
+				$null = $Parameters.Add("user=" + '"' + $Script:PV.user + '"')
 			}
 
 		}
 
 	}
 
-	End {
+	end {
 
 		#output parameter string
 		$Parameters -join ' '

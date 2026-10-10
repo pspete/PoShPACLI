@@ -105,20 +105,20 @@
         [boolean]$Passthru = $True
     )
 
-    Begin {
+    begin {
         if ($PSBoundParameters.ContainsKey('DefaultProperties')) {
             # define a subset of properties
-            $ddps = New-Object System.Management.Automation.PSPropertySet DefaultDisplayPropertySet, $DefaultProperties
+            $ddps = [System.Management.Automation.PSPropertySet]::new('DefaultDisplayPropertySet', [string[]]$DefaultProperties)
             $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]$ddps
         }
     }
-    Process {
+    process {
         foreach ($Object in $InputObject) {
             switch ($PSBoundParameters.Keys) {
                 'PropertyToAdd' {
                     foreach ($Key in $PropertyToAdd.Keys) {
                         #Add some noteproperties. Slightly faster than Add-Member.
-                        $Object.PSObject.Properties.Add( ( New-Object System.Management.Automation.PSNoteProperty($Key, $PropertyToAdd[$Key]) ) )
+                        $Object.PSObject.Properties.Add( [System.Management.Automation.PSNoteProperty]::new($Key, $PropertyToAdd[$Key]) )
                     }
                 }
                 'TypeName' {

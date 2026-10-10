@@ -1,35 +1,25 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -46,7 +36,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = $((((1..4) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
+						StdOut   = (1..7 | ForEach-Object { '"' + ((1..4) -join '","') + '"' }) -join "`r`n"
 						ExitCode = 0
 					}
 				}
@@ -55,7 +45,13 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{ $InputObj | Get-PVCTLCertificate } | Should Not throw
+				{ $InputObj | Get-PVCTLCertificate } | Should -Not -Throw
+
+			}
+
+			It "outputs expected number of objects" {
+
+				@($InputObj | Get-PVCTLCertificate) | Should -HaveCount 7
 
 			}
 
@@ -63,9 +59,28 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVCTLCertificate
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$PacliCommand -eq "CTLLIST"
+
+				}
+
+			}
+
+			It "does not include vault or user in pacli arguments" {
+
+				$PV = $Script:PV
+				$Script:PV = [PSCustomObject]@{ vault = "SomeVault"; user = "SomeUser"; sessionID = 1 }
+
+				try {
+
+					$InputObj | Get-PVCTLCertificate
+
+				} finally { $Script:PV = $PV }
+
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'vault=') -and ($CommandParameters -notmatch 'user=')
 
 				}
 

@@ -1,36 +1,25 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -42,7 +31,7 @@ Describe $FunctionName {
 
 				param($Parameter)
 
-				(Get-Command ConvertTo-ParameterString).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command ConvertTo-ParameterString).Parameters["$Parameter"].Attributes.Mandatory | Should -Be $true
 
 			}
 
@@ -68,58 +57,66 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{$InputObj | ConvertTo-ParameterString} | Should Not throw
+				{$InputObj | ConvertTo-ParameterString} | Should -Not -Throw
 
 			}
 
 			It "outputs string" {
 
-				($InputObj | ConvertTo-ParameterString).gettype() | Select-Object -ExpandProperty Name | Should Be "String"
+				($InputObj | ConvertTo-ParameterString).gettype() | Select-Object -ExpandProperty Name | Should -Be "String"
+
+			}
+
+			It "excludes SecureString values" {
+
+				$InputObj["password"] = ConvertTo-SecureString "SomeSecret" -AsPlainText -Force
+				$Output = $InputObj | ConvertTo-ParameterString
+				$Output | Should -Not -Match 'password'
 
 			}
 
 			It "output string contains expected value for Param1" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should BeLike '*Param1="SomeValue"*'
+				$Output | Should -BeLike '*Param1="SomeValue"*'
 
 			}
 
 			It "output string contains expected value for Param2" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should BeLike '*Param2=YES*'
+				$Output | Should -BeLike '*Param2=YES*'
 			}
 
 			It "output string contains expected value for Param3" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should BeLike '*Param3=NO*'
+				$Output | Should -BeLike '*Param3=NO*'
 			}
 
 			It "output string contains expected value for Param4" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should BeLike '*Param4="666"*'
+				$Output | Should -BeLike '*Param4="666"*'
 			}
 
 			It "output string contains expected unquoted value for Param4" {
 
 				$Output = $InputObj | ConvertTo-ParameterString -doNotQuote Param4
-				$Output | Should BeLike '*Param4=666*'
+				$Output | Should -BeLike '*Param4=666*'
 
 			}
 
 			It "output string does not contain value for verbose" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should Not Match 'Verbose'
+				$Output | Should -Not -Match 'Verbose'
 			}
 
 			It "output string contains expected value for Param1" {
 
 				$Output = $InputObj | ConvertTo-ParameterString
-				$Output | Should Not Match 'Debug'
+				$Output | Should -Not -Match 'Debug'
 			}
 
 		}

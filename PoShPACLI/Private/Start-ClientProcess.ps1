@@ -1,4 +1,4 @@
-Function Start-ClientProcess {
+function Start-ClientProcess {
 
 	<#
     .SYNOPSIS
@@ -22,7 +22,7 @@ Function Start-ClientProcess {
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -33,14 +33,11 @@ Function Start-ClientProcess {
 		[System.Diagnostics.Process]$Process
 	)
 
-	Begin {
 
-	}
-
-	Process {
+	process {
 
 		#Start Process
-		$Process.start() | Out-Null
+		$null = $Process.Start()
 
 		#Read Output Stream First
 		$StdOut = $Process.StandardOutput.ReadToEnd()
@@ -60,7 +57,7 @@ Function Start-ClientProcess {
 
 	}
 
-	End {
+	end {
 
 		$Process.Dispose()
 
