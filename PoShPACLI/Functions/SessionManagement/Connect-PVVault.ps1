@@ -16,6 +16,9 @@
 	.PARAMETER password
 	The User’s password (as a Secure String).
 	Note: The LOGONFILE and PASSWORD parameters cannot be defined together.
+	Warning: PACLI receives the password in clear text on its process command
+	line, where it may be captured by process auditing or monitoring tools.
+	Use a logon file to avoid this.
 
 	.PARAMETER newPassword
 	The User’s new password (as a Secure String); (if the User would like to change password at
@@ -99,6 +102,8 @@
 
 		#deal with password SecureString
 		if ($PSBoundParameters.ContainsKey("password")) {
+
+			Write-Warning "Password is passed to PACLI in clear text on the process command line. Use a logon file to avoid exposure."
 
 			$PSBoundParameters["password"] = ConvertTo-InsecureString $password
 

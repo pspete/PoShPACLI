@@ -74,6 +74,22 @@ Describe $FunctionName {
 
 			}
 
+			It "warns when password is used" {
+
+				$InputObj | Connect-PVVault -password $Password -WarningVariable Warn -WarningAction SilentlyContinue
+
+				$Warn | Should Match 'clear text'
+
+			}
+
+			It "does not warn when logon file is used" {
+
+				$InputObj | Connect-PVVault -logonFile "SomeFile" -WarningVariable Warn -WarningAction SilentlyContinue
+
+				$Warn | Should BeNullOrEmpty
+
+			}
+
 		}
 
 	}
