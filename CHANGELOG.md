@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] (major)
+## Unreleased (major)
 
 - Fix parsing of multi-line values in PACLI output ([#72](https://github.com/pspete/PoShPACLI/issues/72))
   - `ConvertFrom-PacliOutput` returns one array per output record.
@@ -44,6 +44,9 @@ All notable changes to this project will be documented in this file.
   - `group`: group names.
   - `location`: location paths.
   - `networkArea`: network area names.
+- Help is now external help (`en-US/PoShPACLI-help.xml`), generated from the command markdown in `docs/collections/_commands`.
+- Released module is a single combined psm1, for faster import.
+- Build, test and release moved from AppVeyor to GitHub Actions; tests run on Windows PowerShell 5.1 and PowerShell 7.
 
 ## [2.1.27] - 2020-04-01
 

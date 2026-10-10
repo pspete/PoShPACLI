@@ -1,4 +1,5 @@
-﻿<#
+﻿#region Loader
+<#
 .SYNOPSIS
 .DESCRIPTION
 .EXAMPLE
@@ -11,28 +12,6 @@ param(
 	[bool]$DotSourceModule = $false
 
 )
-
-#Network Area security flags enum
-[Flags()]enum SecurityLevel{
-
-	Internal = 1
-	External = 2
-	Public = 4
-	HighlySecured = 8
-	Secured = 16
-	Unsecured = 32
-
-}
-
-#Safe Share Options enum
-[Flags()]enum SafeOptions{
-
-	PartiallyImpersonatedUsers = 64
-	FullyImpersonatedUsers = 128
-	ImpersonatedUsers = 512
-	EnforceSafeOpening = 256
-
-}
 
 #Get function files
 Get-ChildItem $PSScriptRoot\ -Recurse -Include "*.ps1" |
@@ -60,6 +39,30 @@ ForEach-Object {
 	}
 
 }
+#endregion Loader
+
+#Network Area security flags enum
+[Flags()]enum SecurityLevel{
+
+	Internal = 1
+	External = 2
+	Public = 4
+	HighlySecured = 8
+	Secured = 16
+	Unsecured = 32
+
+}
+
+#Safe Share Options enum
+[Flags()]enum SafeOptions{
+
+	PartiallyImpersonatedUsers = 64
+	FullyImpersonatedUsers = 128
+	ImpersonatedUsers = 512
+	EnforceSafeOpening = 256
+
+}
+
 
 #Read config and make available in script scope
 $ConfigFile = "$env:HOMEDRIVE$env:HomePath\PV_Configuration.xml"
@@ -109,7 +112,7 @@ $Completers = @(
 	}
 )
 
-$Commands = Get-ChildItem $PSScriptRoot\Functions -Recurse -Include '*.ps1' | ForEach-Object { Get-Command -Name $_.BaseName }
+$Commands = (Import-PowerShellDataFile -Path "$PSScriptRoot\PoShPACLI.psd1").FunctionsToExport | ForEach-Object { Get-Command -Name $_ }
 
 foreach ($Completer in $Completers) {
 
