@@ -23,6 +23,12 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
+		BeforeAll {
+
+			Mock Export-Clixml -MockWith { }
+
+		}
+
 		Context "General" {
 
 			BeforeEach {

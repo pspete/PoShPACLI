@@ -16,8 +16,13 @@ BeforeDiscovery {
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path (Resolve-Path "$PSScriptRoot\..\$ModuleName") "$ModuleName.psd1"
 
-	Get-Module -Name $ModuleName -All | Remove-Module -Force -ErrorAction Ignore
-	$Module = Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop -PassThru
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
+
+	$Module = Get-Module -Name $ModuleName
 
 	$Manifest = Import-PowerShellDataFile -Path $ManifestPath
 	$FormatFiles = @($Manifest.FormatsToProcess | ForEach-Object { @{ Name = $PSItem } })
