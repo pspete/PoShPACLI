@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+- Fix parsing of multi-line values in PACLI output ([#72](https://github.com/pspete/PoShPACLI/issues/72))
+  - `ConvertFrom-PacliOutput` returns one array per output record.
+  - Values containing line breaks no longer shift subsequent properties in list command output (e.g. `Find-PVFile`, `Get-PVFileCategory`).
+- Fix `vault` and `user` values being sent to commands which do not accept them ([#75](https://github.com/pspete/PoShPACLI/issues/75))
+  - `New-PVLogonFile`, `Add-PVCTLCertificate`, `Get-PVCTL`, `Get-PVCTLCertificate`, `Remove-PVCTLCertificate`
+- Fix parameter names rejected by PACLI
+  - Old names retained as aliases.
+  - `Get-PVFile`, `Get-PVPasswordObject`: `userRequest` renamed to `useRequest`
+  - `New-PVUser`, `Set-PVUser`: `requireSecureIDAuth` renamed to `requireSecurIDAuth`
+  - `New-PVSafe`: `alwaysNeedsConfirmation` renamed to `alwaysNeedConfirmation`
+  - `New-PVSafe`: duplicate `safeKey` parameter removed; now an alias of `keyFilePath`
+- Fix `New-PVPassword` only processing the last pipeline input object.
+- `Connect-PVVault` warns when `password` is used ([#76](https://github.com/pspete/PoShPACLI/issues/76))
+  - PACLI receives the password in clear text on its command line; use a logon file to avoid this.
+
 ## [2.1.27] - 2020-04-01
 
 - `Set-PVSafe`
