@@ -1,36 +1,25 @@
-﻿#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace '.Tests.ps1'
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if ( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -42,7 +31,7 @@ Describe $FunctionName {
 
 				param($Parameter)
 
-				(Get-Command ConvertFrom-PacliOutput).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command ConvertFrom-PacliOutput).Parameters["$Parameter"].Attributes.Mandatory | Should -Be $true
 
 			}
 
@@ -60,19 +49,19 @@ Describe $FunctionName {
 
 			It 'executes without exception' {
 
-				{ $InputObj | ConvertFrom-PacliOutput } | Should Not throw
+				{ $InputObj | ConvertFrom-PacliOutput } | Should -Not -Throw
 
 			}
 
 			It 'outputs array' {
 
-				($InputObj | ConvertFrom-PacliOutput).gettype() | Select-Object -ExpandProperty BaseType | Should Be 'Array'
+				($InputObj | ConvertFrom-PacliOutput).gettype() | Select-Object -ExpandProperty BaseType | Should -Be 'Array'
 
 			}
 
 			It 'outputs array with expected length' {
 
-				($InputObj | ConvertFrom-PacliOutput).length | Should Be 15
+				($InputObj | ConvertFrom-PacliOutput).length | Should -Be 15
 
 			}
 
@@ -106,48 +95,48 @@ selenium.common.exceptions.ElementNotVisibleException: Message: element not visi
 
 			It 'executes without exception' {
 
-				{ $InputObj | ConvertFrom-PacliOutput } | Should Not throw
+				{ $InputObj | ConvertFrom-PacliOutput } | Should -Not -Throw
 
 			}
 
 			It 'outputs array' {
 
-				($InputObj | ConvertFrom-PacliOutput).gettype() | Select-Object -ExpandProperty BaseType | Should Be 'Array'
+				($InputObj | ConvertFrom-PacliOutput).gettype() | Select-Object -ExpandProperty BaseType | Should -Be 'Array'
 
 			}
 
 			It 'outputs array with expected count' {
 
-				($InputObj | ConvertFrom-PacliOutput).count | Should Be 2
+				($InputObj | ConvertFrom-PacliOutput).count | Should -Be 2
 
 			}
 
 			It 'outputs array with expected length' {
 
-				($InputObj | ConvertFrom-PacliOutput | Select-Object -First 1).length | Should Be 32
+				($InputObj | ConvertFrom-PacliOutput | Select-Object -First 1).length | Should -Be 32
 
 			}
 
 			It 'outputs each record with expected length' {
 
-				$InputObj | ConvertFrom-PacliOutput | ForEach-Object { $PSItem.length | Should Be 32 }
+				$InputObj | ConvertFrom-PacliOutput | ForEach-Object { $PSItem.length | Should -Be 32 }
 
 			}
 
 			It 'preserves multi-line value' {
 
 				$Value = ($InputObj | ConvertFrom-PacliOutput | Select-Object -First 1)[31]
-				$Value | Should Match '^UserName:CYBERARK_TESTING#'
-				$Value | Should Match 'Traceback \(most recent call last\):\r?\n'
-				$Value | Should Match 'CPMDisabled:\(CPM\)MaxRetries#$'
+				$Value | Should -Match '^UserName:CYBERARK_TESTING#'
+				$Value | Should -Match 'Traceback \(most recent call last\):\r?\n'
+				$Value | Should -Match 'CPMDisabled:\(CPM\)MaxRetries#$'
 
 			}
 
 			It 'outputs expected values from record after multi-line value' {
 
 				$Record = ($InputObj | ConvertFrom-PacliOutput | Select-Object -Last 1)
-				$Record[0] | Should Be 'ztest1'
-				$Record[13] | Should Be '000000000000053'
+				$Record[0] | Should -Be 'ztest1'
+				$Record[13] | Should -Be '000000000000053'
 
 			}
 
@@ -157,28 +146,28 @@ selenium.common.exceptions.ElementNotVisibleException: Message: element not visi
 
 			It 'outputs single record as one array' {
 
-				@('"a","b","c"' | ConvertFrom-PacliOutput).count | Should Be 1
+				@('"a","b","c"' | ConvertFrom-PacliOutput).count | Should -Be 1
 
 			}
 
 			It 'outputs one array per record' {
 
-				@("`"a`",`"b`"`r`n`"c`",`"d`"`r`n`r`n`"e`",`"f`"`r`n" | ConvertFrom-PacliOutput).count | Should Be 3
+				@("`"a`",`"b`"`r`n`"c`",`"d`"`r`n`r`n`"e`",`"f`"`r`n" | ConvertFrom-PacliOutput).count | Should -Be 3
 
 			}
 
 			It 'handles LF line endings' {
 
-				@("`"a`",`"b`"`n`"c`",`"d`"" | ConvertFrom-PacliOutput).count | Should Be 2
+				@("`"a`",`"b`"`n`"c`",`"d`"" | ConvertFrom-PacliOutput).count | Should -Be 2
 
 			}
 
 			It 'preserves empty values' {
 
 				$Record = '"a","","c",""' | ConvertFrom-PacliOutput
-				$Record.length | Should Be 4
-				$Record[1] | Should BeNullOrEmpty
-				$Record[2] | Should Be 'c'
+				$Record.length | Should -Be 4
+				$Record[1] | Should -BeNullOrEmpty
+				$Record[2] | Should -Be 'c'
 
 			}
 

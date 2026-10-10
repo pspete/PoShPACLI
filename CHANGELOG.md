@@ -28,6 +28,8 @@ All notable changes to this project will be documented in this file.
 - Fix `Get-PVSafeEvent` returning no output for events containing XML data; `Data` property now contains the event XML.
 - Code style modernised: `::new()` over `New-Object`, `$null =` over `Out-Null`, named `Invoke-PACLICommand` arguments, consistent keyword casing, empty `begin`/`end` blocks removed.
 - `UserMangement` function folder renamed to `UserManagement`.
+- Tests migrated to Pester 5.7.1.
+  - Coverage published to Codecov in JaCoCo format; Coveralls removed.
 
 ## [2.1.27] - 2020-04-01
 

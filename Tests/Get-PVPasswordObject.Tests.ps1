@@ -1,35 +1,25 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -58,7 +48,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{ $InputObj | Get-PVPasswordObject } | Should Not throw
+				{ $InputObj | Get-PVPasswordObject } | Should -Not -Throw
 
 			}
 
@@ -66,7 +56,7 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVPasswordObject
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$PacliCommand -eq "RETRIEVEPASSWORDOBJECT"
 
@@ -78,7 +68,7 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVPasswordObject -userRequest
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					($CommandParameters -match 'useRequest=Yes')
 
@@ -90,7 +80,7 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVPasswordObject
 
-				$Result.Password | Should Be 'SomeOutput'
+				$Result.Password | Should -Be 'SomeOutput'
 
 			}
 
@@ -98,7 +88,7 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVPasswordObject
 
-				$Result.PSObject.TypeNames[0] | Should Be 'pacli.PoShPACLI.Password'
+				$Result.PSObject.TypeNames[0] | Should -Be 'pacli.PoShPACLI.Password'
 
 			}
 
@@ -113,7 +103,7 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVPasswordObject
 
-				$Result.Password | Should BeExactly 'Some Pass","word'
+				$Result.Password | Should -BeExactly 'Some Pass","word'
 
 			}
 
@@ -121,8 +111,8 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVPasswordObject -AsSecureString
 
-				$Result.Password | Should BeOfType [securestring]
-				[System.Net.NetworkCredential]::new('', $Result.Password).Password | Should BeExactly 'SomeOutput'
+				$Result.Password | Should -BeOfType [securestring]
+				[System.Net.NetworkCredential]::new('', $Result.Password).Password | Should -BeExactly 'SomeOutput'
 
 			}
 
@@ -130,7 +120,7 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVPasswordObject -AsSecureString
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$CommandParameters -notmatch 'AsSecureString'
 
@@ -145,8 +135,8 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVPasswordObject
 
-				Assert-MockCalled ConvertFrom-PacliOutput -Times 0 -Exactly -Scope It
-				Assert-MockCalled Add-ObjectDetail -Times 0 -Exactly -Scope It
+				Should -Invoke ConvertFrom-PacliOutput -Times 0 -Exactly -Scope It
+				Should -Invoke Add-ObjectDetail -Times 0 -Exactly -Scope It
 
 			}
 

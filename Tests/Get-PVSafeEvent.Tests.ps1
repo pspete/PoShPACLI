@@ -1,35 +1,25 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -76,7 +66,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{ $InputObj | Get-PVSafeEvent } | Should Not throw
+				{ $InputObj | Get-PVSafeEvent } | Should -Not -Throw
 
 			}
 
@@ -84,7 +74,7 @@ Describe $FunctionName {
 
 				$InputObj | Get-PVSafeEvent
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$PacliCommand -eq "SAFEEVENTSLIST"
 
@@ -96,7 +86,7 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVSafeEvent
 
-				$Result.Count | Should Be 3
+				$Result.Count | Should -Be 3
 
 			}
 
@@ -104,12 +94,12 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVSafeEvent
 
-				$Result[0].Safename | Should Be 'Notification Engine'
-				$Result[0].EventID | Should Be '14'
-				$Result[0].FromIP | Should Be '192.168.10.21'
-				([xml]$Result[0].Data).EventData.Parms.Parm.'#text' | Should Be '30'
-				$Result[1].EventID | Should Be '13'
-				([xml]$Result[1].Data).EventData.Parms.Parm.'#text' | Should Be '27'
+				$Result[0].Safename | Should -Be 'Notification Engine'
+				$Result[0].EventID | Should -Be '14'
+				$Result[0].FromIP | Should -Be '192.168.10.21'
+				([xml]$Result[0].Data).EventData.Parms.Parm.'#text' | Should -Be '30'
+				$Result[1].EventID | Should -Be '13'
+				([xml]$Result[1].Data).EventData.Parms.Parm.'#text' | Should -Be '27'
 
 			}
 
@@ -117,10 +107,10 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVSafeEvent
 
-				$Result[2].Safename | Should Be 'SomeSafe'
-				$Result[2].EventID | Should Be '11'
-				$Result[2].Username | Should Be 'SomeUser'
-				$Result[2].Data | Should Be 'Some Data'
+				$Result[2].Safename | Should -Be 'SomeSafe'
+				$Result[2].EventID | Should -Be '11'
+				$Result[2].Username | Should -Be 'SomeUser'
+				$Result[2].Data | Should -Be 'Some Data'
 
 			}
 
@@ -128,7 +118,7 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Get-PVSafeEvent
 
-				$Result[0].PSObject.TypeNames[0] | Should Be 'pacli.PoShPACLI.Safe.Event'
+				$Result[0].PSObject.TypeNames[0] | Should -Be 'pacli.PoShPACLI.Safe.Event'
 
 			}
 

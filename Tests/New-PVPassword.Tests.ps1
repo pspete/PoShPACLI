@@ -1,35 +1,25 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
-
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
-
-if( -not (Get-Module -Name $ModuleName -All)) {
+	#Assume ModuleName from Repository Root folder
+	$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
 
 	#Resolve Path to Module Directory
 	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+
 	#Define Path to Module Manifest
 	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
-	Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	if ( -not (Get-Module -Name $ModuleName -All)) {
+
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-BeforeAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-AfterAll {
-
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
+Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 	InModuleScope $ModuleName {
 
@@ -48,7 +38,7 @@ Describe $FunctionName {
 
 			It "executes without exception" {
 
-				{New-PVPassword -length 125} | Should Not throw
+				{New-PVPassword -length 125} | Should -Not -Throw
 
 			}
 
@@ -56,7 +46,7 @@ Describe $FunctionName {
 
 				New-PVPassword -length 125
 
-				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
 
 					$PacliCommand -eq "GENERATEPASSWORD"
 
@@ -71,8 +61,8 @@ Describe $FunctionName {
 					[PSCustomObject]@{ length = 20 }
 				) | New-PVPassword
 
-				Assert-MockCalled Invoke-PACLICommand -Times 2 -Exactly -Scope It
-				$Results | Should HaveCount 2
+				Should -Invoke Invoke-PACLICommand -Times 2 -Exactly -Scope It
+				$Results | Should -HaveCount 2
 
 			}
 

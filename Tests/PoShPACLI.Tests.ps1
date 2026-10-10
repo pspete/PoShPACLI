@@ -8,169 +8,156 @@
     A generic set of tests to apply to a module
 #>
 
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Assume ModuleName from Test File Name
-$ModuleName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Assume ModuleName from Test File Name
+	$ModuleName = (Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path (Resolve-Path "$PSScriptRoot\..\$ModuleName") "$ModuleName.psd1"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	Get-Module -Name $ModuleName -All | Remove-Module -Force -ErrorAction Ignore
+	$Module = Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop -PassThru
 
-Get-Module -Name $ModuleName -All | Remove-Module -Force -ErrorAction Ignore
-$Module = Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop -PassThru
+	$Manifest = Import-PowerShellDataFile -Path $ManifestPath
+	$FormatFiles = @($Manifest.FormatsToProcess | ForEach-Object { @{ Name = $PSItem } })
+	$TypesFiles = @($Manifest.TypesToProcess | ForEach-Object { @{ Name = $PSItem } })
 
-Describe "Module" {
-
-	Context "Module Consistency Tests" {
-
-		It "has a valid manifest" {
-
-			{$null = Test-ModuleManifest -Path $ManifestPath -ErrorAction Stop -WarningAction SilentlyContinue} |
-				Should Not Throw
-
-		}
-
-		It "specifies valid root module" {
-
-			$Module.RootModule | Should Be "$ModuleName.psm1"
-
-		}
-
-		It "has a valid description" {
-
-			$Module.Description | Should Not BeNullOrEmpty
-
-		}
-
-		It "has a valid guid" {
-
-			$Module.Guid | Should Be '194c227f-87bf-43af-b401-4a34bd8e2ac6'
-
-		}
-
-		It "has a valid copyright" {
-
-			$Module.Copyright | Should Not BeNullOrEmpty
-
-		}
-
-		Context "Files To Process" {
-
-			#validate formats
-			($Module.FormatsToProcess).foreach{
-
-				$FormatFilePath = (Join-Path $ModulePath $_)
-
-				#File Exists
-				It "$_ exists" {
-
-					$FormatFilePath | Should Exist
-
-				}
-
-				#file contains valid format data
-				It "$_ is valid" {
-
-					{Update-FormatData -AppendPath $FormatFilePath -ErrorAction Stop -WarningAction SilentlyContinue} |
-						Should Not Throw
-
-				}
-
+	$ExportedFunctions = @($Module.ExportedFunctions.Values.Name | ForEach-Object {
+			$help = Get-Help $PSItem -Full
+			@{
+				Name           = $PSItem
+				HelpParameters = @(
+					$help.parameters.parameter | Where-Object { $PSItem.name -and $PSItem.name -NotIn @('WhatIf', 'Confirm') } |
+						ForEach-Object { @{ Name = $PSItem.name } }
+				)
 			}
+		})
 
-			#validate types
-			($Module.TypesToProcess).foreach{
+	$ExportedAliases = @($Module.ExportedAliases.Values | ForEach-Object { $PSItem.Name } | ForEach-Object { @{ Name = $PSItem } })
 
-				$TypesFilePath = (Join-Path $ModulePath $_)
+}
 
-				#file exists
-				It "$_ exists" {
+Describe 'Module' {
 
-					$TypesFilePath | Should Exist
+	BeforeAll {
 
-				}
+		$ModuleName = (Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1'
+		$ModulePath = Resolve-Path "$PSScriptRoot\..\$ModuleName"
+		$ManifestPath = Join-Path $ModulePath "$ModuleName.psd1"
+		$Module = Get-Module -Name $ModuleName
 
-				#file contains valid type data
-				It "$_ is valid" {
-
-					{Update-TypeData -AppendPath $TypesFilePath -ErrorAction Stop -WarningAction SilentlyContinue} |
-						Should Not Throw
-
-				}
-
-			}
-
-		}
-
-		#Get Public Function Names
 		$PublicFunctions = Get-ChildItem "$ModulePath\Functions" -Include *.ps1 -Recurse |
 			Select-Object -ExpandProperty BaseName
 
-		Context "Exported Function Analysis" {
+	}
 
-			#Get Exported Function Names
-			$ExportedFunctions = $Module.ExportedFunctions.Values.name
+	Context 'Module Consistency Tests' {
+
+		It 'has a valid manifest' {
+
+			{ $null = Test-ModuleManifest -Path $ManifestPath -ErrorAction Stop -WarningAction SilentlyContinue } |
+				Should -Not -Throw
+
+		}
+
+		It 'specifies valid root module' {
+
+			$Module.RootModule | Should -Be "$ModuleName.psm1"
+
+		}
+
+		It 'has a valid description' {
+
+			$Module.Description | Should -Not -BeNullOrEmpty
+
+		}
+
+		It 'has a valid guid' {
+
+			$Module.Guid | Should -Be '194c227f-87bf-43af-b401-4a34bd8e2ac6'
+
+		}
+
+		It 'has a valid copyright' {
+
+			$Module.Copyright | Should -Not -BeNullOrEmpty
+
+		}
+
+		Context 'Files To Process' {
+
+			It '<Name> exists' -ForEach ($FormatFiles + $TypesFiles) {
+
+				Join-Path $ModulePath $Name | Should -Exist
+
+			}
+
+			It '<Name> is valid format data' -ForEach $FormatFiles {
+
+				{ Update-FormatData -AppendPath (Join-Path $ModulePath $Name) -ErrorAction Stop -WarningAction SilentlyContinue } |
+					Should -Not -Throw
+
+			}
+
+			It '<Name> is valid type data' -ForEach $TypesFiles {
+
+				{ Update-TypeData -AppendPath (Join-Path $ModulePath $Name) -ErrorAction Stop -WarningAction SilentlyContinue } |
+					Should -Not -Throw
+
+			}
+
+		}
+
+		Context 'Exported Function Analysis' {
 
 			It 'exports the expected number of functions' {
 
-				($PublicFunctions | Measure-Object | Select-Object -ExpandProperty Count) |
-
-				Should be ($ExportedFunctions | Measure-Object | Select-Object -ExpandProperty Count)
+				@($PublicFunctions).Count | Should -Be @($Module.ExportedFunctions.Values).Count
 
 			}
 
-			$ExportedFunctions.foreach{
+			Context '<Name>' -ForEach $ExportedFunctions {
 
-				Context "$_" {
+				BeforeAll {
 
-					It 'is a public function' {
+					$help = Get-Help $Name -Full
 
-						$PublicFunctions -contains $_ | Should Be $true
+				}
 
-					}
+				It 'is a public function' {
 
-					It 'has a related pester tests file' {
-						Test-Path (Join-Path $here "$_.Tests.ps1") | Should Be $true
-					}
+					$PublicFunctions -contains $Name | Should -Be $true
 
-					Context "Help" {
+				}
 
-						$help = Get-Help $_ -Full
+				It 'has a related pester tests file' {
 
-						It 'has synopsis' {
+					Join-Path $PSScriptRoot "$Name.Tests.ps1" | Should -Exist
 
-							$help.synopsis | Should Not BeNullOrEmpty
+				}
 
-						}
+				It 'has synopsis' {
 
-						It 'has description' {
+					$help.synopsis | Should -Not -BeNullOrEmpty
 
-							$help.description | Should Not BeNullOrEmpty
+				}
 
-						}
+				It 'has description' {
 
-						It 'has example code' {
+					$help.description | Should -Not -BeNullOrEmpty
 
-							$help.examples.example.code | Should Not BeNullOrEmpty
+				}
 
-						}
+				It 'has example code' {
 
-						$HelpParameters = @($help.parameters.parameter | Where-Object { $PSItem.name -and $PSItem.name -NotIn @("WhatIf", "Confirm") })
+					$help.examples.example.code | Should -Not -BeNullOrEmpty
 
-						$HelpParameters.foreach{
+				}
 
-							It "has description of parameter $($_.name)" {
+				It 'has description of parameter <Name>' -ForEach $HelpParameters {
 
-								$_.description | Should Not BeNullOrEmpty
-							}
-
-						}
-
-					}
+					($help.parameters.parameter | Where-Object name -EQ $Name).description | Should -Not -BeNullOrEmpty
 
 				}
 
@@ -178,54 +165,26 @@ Describe "Module" {
 
 		}
 
-		Context "Exported Alias Analysis" {
+		Context 'Exported Alias Analysis' {
 
-			$ExportedAliases = $Module.ExportedAliases.Values.name
+			It '<Name> resolves to public function' -ForEach $ExportedAliases {
 
-			$ExportedAliases.foreach{
-
-				Context "$_" {
-
-					It "Resolves to Public Function" {
-
-						$PublicFunctions -contains $((Get-Alias $_).ResolvedCommand) | Should Be $true
-
-					}
-
-
-				}
-
-			}
-
-
-		}
-
-	}
-<#
-	Describe 'PSScriptAnalyzer' {
-
-		$Scripts = Get-ChildItem "$ModulePath" -Filter '*.ps1' -Exclude '*.ps1xml' -Recurse
-
-		$Rules = Get-ScriptAnalyzerRule
-
-		foreach ($Script in $scripts) {
-
-			Context "Checking: $($script.BaseName)" {
-
-				foreach ($rule in $rules) {
-
-					It "passes rule $rule" -Skip {
-
-						(Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName ).Count | Should Be 0
-
-					}
-
-				}
+				$PublicFunctions -contains (Get-Alias $Name).ResolvedCommand.Name | Should -Be $true
 
 			}
 
 		}
 
 	}
-#>
+
+}
+
+Describe 'PSScriptAnalyzer' {
+
+	It 'reports no issues' {
+
+		Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\PoShPACLI" -Recurse | Should -BeNullOrEmpty
+
+	}
+
 }

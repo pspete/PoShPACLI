@@ -6,9 +6,7 @@ Write-Host 'Installing Required Modules:' -ForegroundColor Yellow
 $RequiredModules = @(
 	'PowerShellGet'
 	#"Pester",
-	'PSScriptAnalyzer',
-	'coveralls',
-	'PSCodeCovIo'
+	'PSScriptAnalyzer'
 )
 
 #---------------------------------#
@@ -21,10 +19,10 @@ if (-not $IsCoreCLR) {
 }
 
 #---------------------------------#
-# Install Pester 4                #
+# Install Pester 5                #
 #---------------------------------#
 try {
-	Install-Module -Name Pester -Repository PSGallery -RequiredVersion 4.10.1 -Confirm:$false -Force -SkipPublisherCheck -ErrorAction Stop | Out-Null
+	Install-Module -Name Pester -Repository PSGallery -RequiredVersion 5.7.1 -Confirm:$false -Force -SkipPublisherCheck -ErrorAction Stop | Out-Null
 } catch { throw $_ }
 #---------------------------------#
 # Install Required Modules        #
