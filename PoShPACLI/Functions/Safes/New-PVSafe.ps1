@@ -80,7 +80,7 @@
 	0–64 – The number of authorized Owners that need to confirm (default=1)
 	255 – All authorized Owners need to confirm
 
-	.PARAMETER alwaysNeedsConfirmation
+	.PARAMETER alwaysNeedConfirmation
 	Whether or not all Owners require confirmation to access the Safe.
 
 	No – Confirmation is needed only if the request is from an Owner who is unauthorized
@@ -98,10 +98,6 @@
 	2 – PassKeyType
 	3 – FileKeyType
 	4 – NoKeyType (during transmission)
-
-	.PARAMETER safeKey
-	The pathname of the key file used to encrypt the contents of the Safe if the value of
-	‘safekeytype’ is ‘2’ or ‘3’.
 
 	.PARAMETER password
 	The password required to encrypt the contents of the Safe if the value of ‘safekeytype’
@@ -268,7 +264,8 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$alwaysNeedsConfirmation,
+		[Alias("alwaysNeedsConfirmation")]
+		[switch]$alwaysNeedConfirmation,
 
 		[Parameter(
 			Mandatory = $False,
@@ -279,16 +276,12 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$safeKey,
-
-		[Parameter(
-			Mandatory = $False,
-			ValueFromPipelineByPropertyName = $True)]
 		[securestring]$password,
 
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
+		[Alias("safeKey")]
 		[string]$keyFilePath,
 
 		[Parameter(

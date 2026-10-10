@@ -74,6 +74,18 @@ Describe $FunctionName {
 
 			}
 
+			It "sends PACLI argument names for aliased parameters" {
+
+				$InputObj | Get-PVPasswordObject -userRequest
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -match 'useRequest=Yes')
+
+				}
+
+			}
+
 		}
 
 	}

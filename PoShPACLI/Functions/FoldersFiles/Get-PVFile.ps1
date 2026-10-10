@@ -64,7 +64,7 @@
 	.PARAMETER requestReason
 	The reason for the request.
 
-	.PARAMETER userRequest
+	.PARAMETER useRequest
 	If a confirmed request exists, it will be used to open the Safe
 	and retrieve the specified file.
 
@@ -162,7 +162,8 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$userRequest,
+		[Alias("userRequest")]
+		[switch]$useRequest,
 
 		[Parameter(
 			Mandatory = $False,

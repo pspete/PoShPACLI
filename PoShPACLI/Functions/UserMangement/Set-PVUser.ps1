@@ -23,7 +23,7 @@
 		additional parameters.
 		LDAP_AUTH – LDAP authentication.
 
-	.PARAMETER requireSecureIDAuth
+	.PARAMETER requireSecurIDAuth
 	Whether or not the User is required to provide a SecurID passcode as well
 	as the method specified in the authtype parameter
 
@@ -228,7 +228,8 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[switch]$requireSecureIDAuth,
+		[Alias("requireSecureIDAuth")]
+		[switch]$requireSecurIDAuth,
 
 		[Parameter(
 			Mandatory = $False,

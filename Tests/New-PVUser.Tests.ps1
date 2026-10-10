@@ -72,6 +72,18 @@ Describe $FunctionName {
 
 			}
 
+			It "sends PACLI argument names for aliased parameters" {
+
+				$InputObj | New-PVUser -password $Password -destUser "UserName" -requireSecureIDAuth
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -match 'requireSecurIDAuth=Yes')
+
+				}
+
+			}
+
 		}
 
 	}

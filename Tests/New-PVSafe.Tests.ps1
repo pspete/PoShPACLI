@@ -90,6 +90,18 @@ Describe $FunctionName {
 
 			}
 
+			It "sends PACLI argument names for aliased parameters" {
+
+				New-PVSafe -password $Password -safe "SomeSafe" -alwaysNeedsConfirmation -safeKey "SomeKey"
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -match 'alwaysNeedConfirmation=Yes') -and ($CommandParameters -match 'keyFilePath="SomeKey"')
+
+				}
+
+			}
+
 		}
 
 	}
