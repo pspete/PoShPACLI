@@ -71,3 +71,59 @@ If (Test-Path $ConfigFile) {
 	Set-Variable -Name PV -Value $config -Scope Script
 
 }
+#Register argument completers
+$Completers = @(
+	@{
+		Parameter = 'safe', 'safeName'
+		Exclude   = 'New-PVSafe'
+		Retrieval = { Get-PVSafeList }
+		Value     = 'Safename'
+		ToolTip   = 'Location'
+	}
+	@{
+		Parameter = 'destUser', 'owner', 'member', 'trusterName'
+		Exclude   = 'New-PVUser', 'Add-PVExternalUser'
+		Retrieval = { Get-PVUserList }
+		Value     = 'Username'
+		ToolTip   = 'Type'
+	}
+	@{
+		Parameter = 'group'
+		Exclude   = 'New-PVGroup'
+		Retrieval = { Get-PVUserList | Where-Object Type -EQ 'GROUP' }
+		Value     = 'Username'
+		ToolTip   = 'Location'
+	}
+	@{
+		Parameter = 'location'
+		Exclude   = 'New-PVLocation'
+		Retrieval = { Get-PVLocation }
+		Value     = 'Location'
+	}
+	@{
+		Parameter = 'networkArea'
+		Exclude   = 'New-PVNetworkArea'
+		Retrieval = { Get-PVNetworkArea }
+		Value     = 'NetworkArea'
+		ToolTip   = 'SecurityLevel'
+	}
+)
+
+$Commands = Get-ChildItem $PSScriptRoot\Functions -Recurse -Include '*.ps1' | ForEach-Object { Get-Command -Name $_.BaseName }
+
+foreach ($Completer in $Completers) {
+
+	$ScriptBlock = Get-ArgumentCompleter -RetrievalCommand $Completer.Retrieval -ValueProperty $Completer.Value -ToolTipProperty $Completer.ToolTip
+
+	foreach ($Parameter in $Completer.Parameter) {
+
+		$CommandName = $Commands | Where-Object { ($_.Parameters.Keys -contains $Parameter) -and ($Completer.Exclude -notcontains $_.Name) } |
+			Select-Object -ExpandProperty Name
+
+		if ($CommandName) {
+			Register-ArgumentCompleter -CommandName $CommandName -ParameterName $Parameter -ScriptBlock $ScriptBlock
+		}
+
+	}
+
+}

@@ -82,6 +82,26 @@ Output can be piped between PoShPACLI functions:
 
 ![Pipeline-Example-1](/media/_1_pipeline.png)
 
+#### Tab Completion
+
+When connected to a vault, pressing `Tab` completes existing names from the vault for these parameters:
+
+| Parameter                                    | Completes             |
+| -------------------------------------------- | --------------------- |
+| `safe`, `safeName`                           | Safe names            |
+| `destUser`, `owner`, `member`, `trusterName` | User and group names  |
+| `group`                                      | Group names           |
+| `location`                                   | Location paths        |
+| `networkArea`                                | Network area names    |
+
+Each completion runs a PACLI list command against the vault.
+Parameters which take a new name (e.g. `New-PVSafe -safe`) are not completed.
+
+```powershell
+Open-PVSafe -safe Sys<Tab>
+# Open-PVSafe -safe System
+```
+
 ## PACLI to PoShPACLI Function Relationship
 
 The table shows how the the PoShPACLI module functions relate to their native PACLI counterparts:

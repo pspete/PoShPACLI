@@ -30,6 +30,13 @@ All notable changes to this project will be documented in this file.
 - `UserMangement` function folder renamed to `UserManagement`.
 - Tests migrated to Pester 5.7.1.
   - Coverage published to Codecov in JaCoCo format; Coveralls removed.
+  - Tests no longer overwrite `PV_Configuration.xml` in the user profile.
+- Tab completion of vault values when connected to a vault.
+  - `safe`, `safeName`: safe names.
+  - `destUser`, `owner`, `member`, `trusterName`: user and group names.
+  - `group`: group names.
+  - `location`: location paths.
+  - `networkArea`: network area names.
 
 ## [2.1.27] - 2020-04-01
 
