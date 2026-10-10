@@ -8,6 +8,7 @@
 	Returns a scriptblock suitable for Register-ArgumentCompleter.
 	When invoked by the completion engine, the retrieval scriptblock is run in the module scope.
 	No PACLI command is run unless a vault user is set in the module scope.
+	Results are cached per vault, user and session for 5 minutes.
 	Errors are suppressed so tab completion fails silently.
 
 	.PARAMETER RetrievalCommand
@@ -62,7 +63,23 @@
 
 				$ErrorActionPreference = 'Stop'
 
-				& $Retrieval | Get-CompletionResult -WordToComplete $Word -ValueProperty $ValueProperty -ToolTipProperty $ToolTipProperty
+				if ($null -eq $Script:CompletionCache) { $Script:CompletionCache = @{ } }
+
+				$Key = '{0}|{1}|{2}|{3}' -f $Retrieval, $Script:PV.vault, $Script:PV.user, $Script:PV.sessionID
+				$Cached = $Script:CompletionCache[$Key]
+
+				if ((-not $Cached) -or ($Cached.Expires -lt [datetime]::Now)) {
+
+					$Cached = @{
+						Data    = @(& $Retrieval)
+						Expires = [datetime]::Now.AddMinutes(5)
+					}
+
+					$Script:CompletionCache[$Key] = $Cached
+
+				}
+
+				$Cached.Data | Get-CompletionResult -WordToComplete $Word -ValueProperty $ValueProperty -ToolTipProperty $ToolTipProperty
 
 			} $RetrievalCommand $ValueProperty $ToolTipProperty $wordToComplete
 

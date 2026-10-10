@@ -8,6 +8,7 @@
 	Shared filtering and formatting for the module's argument completers.
 	Emits one CompletionResult for each input object where the value of the specified
 	property starts with the word being completed (case-insensitive).
+	A leading backslash on the value is optional, so location paths match by name.
 	Values containing whitespace or special characters are single quoted.
 
 	.PARAMETER InputObject
@@ -62,7 +63,7 @@
 
 			$Value = "$($Item.$ValueProperty)"
 
-			if ((-not $Value) -or ($Value -notlike $Pattern)) { continue }
+			if ((-not $Value) -or (($Value -notlike $Pattern) -and ($Value.TrimStart('\') -notlike $Pattern))) { continue }
 
 			$CompletionText = if ($Value -match '[\s''"`$#;,(){}@&|<>]') { "'{0}'" -f ($Value -replace "'", "''") } else { $Value }
 

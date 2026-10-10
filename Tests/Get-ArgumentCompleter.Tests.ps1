@@ -50,6 +50,7 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 			$PV = $Script:PV
 			$Script:PV = [PSCustomObject]@{ user = 'SomeUser' }
+			$Script:CompletionCache = @{ }
 
 			Mock Get-PVSafeList -MockWith {
 				[PSCustomObject]@{ Safename = 'SomeSafe'; Location = '\' }
@@ -116,6 +117,36 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 				{ & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ } } | Should -Not -Throw
 				& $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ } | Should -BeNullOrEmpty
+
+			}
+
+			It "caches retrieval results" {
+
+				$null = & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ }
+				$Result = & $Completer 'Open-PVSafe' 'safe' 'Other' $null @{ }
+
+				$Result.CompletionText | Should -Be 'OtherSafe'
+				Should -Invoke Get-PVSafeList -Times 1 -Exactly -Scope It
+
+			}
+
+			It "refreshes expired cache entries" {
+
+				$null = & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ }
+				$Script:CompletionCache.Values | ForEach-Object { $PSItem.Expires = [datetime]::Now.AddSeconds(-1) }
+				$null = & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ }
+
+				Should -Invoke Get-PVSafeList -Times 2 -Exactly -Scope It
+
+			}
+
+			It "caches results separately for each vault user" {
+
+				$null = & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ }
+				$Script:PV = [PSCustomObject]@{ user = 'OtherUser' }
+				$null = & $Completer 'Open-PVSafe' 'safe' 'Some' $null @{ }
+
+				Should -Invoke Get-PVSafeList -Times 2 -Exactly -Scope It
 
 			}
 

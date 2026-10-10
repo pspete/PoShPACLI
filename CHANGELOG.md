@@ -32,6 +32,7 @@ All notable changes to this project will be documented in this file.
   - Coverage published to Codecov in JaCoCo format; Coveralls removed.
   - Tests no longer overwrite `PV_Configuration.xml` in the user profile.
 - Tab completion of vault values when connected to a vault.
+  - Results cached for 5 minutes per vault, user and session.
   - `safe`, `safeName`: safe names.
   - `destUser`, `owner`, `member`, `trusterName`: user and group names.
   - `group`: group names.

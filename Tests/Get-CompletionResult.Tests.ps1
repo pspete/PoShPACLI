@@ -102,6 +102,15 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 			}
 
+			It "matches values without leading backslash" {
+
+				$Locations = [PSCustomObject]@{ Location = '\System' }
+
+				($Locations | Get-CompletionResult -WordToComplete 'Sys' -ValueProperty Location).CompletionText | Should -Be '\System'
+				($Locations | Get-CompletionResult -WordToComplete '\Sys' -ValueProperty Location).CompletionText | Should -Be '\System'
+
+			}
+
 			It "sets result type to ParameterValue" {
 
 				($InputObj | Get-CompletionResult -WordToComplete 'Sys' -ValueProperty Safename).ResultType | Should -Be 'ParameterValue'

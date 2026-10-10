@@ -94,7 +94,8 @@ When connected to a vault, pressing `Tab` completes existing names from the vaul
 | `location`                                   | Location paths        |
 | `networkArea`                                | Network area names    |
 
-Each completion runs a PACLI list command against the vault.
+Results are retrieved from the vault with a PACLI list command and cached for 5 minutes per vault, user and session.
+Locations complete with or without the leading `\`.
 Parameters which take a new name (e.g. `New-PVSafe -safe`) are not completed.
 
 ```powershell
