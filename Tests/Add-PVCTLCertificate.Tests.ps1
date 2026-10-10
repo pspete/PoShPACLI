@@ -72,6 +72,25 @@ Describe $FunctionName {
 
 			}
 
+			It "does not include vault or user in pacli arguments" {
+
+				$PV = $Script:PV
+				$Script:PV = [PSCustomObject]@{ vault = "SomeVault"; user = "SomeUser"; sessionID = 1 }
+
+				try {
+
+					$InputObj | Add-PVCTLCertificate
+
+				} finally { $Script:PV = $PV }
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					($CommandParameters -notmatch 'vault=') -and ($CommandParameters -notmatch 'user=')
+
+				}
+
+			}
+
 		}
 
 	}
