@@ -4,14 +4,14 @@
 
 **PowerShell module for the CyberArk PACLI command line utility**
 
-[![appveyor][]][av-site] [![tests][]][tests-site] [![codefactor][]][cf-site] [![codecov][]][codecov-link] [![psgallery][]][ps-site] [![downloads][]][ps-site] [![license][]][license-link]
+[![build][]][build-site] [![dev][]][dev-site] [![codefactor][]][cf-site] [![codecov][]][codecov-link] [![psgallery][]][ps-site] [![downloads][]][ps-site] [![license][]][license-link]
 
-[appveyor]:https://ci.appveyor.com/api/projects/status/0kmmudd6y4i886eo/branch/master?svg=true
-[av-site]:https://ci.appveyor.com/project/pspete/poshpacli/branch/master
+[build]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml/badge.svg?branch=master&event=push
+[build-site]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml?query=branch%3Amaster
+[dev]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml/badge.svg?branch=dev&event=push
+[dev-site]:https://github.com/pspete/PoShPACLI/actions/workflows/ci.yml?query=branch%3Adev
 [psgallery]:https://img.shields.io/powershellgallery/v/PoShPACLI.svg
 [ps-site]:https://www.powershellgallery.com/packages/PoShPACLI
-[tests]:https://img.shields.io/appveyor/tests/pspete/poshpacli.svg
-[tests-site]:https://ci.appveyor.com/project/pspete/poshpacli
 [downloads]:https://img.shields.io/powershellgallery/dt/poshpacli.svg?color=blue
 [cf-site]:https://www.codefactor.io/repository/github/pspete/poshpacli
 [codefactor]:https://www.codefactor.io/repository/github/pspete/poshpacli/badge
@@ -36,7 +36,7 @@ PoShPACLI runs CyberArk PACLI commands as PowerShell functions. Results come bac
 
 ## Features
 
-- **One function per PACLI command**: 116 functions with full comment-based help (`Get-Help <Function> -Full`).
+- **One function per PACLI command**: 116 functions with full help (`Get-Help <Function> -Full`).
 - **Session values remembered**: `sessionID`, `vault` and `user` are kept by the module and added to every command for you.
 - **Object output**: list commands return typed objects with formatting, ready for the pipeline.
 - **Tab completion**: safe, user, group, location and network area names complete from the connected vault.
