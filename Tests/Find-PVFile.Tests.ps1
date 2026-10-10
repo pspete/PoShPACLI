@@ -51,7 +51,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = $((((1..32) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
+						StdOut   = (1..7 | ForEach-Object { '"' + ((1..32) -join '","') + '"' }) -join "`r`n"
 						ExitCode = 0
 					}
 				}
@@ -61,6 +61,12 @@ Describe $FunctionName {
 			It "executes without exception" {
 
 				{ $InputObj | Find-PVFile } | Should Not throw
+			}
+
+			It "outputs expected number of objects" {
+
+				@($InputObj | Find-PVFile) | Should HaveCount 7
+
 			}
 
 			It "invokes expected pacli command" {

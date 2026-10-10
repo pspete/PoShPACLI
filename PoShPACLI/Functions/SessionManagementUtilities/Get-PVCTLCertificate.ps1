@@ -42,15 +42,12 @@
 			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = $Return.StdOut | ConvertFrom-PacliOutput
+				$Results = @($Return.StdOut | ConvertFrom-PacliOutput)
 
 				If ($Results) {
 
 					#loop through results
-					For ($i = 0 ; $i -lt $Results.length ; $i += 3) {
-
-						#Get Range from array
-						$values = $Results[$i..($i + 3)]
+					foreach ($values in $Results) {
 
 						#Output Object
 						[PSCustomObject] @{

@@ -3,12 +3,19 @@
 	<#
 	.SYNOPSIS
 	Converts the quote enclosed, comma separated string returned by certain
-	PACLI commands to unquoted string values contained in an array.
+	PACLI commands to arrays of unquoted string values, one array per record.
 
 	.DESCRIPTION
 	The PACLI executable returns raw string data from certain functions.
-	Passing the output through this function allows the  values to be
-	extracted from the string and returned in an array for further processing.
+	Passing the output through this function allows the values to be
+	extracted from the string and returned for further processing.
+
+	Each record returned by PACLI is output as a single string array.
+	Records are delimited by a closing quote, a line break and an opening quote.
+	Values are delimited by "," so values containing line breaks or quotes
+	are preserved.
+
+	Records which are not quote enclosed are ignored.
 
 	.PARAMETER pacliOutput
 	The string Returned from the PACLI executable.
@@ -16,31 +23,21 @@
 	PACLI commands which return output should be called with the 'ENCLOSE'
 	output option to ensure all values are enclosed in quotation marks.
 
-	All whitespace should be removed from the PACLI output via a
-	Select-String -Pattern "\S" pattern match in order to prevent blank lines
-	in the PACLI output affecting the number of property values returned by
-	this function.
-
-	.PARAMETER regEx
-	A Regular Expression String. This is applied to the quoted output from
-	the PACLI function to extract the quoted values from the string.
-
-	The default Regular Expression used is: '"(.*?)"(?=,|$)'
-
 	.EXAMPLE
-	foreach ($pacliLine in $pacliOutPut){
+	$Results = @($Return.StdOut | ConvertFrom-PacliOutput)
 
-		$returnValues = $pacliLine | ConvertFrom-PacliOutput
+	foreach ($values in $Results) {
+
+		$values[0]
 
 	}
 
-	Outputs an array containing the returned property values for each line
-	of PACLI output passed to this function.
+	Outputs the first property value of each record in the PACLI output.
 
 	.EXAMPLE
-	$Results = ($Return.StdOut | ConvertFrom-PacliOutput)
+	$Return.StdOut | ConvertFrom-PacliOutput | Select-Object -First 1
 
-	Converts StdOut of PACLI output
+	Outputs the property values of the first record in the PACLI output.
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -48,22 +45,25 @@
 	#>
 
 	[CmdLetBinding()]
+	[OutputType('System.String[]')]
 	param(
 
 		[Parameter(
 			Mandatory = $True, ValueFromPipeline = $True)]
-		[string]$pacliOutput,
-
-		[Parameter(
-			Mandatory = $False, ValueFromPipeline = $False)]
-		[string]$regEx = '"(.*?)"(?=,|$)'
+		[string]$pacliOutput
 	)
 
 	Begin { }
 
 	Process {
 
-		(($pacliOutput | Select-String -Pattern "\S") -split "\r\n" | Select-String -Pattern $regEx -AllMatches).Matches.Groups.Where( { $PSItem.Name -eq 1 }).Value
+		$pacliOutput.Trim() -split '(?<=")\s*[\r\n]+\s*(?=")' |
+			Where-Object { $PSItem -match '(?s)^".*"$' } |
+			ForEach-Object {
+
+				, [string[]]($PSItem.Substring(1, $PSItem.Length - 2) -split '","')
+
+			}
 
 	}
 

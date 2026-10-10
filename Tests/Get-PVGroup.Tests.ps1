@@ -48,7 +48,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = $((((1..6) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
+						StdOut   = (1..7 | ForEach-Object { '"' + ((1..6) -join '","') + '"' }) -join "`r`n"
 						ExitCode = 0
 					}
 				}
@@ -58,6 +58,12 @@ Describe $FunctionName {
 			It "executes without exception" {
 
 				{ $InputObj | Get-PVGroup } | Should Not throw
+
+			}
+
+			It "outputs expected number of objects" {
+
+				@($InputObj | Get-PVGroup) | Should HaveCount 7
 
 			}
 

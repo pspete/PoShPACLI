@@ -58,16 +58,13 @@
 			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = $Return.StdOut | ConvertFrom-PacliOutput
+				$Results = @($Return.StdOut | ConvertFrom-PacliOutput)
 
-				#Ensure expected number of property values
-				If ($($Results.length) % 11 -eq 0) {
+				#if records returned
+				If ($Results) {
 
 					#loop through results
-					For ($i = 0 ; $i -lt $Results.length ; $i += 11) {
-
-						#Get Range from array
-						$values = $Results[$i..($i + 11)]
+					foreach ($values in $Results) {
 
 						#Output Object
 						[PSCustomObject] @{

@@ -42,7 +42,7 @@ Describe $FunctionName {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = $((((1..19) * 7 -join '" "') -replace '^', '"') -replace '$', '"')
+						StdOut   = (1..7 | ForEach-Object { '"' + ((1..19) -join '","') + '"' }) -join "`r`n"
 						ExitCode = 0
 					}
 				}
@@ -52,6 +52,12 @@ Describe $FunctionName {
 			It "executes without exception" {
 
 				{Get-PVSafeList} | Should Not throw
+
+			}
+
+			It "outputs expected number of objects" {
+
+				@(Get-PVSafeList) | Should HaveCount 7
 
 			}
 

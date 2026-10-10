@@ -76,16 +76,13 @@
 			if ($Return.StdOut) {
 
 				#Convert Output to array
-				$Results = $Return.StdOut | ConvertFrom-PacliOutput
+				$Results = @($Return.StdOut | ConvertFrom-PacliOutput)
 
-				#Ensure expected number of property values
-				If ($($Results.length) % 14 -eq 0) {
+				#if records returned
+				If ($Results) {
 
 					#loop through results
-					For ($i = 0 ; $i -lt $Results.length ; $i += 14) {
-
-						#Get User Range from array
-						$values = $Results[$i..($i + 14)]
+					foreach ($values in $Results) {
 
 						#output object for each user
 						[PSCustomObject] @{

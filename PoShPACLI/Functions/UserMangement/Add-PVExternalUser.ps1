@@ -78,7 +78,7 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						'Username' = $Results
+						'Username' = $Results[0]
 
 					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User.External
 

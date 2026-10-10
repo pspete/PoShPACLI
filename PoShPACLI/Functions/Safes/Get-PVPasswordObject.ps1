@@ -182,7 +182,7 @@
 					#Output Object
 					[PSCustomObject] @{
 
-						'Password' = $Results
+						'Password' = $Results -join '","'
 
 					} | Add-ObjectDetail -TypeName pacli.PoShPACLI.Password
 
