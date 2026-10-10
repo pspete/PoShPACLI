@@ -62,6 +62,18 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 			}
 
+			It "sends requestUsageType CHECK_DONT_USE unquoted" {
+
+				$InputObj | Open-PVSafe -requestUsageType CHECK_DONT_USE
+
+				Should -Invoke Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -match 'requestUsageType=CHECK_DONT_USE '
+
+				}
+
+			}
+
 		}
 
 	}

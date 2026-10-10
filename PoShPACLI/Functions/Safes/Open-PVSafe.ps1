@@ -20,7 +20,7 @@
 		necessary, or use the confirmation if it has been granted to
 		open the Safe/file/password.
 
-		CHECK_DON’T_USE – check if a request has been sent or,
+		CHECK_DONT_USE – check if a request has been sent or,
 		if not, create one and send an error. If a request is not
 		needed, carry out the action.
 
@@ -80,7 +80,7 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[ValidateSet('REQUEST_AND_USE', 'CHECK_DON`T_USE', 'USE_ONLY')]
+		[ValidateSet('REQUEST_AND_USE', 'CHECK_DONT_USE', 'USE_ONLY')]
 		[string]$requestUsageType,
 
 		[Parameter(

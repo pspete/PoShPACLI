@@ -15,6 +15,12 @@ All notable changes to this project will be documented in this file.
   - `New-PVUser`, `Set-PVUser`: `requireSecureIDAuth` renamed to `requireSecurIDAuth`
   - `New-PVSafe`: `alwaysNeedsConfirmation` renamed to `alwaysNeedConfirmation`
   - `New-PVSafe`: duplicate `safeKey` parameter removed; now an alias of `keyFilePath`
+- Fix `requestUsageType` value `CHECK_DONT_USE` rejected by PACLI
+  - `Open-PVSafe`, `Get-PVFile`, `Get-PVPasswordObject`: previously `CHECK_DON'T_USE`.
+- Fix `Open-PVSafe` error "Cannot index into a null array" when PACLI returns no output ([#73](https://github.com/pspete/PoShPACLI/issues/73))
+- New output properties returned by current PACLI versions
+  - `Get-PVFileList`: `CategoryModificationDate` ([#77](https://github.com/pspete/PoShPACLI/pull/77))
+  - `Get-PVUser`: `AuthMethod`
 - Fix `New-PVPassword` only processing the last pipeline input object.
 - `Connect-PVVault` warns when `password` is used ([#76](https://github.com/pspete/PoShPACLI/issues/76))
   - PACLI receives the password in clear text on its command line; use a logon file to avoid this.

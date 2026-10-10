@@ -38,7 +38,7 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 
 				Mock Invoke-PACLICommand -MockWith {
 					[PSCustomObject]@{
-						StdOut   = (1..7 | ForEach-Object { '"' + ((1..65) -join '","') + '"' }) -join "`r`n"
+						StdOut   = (1..7 | ForEach-Object { '"' + ((1..66) -join '","') + '"' }) -join "`r`n"
 						ExitCode = 0
 					}
 				}
@@ -54,6 +54,12 @@ Describe ((Split-Path -Leaf $PSCommandPath) -Replace '.Tests.ps1') {
 			It "outputs expected number of objects" {
 
 				@($InputObj | Get-PVUser) | Should -HaveCount 7
+
+			}
+
+			It "outputs AuthMethod" {
+
+				($InputObj | Get-PVUser)[0].AuthMethod | Should -Be 66
 
 			}
 

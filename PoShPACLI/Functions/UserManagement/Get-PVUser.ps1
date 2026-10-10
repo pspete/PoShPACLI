@@ -117,6 +117,7 @@
 							'UserTypeID'                = $values[62]
 							'NonAllowedClients'         = $values[63]
 							'EnableComponentMonitoring' = $values[64]
+							'AuthMethod'                = $values[65]
 
 						} | Add-ObjectDetail -TypeName pacli.PoShPACLI.User
 

@@ -80,6 +80,7 @@
 							'LockedByGW'       = $values[16]
 							'ValidationStatus' = $values[17]
 							'LockedByUserID'   = $values[18]
+							'CategoryModificationDate' = $values[19]
 							'Safename'         = $safe
 							'Folder'           = $folder
 
