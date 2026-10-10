@@ -1,4 +1,4 @@
-Function Get-PVConfiguration {
+function Get-PVConfiguration {
 	<#
 	.SYNOPSIS
 	Gets variable value from the script scope which holds default values for PACLI operations.
@@ -15,9 +15,8 @@ Function Get-PVConfiguration {
 	[CmdletBinding()]
 	Param()
 
-	Begin { }
 
-	Process {
+	process {
 
 		try {
 
@@ -32,6 +31,5 @@ Function Get-PVConfiguration {
 
 	}
 
-	End { }
 
 }

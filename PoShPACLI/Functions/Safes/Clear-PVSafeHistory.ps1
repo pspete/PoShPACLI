@@ -1,4 +1,4 @@
-﻿Function Clear-PVSafeHistory {
+﻿function Clear-PVSafeHistory {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,9 +30,9 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CLEARSAFEHISTORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand CLEARSAFEHISTORY -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

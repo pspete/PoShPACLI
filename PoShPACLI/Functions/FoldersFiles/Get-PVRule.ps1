@@ -1,4 +1,4 @@
-﻿Function Get-PVRule {
+﻿function Get-PVRule {
 
 	<#
 	.SYNOPSIS
@@ -28,7 +28,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -47,9 +47,9 @@
 		[switch]$isFolder
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RULESLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand RULESLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

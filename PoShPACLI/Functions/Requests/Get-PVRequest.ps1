@@ -1,4 +1,4 @@
-﻿Function Get-PVRequest {
+﻿function Get-PVRequest {
 
 	<#
 	.SYNOPSIS
@@ -68,7 +68,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -125,9 +125,9 @@
 		[string]$objectsType
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath REQUESTSLIST "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand REQUESTSLIST -CommandParameters "$($PSBoundParameters |
             ConvertTo-ParameterString -donotQuote requestsType,displayInvalid,objectsType) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

@@ -1,4 +1,4 @@
-﻿Function Set-PVSafeOwner {
+﻿function Set-PVSafeOwner {
 
 	<#
 	.SYNOPSIS
@@ -112,7 +112,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -259,9 +259,9 @@
 		[switch]$renameObject
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEOWNER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand UPDATEOWNER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

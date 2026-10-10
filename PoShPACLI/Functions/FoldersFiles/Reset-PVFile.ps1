@@ -1,4 +1,4 @@
-﻿Function Reset-PVFile {
+﻿function Reset-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -48,9 +48,9 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RESETFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand -PacliCommand RESETFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

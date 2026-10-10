@@ -1,4 +1,4 @@
-﻿Function Get-PVLocation {
+﻿function Get-PVLocation {
 
 	<#
 	.SYNOPSIS
@@ -17,12 +17,12 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param()
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCATIONSLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand LOCATIONSLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

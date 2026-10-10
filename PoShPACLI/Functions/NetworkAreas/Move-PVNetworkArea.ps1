@@ -1,4 +1,4 @@
-﻿Function Move-PVNetworkArea {
+﻿function Move-PVNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -24,7 +24,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$newLocation
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath MOVENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand MOVENETWORKAREA -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

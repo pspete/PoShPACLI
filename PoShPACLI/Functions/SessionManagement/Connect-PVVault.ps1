@@ -1,4 +1,4 @@
-﻿Function Connect-PVVault {
+﻿function Connect-PVVault {
 
 	<#
 	.SYNOPSIS
@@ -59,7 +59,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -98,7 +98,7 @@
 		[switch]$radius
 	)
 
-	PROCESS {
+	process {
 
 		#deal with password SecureString
 		if ($PSBoundParameters.ContainsKey("password")) {
@@ -109,7 +109,7 @@
 
 
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOGON -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString -NoUser)
+		$Return = Invoke-PACLICommand -PacliCommand LOGON -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoUser)
 
 		if ($Return.ExitCode -eq 0) {
 

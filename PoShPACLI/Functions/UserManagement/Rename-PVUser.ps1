@@ -1,4 +1,4 @@
-﻿Function Rename-PVUser {
+﻿function Rename-PVUser {
 
 	<#
     .SYNOPSIS
@@ -23,7 +23,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$newName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMEUSER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand RENAMEUSER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

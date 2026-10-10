@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeOwner {
+﻿function Get-PVSafeOwner {
 
 	<#
 	.SYNOPSIS
@@ -28,7 +28,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -48,9 +48,9 @@
 		[switch]$includeGroupMembers
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OWNERSLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand OWNERSLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

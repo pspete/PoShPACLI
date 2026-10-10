@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeActivity {
+﻿function Get-PVSafeActivity {
 
 	<#
 	.SYNOPSIS
@@ -102,7 +102,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -190,7 +190,7 @@
 		[int]$options
 	)
 
-	PROCESS {
+	process {
 
 		('fromDate', 'toDate') | ForEach-Object {
 
@@ -202,7 +202,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTSAFE "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand INSPECTSAFE -CommandParameters "$($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote logdays,categoryFilterType,maxRecords,options) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

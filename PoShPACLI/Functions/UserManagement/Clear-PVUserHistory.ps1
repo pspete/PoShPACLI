@@ -1,4 +1,4 @@
-﻿Function Clear-PVUserHistory {
+﻿function Clear-PVUserHistory {
 
 	<#
 	.SYNOPSIS
@@ -17,12 +17,12 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param()
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CLEARUSERHISTORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand CLEARUSERHISTORY -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

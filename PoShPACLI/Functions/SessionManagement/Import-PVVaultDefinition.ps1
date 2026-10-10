@@ -1,4 +1,4 @@
-﻿Function Import-PVVaultDefinition {
+﻿function Import-PVVaultDefinition {
 
 	<#
 	.SYNOPSIS
@@ -24,7 +24,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,11 +38,11 @@
 		[string]$vault
 	)
 
-	PROCESS {
+	process {
 
 
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINEFROMFILE $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+		$Return = Invoke-PACLICommand -PacliCommand DEFINEFROMFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 		if ($Return.ExitCode -eq 0) {
 

@@ -1,4 +1,4 @@
-﻿Function Remove-PVUser {
+﻿function Remove-PVUser {
 
 	<#
     .SYNOPSIS
@@ -20,7 +20,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -31,9 +31,9 @@
 		[string]$destUser
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEUSER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETEUSER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

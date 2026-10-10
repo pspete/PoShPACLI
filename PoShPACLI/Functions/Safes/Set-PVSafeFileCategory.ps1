@@ -1,4 +1,4 @@
-﻿Function Set-PVSafeFileCategory {
+﻿function Set-PVSafeFileCategory {
 
 	<#
 	.SYNOPSIS
@@ -37,7 +37,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -73,9 +73,9 @@
 		[switch]$required
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand UPDATESAFEFILECATEGORY -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

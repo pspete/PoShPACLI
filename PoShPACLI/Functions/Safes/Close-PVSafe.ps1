@@ -1,4 +1,4 @@
-﻿Function Close-PVSafe {
+﻿function Close-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,9 +30,9 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CLOSESAFE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand CLOSESAFE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

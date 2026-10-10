@@ -1,4 +1,4 @@
-﻿Function Disconnect-PVVault {
+﻿function Disconnect-PVVault {
 
 	<#
 	.SYNOPSIS
@@ -17,12 +17,12 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param()
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath LOGOFF $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand LOGOFF -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 	}
 

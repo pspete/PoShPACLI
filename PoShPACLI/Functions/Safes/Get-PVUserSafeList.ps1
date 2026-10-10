@@ -1,4 +1,4 @@
-﻿Function Get-PVUserSafeList {
+﻿function Get-PVUserSafeList {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,9 +30,9 @@
 		[String]$owner
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OWNERSAFESLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand OWNERSAFESLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

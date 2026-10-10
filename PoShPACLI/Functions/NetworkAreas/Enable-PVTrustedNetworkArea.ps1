@@ -1,4 +1,4 @@
-﻿Function Enable-PVTrustedNetworkArea {
+﻿function Enable-PVTrustedNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$networkArea
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ACTIVATETRUSTEDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ACTIVATETRUSTEDNETWORKAREA -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

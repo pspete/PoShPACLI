@@ -1,4 +1,4 @@
-﻿Function New-PVVaultDefinition {
+﻿function New-PVVaultDefinition {
 
 	<#
 	.SYNOPSIS
@@ -86,7 +86,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -187,9 +187,9 @@
 		[switch]$allowSSCFor3PartyAuth
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath DEFINE -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser `
+		$Return = Invoke-PACLICommand -PacliCommand DEFINE -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser `
 				-doNotQuote proxyType, port, timeout, reconnectPeriod, proxyPort, numOfRecordsPerSend, numOfRecordsPerChunk)
 
 		if ($Return.ExitCode -eq 0) {

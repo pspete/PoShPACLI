@@ -1,4 +1,4 @@
-﻿Function Set-PVUser {
+﻿function Set-PVUser {
 
 	<#
 	.SYNOPSIS
@@ -209,7 +209,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -482,9 +482,9 @@
 		[switch]$enableComponentMonitoring
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEUSER -SecretParameters $PSBoundParameters $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand UPDATEUSER -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote authType, retention, quota)
 
 	}

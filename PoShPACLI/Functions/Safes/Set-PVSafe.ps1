@@ -1,4 +1,4 @@
-﻿Function Set-PVSafe {
+﻿function Set-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -155,7 +155,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -309,7 +309,7 @@
 		[string]$allowedFileTypes
 	)
 
-	PROCESS {
+	process {
 
 		Switch ([array]$PSBoundParameters.Keys) {
 
@@ -319,7 +319,7 @@
 
 		}
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATESAFE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand UPDATESAFE -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay, dailyVersions,
 			monthlyVersions, yearlyVersions, logRetention, fileRetention, requestsRetention,
 			safeOptions, securityLevelParm, confirmationCount, maxFileSize)

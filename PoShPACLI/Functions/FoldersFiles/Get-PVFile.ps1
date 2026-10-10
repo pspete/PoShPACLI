@@ -1,4 +1,4 @@
-﻿Function Get-PVFile {
+﻿function Get-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -92,7 +92,7 @@
 	be returned as an error.
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -176,9 +176,9 @@
 		[switch]$executeRequest
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEFILE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand RETRIEVEFILE -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote requestUsageType, requestAccessType)
 	}
 

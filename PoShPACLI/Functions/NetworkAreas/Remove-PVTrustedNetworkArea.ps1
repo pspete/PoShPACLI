@@ -1,4 +1,4 @@
-﻿Function Remove-PVTrustedNetworkArea {
+﻿function Remove-PVTrustedNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -39,9 +39,9 @@
 		[string]$networkArea
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETETRUSTEDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETETRUSTEDNETWORKAREA -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Move-PVFolder {
+﻿function Move-PVFolder {
 
 	<#
 	.SYNOPSIS
@@ -28,7 +28,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -48,9 +48,9 @@
 		[string]$newLocation
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath MOVEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand MOVEFOLDER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

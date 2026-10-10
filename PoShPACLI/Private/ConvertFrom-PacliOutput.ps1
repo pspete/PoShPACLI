@@ -1,4 +1,4 @@
-﻿Function ConvertFrom-PacliOutput {
+﻿function ConvertFrom-PacliOutput {
 
 	<#
 	.SYNOPSIS
@@ -44,7 +44,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	[OutputType('System.String[]')]
 	param(
 
@@ -53,9 +53,8 @@
 		[string]$pacliOutput
 	)
 
-	Begin { }
 
-	Process {
+	process {
 
 		$pacliOutput.Trim() -split '(?<=")\s*[\r\n]+\s*(?=")' |
 			Where-Object { $PSItem -match '(?s)^".*"$' } |
@@ -67,6 +66,5 @@
 
 	}
 
-	End { }
 
 }

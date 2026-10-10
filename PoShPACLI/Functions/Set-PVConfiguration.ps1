@@ -1,4 +1,4 @@
-Function Set-PVConfiguration {
+function Set-PVConfiguration {
 	<#
 	.SYNOPSIS
 	Sets a variable in the script scope which holds default values for PACLI operations.
@@ -57,13 +57,13 @@ Function Set-PVConfiguration {
 
 	)
 
-	Begin {
+	begin {
 
 		$Defaults = [pscustomobject]@{ }
 
 	}
 
-	Process {
+	process {
 
 		If ($PSBoundParameters.Keys -notcontains "ClientPath") {
 
@@ -108,6 +108,5 @@ Function Set-PVConfiguration {
 
 	}
 
-	End { }
 
 }

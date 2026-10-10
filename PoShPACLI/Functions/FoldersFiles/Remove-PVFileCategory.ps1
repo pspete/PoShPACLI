@@ -1,4 +1,4 @@
-﻿Function Remove-PVFileCategory {
+﻿function Remove-PVFileCategory {
 
 	<#
 	.SYNOPSIS
@@ -30,7 +30,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -58,9 +58,9 @@
 		[string]$category
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETEFILECATEGORY -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

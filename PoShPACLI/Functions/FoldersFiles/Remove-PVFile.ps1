@@ -1,4 +1,4 @@
-﻿Function Remove-PVFile {
+﻿function Remove-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -28,7 +28,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -50,9 +50,9 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETEFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Add-PVSafeGWAccount {
+﻿function Add-PVSafeGWAccount {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$gwAccount
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFESHARE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDSAFESHARE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

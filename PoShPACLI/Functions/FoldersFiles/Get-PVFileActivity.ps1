@@ -1,4 +1,4 @@
-﻿Function Get-PVFileActivity {
+﻿function Get-PVFileActivity {
 
 	<#
 	.SYNOPSIS
@@ -29,7 +29,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -55,10 +55,10 @@
 		[int]$logDays
 	)
 
-	PROCESS {
+	process {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath INSPECTFILE "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand INSPECTFILE -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote logDays) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

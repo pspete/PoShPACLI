@@ -1,4 +1,4 @@
-﻿Function Lock-PVUser {
+﻿function Lock-PVUser {
 
 	<#
 	.SYNOPSIS
@@ -17,12 +17,12 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param()
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath LOCK $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand LOCK -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

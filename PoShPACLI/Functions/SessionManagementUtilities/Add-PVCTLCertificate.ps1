@@ -1,4 +1,4 @@
-﻿Function Add-PVCTLCertificate {
+﻿function Add-PVCTLCertificate {
 
 	<#
 	.SYNOPSIS
@@ -25,7 +25,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -39,9 +39,9 @@
 		[string]$certFileName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CTLADDCERT $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+		$Null = Invoke-PACLICommand -PacliCommand CTLADDCERT -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 	}
 

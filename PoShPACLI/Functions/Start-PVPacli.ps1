@@ -1,4 +1,4 @@
-﻿Function Start-PVPacli {
+﻿function Start-PVPacli {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -41,11 +41,15 @@
 		[string]$ctlFileName
 	)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath INIT $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser -NoSessionID)
+	process {
 
-	if ($Return.ExitCode -eq 0) {
+		$Return = Invoke-PACLICommand -PacliCommand INIT -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser -NoSessionID)
 
-		Set-PVConfiguration -sessionID $sessionID
+		if ($Return.ExitCode -eq 0) {
+
+			Set-PVConfiguration -sessionID $sessionID
+
+		}
 
 	}
 

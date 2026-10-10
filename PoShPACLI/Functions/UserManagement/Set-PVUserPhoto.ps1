@@ -1,4 +1,4 @@
-﻿Function Set-PVUserPhoto {
+﻿function Set-PVUserPhoto {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -47,9 +47,9 @@
 		[string]$localFile
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath PUTUSERPHOTO $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand PUTUSERPHOTO -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

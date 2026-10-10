@@ -1,4 +1,4 @@
-﻿Function Remove-PVSafe {
+﻿function Remove-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -26,7 +26,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
@@ -37,9 +37,9 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETESAFE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

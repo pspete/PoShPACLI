@@ -1,4 +1,4 @@
-﻿Function Set-PVLDAPBranch {
+﻿function Set-PVLDAPBranch {
 
 	<#
 	.SYNOPSIS
@@ -35,7 +35,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
@@ -71,9 +71,9 @@
 		[string]$ldapGroupMatch
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHUPDATE "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand LDAPBRANCHUPDATE -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote updateBranchID) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

@@ -1,4 +1,4 @@
-﻿Function Unlock-PVFile {
+﻿function Unlock-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -47,9 +47,9 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNLOCKFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand -PacliCommand UNLOCKFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

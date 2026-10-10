@@ -1,4 +1,4 @@
-﻿Function Remove-PVNetworkAreaAddress {
+﻿function Remove-PVNetworkAreaAddress {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -38,9 +38,9 @@
 		[string]$ipAddress
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEAREAADDRESS $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETEAREAADDRESS -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

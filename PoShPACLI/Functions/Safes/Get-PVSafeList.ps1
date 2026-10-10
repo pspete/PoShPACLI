@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeList {
+﻿function Get-PVSafeList {
 
 	<#
 	.SYNOPSIS
@@ -25,7 +25,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -39,9 +39,9 @@
 		[switch]$includeSubLocations
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFESLIST "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand SAFESLIST -CommandParameters "$($PSBoundParameters |
             ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		#if result(s) returned

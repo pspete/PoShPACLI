@@ -1,4 +1,4 @@
-﻿Function Set-PVUserPassword {
+﻿function Set-PVUserPassword {
 
 	<#
     .SYNOPSIS
@@ -23,7 +23,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -38,9 +38,9 @@
 		[securestring]$newPassword
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath SETPASSWORD -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand SETPASSWORD -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

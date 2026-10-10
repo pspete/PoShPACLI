@@ -1,4 +1,4 @@
-﻿Function Restore-PVFolder {
+﻿function Restore-PVFolder {
 
 	<#
 	.SYNOPSIS
@@ -25,7 +25,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -40,9 +40,9 @@
 		[string]$folder
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand UNDELETEFOLDER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Get-PVUserPhoto {
+﻿function Get-PVUserPhoto {
 
 	<#
 	.SYNOPSIS
@@ -27,7 +27,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -47,9 +47,9 @@
 		[string]$localFile
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath GETUSERPHOTO $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand GETUSERPHOTO -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

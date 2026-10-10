@@ -1,4 +1,4 @@
-﻿Function Remove-PVCTLCertificate {
+﻿function Remove-PVCTLCertificate {
 
 	<#
 	.SYNOPSIS
@@ -25,7 +25,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -40,9 +40,9 @@
 		[string]$certFileName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CTLREMOVECERT $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+		$Null = Invoke-PACLICommand -PacliCommand CTLREMOVECERT -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 	}
 

@@ -1,4 +1,4 @@
-﻿Function New-PVLocation {
+﻿function New-PVLocation {
 
 	<#
 	.SYNOPSIS
@@ -25,7 +25,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -40,9 +40,9 @@
 		[int]$quota
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDLOCATION $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand ADDLOCATION -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote quota)
 
 

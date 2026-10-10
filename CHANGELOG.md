@@ -26,6 +26,8 @@ All notable changes to this project will be documented in this file.
 - `Get-PVPasswordObject`: new `-AsSecureString` switch outputs the password as a SecureString.
 - Fix `New-PVUser` sending `password` unquoted.
 - Fix `Get-PVSafeEvent` returning no output for events containing XML data; `Data` property now contains the event XML.
+- Code style modernised: `::new()` over `New-Object`, `$null =` over `Out-Null`, named `Invoke-PACLICommand` arguments, consistent keyword casing, empty `begin`/`end` blocks removed.
+- `UserMangement` function folder renamed to `UserManagement`.
 
 ## [2.1.27] - 2020-04-01
 

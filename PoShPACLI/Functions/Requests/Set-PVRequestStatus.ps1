@@ -1,4 +1,4 @@
-﻿Function Set-PVRequestStatus {
+﻿function Set-PVRequestStatus {
 
 	<#
 	.SYNOPSIS
@@ -29,7 +29,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
@@ -55,10 +55,10 @@
 		[string]$reason
 	)
 
-	PROCESS {
+	process {
 
 		#ConvertTo-ParameterString usually remove "Confirm", which conflicts with a parameter of the function
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CONFIRMREQUEST "$($($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand CONFIRMREQUEST -CommandParameters "$($($PSBoundParameters |
 		ConvertTo-ParameterString -doNotQuote requestID) -replace 'confirmRequest','confirm') OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

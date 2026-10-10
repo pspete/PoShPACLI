@@ -1,4 +1,4 @@
-﻿Function Rename-PVNetworkArea {
+﻿function Rename-PVNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -38,9 +38,9 @@
 		[string]$newName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMENETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand RENAMENETWORKAREA -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Add-PVPasswordObject {
+﻿function Add-PVPasswordObject {
 
 	<#
 	.SYNOPSIS
@@ -30,7 +30,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -55,9 +55,9 @@
 		[securestring]$password
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREPASSWORDOBJECT -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand STOREPASSWORDOBJECT -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

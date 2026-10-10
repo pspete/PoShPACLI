@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeLog {
+﻿function Get-PVSafeLog {
 
 	<#
 	.SYNOPSIS
@@ -17,12 +17,12 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param()
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFESLOG "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand SAFESLOG -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

@@ -1,4 +1,4 @@
-﻿Function Add-PVGroupMember {
+﻿function Add-PVGroupMember {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -39,9 +39,9 @@
 		[string]$member
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDGROUPMEMBER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDGROUPMEMBER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

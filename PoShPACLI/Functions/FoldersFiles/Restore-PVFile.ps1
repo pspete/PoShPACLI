@@ -1,4 +1,4 @@
-﻿Function Restore-PVFile {
+﻿function Restore-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -47,9 +47,9 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath UNDELETEFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand -PacliCommand UNDELETEFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

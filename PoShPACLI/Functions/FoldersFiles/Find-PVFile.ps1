@@ -1,4 +1,4 @@
-﻿Function Find-PVFile {
+﻿function Find-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -198,7 +198,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -359,7 +359,7 @@
 		[string]$fileCategoryValuesSeparator
 	)
 
-	PROCESS {
+	process {
 
 		('fromDate', 'toDate') | ForEach-Object {
 
@@ -372,7 +372,7 @@
 		}
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FINDFILES "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
+		$Return = Invoke-PACLICommand -PacliCommand FINDFILES -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote dateLimit,dateActionLimit,prevCount,
 					searchInAllAction,deletedOption,sizeLimit,sizeLimitType,
 						categoryListAction ) OUTPUT (ALL,ENCLOSE)"
 

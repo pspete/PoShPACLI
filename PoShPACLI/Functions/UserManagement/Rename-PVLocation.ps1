@@ -1,4 +1,4 @@
-﻿Function Rename-PVLocation {
+﻿function Rename-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -24,7 +24,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$newName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMELOCATION $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand RENAMELOCATION -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

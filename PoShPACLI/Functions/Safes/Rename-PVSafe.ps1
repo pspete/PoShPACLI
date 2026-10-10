@@ -1,4 +1,4 @@
-﻿Function Rename-PVSafe {
+﻿function Rename-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -22,7 +22,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -37,9 +37,9 @@
 		[string]$newName
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RENAMESAFE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand RENAMESAFE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

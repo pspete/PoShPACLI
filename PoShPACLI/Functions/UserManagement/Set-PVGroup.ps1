@@ -1,4 +1,4 @@
-﻿Function Set-PVGroup {
+﻿function Set-PVGroup {
 
 	<#
 	.SYNOPSIS
@@ -30,7 +30,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
@@ -56,9 +56,9 @@
 		[string]$externalGroup
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UPDATEGROUP $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand UPDATEGROUP -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 	}
 

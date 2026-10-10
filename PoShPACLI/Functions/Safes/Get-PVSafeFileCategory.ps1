@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeFileCategory {
+﻿function Get-PVSafeFileCategory {
 
 	<#
 	.SYNOPSIS
@@ -28,7 +28,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -43,9 +43,9 @@
 		[string]$category
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTSAFEFILECATEGORIES "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand LISTSAFEFILECATEGORIES -CommandParameters "$($PSBoundParameters |
             ConvertTo-ParameterString) output (ALL,ENCLOSE)"
 
 		#if result(s) returned

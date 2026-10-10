@@ -1,4 +1,4 @@
-﻿Function Unlock-PVUser {
+﻿function Unlock-PVUser {
 
 	<#
     .SYNOPSIS
@@ -20,7 +20,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -29,9 +29,9 @@
 		[securestring]$password
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath UNLOCK -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand UNLOCK -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

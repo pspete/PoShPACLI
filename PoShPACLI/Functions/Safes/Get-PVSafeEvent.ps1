@@ -1,4 +1,4 @@
-﻿Function Get-PVSafeEvent {
+﻿function Get-PVSafeEvent {
 
 	<#
 	.SYNOPSIS
@@ -45,7 +45,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -85,7 +85,7 @@
 		[switch]$caseSensitive
 	)
 
-	PROCESS {
+	process {
 
 		if ($PSBoundParameters.ContainsKey("fromDate")) {
 
@@ -93,7 +93,7 @@
 
 		}
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEEVENTSLIST "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand SAFEEVENTSLIST -CommandParameters "$($PSBoundParameters |
             ConvertTo-ParameterString -donotQuote numOfEvents) OUTPUT (ALL,ENCLOSE)"
 
 		#If data returned

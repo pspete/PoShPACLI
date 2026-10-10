@@ -1,4 +1,4 @@
-﻿Function Remove-PVRequest {
+﻿function Remove-PVRequest {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -41,9 +41,9 @@
 		[int]$requestID
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETEREQUEST $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand DELETEREQUEST -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -doNotQuote requestID)
 
 

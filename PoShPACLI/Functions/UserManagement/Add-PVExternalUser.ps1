@@ -1,4 +1,4 @@
-﻿Function Add-PVExternalUser {
+﻿function Add-PVExternalUser {
 
 	<#
 	.SYNOPSIS
@@ -31,7 +31,7 @@
 	Work required to support LDAPFullDN & Parameter Validation / Parameter Sets
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -61,9 +61,9 @@
 
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDUPDATEEXTERNALUSERENTITY "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand ADDUPDATEEXTERNALUSERENTITY -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

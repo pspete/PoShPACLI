@@ -1,4 +1,4 @@
-﻿Function Add-PVFileCategory {
+﻿function Add-PVFileCategory {
 
 	<#
 	.SYNOPSIS
@@ -33,7 +33,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -64,9 +64,9 @@
 		[string]$value
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDFILECATEGORY $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDFILECATEGORY -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Get-PVPasswordObject {
+﻿function Get-PVPasswordObject {
 
 	<#
 	.SYNOPSIS
@@ -94,7 +94,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -178,11 +178,11 @@
 		[switch]$AsSecureString
 	)
 
-	PROCESS {
+	process {
 
 		$null = $PSBoundParameters.Remove('AsSecureString')
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEPASSWORDOBJECT "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand RETRIEVEPASSWORDOBJECT -CommandParameters "$($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

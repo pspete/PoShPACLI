@@ -1,4 +1,4 @@
-﻿Function Remove-PVSafeGWAccount {
+﻿function Remove-PVSafeGWAccount {
 
 	<#
     .SYNOPSIS
@@ -25,7 +25,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -41,9 +41,9 @@
 		[string]$gwAccount
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETESAFESHARE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETESAFESHARE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

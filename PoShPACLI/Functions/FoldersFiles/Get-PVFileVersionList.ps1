@@ -1,4 +1,4 @@
-﻿Function Get-PVFileVersionList {
+﻿function Get-PVFileVersionList {
 
 	<#
 	.SYNOPSIS
@@ -27,7 +27,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -48,10 +48,10 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILEVERSIONSLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand FILEVERSIONSLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

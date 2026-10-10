@@ -1,4 +1,4 @@
-﻿Function Remove-PVLocation {
+﻿function Remove-PVLocation {
 
 	<#
     .SYNOPSIS
@@ -21,7 +21,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -31,9 +31,9 @@
 		[string]$location
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETELOCATION $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand DELETELOCATION -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

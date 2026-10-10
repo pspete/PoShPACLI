@@ -1,4 +1,4 @@
-﻿Function Add-PVFile {
+﻿function Add-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -39,7 +39,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -74,9 +74,9 @@
 		[switch]$deleteMacros
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath STOREFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand STOREFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Get-PVTrustedNetworkArea {
+﻿function Get-PVTrustedNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,9 +30,9 @@
 		[string]$trusterName
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath TRUSTEDNETWORKAREASLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand TRUSTEDNETWORKAREASLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

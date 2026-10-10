@@ -1,4 +1,4 @@
-﻿Function Reset-PVSafe {
+﻿function Reset-PVSafe {
 
 	<#
     .SYNOPSIS
@@ -20,7 +20,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -31,9 +31,9 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath RESETSAFE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand RESETSAFE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

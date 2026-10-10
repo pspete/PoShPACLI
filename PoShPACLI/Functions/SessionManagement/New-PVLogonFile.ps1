@@ -1,4 +1,4 @@
-﻿Function New-PVLogonFile {
+﻿function New-PVLogonFile {
 
 	<#
 	.SYNOPSIS
@@ -29,7 +29,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -49,9 +49,9 @@
 		[securestring]$password
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath CREATELOGONFILE -SecretParameters $PSBoundParameters $($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
+		$Null = Invoke-PACLICommand -PacliCommand CREATELOGONFILE -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser)
 
 	}
 

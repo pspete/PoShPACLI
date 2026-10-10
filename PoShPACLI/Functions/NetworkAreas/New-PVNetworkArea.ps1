@@ -1,4 +1,4 @@
-﻿Function New-PVNetworkArea {
+﻿function New-PVNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -31,7 +31,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -47,7 +47,7 @@
 		[SecurityLevel]$securityLevelParm
 	)
 
-	PROCESS {
+	process {
 
 		If ($PSBoundParameters.ContainsKey("securityLevelParm")) {
 
@@ -55,7 +55,7 @@
 
 		}
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDNETWORKAREA $($PSBoundParameters | ConvertTo-ParameterString -donotQuote securityLevelParm)
+		$Null = Invoke-PACLICommand -PacliCommand ADDNETWORKAREA -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString -donotQuote securityLevelParm)
 
 	}
 

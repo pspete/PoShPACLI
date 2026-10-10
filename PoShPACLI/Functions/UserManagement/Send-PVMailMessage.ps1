@@ -1,4 +1,4 @@
-﻿Function Send-PVMailMessage {
+﻿function Send-PVMailMessage {
 
 	<#
 	.SYNOPSIS
@@ -104,7 +104,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -230,9 +230,9 @@
 		[string]$parm10
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath MAILUSER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand MAILUSER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function Get-PVRequestStatus {
+﻿function Get-PVRequestStatus {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[int]$requestID
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath REQUESTCONFIRMATIONSTATUS "$($PSBoundParameters | ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand REQUESTCONFIRMATIONSTATUS -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -doNotQuote requestID) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

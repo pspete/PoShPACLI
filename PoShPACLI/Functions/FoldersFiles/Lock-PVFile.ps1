@@ -1,4 +1,4 @@
-﻿Function Lock-PVFile {
+﻿function Lock-PVFile {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -47,9 +47,9 @@
 		[string]$file
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LOCKFILE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Return = Invoke-PACLICommand -PacliCommand LOCKFILE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 		if ($Return.ExitCode -eq 0) {
 

@@ -1,4 +1,4 @@
-﻿Function Get-PVFileList {
+﻿function Get-PVFileList {
 
 	<#
 	.SYNOPSIS
@@ -24,7 +24,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -39,10 +39,10 @@
 		[string]$folder
 	)
 
-	PROCESS {
+	process {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FILESLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand FILESLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

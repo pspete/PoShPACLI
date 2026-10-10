@@ -1,4 +1,4 @@
-﻿Function Write-PVSafeEvent {
+﻿function Write-PVSafeEvent {
 
 	<#
 	.SYNOPSIS
@@ -36,7 +36,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -61,9 +61,9 @@
 		[String]$data
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDEVENT $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand ADDEVENT -CommandParameters ($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote sourceID, eventTypeID)
 

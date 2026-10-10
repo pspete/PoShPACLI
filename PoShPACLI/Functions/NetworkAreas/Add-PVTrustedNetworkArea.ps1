@@ -1,4 +1,4 @@
-﻿Function Add-PVTrustedNetworkArea {
+﻿function Add-PVTrustedNetworkArea {
 
 	<#
 	.SYNOPSIS
@@ -34,7 +34,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -64,9 +64,9 @@
 		[int]$maxViolationCount
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDTRUSTEDNETWORKAREA $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand ADDTRUSTEDNETWORKAREA -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote fromHour, toHour, maxViolationCount)
 
 

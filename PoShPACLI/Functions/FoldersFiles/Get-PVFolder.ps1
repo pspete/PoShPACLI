@@ -1,4 +1,4 @@
-﻿Function Get-PVFolder {
+﻿function Get-PVFolder {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,10 +30,10 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath FOLDERSLIST "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand FOLDERSLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

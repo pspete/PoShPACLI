@@ -1,4 +1,4 @@
-﻿Function Remove-PVLDAPBranch {
+﻿function Remove-PVLDAPBranch {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification = 'ShouldProcess handling is in Invoke-PACLICommand')]
 	param(
 
@@ -39,9 +39,9 @@
 		[string]$deleteBranchID
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LDAPBRANCHDELETE "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand LDAPBRANCHDELETE -CommandParameters "$($PSBoundParameters |
                 ConvertTo-ParameterString -donotQuote deleteBranchID) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

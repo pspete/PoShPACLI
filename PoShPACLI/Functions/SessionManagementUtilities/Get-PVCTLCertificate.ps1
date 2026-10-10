@@ -1,4 +1,4 @@
-﻿Function Get-PVCTLCertificate {
+﻿function Get-PVCTLCertificate {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -32,9 +32,9 @@
 		[string]$ctlFileName
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath CTLLIST "$($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand CTLLIST -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -NoVault -NoUser) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

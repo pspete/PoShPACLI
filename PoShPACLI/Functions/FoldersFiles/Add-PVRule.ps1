@@ -1,4 +1,4 @@
-﻿Function Add-PVRule {
+﻿function Add-PVRule {
 
 	<#
 	.SYNOPSIS
@@ -135,7 +135,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -290,9 +290,9 @@
 		[switch]$renameObject
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath ADDRULE "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand ADDRULE -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString -donotQuote effect) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

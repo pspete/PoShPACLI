@@ -1,4 +1,4 @@
-﻿Function Add-PVPreferredFolder {
+﻿function Add-PVPreferredFolder {
 
 	<#
 	.SYNOPSIS
@@ -23,7 +23,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -38,9 +38,9 @@
 		[string]$folder
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDPREFERREDFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDPREFERREDFOLDER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 	}
 
 }

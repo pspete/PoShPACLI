@@ -1,4 +1,4 @@
-﻿Function Add-PVSafeOwner {
+﻿function Add-PVSafeOwner {
 
 	<#
 	.SYNOPSIS
@@ -114,7 +114,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -260,9 +260,9 @@
 		[switch]$renameObject
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDOWNER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDOWNER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

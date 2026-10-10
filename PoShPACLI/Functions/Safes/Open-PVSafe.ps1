@@ -1,4 +1,4 @@
-﻿Function Open-PVSafe {
+﻿function Open-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -68,7 +68,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -120,9 +120,9 @@
 		[switch]$executeRequest
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath OPENSAFE "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand OPENSAFE -CommandParameters "$($PSBoundParameters |
 					ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {

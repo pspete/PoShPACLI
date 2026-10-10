@@ -1,4 +1,4 @@
-﻿Function Get-PVSafe {
+﻿function Get-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -20,7 +20,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -30,9 +30,9 @@
 		[string]$safe
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath SAFEDETAILS "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
+		$Return = Invoke-PACLICommand -PacliCommand SAFEDETAILS -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE,OEM)"
 
 		if ($Return.ExitCode -eq 0) {
 

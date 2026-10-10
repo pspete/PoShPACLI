@@ -1,4 +1,4 @@
-﻿Function Get-PVFileCategory {
+﻿function Get-PVFileCategory {
 
 	<#
 	.SYNOPSIS
@@ -30,7 +30,7 @@
 
 	#>
 
-	[CmdLetBinding()]
+	[CmdletBinding()]
 	param(
 
 		[Parameter(
@@ -56,10 +56,10 @@
 		[string]$category
 	)
 
-	PROCESS {
+	process {
 
 		#execute pacli
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath LISTFILECATEGORIES "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
+		$Return = Invoke-PACLICommand -PacliCommand LISTFILECATEGORIES -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString) OUTPUT (ALL,ENCLOSE)"
 
 		if ($Return.ExitCode -eq 0) {
 

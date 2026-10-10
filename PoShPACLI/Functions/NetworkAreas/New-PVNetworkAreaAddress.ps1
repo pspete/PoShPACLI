@@ -1,4 +1,4 @@
-﻿Function New-PVNetworkAreaAddress {
+﻿function New-PVNetworkAreaAddress {
 
 	<#
 	.SYNOPSIS
@@ -29,7 +29,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -54,9 +54,9 @@
 		[string]$toAddress
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDAREAADDRESS $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand ADDAREAADDRESS -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -doNotQuote ipAddress, ipMask, toAddress)
 
 

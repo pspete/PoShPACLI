@@ -1,4 +1,4 @@
-﻿Function Set-PVObjectValidation {
+﻿function Set-PVObjectValidation {
 
 	<#
 	.SYNOPSIS
@@ -41,7 +41,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -78,9 +78,9 @@
 		[string]$reason
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath VALIDATEOBJECT $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand VALIDATEOBJECT -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote validationAction)
 
 

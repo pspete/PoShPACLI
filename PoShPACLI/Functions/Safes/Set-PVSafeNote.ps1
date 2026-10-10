@@ -1,4 +1,4 @@
-﻿Function Set-PVSafeNote {
+﻿function Set-PVSafeNote {
 
 	<#
 	.SYNOPSIS
@@ -26,7 +26,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -47,9 +47,9 @@
 		[String]$text
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDNOTE $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDNOTE -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

@@ -1,4 +1,4 @@
-﻿Function New-PVSafe {
+﻿function New-PVSafe {
 
 	<#
 	.SYNOPSIS
@@ -170,7 +170,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -345,7 +345,7 @@
 		[switch]$supportOLAC
 	)
 
-	PROCESS {
+	process {
 
 		Switch ([array]$PSBoundParameters.Keys) {
 
@@ -355,7 +355,7 @@
 
 		}
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDSAFE -SecretParameters $PSBoundParameters $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand ADDSAFE -SecretParameters $PSBoundParameters -CommandParameters ($PSBoundParameters |
 
 			ConvertTo-ParameterString -donotQuote size, fromHour, toHour, delay,
 			dailyVersions, monthlyVersions, yearlyVersions, logRetention,

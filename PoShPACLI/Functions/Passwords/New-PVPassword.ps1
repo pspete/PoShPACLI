@@ -1,4 +1,4 @@
-﻿Function New-PVPassword {
+﻿function New-PVPassword {
 
 	<#
 	.SYNOPSIS
@@ -56,7 +56,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -97,9 +97,9 @@
 		[string]$forbiddenChars
 	)
 
-	PROCESS {
+	process {
 
-		$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters |
+		$Return = Invoke-PACLICommand -PacliCommand GENERATEPASSWORD -CommandParameters "$($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
 			minDigit,effectiveLength) OUTPUT (ALL)"
 

@@ -1,4 +1,4 @@
-﻿Function Invoke-PACLICommand {
+﻿function Invoke-PACLICommand {
 
 	<#
 	.SYNOPSIS
@@ -22,7 +22,7 @@
 	Secret values are masked in WhatIf and Debug output.
 
     .EXAMPLE
-	Invoke-PACLICommand $Script:PV.ClientPath PACLICMD "$($PSBoundParameters | ConvertTo-ParameterString)
+	Invoke-PACLICommand -PacliCommand PACLICMD -CommandParameters "$($PSBoundParameters | ConvertTo-ParameterString)
 
 	Will execute PACLI.EXE PACLICMD Param1="Value" Param2="Value" Param3="Value"
 
@@ -31,7 +31,7 @@
 
     #>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	param(
 
 		[Parameter(
@@ -62,7 +62,7 @@
 		[System.Collections.IDictionary]$SecretParameters
 	)
 
-	Begin {
+	begin {
 
 		Try {
 
@@ -82,7 +82,7 @@
 
 	}
 
-	Process {
+	process {
 
 		$Secrets = @()
 		if ($SecretParameters) {
@@ -125,7 +125,7 @@
 
 	}
 
-	End {
+	end {
 
 		$Process.Dispose()
 

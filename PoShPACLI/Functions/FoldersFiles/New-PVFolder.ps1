@@ -1,4 +1,4 @@
-﻿Function New-PVFolder {
+﻿function New-PVFolder {
 
 	<#
 	.SYNOPSIS
@@ -22,7 +22,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -38,9 +38,9 @@
 		[string]$folder
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath ADDFOLDER $($PSBoundParameters | ConvertTo-ParameterString)
+		$Null = Invoke-PACLICommand -PacliCommand ADDFOLDER -CommandParameters ($PSBoundParameters | ConvertTo-ParameterString)
 
 
 

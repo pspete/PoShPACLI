@@ -1,4 +1,4 @@
-﻿Function Remove-PVRule {
+﻿function Remove-PVRule {
 
 	<#
 	.SYNOPSIS
@@ -35,7 +35,7 @@
 
 	#>
 
-	[CmdLetBinding(SupportsShouldProcess)]
+	[CmdletBinding(SupportsShouldProcess)]
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PACLICommand")]
 	param(
 
@@ -65,9 +65,9 @@
 		[switch]$isFolder
 	)
 
-	PROCESS {
+	process {
 
-		$Null = Invoke-PACLICommand $Script:PV.ClientPath DELETERULE $($PSBoundParameters |
+		$Null = Invoke-PACLICommand -PacliCommand DELETERULE -CommandParameters ($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote ruleID)
 
 
