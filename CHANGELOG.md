@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
   - `-WhatIf` and `-Debug` output masks secret values, including values containing spaces.
   - `Get-PVPasswordObject` no longer passes the retrieved password to other commands.
   - Affects `Add-PVPasswordObject`, `Connect-PVVault`, `New-PVLogonFile`, `New-PVSafe`, `New-PVUser`, `New-PVVaultDefinition`, `Set-PVUser`, `Set-PVUserPassword`, `Unlock-PVUser`.
+- `Get-PVPasswordObject`: new `-AsSecureString` switch outputs the password as a SecureString.
 - Fix `New-PVUser` sending `password` unquoted.
 - Fix `Get-PVSafeEvent` returning no output for events containing XML data; `Data` property now contains the event XML.
 

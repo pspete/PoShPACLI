@@ -75,11 +75,19 @@
 	.PARAMETER internalName
 	The name of a previous password version.
 
+	.PARAMETER AsSecureString
+	Output the retrieved password as a SecureString.
+
 	.EXAMPLE
 	Get-PVPasswordObject -safe Oracle -folder root `
 	-file Application-ORACLE-10.10.10.10-SYS -lockFile
 
 	Retrieves the specified password from the Oracle safe
+
+	.EXAMPLE
+	Get-PVPasswordObject -safe Oracle -folder root -file Application-ORACLE-10.10.10.10-SYS -AsSecureString
+
+	Retrieves the specified password from the Oracle safe as a SecureString
 
 	.NOTES
 	AUTHOR: Pete Maan
@@ -162,10 +170,17 @@
 		[Parameter(
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True)]
-		[string]$internalName
+		[string]$internalName,
+
+		[Parameter(
+			Mandatory = $False,
+			ValueFromPipelineByPropertyName = $False)]
+		[switch]$AsSecureString
 	)
 
 	PROCESS {
+
+		$null = $PSBoundParameters.Remove('AsSecureString')
 
 		$Return = Invoke-PACLICommand $Script:PV.ClientPath RETRIEVEPASSWORDOBJECT "$($PSBoundParameters |
 			ConvertTo-ParameterString -donotQuote requestUsageType,requestAccessType) OUTPUT (ALL,ENCLOSE)"
@@ -185,6 +200,12 @@
 				}
 
 				If ($Value) {
+
+					If ($AsSecureString) {
+
+						$Value = [System.Net.NetworkCredential]::new('', $Value).SecurePassword
+
+					}
 
 					#Output Object
 					$Password = [PSCustomObject] @{

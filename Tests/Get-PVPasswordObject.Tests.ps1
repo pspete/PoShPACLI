@@ -117,6 +117,27 @@ Describe $FunctionName {
 
 			}
 
+			It "outputs password as SecureString with AsSecureString" {
+
+				$Result = $InputObj | Get-PVPasswordObject -AsSecureString
+
+				$Result.Password | Should BeOfType [securestring]
+				[System.Net.NetworkCredential]::new('', $Result.Password).Password | Should BeExactly 'SomeOutput'
+
+			}
+
+			It "does not send AsSecureString to PACLI" {
+
+				$InputObj | Get-PVPasswordObject -AsSecureString
+
+				Assert-MockCalled Invoke-PACLICommand -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$CommandParameters -notmatch 'AsSecureString'
+
+				}
+
+			}
+
 			It "does not pass password value to other commands" {
 
 				Mock ConvertFrom-PacliOutput -MockWith { }
