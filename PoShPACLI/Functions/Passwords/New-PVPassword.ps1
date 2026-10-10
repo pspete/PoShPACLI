@@ -97,19 +97,23 @@
 		[string]$forbiddenChars
 	)
 
-	$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters |
-            ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
-                minDigit,effectiveLength) OUTPUT (ALL)"
+	PROCESS {
 
-	if ($Return.ExitCode -eq 0) {
+		$Return = Invoke-PACLICommand $Script:PV.ClientPath GENERATEPASSWORD "$($PSBoundParameters |
+			ConvertTo-ParameterString -donotQuote length,minUpperCase,minSpecial,minLowerCase,
+			minDigit,effectiveLength) OUTPUT (ALL)"
 
-		#if result(s) returned
-		if ($Return.StdOut) {
+		if ($Return.ExitCode -eq 0) {
 
-			#Return Generated Password String
-			[PSCustomObject] @{
+			#if result(s) returned
+			if ($Return.StdOut) {
 
-				"Password" = $Return.StdOut.TrimEnd()
+				#Return Generated Password String
+				[PSCustomObject] @{
+
+					"Password" = $Return.StdOut.TrimEnd()
+
+				}
 
 			}
 

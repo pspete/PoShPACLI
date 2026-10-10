@@ -64,6 +64,18 @@ Describe $FunctionName {
 
 			}
 
+			It "processes each pipeline input object" {
+
+				$Results = @(
+					[PSCustomObject]@{ length = 10 },
+					[PSCustomObject]@{ length = 20 }
+				) | New-PVPassword
+
+				Assert-MockCalled Invoke-PACLICommand -Times 2 -Exactly -Scope It
+				$Results | Should HaveCount 2
+
+			}
+
 		}
 
 	}
